@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>WebAudioPlayer</title> 
+</head>
+<body>
+	<input id="myAudio" type="file" accept="audio/mpeg" onchange="loadAudio()">
+		</input>
+	<script>
+	
+	function loadAudio() {
+	var data = document.getElementById("myAudio").files[0];
+	var reader = new FileReader();
+	reader.readAsArrayBuffer(data);
+	reader.result;
+	var read = reader.result;
+	audioCtx = new AudioContext();
+	analyser = audioCtx.createAnalyser();
+	decode = audioCtx.decodeAudioData(read);
+	analyser.connect(audioCtx.destination);
+	analyser.fftSize = 128;
+	//var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+	//analyser.getByteFrequencyData(frequencyData);
+	//console.log("hallo")
+	}
+	
+	
+	</script>
+	</body>
+		
+   
+        
+
+
+</html>
