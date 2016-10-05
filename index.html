@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
-    <title>WebAudioPlayer</title> 
+    <title>WebAudioPlayer</title>
 </head>
 <body>
-	<input id="myAudio" type="file" accept="audio/mpeg" onchange="loadAudio()">
-		</input>
-	<script>
-	
+  <form method="post" enctype="multipart/form-data" action="">
+      <input name="Datei" type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">
+  </form>
+	<script type="text/javascript">
 	function loadAudio() {
 	var data = document.getElementById("myAudio").files[0];
 	var reader = new FileReader();
 	reader.readAsArrayBuffer(data);
+  var state = reader.readyState;
+  console.log(state);
 	reader.result;
 	var read = reader.result;
 	audioCtx = new AudioContext();
@@ -24,13 +26,13 @@
 	//analyser.getByteFrequencyData(frequencyData);
 	//console.log("hallo")
 	}
-	
-	
+
+
 	</script>
 	</body>
-		
-   
-        
+
+
+
 
 
 </html>
