@@ -7,20 +7,21 @@
 
 <body>
     <form method="post" enctype="multipart/form-data" action="">
-        <input id="myAudio" accept="audio/*" onchange="loadAudio()">
+        <input type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">
     </form>
     <script type="text/javascript">
         function loadAudio() {
             var data = document.getElementById("myAudio").files[0];
-            var reader = new FileReader();
+            var reader = new FileReader
+            var buffer = new ArrayBuffer();
             reader.readAsArrayBuffer(data);
             var state = reader.readyState;
             console.log(state);
-            reader.result;
-            var read = reader.result;
+            buffer = reader.result;
+            //var read = reader.result;
             audioCtx = new AudioContext();
             analyser = audioCtx.createAnalyser();
-            decode = audioCtx.decodeAudioData(read);
+            decode = audioCtx.decodeAudioData(buffer);
             analyser.connect(audioCtx.destination);
             analyser.fftSize = 128;
             //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
