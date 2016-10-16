@@ -6,34 +6,38 @@
 </head>
 
 <body>
-<form method="post" enctype="multipart/form-data" action="">-->
-<input type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">-->
-</form>-->
-<script type="text/javascript">
-    function loadAudio() {
-        var data = document.getElementById("myAudio").files[0];
-        var reader = new FileReader;
-        var buffer = new ArrayBuffer();
-        buffer  = reader.readAsArrayBuffer(data);
-        reader.resultType = "arraybuffer";
-        var signalData = reader.result;
-        var audioCtx = new AudioContext();
-        reader.onload = function(){
-            audioCtx.decodeAudioData(reader.result, function(buf) {
-                audioData = buf;
-            }, function(e){"Error with decoding audio data" + e.err});
+    <form method="post" enctype="multipart/form-data" action="">-->
+        <input type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">-->
+    </form>-->
+    <script type="text/javascript">
+        function loadAudio() {
+            var data = document.getElementById("myAudio").files[0];
+            var reader = new FileReader;
+            var buffer = new ArrayBuffer();
+            buffer = reader.readAsArrayBuffer(data);
+            var state = reader.readyState;
+            console.log(state);
+            reader.resultType = "arraybuffer";
+            var signalData = reader.result;
+            var audioCtx = new AudioContext();
+            reader.onload = function() {
+                audioCtx.decodeAudioData(reader.result, function(buf) {
+                    audioData = buf;
+                }, function(e) {
+                    "Error with decoding audio data" + e.err
+                });
+            }
+
+
+
+            // var analyser = audioCtx.createAnalyser();
+            // analyser.connect(audioCtx.destination);
+            // analyser.fftSize = 128;
+            //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+            //analyser.getByteFrequencyData(frequencyData);
+            //console.log("hallo")
         }
-
-
-
-       // var analyser = audioCtx.createAnalyser();
-       // analyser.connect(audioCtx.destination);
-       // analyser.fftSize = 128;
-        //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-        //analyser.getByteFrequencyData(frequencyData);
-        //console.log("hallo")
-    }
-</script>-->
+    </script>-->
 
 
 

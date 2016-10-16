@@ -9,33 +9,27 @@ if (!window.AudioContext) {
 function loadAudio() {
 
     var data = document.getElementById("myAudio").files[0];
-    console.log(data);
-
-    var buffer = new ArrayBuffer(data.size);
-    console.log(buffer);
-
-    var reader = new FileReader(buffer);
-    console.log(reader);
-
-    buffer = reader.result;
-    console.log(buffer);
-
-    reader.readAsArrayBuffer(data.size);
-
-    // reader.load;
-
+    var reader = new FileReader();
+    var buffer = new ArrayBuffer();
+    var audioCtx = new AudioContext();
+    buffer = reader.readAsArrayBuffer(data);
     var state = reader.readyState;
+
     console.log(state);
-    read = reader.result;
-    console.log(read);
-    audioCtx = new AudioContext();
-    analyser = audioCtx.createAnalyser();
-    audioCtx.decodeAudioData(read);
-    analyser.connect(audioCtx.destination);
-    analyser.fftSize = 128;
-    var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(frequencyData);
-    console.log("hallo");
+
+    reader.resultType = "arrayBuffer";
+
+    reader.onload = function() {
+        audioCtx.decodeAudioData(reader.result, function(buf) {
+            audioData = buf;
+            var analyser = audioCtx.createAnalyser();
+            analyser.connect(audioCtx.destination);
+            analyser.fftSize = 128;
+            var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(frequencyData);
+            console.log("hallo");
+        });
+    };
 }
 
 // define variables and create new AudioContext obj
