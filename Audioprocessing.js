@@ -7,67 +7,70 @@ if (!window.AudioContext) {
 }
 
 function loadAudio() {
-
-    var data = document.getElementById("myAudio").files[0];
-    var reader = new FileReader();
-    var buffer = new ArrayBuffer();
     var audioCtx = new AudioContext();
-    buffer = reader.readAsArrayBuffer(data);
-    var state = reader.readyState;
+    var voiceSelect = document.getElementById("myAudio");
+    var source;
+    var stream;
 
-    console.log(state);
+    // grab the mute button to use below
 
-    reader.resultType = "arrayBuffer";
+    var mute = document.querySelector('.mute');
 
-    reader.onload = function() {
-        audioCtx.decodeAudioData(reader.result, function(buf) {
-            audioData = buf;
-            var analyser = audioCtx.createAnalyser();
-            analyser.connect(audioCtx.destination);
-            analyser.fftSize = 128;
-            var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-            analyser.getByteFrequencyData(frequencyData);
-            console.log("hallo");
+    //set up the different audio nodes we will use for the app
+
+    var analyser = audioCtx.createAnalyser();
+    analyser.minDecibels = -90;
+    analyser.maxDecibels = -10;
+    analyser.smoothingTimeConstant = 0.85;
+
+    var distortion = audioCtx.createWaveShaper();
+    var gainNode = audioCtx.createGain();
+    var biquadFilter = audioCtx.createBiquadFilter();
+    var convolver = audioCtx.createConvolver();
+
+    // distortion curve for the waveshaper, thanks to Kevin Ennis
+    // http://stackoverflow.com/questions/22312841/waveshaper-node-in-webaudio-how-to-emulate-distortion
+
+    function makeDistortionCurve(amount) {
+        var k = typeof amount === 'number' ? amount : 50,
+            n_samples = 44100,
+            curve = new Float32Array(n_samples),
+            deg = Math.PI / 180,
+            i = 0,
+            x;
+        for (; i < n_samples; ++i) {
+            x = i * 2 / n_samples - 1;
+            curve[i] = (3 + k) * x * 20 * deg / (Math.PI + k * Math.abs(x));
+        }
+        return curve;
+    }
+
+    // grab audio track via XHR for convolver node
+
+    var soundSource, concertHallBuffer;
+
+    ajaxRequest = new XMLHttpRequest();
+
+    ajaxRequest.open('GET', 'https://mdn.github.io/voice-change-o-matic/audio/concert-crowd.ogg', true);
+
+    ajaxRequest.responseType = 'arraybuffer';
+
+
+    ajaxRequest.onload = function() {
+        var audioData = ajaxRequest.response;
+
+        audioCtx.decodeAudioData(audioData, function(buffer) {
+            concertHallBuffer = buffer;
+            soundSource = audioCtx.createBufferSource();
+            soundSource.buffer = concertHallBuffer;
+        }, function(e) {
+            "Error with decoding audio data" + e.err
         });
-    };
-}
 
-// define variables and create new AudioContext obj
-// var context = new AudioContext();
-// var audioBuffer;
-// var sourceNode;
-//
-// setupAudioNodes();
-// loadSound("wagner-short.ogg");
-//
-// function setupAudioNodes() {
-//     sourceNode = context.createBufferSource();
-//     sourceNode.connect(context.destination);
-// }
-//
-// function loadSound(url) {
-// var request = new XMLHttpRequest();
-// request.open('GET', url, true);
-// request.responseType = 'arraybuffer';
-//
-// // When loaded decode the data
-// request.onload = function() {
-//
-//     // decode the data
-//     context.decodeAudioData(request.response, function(buffer) {
-//         // when the audio is decoded play the sound
-//         playSound(buffer);
-//     }, onError);
-// }
-// request.send();
-// }
-//
-// function playSound(buffer) {
-// sourceNode.buffer = buffer;
-// sourceNode.start(0);
-// }
-//
-// // log if an error occurs
-// function onError(e) {
-//     console.log(e);
-// }
+        soundSource.connect(audioCtx.destination);
+        soundSource.loop = true;
+        soundSource.start();
+    };
+
+    ajaxRequest.send();
+}
