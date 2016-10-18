@@ -21,7 +21,8 @@ function loadAudio() {
             audioData = buf;
         });
     };
-asdfssd
+
+
     // var analyser = audioCtx.createAnalyser();
     // analyser.connect(audioCtx.destination);
     // analyser.fftSize = 128;
