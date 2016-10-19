@@ -6,39 +6,47 @@
 </head>
 
 <body>
-    <form method="post" enctype="multipart/form-data" action="">-->
-        <input type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">-->
-    </form>-->
-    <script type="text/javascript">
-        function loadAudio() {
-            var data = document.getElementById("myAudio").files[0];
-            var reader = new FileReader;
-            var buffer = new ArrayBuffer();
-            buffer = reader.readAsArrayBuffer(data);
-            var state = reader.readyState;
-            console.log(state);
-            reader.resultType = "arraybuffer";
-            var signalData = reader.result;
-            var audioCtx = new AudioContext();
-            reader.onload = function() {
-                audioCtx.decodeAudioData(reader.result, function(buf) {
-                    audioData = buf;
-                }, function(e) {
-                    "Error with decoding audio data" + e.err
-                });
-            }
+<form method="post" enctype="multipart/form-data" action="">&ndash;&gt;
+<input type="file" id="myAudio" accept="audio/*" onchange="loadAudio()">&ndash;&gt;
+</form>&ndash;&gt;
+<script>
 
 
+   function loadAudio() {
+       var data = document.getElementById("myAudio").files[0];
+       var audioCtx = new AudioContext();
+       var reader = new FileReader;
+       var buffer = new ArrayBuffer();
+       buffer = reader.readAsArrayBuffer(data);
+       reader.resultType = "arraybuffer";
+       var samples = [];
+       var audioData = [];
+       var array = [];
+       reader.onload = function decode() {
+           audioCtx.decodeAudioData(reader.result, function (buf) {
+               audioData = buf;
+               console.log(reader.result)
+               console.log(audioData)
+               samples = audioData.getChannelData(0);
 
-            // var analyser = audioCtx.createAnalyser();
-            // analyser.connect(audioCtx.destination);
-            // analyser.fftSize = 128;
-            //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-            //analyser.getByteFrequencyData(frequencyData);
-            //console.log("hallo")
-        }
-    </script>-->
+               console.log(samples)
+               array = new Array(samples.length, );
+               console.log(array)
+               CalculateFFt(samples.slice(48000,49000),array.slice(48000,49000));
 
+           }, function (e) {
+               "Error with decoding audio data" + e.err
+           });
+       };
+   }
+</script>
+<script src="fft.js"></script>
+<script>
+    function CalculateFFt(real,imag){
+        transform(real,imag);
+        return real, imag;
+    }
+</script>
 
 
 
