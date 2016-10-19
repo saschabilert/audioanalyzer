@@ -30,7 +30,7 @@
                samples = audioData.getChannelData(0);
 
                console.log(samples)
-               array = new Array(samples.length, );
+               array = new Array(samples.length).fill(0);
                console.log(array)
                CalculateFFt(samples.slice(48000,49000),array.slice(48000,49000));
 
