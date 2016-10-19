@@ -5,17 +5,27 @@ if (!window.AudioContext) {
     }
     window.AudioContext = window.webkitAudioContext;
 }
-
+// function triggered by loading a Audiodata
 function loadAudio() {
-    var data = document.getElementById("myAudio").files[0];
+
+    // define objects
     var reader = new FileReader();
     var buffer = new ArrayBuffer();
-    buffer = reader.readAsArrayBuffer(data);
-    var state = reader.readyState;
-    console.log(state);
-    reader.resultType = "arraybuffer";
-    var signalData = reader.result;
     var audioCtx = new AudioContext();
+
+    // get the first file data with the id "myAudio"
+    var data = document.getElementById("myAudio").files[0];
+
+    
+    reader.readAsArrayBuffer(data).then(function(buffer) {
+        console.log(reader.readyState);
+    });
+
+    reader.resultType = "arraybuffer";
+
+
+    var signalData = reader.result;
+
     reader.onload = function() {
         audioCtx.decodeAudioData(reader.result, function(buf) {
             audioData = buf;
