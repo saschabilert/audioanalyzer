@@ -10,28 +10,26 @@ function loadAudio() {
 
     // define objects
     var reader = new FileReader();
-    var buffer = new ArrayBuffer();
     var audioCtx = new AudioContext();
 
     // get the first file data with the id "myAudio"
     var data = document.getElementById("myAudio").files[0];
 
-    
-    reader.readAsArrayBuffer(data).then(function(buffer) {
-        console.log(reader.readyState);
-    });
-
-    reader.resultType = "arraybuffer";
-
-
-    var signalData = reader.result;
+    reader.readAsArrayBuffer(data);
 
     reader.onload = function() {
-        audioCtx.decodeAudioData(reader.result, function(buf) {
-            audioData = buf;
+        audioCtx.decodeAudioData(reader.result).then(buffer => {
+          splitData(buffer.getChannelData);
         });
     };
 
+    function splitData(bufferArray) {
+      var x = bufferArray;
+      console.log(x);
+    }
+
+
+    // var x = {durration:5}; (Object erzeugen mit eigenen Properties)
 
     // var analyser = audioCtx.createAnalyser();
     // analyser.connect(audioCtx.destination);
