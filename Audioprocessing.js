@@ -19,13 +19,32 @@ function loadAudio() {
 
     reader.onload = function() {
         audioCtx.decodeAudioData(reader.result).then(buffer => {
-          splitData(buffer.getChannelData);
+            splitData(buffer);
         });
     };
 
-    function splitData(bufferArray) {
-      var x = bufferArray;
-      console.log(x);
+    function splitData(buffer) {
+        // define the block length
+        var blockLen = 2048;
+
+        // define hopsize
+        var hopsize = blockLen / 4;
+
+        console.log(hopsize);
+
+        // calculate the startpoints for the sample blocks
+        var nPart = Math.floor((buffer.getChannelData(0).length - blockLen) / hopsize);
+
+        console.log(buffer.getChannelData(0).length);
+
+        console.log(nPart);
+
+        for (var i = 0; i < nPart; i++) {
+
+          i += hopsize;
+        }
+
+
     }
 
 
