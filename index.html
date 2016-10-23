@@ -42,9 +42,16 @@
 </script>
 <script src="fft.js"></script>
 <script>
+    var absValue = [];
     function CalculateFFt(real,imag){
         transform(real,imag);
+        for (i=0; i<=real.length;i++) {
+            absValue[i] = Math.sqrt(real[i]*real[i] + imag[i]*imag[i]);
+
+        }
+        console.log(absValue);
         return real, imag;
+
     }
 </script>
 
