@@ -15,45 +15,54 @@ function loadAudio() {
     // get the first file data with the id "myAudio"
     var data = document.getElementById("myAudio").files[0];
 
+    // read the data from myAudio as ArrayBuffer
     reader.readAsArrayBuffer(data);
 
+    // trigger the onload function to decode the Audiodata
     reader.onload = function() {
         audioCtx.decodeAudioData(reader.result).then(buffer => {
+            // give the decoded Audiodata to the split-function
             splitData(buffer);
         });
     };
 
     function splitData(buffer) {
-        // define the block length
+        // define the block length :: later blockLen as user input
         var blockLen = 2048;
-
-        // define hopsize
+        // define hopsize 25% of blockLen
         var hopsize = blockLen / 4;
+
+        var samples = buffer.getChannelData(0);
 
         console.log(hopsize);
 
         // calculate the startpoints for the sample blocks
-        var nPart = Math.floor((buffer.getChannelData(0).length - blockLen) / hopsize);
-
-        console.log(buffer.getChannelData(0).length);
-
-        console.log(nPart);
+        var nPart = Math.floor((samples.length - blockLen) / hopsize);
+        // create array with zeros for imaginär part to use the fft
+        var zeros = new Array(samples.length).fill(0);
+        // create an 2D array to save the transformed data
+        var Array2D = new Array(nPart).fill(new Array(blockLen));
 
         for (var i = 0; i < nPart; i++) {
 
-          i += hopsize;
+            var endIdx = 0;
+
+            CalculateFFt(samples.slice(hopsize*i,blockLen+endIdx),zeros.slice(hopsize*i,blockLen+endIdx));
+
+            endIdx += hopsize;
         }
-
-
     }
 
+    function CalculateFFt(real, imag) {
+        var absValue = [];
+        transform(real, imag);
+        // calculate the absolute value
+        for (i = 0; i <= real.length; i++) {
+            absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
 
-    // var x = {durration:5}; (Object erzeugen mit eigenen Properties)
+        }
+        console.log(absValue);
+        return real, imag;
 
-    // var analyser = audioCtx.createAnalyser();
-    // analyser.connect(audioCtx.destination);
-    // analyser.fftSize = 128;
-    //var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-    //analyser.getByteFrequencyData(frequencyData);
-    //console.log("hallo")
+    }
 }
