@@ -30,7 +30,7 @@ function loadAudio() {
 
     function splitData(buffer) {
         // define the block length :: later blockLen as user input
-        var blockLen = 4096;
+        var blockLen = 2048;
         // define hopsize 25% of blockLen
         var hopsize = blockLen / 4;
 
@@ -41,7 +41,7 @@ function loadAudio() {
         // create array with zeros for imaginär part to use the fft
         var zeros = new Array(samples.length).fill(0);
         var endIdx = 0;
-        var absValue = [];
+        var absValue = new Array(blockLen+1);
 
         for (var i = 0; i < nPart; i++) {
 
@@ -58,7 +58,6 @@ function loadAudio() {
     }
 
     function CalculateFFT(real, imag) {
-        // console.log(imag[20]);
         transform(real, imag);
     }
 
