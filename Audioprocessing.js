@@ -5,6 +5,7 @@ if (!window.AudioContext) {
     }
     window.AudioContext = window.webkitAudioContext;
 }
+
 // function triggered by loading a Audiodata
 function loadAudio() {
 
@@ -22,47 +23,50 @@ function loadAudio() {
     reader.onload = function() {
         audioCtx.decodeAudioData(reader.result).then(buffer => {
             // give the decoded Audiodata to the split-function
-            splitData(buffer);
+            var Value = splitData(buffer);
+            console.log(Value);
         });
     };
 
     function splitData(buffer) {
         // define the block length :: later blockLen as user input
-        var blockLen = 2048;
+        var blockLen = 4096;
         // define hopsize 25% of blockLen
         var hopsize = blockLen / 4;
 
         var samples = buffer.getChannelData(0);
 
-        console.log(hopsize);
-
         // calculate the startpoints for the sample blocks
         var nPart = Math.floor((samples.length - blockLen) / hopsize);
         // create array with zeros for imaginär part to use the fft
         var zeros = new Array(samples.length).fill(0);
-        // create an 2D array to save the transformed data
-        var Array2D = new Array(nPart).fill(new Array(blockLen));
-
+        var endIdx = 0;
+        var absValue = [];
         for (var i = 0; i < nPart; i++) {
 
-            var endIdx = 0;
+            var real = samples.slice(hopsize * i, blockLen + endIdx);
+            var imag = zeros.slice(hopsize * i, blockLen + endIdx);
 
-            CalculateFFt(samples.slice(hopsize*i,blockLen+endIdx),zeros.slice(hopsize*i,blockLen+endIdx));
+            endIdx = endIdx + hopsize;
 
-            endIdx += hopsize;
+            CalculateFFT(real, imag);
+
+            CalculateFFTabsValue(real, imag, absValue);
         }
+        return absValue;
     }
 
-    function CalculateFFt(real, imag) {
-        var absValue = [];
+    function CalculateFFT(real, imag) {
+        // console.log(imag[20]);
         transform(real, imag);
-        // calculate the absolute value
+    }
+
+    function CalculateFFTabsValue(real, imag, absValue) {
+        // console.log(imag[20]);
         for (i = 0; i <= real.length; i++) {
             absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
-
         }
-        console.log(absValue);
-        return real, imag;
-
+        return absValue;
     }
+
 }
