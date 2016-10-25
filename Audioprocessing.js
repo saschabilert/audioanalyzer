@@ -42,6 +42,7 @@ function loadAudio() {
         var zeros = new Array(samples.length).fill(0);
         var endIdx = 0;
         var absValue = [];
+
         for (var i = 0; i < nPart; i++) {
 
             var real = samples.slice(hopsize * i, blockLen + endIdx);
@@ -68,5 +69,4 @@ function loadAudio() {
         }
         return absValue;
     }
-
 }
