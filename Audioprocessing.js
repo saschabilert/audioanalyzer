@@ -41,13 +41,14 @@ function loadAudio() {
         // create array with zeros for imaginär part to use the fft
         var zeros = new Array(samples.length).fill(0);
         // create an 2D array to save the transformed data
-        var Array2D = new Array(nPart).fill(new Array(blockLen));
+        var arr2d = Create2DArray(nPart);
+        console.log(arr2d)
 
         for (var i = 0; i < nPart; i++) {
 
             var endIdx = 0;
 
-            CalculateFFt(samples.slice(hopsize*i,blockLen+endIdx),zeros.slice(hopsize*i,blockLen+endIdx));
+            //CalculateFFt(samples.slice(hopsize*i,blockLen+endIdx),zeros.slice(hopsize*i,blockLen+endIdx));
 
             endIdx += hopsize;
         }
@@ -64,5 +65,15 @@ function loadAudio() {
         console.log(absValue);
         return real, imag;
 
+    }
+
+    function Create2DArray(rows) {
+        var arr = [];
+
+        for (var i=0;i<rows;i++) {
+            arr[i] = [];
+        }
+
+        return arr;
     }
 }
