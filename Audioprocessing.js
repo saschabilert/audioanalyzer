@@ -38,11 +38,7 @@
          audioCtx.decodeAudioData(reader.result).then(buffer => {
              // give the decoded Audiodata to the split-function
              CalculateSpec(buffer);
-             console.log(buffer);
              Audiodata.numOfChannels = buffer.numberOfChannels;
-             console.log(Audiodata.spectrogram);
-             console.log(Audiodata.numOfChannels);
-
          });
      };
 
@@ -68,16 +64,18 @@
 
          for (var i = 0; i < nPart; i++) {
 
-             var real = Audiodata.samples.slice(Audiodata.hopsize * i,
+             var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
                  Audiodata.blockLen + endIdx);
-             var imag = zeros.fill(0);
+             var imagPart = zeros.fill(0);
+
+             window = Windowing(Audiodata.blockLen, "hann");
 
              endIdx = endIdx + Audiodata.hopsize;
 
-             CalculateFFT(real, imag);
+             CalculateFFT(realPart, imagPart);
 
-             Audiodata.spectrogram[i] = CalculateAbs(real, imag);
-             Audiodata.phase[i] = CalculatePhase(real, imag);
+             Audiodata.spectrogram[i] = CalculateAbs(realPart, imagPart);
+             Audiodata.phase[i] = CalculatePhase(realPart, imagPart);
 
          }
      }
@@ -104,5 +102,28 @@
              phaseValue[i] = Math.atan2(real[i], imag[i]);
          }
          return phaseValue;
+     }
+
+     function Windowing(len, type) {
+         windowLen =
+             switch (type) {
+                 case "hann":
+                     var window = (0.5 * (1 - Math.cos(2 * pi * real / (real.length - 1))));
+                     return window;
+                 case "blackmann":
+                     real = real *
+                         break;
+                 default:
+                     return real;
+             }
+     }
+
+     function Linspace(startValue, endValue) {
+
+         linVektor = new Array(endValue - startValue);
+         for (startValue; startValue = < endValue; startValue++) {
+          
+         }
+
      }
  }
