@@ -42,9 +42,9 @@ function loadAudio() {
         var zeros = new Array(samples.length).fill(0);
         var endIdx = 0;
         var spectrogram = new Array(nPart);
-
-        for (var i = 0; i < nPart; i++) {
-
+        var phase = new Array(nPart);
+        for (var i = 0; i < 10; i++) {
+            console.log(i);
             var real = samples.slice(hopsize * i, blockLen + endIdx);
             var imag = zeros.slice(hopsize * i, blockLen + endIdx);
 
@@ -53,6 +53,7 @@ function loadAudio() {
             CalculateFFT(real, imag);
 
             spectrogram[i] = CalculateFFTabsValue(real, imag);
+            phase[i] = CalculatePhase(real,imag);
 
 
         }
@@ -70,5 +71,13 @@ function loadAudio() {
             absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
         }
         return absValue;
+    }
+
+    function CalculatePhase(real,imag) {
+        var phaseValue = new Array(real.length/2+1);
+        for (i=0; i<phaseValue.length; i++) {
+            phaseValue[i] = Math.atan2(real[i],imag[i]);
+        }
+        return phaseValue;
     }
 }
