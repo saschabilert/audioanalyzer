@@ -1,4 +1,4 @@
-// check if AudioContext is supported be the current browser
+ // check if AudioContext is supported be the current browser
 if (!window.AudioContext) {
     if (!window.webkitAudioContex) {
         alert("no audiocontext found");
@@ -41,7 +41,7 @@ function loadAudio() {
         // create array with zeros for imaginär part to use the fft
         var zeros = new Array(samples.length).fill(0);
         var endIdx = 0;
-        var absValue = new Array(blockLen+1);
+        var spectrogram = new Array(nPart);
 
         for (var i = 0; i < nPart; i++) {
 
@@ -52,18 +52,21 @@ function loadAudio() {
 
             CalculateFFT(real, imag);
 
-            CalculateFFTabsValue(real, imag, absValue);
+            spectrogram[i] = CalculateFFTabsValue(real, imag);
+
+
         }
-        return absValue;
+        console.log(spectrogram);
+        // return ;
     }
 
     function CalculateFFT(real, imag) {
         transform(real, imag);
     }
 
-    function CalculateFFTabsValue(real, imag, absValue) {
-        // console.log(imag[20]);
-        for (i = 0; i <= real.length; i++) {
+    function CalculateFFTabsValue(real, imag) {
+        var absValue = new Array(real.length/2+1);
+        for (i = 0; i < absValue.length; i++) {
             absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
         }
         return absValue;
