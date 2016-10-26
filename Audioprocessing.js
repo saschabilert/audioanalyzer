@@ -16,6 +16,7 @@ function loadAudio() {
     // get the first file data with the id "myAudio"
     var data = document.getElementById("myAudio").files[0];
 
+
     // read the data from myAudio as ArrayBuffer
     reader.readAsArrayBuffer(data);
 
@@ -24,7 +25,7 @@ function loadAudio() {
         audioCtx.decodeAudioData(reader.result).then(buffer => {
             // give the decoded Audiodata to the split-function
             var Value = splitData(buffer);
-            console.log(Value);
+            console.log(buffer);
         });
     };
 
