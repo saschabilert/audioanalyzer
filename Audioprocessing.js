@@ -39,6 +39,7 @@
              // give the decoded Audiodata to the split-function
              CalculateSpec(buffer);
              Audiodata.numOfChannels = buffer.numberOfChannels;
+             drawSpec();
          });
      };
 
@@ -122,7 +123,7 @@
 
          linVektor = new Array(endValue - startValue);
          for (startValue; startValue = < endValue; startValue++) {
-          
+
          }
 
      }
