@@ -42,6 +42,7 @@
              Audiodata.numOfChannels = buffer.numberOfChannels;
              console.log(Audiodata.spectrogram);
              console.log(Audiodata.numOfChannels);
+             drawSpec();
 
          });
      };
