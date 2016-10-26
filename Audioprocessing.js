@@ -6,6 +6,9 @@ if (!window.AudioContext) {
     window.AudioContext = window.webkitAudioContext;
 }
 
+var Audiodata = {blockLen:undefined, signalLen:undefined, sampleRate:undefined, channels:undefined,
+                hopsize:undefined, spectrogram:undefined, samples:undefined};
+
 // function triggered by loading a Audiodata
 function loadAudio() {
 
@@ -20,46 +23,53 @@ function loadAudio() {
     // read the data from myAudio as ArrayBuffer
     reader.readAsArrayBuffer(data);
 
+    Audiodata.sampleRate = audioCtx.sampleRate;
+
     // trigger the onload function to decode the Audiodata
     reader.onload = function() {
         audioCtx.decodeAudioData(reader.result).then(buffer => {
             // give the decoded Audiodata to the split-function
-            var Value = splitData(buffer);
-            console.log(buffer);
+
+            CalculateSpec(buffer);
+            console.log(Audiodata.spectrogram);
+
         });
     };
 
-    function splitData(buffer) {
+    function CalculateSpec(buffer) {
         // define the block length :: later blockLen as user input
-        var blockLen = 2048;
+        Audiodata.blockLen = 2048;
         // define hopsize 25% of blockLen
-        var hopsize = blockLen / 4;
+        Audiodata.hopsize = Audiodata.blockLen / 4;
 
-        var samples = buffer.getChannelData(0);
+        Audiodata.samples = buffer.getChannelData(0);
+
+        Audiodata.signalLen = Audiodata.samples.length;
 
         // calculate the startpoints for the sample blocks
-        var nPart = Math.floor((samples.length - blockLen) / hopsize);
+        var nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
         // create array with zeros for imaginär part to use the fft
-        var zeros = new Array(samples.length).fill(0);
-        var endIdx = 0;
-        var spectrogram = new Array(nPart);
-        var phase = new Array(nPart);
-        for (var i = 0; i < 10; i++) {
-            console.log(i);
-            var real = samples.slice(hopsize * i, blockLen + endIdx);
-            var imag = zeros.slice(hopsize * i, blockLen + endIdx);
+        var zeros = new Array(Audiodata.blockLen).fill(0);
 
-            endIdx = endIdx + hopsize;
+        var endIdx = 0;
+
+        Audiodata.spectrogram = new Array(nPart);
+        var phase = new Array(nPart);
+
+        for (var i = 0; i < nPart; i++) {
+
+            var real = Audiodata.samples.slice(Audiodata.hopsize * i,
+                        Audiodata.blockLen + endIdx);
+            var imag = zeros.fill(0);
+
+            endIdx = endIdx + Audiodata.hopsize;
 
             CalculateFFT(real, imag);
 
-            spectrogram[i] = CalculateFFTabsValue(real, imag);
+            Audiodata.spectrogram[i] = CalculateFFTabsValue(real, imag);
             phase[i] = CalculatePhase(real,imag);
 
-
         }
-        console.log(spectrogram);
-        // return ;
     }
 
     function CalculateFFT(real, imag) {
@@ -67,7 +77,9 @@ function loadAudio() {
     }
 
     function CalculateFFTabsValue(real, imag) {
+
         var absValue = new Array(real.length/2+1);
+
         for (i = 0; i < absValue.length; i++) {
             absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
         }
