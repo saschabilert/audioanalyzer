@@ -14,11 +14,12 @@
      hopsize: undefined,
      spectrogram: undefined,
      phase: undefined,
-     samples: undefined
+     samples: undefined,
+     window: undefined
  };
 
  // function triggered by loading a Audiodata
- function AudioProcessing() {
+ function audioProcessing() {
 
      // define objects
      var reader = new FileReader();
@@ -39,14 +40,14 @@
 
              Audiodata.numOfChannels = buffer.numberOfChannels;
              // give the decoded Audiodata to the split-function
-             CalculateSpec(buffer);
+             calculateSpec(buffer);
 
              drawSpec();
          });
      };
  }
 
- function CalculateSpec(buffer) {
+ function calculateSpec(buffer) {
      // define the block length :: later blockLen as user input
      Audiodata.blockLen = 2048;
      // define hopsize 25% of blockLen
@@ -56,6 +57,8 @@
 
      Audiodata.signalLen = Audiodata.samples.length;
 
+     Audiodata.window = "hann";
+
      // calculate the startpoints for the sample blocks
      var nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
      // create array with zeros for imaginär part to use the fft
@@ -63,7 +66,14 @@
 
      var endIdx = 0;
 
+     var windowLen = linspace(0, Audiodata.blockLen - 1);
+
+     var window = applyWindow(windowLen, Audiodata.window);
+
+     console.log(window);
+
      Audiodata.spectrogram = new Array(nPart);
+
      Audiodata.phase = new Array(nPart);
 
      for (var i = 0; i < nPart; i++) {
@@ -72,23 +82,24 @@
              Audiodata.blockLen + endIdx);
          var imagPart = zeros.fill(0);
 
-         //  window = Windowing(Audiodata.blockLen, "hann");
-
          endIdx = endIdx + Audiodata.hopsize;
 
-         CalculateFFT(realPart, imagPart);
+         console.log(realPart);
 
-         Audiodata.spectrogram[i] = CalculateAbs(realPart, imagPart);
-         Audiodata.phase[i] = CalculatePhase(realPart, imagPart);
+         calculateFFT(realPart, imagPart);
 
+         Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
+         Audiodata.phase[i] = calculatePhase(realPart, imagPart);
+
+         break;
      }
  }
 
- function CalculateFFT(real, imag) {
+ function calculateFFT(real, imag) {
      transform(real, imag);
  }
 
- function CalculateAbs(real, imag) {
+ function calculateAbs(real, imag) {
 
      var absValue = new Array(real.length / 2 + 1);
 
@@ -98,7 +109,7 @@
      return absValue;
  }
 
- function CalculatePhase(real, imag) {
+ function calculatePhase(real, imag) {
 
      var phaseValue = new Array(real.length / 2 + 1);
 
@@ -108,25 +119,27 @@
      return phaseValue;
  }
 
- function Windowing(len, type) {
-     windowLen =
-         switch (type) {
-             case "hann":
-                 var window = (0.5 * (1 - Math.cos(2 * pi * real / (real.length - 1))));
-                 return window;
-             case "blackmann":
-                 real = real *
-                     break;
-             default:
-                 return real;
-         }
+ function applyWindow(windowLen, type) {
+     var window = new Array(windowLen.length);
+     switch (type) {
+         case "hann":
+             for (i = 0; i < windowLen; i++) {
+                 window[i] = (0.5 * (1 - Math.cos(2 * pi * windowLen[i] / (windowLen - 1))));
+             }
+             return window;
+         default:
+             break;
+     }
  }
 
- function Linspace(startValue, endValue) {
+ function linspace(startValue, endValue) {
 
-     linVektor = new Array(endValue - startValue);
-     for (startValue; startValue = < endValue; startValue++) {
+     var linVector = new Array(endValue - startValue);
 
+     for (startValue; startValue <= endValue; startValue++) {
+         linVector[startValue] = startValue;
      }
+
+     return linVector;
 
  }
