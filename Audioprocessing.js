@@ -84,8 +84,6 @@
 
          endIdx = endIdx + Audiodata.hopsize;
 
-         console.log(realPart);
-
          calculateFFT(realPart, imagPart);
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);

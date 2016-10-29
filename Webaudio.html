@@ -19,6 +19,7 @@
             -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
         }
+
         ul li {
             font: bold 12px/18px sans-serif;
             display: inline-block;
@@ -33,10 +34,12 @@
             -o-transition: all 0.2s;
             transition: all 0.2s;
         }
+
         ul li:hover {
             background: #555;
             color: #fff;
         }
+
         ul li ul {
             padding: 0;
             position: absolute;
@@ -55,13 +58,18 @@
             -o-transition: opacity 0.2s;
             -transition: opacity 0.2s;
         }
+
         ul li ul li {
             background: #555;
             display: block;
             color: #fff;
             text-shadow: 0 -1px 0 #000;
         }
-        ul li ul li:hover { background: #666; }
+
+        ul li ul li:hover {
+            background: #666;
+        }
+
         ul li:hover ul {
             display: block;
             opacity: 1;
@@ -89,11 +97,12 @@
 
 
     <div id="canvasdiv" style="width: 1000px; height: 300px; position: absolute; overflow-x: scroll">
-    <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-    <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-        </div>
+        <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+    </div>
 
-    <ul><li>Home</li>
+    <ul>
+        <li>Home</li>
         <li>About</li>
         <li>
             Portfolio
