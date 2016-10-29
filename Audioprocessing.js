@@ -11,9 +11,12 @@
      signalLen: undefined,
      sampleRate: undefined,
      numOfChannels: undefined,
+     nPart: undefined,
      hopsize: undefined,
      spectrogram: undefined,
      phase: undefined,
+     groupDelay: undefined,
+     angle: undefined,
      samples: undefined,
      window: undefined
  };
@@ -57,31 +60,37 @@
 
      Audiodata.signalLen = Audiodata.samples.length;
 
-     Audiodata.window = "hann";
+     Audiodata.window = "hannpoisson";
+
+     Audiodata.angle = "radian";
 
      // calculate the startpoints for the sample blocks
-     var nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+     Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+
      // create array with zeros for imaginär part to use the fft
      var zeros = new Array(Audiodata.blockLen).fill(0);
 
      var endIdx = 0;
 
-     var windowLen = linspace(0, Audiodata.blockLen - 1);
+     var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
      var window = applyWindow(windowLen, Audiodata.window);
 
-     console.log(window);
+     //  console.log(window);
 
-     Audiodata.spectrogram = new Array(nPart);
+     Audiodata.spectrogram = new Array(Audiodata.nPart);
 
-     Audiodata.phase = new Array(nPart);
+     Audiodata.phase = new Array(Audiodata.nPart);
 
-     for (var i = 0; i < nPart; i++) {
+     for (var i = 0; i < Audiodata.nPart; i++) {
 
          var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
              Audiodata.blockLen + endIdx);
          var imagPart = zeros.fill(0);
 
+         for (var k = 0; k < Audiodata.blockLen; k++) {
+             realPart[k] = realPart[k] * window[k];
+         }
          endIdx = endIdx + Audiodata.hopsize;
 
          calculateFFT(realPart, imagPart);
@@ -89,8 +98,9 @@
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
 
-         break;
      }
+     calculateGroupDelay();
+     console.log(Audiodata.phase);
  }
 
  function calculateFFT(real, imag) {
@@ -112,32 +122,53 @@
      var phaseValue = new Array(real.length / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
-         phaseValue[i] = Math.atan2(real[i], imag[i]);
+         if (Audiodata.angle == "radian")
+             phaseValue[i] = Math.atan2(real[i], imag[i]);
+         else
+             phaseValue[i] = Math.atan2(real[i], imag[i]) * (180 / Math.PI);
      }
      return phaseValue;
+ }
+
+ function calculateGroupDelay() {
+     var freqVector = linspace(0,Audiodata.sampleRate/2,Audiodata.blockLen/2);
+     console.log(freqVector);
+     for (var i = 0; i < Audiodata.nPart; i++) {
+
+     }
  }
 
  function applyWindow(windowLen, type) {
      var window = new Array(windowLen.length);
      switch (type) {
          case "hann":
-             for (i = 0; i < windowLen; i++) {
-                 window[i] = (0.5 * (1 - Math.cos(2 * pi * windowLen[i] / (windowLen - 1))));
+             for (i = 0; i < windowLen.length; i++) {
+                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)));
              }
-             return window;
+             break;
+         case "hannpoisson":
+             // α is a parameter that controls the slope of the exponential (wiki)
+             var alpha = 2;
+             for (i = 0; i < windowLen.length; i++) {
+                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) *
+                     Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) / (windowLen.length - 1));
+             }
+             break;
          default:
+             window.fill(1);
              break;
      }
+     return window;
  }
 
- function linspace(startValue, endValue) {
+ function linspace(startIdx, endIdx, n) {
 
-     var linVector = new Array(endValue - startValue);
+     var linVector = new Array(n);
 
-     for (startValue; startValue <= endValue; startValue++) {
-         linVector[startValue] = startValue;
+     for (var i = 0; i < n; i++) {
+         linVector[i] = startIdx + (i * (endIdx - startIdx) / n);
      }
-
+     linVector[0] = startIdx;
+     linVector[n-1] = endIdx;
      return linVector;
-
  }
