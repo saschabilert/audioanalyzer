@@ -7,7 +7,7 @@
  }
 
  var Audiodata = {
-     blockLen: 1024,
+     blockLen: 2048,
      signalLen: undefined,
      sampleRate: undefined,
      numOfChannels: undefined,
@@ -86,10 +86,13 @@
      var window = applyWindow(windowLen, Audiodata.window);
 
      //  console.log(window);
+     console.log(Audiodata.nPart);
 
      Audiodata.spectrogram = new Array(Audiodata.nPart);
 
      Audiodata.phase = new Array(Audiodata.nPart);
+
+     Audiodata.groupDelay = new Array(Audiodata.nPart);
 
      for (var i = 0; i < Audiodata.nPart; i++) {
 
@@ -106,10 +109,13 @@
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-
      }
+     //  console.log(Audiodata.phase);
+
      calculateGroupDelay();
-     console.log(Audiodata.phase);
+
+     //  console.log(Audiodata.groupDelay);
+
  }
 
  function calculateFFT(real, imag) {
@@ -140,10 +146,13 @@
  }
 
  function calculateGroupDelay() {
-     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
-     console.log(freqVector);
-     for (var i = 0; i < Audiodata.nPart; i++) {
 
+     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
+
+     var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
+
+     for (var i = 0; i < Audiodata.nPart; i++) {
+         Audiodata.groupDelay[i] = -1 * diff(Audiodata.phase[i] / dOmega);
      }
  }
 
@@ -151,16 +160,22 @@
      var window = new Array(windowLen.length);
      switch (type) {
          case "hann":
-             for (i = 0; i < windowLen.length; i++) {
+             for (var i = 0; i < windowLen.length; i++) {
                  window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)));
              }
              break;
          case "hannpoisson":
              // α is a parameter that controls the slope of the exponential (wiki)
              var alpha = 2;
-             for (i = 0; i < windowLen.length; i++) {
+
+             for (var i = 0; i < windowLen.length; i++) {
                  window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) *
                      Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) / (windowLen.length - 1));
+             }
+             break;
+         case "cosine":
+             for (var i = 0; i < windowLen.length; i++) {
+                 window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
              }
              break;
          default:
@@ -180,4 +195,14 @@
      linVector[0] = startIdx;
      linVector[n - 1] = endIdx;
      return linVector;
+ }
+
+ function diff(array) {
+
+     var difference = new Array(array.length);
+
+     for (var i = 2; i < array.length; i++) {
+         difference = array[i] - array[i - 1];
+     }
+     return difference;
  }
