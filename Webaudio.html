@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <!-- set title of the website -->
     <title>Load-Audiofile</title>
-    <link rel="stylesheet" href="dropdownMenu.css">
+    <link type="css" rel="stylesheet" href="dropdownMenu.css">
 
 
 
@@ -29,14 +29,14 @@
     <script type="text/javascript" src="Spectrogram.js"></script>
 
 
-<!-- generate dropwdown lists-->
-    <select id="blockLength" onchange = "blockLength()">
+    <!-- generate dropwdown lists-->
+    <select id="blockLength" onchange="blockLength()">
         <option selected disabled>block legnth</option>
         <option value="1024">block length:1024</option>
         <option value="2048">block length:2048</option>
         <option value="4096">block length:4096</option>
         </select>
-    <select id="windowType" onchange = "windowType()">
+    <select id="windowType" onchange="windowType()">
         <option selected disabled>window type</option>
         <option value="rectangle">window:rectangle</option>
         <option value="hann">window:hann</option>
@@ -45,9 +45,9 @@
 
 
     <div id="canvasdiv" style="width: 1000px; height: 300px; position: absolute; overflow-x: scroll">
-           <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-           <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-       </div>
+        <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+    </div>
 
 
 

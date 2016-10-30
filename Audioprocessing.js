@@ -6,12 +6,8 @@
      window.AudioContext = window.webkitAudioContext;
  }
 
- // default inputs for audioProcessing():
-    var inputBlock = "2048";
-    var inputWindow = "hannpoisson"
-
  var Audiodata = {
-     blockLen: undefined,
+     blockLen: 1024,
      signalLen: undefined,
      sampleRate: undefined,
      numOfChannels: undefined,
@@ -24,17 +20,16 @@
      samples: undefined,
      window: undefined
  };
-// process audio signal with a new block length
- function blockLength(){
-     var blockLength = document.getElementById("blockLength").value;
-     inputBlock = blockLength;
-     audioProcessing()
+
+ // process audio signal with a new block length
+ function blockLength() {
+     Audiodata.blockLen = +(document.getElementById("blockLength").value);
+     audioProcessing();
  }
-// process audio signal with a new window type
- function windowType(){
-     var windowType = document.getElementById("windowType").value;
-     inputWindow = windowType;
-     audioProcessing()
+ // process audio signal with a new window type
+ function windowType() {
+     Audiodata.window = document.getElementById("windowType").value;
+     audioProcessing();
  }
 
  // function triggered by loading a Audiodata
@@ -68,15 +63,13 @@
 
  function calculateSpec(buffer) {
      // define the block length :: later blockLen as user input
-     Audiodata.blockLen = +inputBlock;
+     // Audiodata.blockLen = +inputBlock;
      // define hopsize 25% of blockLen
      Audiodata.hopsize = Audiodata.blockLen / 4;
 
      Audiodata.samples = buffer.getChannelData(0);
 
      Audiodata.signalLen = Audiodata.samples.length;
-
-     Audiodata.window = inputWindow;
 
      Audiodata.angle = "radian";
 
@@ -147,7 +140,7 @@
  }
 
  function calculateGroupDelay() {
-     var freqVector = linspace(0,Audiodata.sampleRate/2,Audiodata.blockLen/2);
+     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
      console.log(freqVector);
      for (var i = 0; i < Audiodata.nPart; i++) {
 
@@ -185,8 +178,6 @@
          linVector[i] = startIdx + (i * (endIdx - startIdx) / n);
      }
      linVector[0] = startIdx;
-     linVector[n-1] = endIdx;
+     linVector[n - 1] = endIdx;
      return linVector;
  }
-
-
