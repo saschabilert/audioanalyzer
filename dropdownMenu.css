@@ -1,0 +1,19 @@
+select {
+    background-color:#000;
+    color: #FFF;
+}
+
+select * {
+    background-color:#000;
+    color:#FFF;
+}
+
+select *.white {
+    background-color:#FFF;
+    color:#000;
+}
+
+select *.blue {
+    background-color:#06F;
+    color:#FFF;
+}

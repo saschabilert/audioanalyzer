@@ -7,75 +7,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <!-- set title of the website -->
     <title>Load-Audiofile</title>
+    <link rel="stylesheet" href="dropdownMenu.css">
 
-    <style>
-        ul {
-            text-align: left;
-            display: inline;
-            margin: 0;
-            padding: 15px 4px 17px 0;
-            list-style: none;
-            -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-            -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-        }
 
-        ul li {
-            font: bold 12px/18px sans-serif;
-            display: inline-block;
-            margin-right: -4px;
-            position: relative;
-            padding: 15px 20px;
-            background: #fff;
-            cursor: pointer;
-            -webkit-transition: all 0.2s;
-            -moz-transition: all 0.2s;
-            -ms-transition: all 0.2s;
-            -o-transition: all 0.2s;
-            transition: all 0.2s;
-        }
-
-        ul li:hover {
-            background: #555;
-            color: #fff;
-        }
-
-        ul li ul {
-            padding: 0;
-            position: absolute;
-            top: 48px;
-            left: 0;
-            width: 150px;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            display: none;
-            opacity: 0;
-            visibility: hidden;
-            -webkit-transiton: opacity 0.2s;
-            -moz-transition: opacity 0.2s;
-            -ms-transition: opacity 0.2s;
-            -o-transition: opacity 0.2s;
-            -transition: opacity 0.2s;
-        }
-
-        ul li ul li {
-            background: #555;
-            display: block;
-            color: #fff;
-            text-shadow: 0 -1px 0 #000;
-        }
-
-        ul li ul li:hover {
-            background: #666;
-        }
-
-        ul li:hover ul {
-            display: block;
-            opacity: 1;
-            visibility: visible;
-        }
-    </style>
 
 </head>
 <!-- start body with html-code and js-code -->
@@ -95,26 +29,26 @@
     <script type="text/javascript" src="Spectrogram.js"></script>
 
 
+<!-- generate dropwdown lists-->
+    <select id="blockLength" onchange = "blockLength()">
+        <option selected disabled>block legnth</option>
+        <option value="1024">block length:1024</option>
+        <option value="2048">block length:2048</option>
+        <option value="4096">block length:4096</option>
+        </select>
+    <select id="windowType" onchange = "windowType()">
+        <option selected disabled>window type</option>
+        <option value="rectangle">window:rectangle</option>
+        <option value="hann">window:hann</option>
+        <option value="hannpoisson">window:hannpoisson</option>
+    </select>
+
 
     <div id="canvasdiv" style="width: 1000px; height: 300px; position: absolute; overflow-x: scroll">
-        <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-        <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
-    </div>
+           <canvas id="canvasSpec" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+           <canvas id="canvasDraw" width="2060" height="1025" style="position: absolute; z-index: 0"></canvas>
+       </div>
 
-    <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>
-            Portfolio
-            <ul>
-                <li>Web Design</li>
-                <li>Web Development</li>
-                <li>Illustrations</li>
-            </ul>
-        </li>
-        <li>Blog</li>
-        <li>Contact</li>
-    </ul>
 
 
 

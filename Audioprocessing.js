@@ -6,6 +6,10 @@
      window.AudioContext = window.webkitAudioContext;
  }
 
+ // default inputs for audioProcessing():
+    var inputBlock = "2048";
+    var inputWindow = "hannpoisson"
+
  var Audiodata = {
      blockLen: undefined,
      signalLen: undefined,
@@ -20,6 +24,18 @@
      samples: undefined,
      window: undefined
  };
+// process audio signal with a new block length
+ function blockLength(){
+     var blockLength = document.getElementById("blockLength").value;
+     inputBlock = blockLength;
+     audioProcessing()
+ }
+// process audio signal with a new window type
+ function windowType(){
+     var windowType = document.getElementById("windowType").value;
+     inputWindow = windowType;
+     audioProcessing()
+ }
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
@@ -52,7 +68,7 @@
 
  function calculateSpec(buffer) {
      // define the block length :: later blockLen as user input
-     Audiodata.blockLen = 2048;
+     Audiodata.blockLen = +inputBlock;
      // define hopsize 25% of blockLen
      Audiodata.hopsize = Audiodata.blockLen / 4;
 
@@ -60,7 +76,7 @@
 
      Audiodata.signalLen = Audiodata.samples.length;
 
-     Audiodata.window = "hannpoisson";
+     Audiodata.window = inputWindow;
 
      Audiodata.angle = "radian";
 
@@ -172,3 +188,5 @@
      linVector[n-1] = endIdx;
      return linVector;
  }
+
+
