@@ -9,7 +9,7 @@ function windowType() {
     audioProcessing();
 }
 function overlap() {
-    Audiodata.overlap = document.getElementById("overlap").value;
+    Audiodata.overlap = +(document.getElementById("overlap").value);
     audioProcessing();
 }/**
  * Created by Vlad on 31.10.2016.
