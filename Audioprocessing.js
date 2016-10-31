@@ -122,6 +122,10 @@
      transform(real, imag);
  }
 
+ function calculateCepstrum() {
+      var
+ }
+
  function calculateAbs(real, imag) {
 
      var absValue = new Array(real.length / 2 + 1);
@@ -160,7 +164,7 @@
      var window = new Array(windowLen.length);
      switch (type) {
          case "hann":
-             for (var i = 0; i < windowLen.length; i++) {
+             for (i = 0; i < windowLen.length; i++) {
                  window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)));
              }
              break;
@@ -168,13 +172,13 @@
              // α is a parameter that controls the slope of the exponential (wiki)
              var alpha = 2;
 
-             for (var i = 0; i < windowLen.length; i++) {
+             for (i = 0; i < windowLen.length; i++) {
                  window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) *
                      Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) / (windowLen.length - 1));
              }
              break;
          case "cosine":
-             for (var i = 0; i < windowLen.length; i++) {
+             for (i = 0; i < windowLen.length; i++) {
                  window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
              }
              break;
