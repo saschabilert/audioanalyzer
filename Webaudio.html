@@ -25,6 +25,7 @@
     <script type="text/javascript" src="fft.js"></script>
     <script type="text/javascript" src="Audioprocessing.js"></script>
     <script type="text/javascript" src="Spectrogram.js"></script>
+    <script type="text/javascript" src="MenuScript.js"></script>
 
     <!-- generate dropwdown lists-->
     <select id="blockLength" onchange="blockLength()">
@@ -39,6 +40,13 @@
         <option value="hann">window:hann</option>
         <option value="hannpoisson">window:hannpoisson</option>
         <option value="cosine">window:cosine</option>
+    </select>
+    <select id="overlap" onchange="overlap()">
+        <option selected disabled>overlap</option>
+        <option value="3/4">overlap:25%</option>
+        <option value="1/2">overlap:50%</option>
+        <option value="1/4">overlap:75%</option>
+
     </select>
 
 

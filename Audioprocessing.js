@@ -22,16 +22,8 @@
      cepstrum: undefined
  };
 
- // process audio signal with a new block length
- function blockLength() {
-     Audiodata.blockLen = +(document.getElementById("blockLength").value);
-     audioProcessing();
- }
- // process audio signal with a new window type
- function windowType() {
-     Audiodata.windowFunction = document.getElementById("windowType").value;
-     audioProcessing();
- }
+
+
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
