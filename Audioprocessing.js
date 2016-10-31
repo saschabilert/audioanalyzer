@@ -13,6 +13,7 @@
      numOfChannels: undefined,
      nPart: undefined,
      hopsize: undefined,
+     overlap: 1 / 4,
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
@@ -66,7 +67,7 @@
      // define the block length :: later blockLen as user input
      // Audiodata.blockLen = +inputBlock;
      // define hopsize 25% of blockLen
-     Audiodata.hopsize = Audiodata.blockLen / 4;
+     Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
 
      Audiodata.samples = buffer.getChannelData(0);
 
@@ -112,15 +113,11 @@
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-
-
-
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
      //  console.log(Audiodata.phase);
 
      calculateGroupDelay();
-     calculateCepstrum();
 
      //  console.log(Audiodata.groupDelay);
 
@@ -136,7 +133,8 @@
 
      for (var i = 0; i < Audiodata.nPart; i++) {
 
-         cepstrum[i] = inverseTransform(Math.log10(Audiodata.spectrogram[i]), imag);
+         cepstrum[i] = inverseTransform(Math.log10(Audiodata.spectrogram[i] *
+             Audiodata.spectrogram[i]), imag);
      }
      return cepstrum;
  }
