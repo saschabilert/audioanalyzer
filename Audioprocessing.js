@@ -18,7 +18,8 @@
      groupDelay: undefined,
      angle: undefined,
      samples: undefined,
-     window: undefined
+     windowFunction: undefined,
+     cepstrum: undefined
  };
 
  // process audio signal with a new block length
@@ -28,7 +29,7 @@
  }
  // process audio signal with a new window type
  function windowType() {
-     Audiodata.window = document.getElementById("windowType").value;
+     Audiodata.windowFunction = document.getElementById("windowType").value;
      audioProcessing();
  }
 
@@ -83,7 +84,7 @@
 
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
-     var window = applyWindow(windowLen, Audiodata.window);
+     var window = applyWindow(windowLen, Audiodata.windowFunction);
 
      //  console.log(window);
      console.log(Audiodata.nPart);
@@ -91,6 +92,8 @@
      Audiodata.spectrogram = new Array(Audiodata.nPart);
 
      Audiodata.phase = new Array(Audiodata.nPart);
+
+     Audiodata.cepstrum = new Array(Audiodata.nPart);
 
      Audiodata.groupDelay = new Array(Audiodata.nPart);
 
@@ -109,10 +112,15 @@
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
+
+
+
+         Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
      //  console.log(Audiodata.phase);
 
      calculateGroupDelay();
+     calculateCepstrum();
 
      //  console.log(Audiodata.groupDelay);
 
@@ -122,8 +130,15 @@
      transform(real, imag);
  }
 
- function calculateCepstrum() {
-      var
+ function calculateCepstrum(real, imag) {
+
+     var cepstrum = new Array(real.length / 2 + 1);
+
+     for (var i = 0; i < Audiodata.nPart; i++) {
+
+         cepstrum[i] = inverseTransform(Math.log10(Audiodata.spectrogram[i]), imag);
+     }
+     return cepstrum;
  }
 
  function calculateAbs(real, imag) {
