@@ -6,8 +6,7 @@ var SpectroData = {
     hightCanvas: undefined,
 };
 
-
-//keyEvent=0;
+//keyEvent = 0;
 
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
@@ -50,7 +49,7 @@ function drawSpec() {
     creatHsv();
     var noOfColorSteps = parulaScale[1].length;
 
-    draw()
+    draw();
 
     // Function for drawing a new spectrogram
     function draw() {
@@ -110,9 +109,6 @@ function drawSpec() {
         specData.picData = pictureData;
     }
 
-
-
-
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
@@ -150,11 +146,11 @@ function drawSpec() {
 
     // Function for zooming the time axes only
     function zoomTime(delta) {
-
+        var factor;
         if (delta < 0) {
-            var factor = 1.2;
+            factor = 1.2;
         } else if (delta > 0) {
-            var factor = 0.8;
+            factor = 0.8;
         } else {
             factor = 1;
         }
@@ -166,10 +162,11 @@ function drawSpec() {
     }
     // Function for zooming freq axes only
     function zoomFreq(delta) {
+        var factor;
         if (delta < 0) {
-            var factor = 1.1;
+            factor = 1.1;
         } else if (delta > 0) {
-            var factor = 0.9;
+            factor = 0.9;
         } else {
             factor = 1;
         }
@@ -179,13 +176,13 @@ function drawSpec() {
         ctx.drawImage(tempCanvas, 0, 0);
     }
 
-
     // Function for zooming both axes
     function zoomAll(delta) {
+        var factor;
         if (delta < 0) {
-            var factor = 1.1;
+            factor = 1.1;
         } else if (delta > 0) {
-            var factor = 0.9;
+            factor = 0.9;
         } else {
             factor = 1;
 
@@ -200,12 +197,12 @@ function drawSpec() {
 
     //Function for changing the color scale and/or the scaling of the color scale
     function changeColorScale(delta) {
+        var factor;
         if (delta < 0) {
-            var factor = 5
+            factor = 5;
         } else if (delta > 0) {
-            var factor = -5;
+            factor = -5;
         }
-
 
         specLevelHigh += factor;
         specLevelLow += factor;
@@ -235,9 +232,5 @@ function drawSpec() {
         }
         tempCtx.putImageData(specData.picData, 0, 0);
         ctx.drawImage(tempCanvas, 0, 0);
-
-
-
-
     }
 }

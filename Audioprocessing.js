@@ -23,9 +23,6 @@
      cepstrum: undefined
  };
 
-
-
-
  // function triggered by loading a Audiodata
  function audioProcessing() {
 
@@ -105,7 +102,7 @@
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-        //  Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+         //  Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
      //  console.log(Audiodata.phase);
 
