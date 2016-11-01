@@ -87,7 +87,7 @@ function drawSpec() {
 
 
         tempCtx.putImageData(pictureData, 0, 0);
-        console.log(cWidth / specWidth, cHigh / specHight);
+        // console.log(cWidth / specWidth, cHigh / specHight);
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
         var testdata = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -111,9 +111,9 @@ function drawSpec() {
 
     function mouseWheelFunction(evt) {
         // console.log(evt)
-        //   console.log(keyEvent)
+        // console.log(keyEvent)
         var delta = evt.deltaY;
-        console.log(delta)
+        // console.log(delta)
         if (evt.ctrlKey) {
             if (evt.shiftKey) {
                 delta = evt.deltaX;
