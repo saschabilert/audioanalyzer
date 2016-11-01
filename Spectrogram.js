@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 var SpectroData = {
     picData: undefined,
@@ -116,7 +116,7 @@ canvas.addEventListener("mousewheel", mouseWheelFunction)
 
   function mouseWheelFunction(evt){
 //    console.log(evt)
-//    console.log(keyEvent)
+//   console.log(keyEvent)
         var  delta=evt.deltaY;
         console.log(delta)
         if (keyEvent.ctrlKey){
@@ -232,3 +232,4 @@ document.addEventListener("keydown", function(evt){
 keyEvent=evt;
 
 })
+}
