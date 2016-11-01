@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var SpectroData = {
     picData: undefined,
@@ -231,10 +232,3 @@ document.addEventListener("keydown", function(evt){
 keyEvent=evt;
 
 })
-
-
-
-document.addEventListener("keyup", function(evt){
-keyEvent=evt;
-})
-}

@@ -7,6 +7,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <!-- set title of the website -->
     <title>Load-Audiofile</title>
+    <link rel="stylesheet" href="Webaudiostyle.css">
+
 </head>
 <!-- start body with html-code and js-code -->
 
@@ -17,21 +19,59 @@
     <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
         <!-- set input audiofile and trigger the loadSound function -->
-        <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="AudioProcessing()">
+        <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
     </form>
     <!-- start javascript -->
     <script type="text/javascript" src="fft.js"></script>
     <script type="text/javascript" src="Audioprocessing.js"></script>
+    <script type="text/javascript" src="MenuScript.js"></script>
     <script type="text/javascript" src="Spectrogram.js"></script>
     <script type="text/javascript" src="parula.js"></script>
     <script type="text/javascript" src="gray.js"></script>
     <script type="text/javascript" src="jet.js"></script>
     <script type="text/javascript" src="hsv.js"></script>
 
+    <!-- generate dropwdown lists-->
+    <select id="blockLength" onchange="blockLength()">
+        <option selected disabled>Select a block length</option>
+        <option value="1024">1024</option>
+        <option value="2048">2048</option>
+        <option value="4096">4096</option>
+        </select>
+    <select id="windowType" onchange="windowType()">
+        <option selected disabled>Select a window type</option>
+        <option value="rectangle">rectangle</option>
+        <option value="hann">hann</option>
+        <option value="hannpoisson">hannpoisson</option>
+        <option value="cosine">cosine</option>
+    </select>
+    <select id="overlap" onchange="overlap()">
+        <option selected disabled>Select an overlap</option>
+        <option value="0.75">25%</option>
+        <option value="0.5">50%</option>
+        <option value="0.25">75%</option>
+    </select>
+    <select id="phase" onchange="phaseON()">
+        <option selected disabled>Draw phase</option>
+        <option value="on">on</option>
+        <option value="off">off</option>
+    </select>
 
-    <div id="canvasdiv" style="width: 1600px; height: 600px; position: absolute; overflow-x: scroll">
-    <canvas id="canvasSpec" width="1600" height="512" style="position: absolute; z-index: 0"></canvas>
-    
+
+
+
+    <div id="canvasdiv" style="width: 1500px; height: 512px; position: absolute; overflow-x: scroll">
+        <canvas id="canvasSpec" width="1500" height="512" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasDraw" width="1500" height="512" style="position: absolute; z-index: 0"></canvas>
+    </div>
+
+
+
+
+
+
+=======
+>>>>>>> 60ce629de595074b4d908ea9ac16eeb487beaa54
 
 </body>
 
