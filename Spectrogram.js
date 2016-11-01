@@ -19,33 +19,42 @@ function drawSpec() {
     SpectroData.lengthCanvas = cWidth;
     SpectroData.hightCanvas = cHigh;
 
-
+    // Set level boarders for color scaling
     var specLevelHigh = -0;
     var specLevelLow = -70;
     var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+    // Variable for color scale
     var TypeColorScale = 1;
 
-
+    //Importing spectrogram data to local variable
     var specData = Audiodata.spectrogram;
+
+    // Defining varables with no of spectrograms
     var specWidth = specData.length;
     var specHight = specData[1].length;
     // console.log(specWidth, specHight)
+    // Storing spectrogram specs to global variable
     SpectroData.picLength = specWidth;
     SpectroData.picWidth = specHight;
 
+    // Create temp canvas for temp storing of picture data
     var tempCanvas = document.createElement("canvas"),
         tempCtx = tempCanvas.getContext("2d");
     tempCanvas.width = specWidth;
     tempCanvas.height = specHight;
 
+    // Create color scales
     creatParula();
     creatGray();
     creatJet();
     creatHsv();
     var noOfColorSteps = parulaScale[1].length;
+
     draw()
 
+    // Function for drawing a new spectrogram
     function draw() {
+
 
         if (TypeColorScale == 1) {
             colorScale = parulaScale;
@@ -56,12 +65,16 @@ function drawSpec() {
         } else if (TypeColorScale == 4) {
             colorScale = hsvScale;
         }
+        // Clear canvas from previous data
         ctx.clearRect(0, 0, cWidth, cHigh);
 
+        // create image data variable
         var pictureData = ctx.createImageData(specWidth, specHight);
 
+        // Create counter variable for the numbers in the ImageData variable
         var nPictureData = 0;
 
+        // Loop for transfering the spectrogram data to image data with converting them into the color scale
         for (var j = specHight - 1; j > 0; j--) {
 
             for (var i = 0; i < specWidth; i++) {
@@ -85,12 +98,14 @@ function drawSpec() {
             }
         }
 
-
+        // Putting imageData into the temp canvas
         tempCtx.putImageData(pictureData, 0, 0);
-        // console.log(cWidth / specWidth, cHigh / specHight);
+
+        //SCaling the actual cavas to fit the whole Spectrogram
         ctx.scale(cWidth / specWidth, cHigh / specHight);
+        // Draw the image from the temp canvas to the scaled canvas
         ctx.drawImage(tempCanvas, 0, 0);
-        var testdata = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
         // console.log(testdata)
         specData.picData = pictureData;
     }
@@ -106,7 +121,7 @@ function drawSpec() {
         };
     }
 
-
+    // Function for chasing mouse wheel actions
     canvas.addEventListener("mousewheel", mouseWheelFunction);
 
     function mouseWheelFunction(evt) {
@@ -133,7 +148,7 @@ function drawSpec() {
 
     }
 
-
+    // Function for zooming the time axes only
     function zoomTime(delta) {
 
         if (delta < 0) {
@@ -149,7 +164,7 @@ function drawSpec() {
         ctx.drawImage(tempCanvas, 0, 0);
 
     }
-
+    // Function for zooming freq axes only
     function zoomFreq(delta) {
         if (delta < 0) {
             var factor = 1.1;
@@ -164,6 +179,8 @@ function drawSpec() {
         ctx.drawImage(tempCanvas, 0, 0);
     }
 
+
+    // Function for zooming both axes
     function zoomAll(delta) {
         if (delta < 0) {
             var factor = 1.1;
@@ -181,6 +198,7 @@ function drawSpec() {
         ctx.drawImage(tempCanvas, 0, 0);
     }
 
+    //Function for changing the color scale and/or the scaling of the color scale
     function changeColorScale(delta) {
         if (delta < 0) {
             var factor = 5
