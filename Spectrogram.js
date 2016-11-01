@@ -1,89 +1,106 @@
-function drawSpec(){
 
-  var cWidth=10000;
-  var cHigh=1025;
+var SpectroData = {
+    picData: undefined,
+    picLength: undefined,
+    picWidth: undefined,
+    lengthCanvas: undefined,
+    hightCanvas: undefined,
+  };
+
+
+keyEvent=0;
+
+function drawSpec(){
+var canvas = document.getElementById("canvasSpec");
+  var ctx = canvas.getContext("2d");
+  var cWidth=canvas.width;
+  var cHigh=canvas.height;
+console.log(cWidth,cHigh)
+//Saving actual canvas size to global variable object
+  SpectroData.lengthCanvas=cWidth;
+  SpectroData.hightCanvas=cHigh
+
+
   var specLevelHigh=-0;
   var specLevelLow=-70;
   var specLevelWidth=Math.abs(specLevelHigh-specLevelLow);
-  var noOfColorSteps=100;
+var TypeColorScale=1;
 
+
+  var specData=Audiodata.spectrogram;
+  var specWidth=specData.length;
+  var specHight=specData[1].length
+  console.log(specWidth,specHight)
+  SpectroData.picLength=specWidth;
+  SpectroData.picWidth=specHight;
+
+  var tempCanvas = document.createElement("canvas"),
+       tempCtx = tempCanvas.getContext("2d");
+   tempCanvas.width=specWidth;
+   tempCanvas.height=specHight;
 
 creatParula()
-console.log(parulaScale)
-var specData=Audiodata.spectrogram;
-console.log(specData)
+creatGray()
+creatJet()
+creatHsv()
+  var noOfColorSteps=parulaScale[1].length;
 draw()
 
     function draw() {
-      var canvas = document.getElementById("canvasSpec");
-      var ctx = canvas.getContext("2d");
 
-      var tempCanvas = document.createElement("canvas"),
-           tempCtx = tempCanvas.getContext("2d");
-       tempCanvas.width=specData.length;
-       tempCanvas.height=cWidth,specData[1].length;
+if (TypeColorScale==1){
+colorScale=parulaScale
+}
+else if (TypeColorScale==2) {
+  colorScale=grayScale
+}
+else if (TypeColorScale==3) {
+colorScale=jetScale
+}
+else if (TypeColorScale==4) {
+  colorScale=hsvScale
+}
+      ctx.clearRect(0,0,cWidth,cHigh)
 
-      ctx.clearRect(0,0,cWidth,cHigh);
-        //ctx.scale(specData.length/cWidth,specData[1].length/cHigh)
-        console.log(specData.length/cWidth,specData[1].length/cHigh)
-        var pictureData=ctx.createImageData(specData.length,specData[1].length)
-        console.log(pictureData)
+      var pictureData=ctx.createImageData(specWidth,specHight)
+
         var nPictureData=0;
 
-        for (var j=specData[1].length-1;j>0;j--){
+        for (var j=specHight-1;j>0;j--){
 
-             for (var i=0;i<specData.length;i++){
+             for (var i=0;i<specWidth;i++){
         point=20*Math.log10(specData[i][j]/2048)
-      //  console.log(point)
+
         point +=Math.abs(specLevelLow)
         point=Math.max(point,0)
         point=Math.min(point,specLevelWidth)
-      //  console.log(point)
+
         point /=Math.abs(specLevelLow)
         point*=noOfColorSteps
         point=Math.round(point);
-      //  console.log(point)
+
 
         for (var kk=0;kk<3;kk++){
-          pictureData.data[nPictureData]=Math.round(parulaScale[kk][point]);
+          pictureData.data[nPictureData]=Math.round(colorScale[kk][point]);
           nPictureData++
         }
         pictureData.data[nPictureData]=255;
         nPictureData++
          }
 }
-    /*    for (var j=specData[1].length-1;j>0;j--){
 
-             for (var i=0;i<specData.length;i++){
-               point=20*Math.log10(specData[i][j]/2048)
-               point +=80;
-               point=Math.max(point,0);
-               point/=80;
-               point*=255;
-               point=Math.floor(point);
-               for (var kk=0;kk<3;kk++){
-                 pictureData.data[nPictureData]=point;
-                 nPictureData++
-               }
-               pictureData.data[nPictureData]=255;
-               nPictureData++
-                }
-
-            }*/
-  console.log(pictureData.data)
 
 tempCtx.putImageData(pictureData,0,0)
-ctx.scale(cWidth/specData.length,cHigh/specData[1].length)
+console.log(cWidth/specWidth,cHigh/specHight)
+ctx.scale(cWidth/specWidth,cHigh/specHight)
 ctx.drawImage(tempCanvas,0,0)
+var testdata = ctx.getImageData(0, 0, canvas.width, canvas.height)
+console.log(testdata)
+specData.picData=pictureData;
+}
 
-function writeMessage(canvas, message) {
-        var context = canvas.getContext('2d');
-       context.clearRect(0, 0, 400, 30);
 
-        context.font = '18pt Calibri';
-        context.fillStyle = 'white';
-        context.fillText(message, 10, 25);
-      }
+
 
       function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
@@ -92,12 +109,132 @@ function writeMessage(canvas, message) {
           y: Math.floor(evt.clientY - rect.top)
         };
       }
-}
-      var canvasDraw = document.getElementById('canvasDraw');
-      var context = canvasDraw.getContext('2d');
-      var drawRect=0;
-      var coordStartDraw;
-      var coordStoppDraw;
 
-    //  canvasDraw.addEventListener("wheel", MouseWheelHandler,false)
+
+canvas.addEventListener("mousewheel", mouseWheelFunction)
+
+  function mouseWheelFunction(evt){
+//    console.log(evt)
+//    console.log(keyEvent)
+        var  delta=evt.deltaY;
+        console.log(delta)
+        if (keyEvent.ctrlKey){
+          if(keyEvent.shiftKey){
+              delta=evt.deltaX;
+            // console.log(delta)
+            //event.preventDefault();
+            zoomFreq(delta)}
+          else {
+          event.preventDefault();
+          zoomTime(delta)
+          }
+        }
+        else if (keyEvent.shiftKey) {
+          delta=evt.deltaX;
+          zoomAll(delta)
+
+        }
+
+
+        }
+
+
+function zoomTime(delta){
+
+if(delta<0){
+var factor=1.2}
+else if (delta>0) {
+  var factor=0.8
+}
+else {
+  factor = 1;
+}
+  canvas.width=canvas.width*factor
+  cWidth=canvas.width;
+  ctx.scale(cWidth/specWidth,cHigh/specHight)
+  ctx.drawImage(tempCanvas,0,0)
+
+}
+
+function zoomFreq(delta){
+  if(delta<0){
+  var factor=1.1}
+  else if (delta>0) {
+    var factor=0.9
+  }
+  else {
+    factor=1
+  }
+  canvas.height=canvas.height*factor
+  cHigh=canvas.height;
+  ctx.scale(cWidth/specWidth,cHigh/specHight)
+  ctx.drawImage(tempCanvas,0,0)
+}
+
+function zoomAll(delta){
+  if(delta<0){
+  var factor=1.1}
+  else if (delta>0) {
+    var factor=0.9
+  }
+  else {factor=1
+
+  }
+  canvas.height=canvas.height*factor
+  cHigh=canvas.height;
+  canvas.width=canvas.width*factor
+  cWidth=canvas.width;
+  ctx.scale(cWidth/specWidth,cHigh/specHight)
+  ctx.drawImage(tempCanvas,0,0)
+}
+
+function changeColorScale(delta){
+  if(delta<0){
+    var factor=5}
+  else if (delta>0) {
+    var factor=-5
+  }
+
+
+  specLevelHigh+=factor
+  specLevelLow+=factor
+  specLevelWidth=Math.abs(specLevelHigh-specLevelLow);
+//  console.log(specLevelHigh,specLevelLow)
+  var nPictureData=0;
+  for (var j=specHight-1;j>0;j--){
+
+       for (var i=0;i<specWidth;i++){
+         point=20*Math.log10(specData[i][j]/2048)
+         point +=Math.abs(specLevelLow)
+         point=Math.max(point,0)
+         point=Math.min(point,specLevelWidth)
+
+         point /=Math.abs(specLevelLow)
+         point*=noOfColorSteps
+         point=Math.round(point);
+
+          for (var kk=0;kk<3;kk++){
+            specData.picData.data[nPictureData]=Math.round(colorScale[kk][point]);
+            nPictureData++
+          }
+          specData.picData.data[nPictureData]=255;
+          nPictureData++
+        }
+
+}
+tempCtx.putImageData(specData.picData,0,0)
+ctx.drawImage(tempCanvas,0,0)
+
+}
+//document.onkeydown = KeyCheck;
+document.addEventListener("keydown", function(evt){
+keyEvent=evt;
+
+})
+
+
+
+document.addEventListener("keyup", function(evt){
+keyEvent=evt;
+})
 }
