@@ -9,7 +9,7 @@ var SpectroData = {
   };
 
 
-keyEvent=0;
+//keyEvent=0;
 
 function drawSpec(){
 var canvas = document.getElementById("canvasSpec");
@@ -115,12 +115,12 @@ specData.picData=pictureData;
 canvas.addEventListener("mousewheel", mouseWheelFunction)
 
   function mouseWheelFunction(evt){
-//    console.log(evt)
+   console.log(evt)
 //   console.log(keyEvent)
         var  delta=evt.deltaY;
         console.log(delta)
-        if (keyEvent.ctrlKey){
-          if(keyEvent.shiftKey){
+        if (evt.ctrlKey){
+          if(evt.shiftKey){
               delta=evt.deltaX;
             // console.log(delta)
             //event.preventDefault();
@@ -130,7 +130,7 @@ canvas.addEventListener("mousewheel", mouseWheelFunction)
           zoomTime(delta)
           }
         }
-        else if (keyEvent.shiftKey) {
+        else if (evt.shiftKey) {
           delta=evt.deltaX;
           zoomAll(delta)
 
@@ -226,10 +226,8 @@ function changeColorScale(delta){
 tempCtx.putImageData(specData.picData,0,0)
 ctx.drawImage(tempCanvas,0,0)
 
-}
-//document.onkeydown = KeyCheck;
-document.addEventListener("keydown", function(evt){
-keyEvent=evt;
 
-})
+
+
+}
 }
