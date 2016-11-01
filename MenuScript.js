@@ -13,6 +13,8 @@ function overlap() {
     Audiodata.overlap = +(document.getElementById("overlap").value);
     audioProcessing();
 }
-/**
- * Created by Vlad on 31.10.2016.
- */
+
+function phaseON() {
+    Audiodata.phase = document.getElementById("overlap").value;
+    audioProcessing();
+

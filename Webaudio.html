@@ -29,25 +29,31 @@
 
     <!-- generate dropwdown lists-->
     <select id="blockLength" onchange="blockLength()">
-        <option selected disabled>block legnth</option>
-        <option value="1024">block length:1024</option>
-        <option value="2048">block length:2048</option>
-        <option value="4096">block length:4096</option>
+        <option selected disabled>Select a block length</option>
+        <option value="1024">1024</option>
+        <option value="2048">2048</option>
+        <option value="4096">4096</option>
         </select>
     <select id="windowType" onchange="windowType()">
-        <option selected disabled>window type</option>
-        <option value="rectangle">window:rectangle</option>
-        <option value="hann">window:hann</option>
-        <option value="hannpoisson">window:hannpoisson</option>
-        <option value="cosine">window:cosine</option>
+        <option selected disabled>Select a window type</option>
+        <option value="rectangle">rectangle</option>
+        <option value="hann">hann</option>
+        <option value="hannpoisson">hannpoisson</option>
+        <option value="cosine">cosine</option>
     </select>
     <select id="overlap" onchange="overlap()">
-        <option selected disabled>overlap</option>
-        <option value="3/4">overlap:25%</option>
-        <option value="1/2">overlap:50%</option>
-        <option value="1/4">overlap:75%</option>
-
+        <option selected disabled>Select an overlap</option>
+        <option value="0.75">25%</option>
+        <option value="0.5">50%</option>
+        <option value="0.25">75%</option>
     </select>
+    <select id="phase" onchange="phaseON()">
+        <option selected disabled>Draw phase</option>
+        <option value="on">on</option>
+        <option value="off">off</option>
+    </select>
+
+
 
 
     <div id="canvasdiv" style="width: 1000px; height: 300px; position: absolute; overflow-x: scroll">

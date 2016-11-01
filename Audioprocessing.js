@@ -7,7 +7,7 @@
  }
 
  var Audiodata = {
-     blockLen: 2048,
+     blockLen: 1024,
      signalLen: undefined,
      sampleRate: undefined,
      numOfChannels: undefined,
