@@ -15,6 +15,7 @@
      hopsize: undefined,
      overlap: 1 / 4,
      spectrogram: undefined,
+     completeSpectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
      angle: undefined,
@@ -49,7 +50,9 @@
              // give the decoded Audiodata to the split-function
              calculateSpec(buffer);
 
+
              drawSpec();
+
 
          });
      };
@@ -80,7 +83,7 @@
      var window = applyWindow(windowLen, Audiodata.windowFunction);
 
      //  console.log(window);
-     console.log(Audiodata.nPart);
+    //  console.log(Audiodata.nPart);
 
      Audiodata.spectrogram = new Array(Audiodata.nPart);
 
@@ -99,19 +102,21 @@
          for (var k = 0; k < Audiodata.blockLen; k++) {
              realPart[k] = realPart[k] * window[k];
          }
+
          endIdx = endIdx + Audiodata.hopsize;
 
          calculateFFT(realPart, imagPart);
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-         //  Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+         Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
-     //  console.log(Audiodata.phase);
+    //  console.log();
+     console.log(Audiodata.cepstrum);
 
      calculateGroupDelay();
 
-     //  console.log(Audiodata.groupDelay);
+    //  console.log(Audiodata.groupDelay);
 
  }
 
@@ -121,19 +126,33 @@
 
  function calculateCepstrum(real, imag) {
 
-     var cepstrum = new Array(real.length / 2 + 1);
+     var absValue = calculateAbs(real, imag);
 
-     for (var i = 0; i < Audiodata.nPart; i++) {
+     var completeReal = new Array(Audiodata.blockLen);
+     var completeImag = new Array(Audiodata.blockLen).fill(0);
 
-         cepstrum[i] = inverseTransform(Math.log10(Audiodata.spectrogram[i] *
-             Audiodata.spectrogram[i]), imag);
+     var endIdx = completeReal.length - 1;
+
+     for (var k = 0; k < absValue.length; k++) {
+         var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
+         completeReal[k] = logAbsValue;
+         completeReal[endIdx - k] = logAbsValue;
      }
-     return cepstrum;
+
+     inverseTransform(completeReal, completeImag);
+
+     for (var i = 0; i < completeReal.length; i++) {
+         completeReal[i] = Math.abs(completeReal[i]);
+        //  completeReal = completeReal / Audiodata.blockLen;
+         completeReal[i] = completeReal[i] * completeReal[i];
+     }
+
+     return completeReal.slice(0,1025);
  }
 
  function calculateAbs(real, imag) {
 
-     var absValue = new Array(real.length / 2 + 1);
+     var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
          absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
@@ -143,7 +162,7 @@
 
  function calculatePhase(real, imag) {
 
-     var phaseValue = new Array(real.length / 2 + 1);
+     var phaseValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
          if (Audiodata.angle == "radian")
@@ -158,12 +177,29 @@
 
      var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
 
+    //  console.log(freqVector);
+
      var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
-         Audiodata.groupDelay[i] = -1 * diff(Audiodata.phase[i] / dOmega);
+         var dPhase = diff(Audiodata.phase[i]);
+         for (var k = 0; k < Audiodata.blockLen / 2 + 1; k++) {
+             dPhase[k] = -1 * dPhase[k] / dOmega;
+         }
+         Audiodata.groupDelay[i] = dPhase;
      }
  }
+
+ // function calculateCepstrogram() {
+ //
+ //     var completeSpec = new Array(Audiodata.blockLen);
+ //     var endIdx = completeSpec.length-1;
+ //
+ //     for (var i = 0; i < Audiodata.nPart; i++) {
+ //         var spectrum = Audiodata.spectrogram[i];
+ //         calculateCepstrum(spectrum);
+ //     }
+ // }
 
  function applyWindow(windowLen, type) {
      var window = new Array(windowLen.length);
