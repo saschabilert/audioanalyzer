@@ -22,7 +22,6 @@
      samples: undefined,
      windowFunction: undefined,
      cepstrum: undefined
-     buffer: undefined
  };
  // define global audioContext
  var reader = new FileReader();
