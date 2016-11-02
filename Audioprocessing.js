@@ -21,14 +21,16 @@
      samples: undefined,
      windowFunction: undefined,
      cepstrum: undefined
+     buffer: undefined
  };
+ // define global audioContext
+ var reader = new FileReader();
+ var audioCtx = new AudioContext();
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
 
-     // define objects
-     var reader = new FileReader();
-     var audioCtx = new AudioContext();
+
 
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
@@ -48,6 +50,7 @@
              calculateSpec(buffer);
 
              drawSpec();
+
          });
      };
  }

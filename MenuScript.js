@@ -19,3 +19,9 @@ function phaseON() {
     audioProcessing();
 
 }
+function playSound(buffer){
+    var x = audioCtx.createBufferSource();
+    x.buffer = buffer;
+    x.connect(audioCtx.destination);
+    source.start(0);
+}
