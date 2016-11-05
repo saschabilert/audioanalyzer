@@ -13,93 +13,95 @@
 <!-- start body with html-code and js-code -->
 
 
-    <!-- define headline -->
-    <h1>Welcome to our web based audio engine</h1>
+<!-- define headline -->
+<h1>Welcome to our web based audio engine</h1>
 
 
 
-<button onclick="playSound()" type="button" >Play Audio</button>
+<button onclick="playSound()" type="button">Play Audio</button>
 <button onclick="pauseAud()" type="button">Pause Audio</button>
-    <!-- make a new Formular for the website -->
-    <form method="post" enctype="multipart/form-data" action="">
-        <!-- set input audiofile and trigger the loadSound function -->
+<!-- make a new Formular for the website -->
+<form method="post" enctype="multipart/form-data" action="">
+    <!-- set input audiofile and trigger the loadSound function -->
 
-        <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
-    </form>
-
-
+    <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+</form>
 
 
 
-    <!-- start javascript -->
-    <script type="text/javascript" src="fft.js"></script>
-    <script type="text/javascript" src="Audioprocessing.js"></script>
-    <script type="text/javascript" src="MenuScript.js"></script>
-    <script type="text/javascript" src="Spectrogram.js"></script>
-    <script type="text/javascript" src="parula.js"></script>
-    <script type="text/javascript" src="gray.js"></script>
-    <script type="text/javascript" src="jet.js"></script>
-    <script type="text/javascript" src="hsv.js"></script>
 
 
-    <!-- generate dropwdown lists-->
-    <table>
-        <tr>
-            <th><h1>Waveform</h1></th>
-        </tr>
-        <tr>
-            <td><h1>Here comes the waveform</h1></td>
-        </tr>
-    </table>
+<!-- start javascript -->
+<script type="text/javascript" src="fft.js"></script>
+<script type="text/javascript" src="Audioprocessing.js"></script>
+<script type="text/javascript" src="MenuScript.js"></script>
+<script type="text/javascript" src="Spectrogram.js"></script>
+<script type="text/javascript" src="parula.js"></script>
+<script type="text/javascript" src="gray.js"></script>
+<script type="text/javascript" src="jet.js"></script>
+<script type="text/javascript" src="hsv.js"></script>
+
+
+<!-- generate dropwdown lists-->
+<table>
+    <tr>
+        <th>
+            <h1>Waveform</h1></th>
+    </tr>
+    <tr>
+        <td>
+            <h1>Here comes the waveform</h1></td>
+    </tr>
+</table>
 <br><br><br><br><br><br>
 
 
-    <table>
-        <tr>
-            <th>Choose a block length</th>
-            <th>Choose a window type</th>
-            <th>Choose an overlap</th>
-            <th>Draw phase</th>
-        </tr>
-        <tr>
-            <td>
-    <select id="blockLength" onchange="blockLength()">
+<table>
+    <tr>
+        <th>Choose a block length</th>
+        <th>Choose a window type</th>
+        <th>Choose an overlap</th>
+        <th>Draw phase</th>
+    </tr>
+    <tr>
+        <td>
+            <select id="blockLength" onchange="blockLength()">
         <option value="2048">2048</option>
         <option value="1024">1024</option>
         <option value="4096">4096</option>
         </select>
-            </td>
-            <td>
-    <select id="windowType" onchange="windowType()">
+        </td>
+        <td>
+            <select id="windowType" onchange="windowType()">
         <option value="rectangle">rectangle</option>
         <option value="hann">hann</option>
         <option value="hannpoisson">hannpoisson</option>
         <option value="cosine">cosine</option>
     </select>
-            </td>
-            <td>
-    <select id="overlap" onchange="overlap()">
+        </td>
+        <td>
+            <select id="overlap" onchange="overlap()">
         <option value="0.75">25%</option>
         <option value="0.5">50%</option>
         <option value="0.25">75%</option>
     </select>
-            </td>
-            <td>
-    <select id="phase" onchange="phaseON()">
+        </td>
+        <td>
+            <select id="phase" onchange="phaseON()">
         <option value="phaseOff">off</option>
         <option value="phaseOn">on</option>
     </select>
-            </td>
-            </tr>
-        </table>
+        </td>
+    </tr>
+</table>
 
 
 
 
 
-    <div id="canvasdiv" style="width: 1550px; height: 600px; position: absolute; overflow-x: scroll">
-        <canvas id="canvasSpec" width="1500" height="512" style="position: absolute; z-index: 0"></canvas>
-    </div>
+<div id="canvasdiv" style="width: 1550px; height: 600px; position: absolute; overflow-x: scroll">
+    <canvas id="canvasSpec" width="1500" height="512" style="position: absolute; z-index: 0"></canvas>
+</div>
 
 
 
