@@ -30,8 +30,6 @@
  // function triggered by loading a Audiodata
  function audioProcessing() {
 
-
-
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -49,9 +47,7 @@
              // give the decoded Audiodata to the split-function
              calculateSpec(buffer);
 
-
              drawSpec();
-
 
          });
      };
@@ -82,7 +78,7 @@
      var window = applyWindow(windowLen, Audiodata.windowFunction);
 
      //  console.log(window);
-    //  console.log(Audiodata.nPart);
+     //  console.log(Audiodata.nPart);
 
      Audiodata.spectrogram = new Array(Audiodata.nPart);
 
@@ -110,12 +106,11 @@
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
-    //  console.log();
-     console.log(Audiodata.cepstrum);
+     //  console.log(Audiodata.cepstrum);
 
      calculateGroupDelay();
 
-    //  console.log(Audiodata.groupDelay);
+     //  console.log(Audiodata.groupDelay);
 
  }
 
@@ -142,11 +137,11 @@
 
      for (var i = 0; i < completeReal.length; i++) {
          completeReal[i] = Math.abs(completeReal[i]);
-        //  completeReal = completeReal / Audiodata.blockLen;
+         //  completeReal = completeReal / Audiodata.blockLen;
          completeReal[i] = completeReal[i] * completeReal[i];
      }
 
-     return completeReal.slice(0,1025);
+     return completeReal.slice(0, 1025);
  }
 
  function calculateAbs(real, imag) {
@@ -176,8 +171,6 @@
 
      var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
 
-    //  console.log(freqVector);
-
      var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
@@ -188,17 +181,6 @@
          Audiodata.groupDelay[i] = dPhase;
      }
  }
-
- // function calculateCepstrogram() {
- //
- //     var completeSpec = new Array(Audiodata.blockLen);
- //     var endIdx = completeSpec.length-1;
- //
- //     for (var i = 0; i < Audiodata.nPart; i++) {
- //         var spectrum = Audiodata.spectrogram[i];
- //         calculateCepstrum(spectrum);
- //     }
- // }
 
  function applyWindow(windowLen, type) {
      var window = new Array(windowLen.length);

@@ -11,10 +11,10 @@ var SpectroData = {
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
     var ctx = canvas.getContext("2d");
-ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     var cWidth = canvas.width;
     var cHigh = canvas.height;
-     console.log(cWidth, cHigh)
+    //  console.log(cWidth, cHigh)
     //Saving actual canvas size to global variable object
     SpectroData.lengthCanvas = cWidth;
     SpectroData.hightCanvas = cHigh;
@@ -32,7 +32,7 @@ ctx.setTransform(1, 0, 0, 1, 0, 0)
     // Defining varables with no of spectrograms
     var specWidth = specData.length;
     var specHight = specData[1].length;
-     console.log(specWidth, specHight)
+    //  console.log(specWidth, specHight)
     // Storing spectrogram specs to global variable
     SpectroData.picLength = specWidth;
     SpectroData.picWidth = specHight;
@@ -40,7 +40,7 @@ ctx.setTransform(1, 0, 0, 1, 0, 0)
     // Create temp canvas for temp storing of picture data
     var tempCanvas = document.createElement("canvas"),
         tempCtx = tempCanvas.getContext("2d");
-        tempCtx.clearRect(0,0,specWidth,specHight)
+    tempCtx.clearRect(0, 0, specWidth, specHight);
     tempCanvas.width = specWidth;
     tempCanvas.height = specHight;
 
@@ -104,9 +104,9 @@ ctx.setTransform(1, 0, 0, 1, 0, 0)
 
         //SCaling the actual cavas to fit the whole Spectrogram
         ctx.scale(cWidth / specWidth, cHigh / specHight);
-        console.log(cWidth / specWidth, cHigh / specHight)
+        // console.log(cWidth / specWidth, cHigh / specHight)
         // Draw the image from the temp canvas to the scaled canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(tempCanvas, 0, 0);
 
         // console.log(testdata)
