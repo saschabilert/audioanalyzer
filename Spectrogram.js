@@ -142,10 +142,7 @@ function drawSpec() {
         } else if (evt.shiftKey) {
             delta = evt.deltaX;
             zoomAll(delta);
-
         }
-
-
     }
 
     // Function for zooming the time axes only

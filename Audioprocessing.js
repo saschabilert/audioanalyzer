@@ -48,6 +48,7 @@
              calculateSpec(buffer);
 
              drawSpec();
+            //  drawWave();
 
          });
      };
