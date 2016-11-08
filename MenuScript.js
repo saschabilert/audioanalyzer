@@ -20,6 +20,7 @@ function phaseON() {
 
 }
 function playSound(buffer){
+    console.log(Audiodata.samples);
     var x = audioCtx.createBufferSource();
     x.buffer = buffer;
     x.connect(audioCtx.destination);

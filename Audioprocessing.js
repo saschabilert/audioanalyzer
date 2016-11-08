@@ -33,7 +33,6 @@
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
-
      // read the data from myAudio as ArrayBuffer
      reader.readAsArrayBuffer(data);
 
@@ -44,11 +43,13 @@
          audioCtx.decodeAudioData(reader.result).then(buffer => {
 
              Audiodata.numOfChannels = buffer.numberOfChannels;
+
              // give the decoded Audiodata to the split-function
              calculateSpec(buffer);
 
              drawSpec();
-            //  drawWave();
+
+             drawWave();
 
          });
      };
@@ -78,9 +79,6 @@
 
      var window = applyWindow(windowLen, Audiodata.windowFunction);
 
-     //  console.log(window);
-     //  console.log(Audiodata.nPart);
-
      Audiodata.spectrogram = new Array(Audiodata.nPart);
 
      Audiodata.phase = new Array(Audiodata.nPart);
@@ -107,11 +105,8 @@
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
-     //  console.log(Audiodata.cepstrum);
 
      calculateGroupDelay();
-
-     //  console.log(Audiodata.groupDelay);
 
  }
 
