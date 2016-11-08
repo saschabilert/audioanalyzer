@@ -13,6 +13,9 @@ function drawWave() {
     if (canvas.getContext) {
         var canvasCtx = canvas.getContext("2d");
 
+        WaveData.lengthCanvas = canvas.width;
+        WaveData.hightCanvas = canvas.height;
+
         var nPart = Math.floor(Audiodata.signalLen / Audiodata.blockLen);
 
         console.log(nPart);
@@ -24,25 +27,24 @@ function drawWave() {
 
             if ((i % 2) === 0) {
                 value[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i + 1)));
+                    Audiodata.blockLen * (i + 1))) * WaveData.hightCanvas;
             } else if ((i % 2) === 1) {
-                value[i] = findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i + 1)));
+                value[i] = Math.abs(findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
+                    Audiodata.blockLen * (i + 1))) * WaveData.hightCanvas);
             }
 
         }
 
         console.log(value);
 
-        WaveData.lengthCanvas = canvas.width;
-        WaveData.hightCanvas = canvas.height;
-
         // First path
         canvasCtx.beginPath();
         canvasCtx.strokeStyle = 'blue';
-        canvasCtx.moveTo(10, 100);
-        canvasCtx.lineTo(700, 100);
-        canvasCtx.stroke();
+        canvasCtx.moveTo(0, 100);
+        for (i = 0; i < value.length; i++) {
+            canvasCtx.lineTo(i, value[i]);
+            canvasCtx.stroke();
+        }
 
     } else {
         // canvas-unsupported code here
