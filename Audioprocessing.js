@@ -28,8 +28,6 @@
  var audioCtx = new AudioContext();
  var myArrayBuffer = undefined;
 
-
-
  // function triggered by loading a Audiodata
  function audioProcessing() {
 
@@ -47,14 +45,12 @@
          audioCtx.decodeAudioData(reader.result).then(buffer => {
 
              Audiodata.numOfChannels = buffer.numberOfChannels;
-         myArrayBuffer = buffer;
+             myArrayBuffer = buffer;
 
              // give the decoded Audiodata to the split-function
              calculateSpec(buffer);
 
              drawSpec();
-
-
              drawWave();
 
          });
@@ -234,19 +230,21 @@
      }
      return difference;
  }
+
  var startOffset = 0;
  var startTime = 0;
-var audPlay = undefined;
- function playSound(){
-      startTime = audioCtx.currentTime;
-      audPlay = audioCtx.createBufferSource();
-      audPlay.buffer = myArrayBuffer;
-      audPlay.loop = false;
-      audPlay.connect(audioCtx.destination);
-      audPlay.start(0, startOffset);
+ var audPlay = undefined;
+
+ function playSound() {
+     startTime = audioCtx.currentTime;
+     audPlay = audioCtx.createBufferSource();
+     audPlay.buffer = myArrayBuffer;
+     audPlay.loop = false;
+     audPlay.connect(audioCtx.destination);
+     audPlay.start(0, startOffset);
  }
 
-  function pauseSound(){
-      audPlay.stop();
-      startOffset += audioCtx.currentTime-startTime;
-  }
+ function pauseSound() {
+     audPlay.stop();
+     startOffset += audioCtx.currentTime - startTime;
+ }

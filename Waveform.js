@@ -22,20 +22,20 @@ function drawWave() {
 
         console.log(maxValue.length);
 
-        for (var i = 0; i < maxValue.length; i++) {
-
-            var k = 0;
-
-            if ((i % 2) === 0) {
-                maxValue[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i * 2 + 1)));
-            } else if ((i % 2) === 1) {
-                minValue[i] = findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i * 2 + 1)));
-            }
-            k++;
-
-        }
+        // for (var i = 0; i < maxValue.length; i++) {
+        //
+        //     var k = 0;
+        //
+        //     if ((i % 2) === 0) {
+        //         maxValue[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
+        //             Audiodata.blockLen * (i * 2 + 1)));
+        //     } else if ((i % 2) === 1) {
+        //         minValue[i] = findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
+        //             Audiodata.blockLen * (i * 2 + 1)));
+        //     }
+        //     k++;
+        //
+        // }
 
         console.log(maxValue);
 
@@ -51,106 +51,8 @@ function drawWave() {
         canvasCtx.lineTo(700, 100);
         canvasCtx.stroke();
 
-        // Second path
-        // canvasCtx.beginPath();
-        // canvasCtx.strokeStyle = 'green';
-        // canvasCtx.moveTo(20, 20);
-        // canvasCtx.lineTo(120, 120);
-        // canvasCtx.stroke();
-
-        // console.log(WaveData.lengthCanvas);
-
-
-        // // Set level boarders for color scaling
-        // var specLevelHigh = -0;
-        // var specLevelLow = -70;
-        // var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
-        // // Variable for color scale
-        // var TypeColorScale = 1;
-        //
-        // //Importing spectrogram data to local variable
-        // var specData = Audiodata.spectrogram;
-        //
-        // // Defining varables with no of spectrograms
-        // var specWidth = specData.length;
-        // var specHight = specData[1].length;
-        // //  console.log(specWidth, specHight)
-        // // Storing spectrogram specs to global variable
-        // SpectroData.picLength = specWidth;
-        // SpectroData.picWidth = specHight;
-        //
-        // // Create temp canvas for temp storing of picture data
-        // var tempCanvas = document.createElement("canvas"),
-        //     tempCtx = tempCanvas.getContext("2d");
-        // tempCtx.clearRect(0, 0, specWidth, specHight);
-        // tempCanvas.width = specWidth;
-        // tempCanvas.height = specHight;
-        //
-        //
-        // var noOfColorSteps = parulaScale[1].length;
-
-        // draw();
     } else {
         // canvas-unsupported code here
-    }
-
-    // Function for drawing a new spectrogram
-    function draw() {
-
-        if (TypeColorScale == 1) {
-            colorScale = parulaScale;
-        } else if (TypeColorScale == 2) {
-            colorScale = grayScale;
-        } else if (TypeColorScale == 3) {
-            colorScale = jetScale;
-        } else if (TypeColorScale == 4) {
-            colorScale = hsvScale;
-        }
-        // Clear canvas from previous data
-        ctx.clearRect(0, 0, cWidth, cHigh);
-
-        // create image data variable
-        var pictureData = ctx.createImageData(specWidth, specHight);
-
-        // Create counter variable for the numbers in the ImageData variable
-        var nPictureData = 0;
-
-        // Loop for transfering the spectrogram data to image data with converting them into the color scale
-        for (var j = specHight - 1; j > 0; j--) {
-
-            for (var i = 0; i < specWidth; i++) {
-                point = 20 * Math.log10(specData[i][j] / 2048);
-
-                point += Math.abs(specLevelLow);
-                point = Math.max(point, 0);
-                point = Math.min(point, specLevelWidth);
-
-                point /= Math.abs(specLevelLow);
-                point *= noOfColorSteps;
-                point = Math.round(point);
-
-
-                for (var kk = 0; kk < 3; kk++) {
-                    pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
-                    nPictureData++;
-                }
-                pictureData.data[nPictureData] = 255;
-                nPictureData++;
-            }
-        }
-
-        // Putting imageData into the temp canvas
-        tempCtx.putImageData(pictureData, 0, 0);
-
-        //SCaling the actual cavas to fit the whole Spectrogram
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        // console.log(cWidth / specWidth, cHigh / specHight)
-        // Draw the image from the temp canvas to the scaled canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(tempCanvas, 0, 0);
-
-        // console.log(testdata)
-        specData.picData = pictureData;
     }
 
     function getMousePos(canvas, evt) {

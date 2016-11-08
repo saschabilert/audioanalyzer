@@ -33,8 +33,8 @@
     <h1>Welcome to our web based audio engine</h1>
 
 
-<input type="button" value="Play Audio" id = "play" onclick="playSound()">
-<input type="button" value="Pause Audio" id = "pause" onclick="pauseSound()">
+    <input type="button" value="Play Audio" id="play" onclick="playSound()">
+    <input type="button" value="Pause Audio" id="pause" onclick="pauseSound()">
 
     <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
@@ -42,11 +42,11 @@
         <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
     </form>
 
-    <!-- generate dropwdown lists-->
-
     <div class="canvas" id="canvasDivWave" style="margin-top: 10px; margin-left: 5px; width: 1500px; height: 200px; position: absolute; overflow-x: scroll">
         <canvas id="canvasWave" width="1500" height="200" style="position: absolute; z-index: 0"></canvas>
     </div>
+
+    <!-- generate dropwdown lists-->
 
     <table>
         <tr>
