@@ -14,9 +14,8 @@ function overlap() {
     audioProcessing();
 }
 
-function phaseON() {
+function phaseOn() {
     Audiodata.phase = document.getElementById("overlap").value;
     audioProcessing();
 
 }
-
