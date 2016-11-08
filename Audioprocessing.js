@@ -250,3 +250,9 @@ var audPlay = undefined;
       audPlay.stop();
       startOffset += audioCtx.currentTime-startTime;
   }
+
+  function gainChange(){
+      var gainNode = audioCtx.createGain();
+      audPlay.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+  }
