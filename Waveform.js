@@ -47,8 +47,11 @@ function drawWave() {
         //
         // }
 
-        var x = WaveData.lengthCanvas/value.length;
-        console.log(x);
+        // var samples = new Array(Audiodata.samples.length);
+        
+        // samples = samples * WaveData.hightCanvas;
+
+        console.log(value);
 
         // First path
         canvasCtx.beginPath();

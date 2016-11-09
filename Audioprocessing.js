@@ -110,7 +110,8 @@
 
      calculateGroupDelay();
 
-    //  console.log(Audiodata.cepstrum);
+     console.log(Audiodata.phase);
+     console.log(Audiodata.spectrogram);
 
  }
 
