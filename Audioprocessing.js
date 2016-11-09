@@ -109,8 +109,8 @@
      }
 
      calculateGroupDelay();
-     
-     console.log(Audiodata.cepstrum);
+
+    //  console.log(Audiodata.cepstrum);
 
  }
 
