@@ -109,9 +109,8 @@
      }
 
      calculateGroupDelay();
-
-     console.log(Audiodata.phase);
-     console.log(Audiodata.spectrogram);
+     
+     console.log(Audiodata.cepstrum);
 
  }
 
@@ -123,18 +122,21 @@
 
      var absValue = calculateAbs(real, imag);
 
+     var logAbsValue;
+
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
      var endIdx = completeReal.length - 1;
 
-     for (var k = 0; k < absValue.length; k++) {
-         var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
-         completeReal[k] = logAbsValue;
-         completeReal[endIdx - k] = logAbsValue;
+     for (var k = 0; k < Audiodata.blockLen/2 ; k++) {
+         logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
+         completeReal[k + Audiodata.blockLen/2] = logAbsValue;
+         completeReal[Audiodata.blockLen/2 - k] = logAbsValue;
      }
 
      inverseTransform(completeReal, completeImag);
+
 
      for (var i = 0; i < completeReal.length; i++) {
          completeReal[i] = Math.abs(completeReal[i]);
@@ -142,7 +144,7 @@
          completeReal[i] = completeReal[i] * completeReal[i];
      }
 
-     return completeReal.slice(0, 1025);
+     return completeReal;
  }
 
  function calculateAbs(real, imag) {
@@ -175,10 +177,13 @@
      var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
+
          var dPhase = diff(Audiodata.phase[i]);
+
          for (var k = 0; k < Audiodata.blockLen / 2 + 1; k++) {
              dPhase[k] = -1 * dPhase[k] / dOmega;
          }
+
          Audiodata.groupDelay[i] = dPhase;
      }
  }
@@ -226,10 +231,10 @@
 
  function diff(array) {
 
-     var difference = new Array(array.length);
+     var difference = new Array(array.length - 2);
 
-     for (var i = 2; i < array.length; i++) {
-         difference = array[i] - array[i - 1];
+     for (var i = 1; i < difference.length; i++) {
+         difference[i - 1] = array[i] - array[i - 1];
      }
      return difference;
  }
