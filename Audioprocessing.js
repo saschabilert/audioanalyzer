@@ -26,7 +26,7 @@
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
- var myArrayBuffer = undefined;
+ var myArrayBuffer;
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
@@ -233,7 +233,7 @@
 
  var startOffset = 0;
  var startTime = 0;
- var audPlay = undefined;
+ var audPlay;
 
  function playSound() {
      startTime = audioCtx.currentTime;

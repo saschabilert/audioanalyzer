@@ -13,43 +13,38 @@ function drawWave() {
     if (canvas.getContext) {
         var canvasCtx = canvas.getContext("2d");
 
-        // console.log(Audiodata.samples);
+        WaveData.lengthCanvas = canvas.width;
+        WaveData.hightCanvas = canvas.height;
 
         var nPart = Math.floor(Audiodata.signalLen / Audiodata.blockLen);
 
-        var maxValue = new Array(nPart / 2);
-        var minValue = new Array(nPart / 2);
+        console.log(nPart);
 
-        console.log(maxValue.length);
+        var value = new Array(nPart);
 
-        // for (var i = 0; i < maxValue.length; i++) {
-        //
-        //     var k = 0;
-        //
-        //     if ((i % 2) === 0) {
-        //         maxValue[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
-        //             Audiodata.blockLen * (i * 2 + 1)));
-        //     } else if ((i % 2) === 1) {
-        //         minValue[i] = findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
-        //             Audiodata.blockLen * (i * 2 + 1)));
-        //     }
-        //     k++;
-        //
-        // }
 
-        console.log(maxValue);
+        for (var i = 0; i < nPart; i++) {
 
-        console.log(minValue);
+            if ((i % 2) === 0) {
+                value[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
+                    Audiodata.blockLen * (i + 1))) * WaveData.hightCanvas;
+            } else if ((i % 2) === 1) {
+                value[i] = Math.abs(findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
+                    Audiodata.blockLen * (i + 1))) * WaveData.hightCanvas);
+            }
 
-        WaveData.lengthCanvas = canvas.width;
-        WaveData.hightCanvas = canvas.height;
+        }
+
+        console.log(value);
 
         // First path
         canvasCtx.beginPath();
         canvasCtx.strokeStyle = 'blue';
-        canvasCtx.moveTo(10, 100);
-        canvasCtx.lineTo(700, 100);
-        canvasCtx.stroke();
+        canvasCtx.moveTo(0, 100);
+        for (i = 0; i < value.length; i++) {
+            canvasCtx.lineTo(i, value[i]);
+            canvasCtx.stroke();
+        }
 
     } else {
         // canvas-unsupported code here
