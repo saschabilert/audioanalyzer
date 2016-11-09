@@ -57,7 +57,7 @@ function drawWave() {
         canvasCtx.strokeStyle = 'blue';
         canvasCtx.moveTo(0, 100);
         for (i = 0; i < value.length; i++) {
-            canvasCtx.lineTo(i * x, value[i]);
+            canvasCtx.lineTo(i, value[i]);
             canvasCtx.stroke();
         }
 

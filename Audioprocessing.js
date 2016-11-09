@@ -110,9 +110,6 @@
 
      calculateGroupDelay();
 
-     console.log(Audiodata.phase);
-     console.log(Audiodata.spectrogram);
-
  }
 
  function calculateFFT(real, imag) {
@@ -130,10 +127,10 @@
 
      var endIdx = completeReal.length - 1;
 
-     for (var k = 0; k < Audiodata.blockLen/2 ; k++) {
+     for (var k = 0; k < Audiodata.blockLen / 2; k++) {
          logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
-         completeReal[k + Audiodata.blockLen/2] = logAbsValue;
-         completeReal[Audiodata.blockLen/2 - k] = logAbsValue;
+         completeReal[k + Audiodata.blockLen / 2] = logAbsValue;
+         completeReal[Audiodata.blockLen / 2 - k] = logAbsValue;
      }
 
      inverseTransform(completeReal, completeImag);
@@ -184,7 +181,6 @@
          for (var k = 0; k < Audiodata.blockLen / 2 + 1; k++) {
              dPhase[k] = -1 * dPhase[k] / dOmega;
          }
-
          Audiodata.groupDelay[i] = dPhase;
      }
  }
