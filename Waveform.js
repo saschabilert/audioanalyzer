@@ -48,7 +48,6 @@ function drawWave() {
         // }
 
         // var samples = new Array(Audiodata.samples.length);
-        
         // samples = samples * WaveData.hightCanvas;
 
         console.log(value);
