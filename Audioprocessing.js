@@ -249,13 +249,12 @@
       startOffset += audioCtx.currentTime-startTime;
   }
 
-  function gainChange(){
-      var gainNode = audioCtx.createGain();
-      audPlay.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-  }
+  // function gainChange(){
+  //     var gainNode = audioCtx.createGain();
+  //     audPlay.connect(gainNode);
+  //     gainNode.connect(audioCtx.destination);
+  //     document.getElementById('volume').addEventListener('change', function() {
+  //         gainNode.gain.value = this.value;
+  //     });
+  // }
 
- function pauseSound() {
-     audPlay.stop();
-     startOffset += audioCtx.currentTime - startTime;
- }
