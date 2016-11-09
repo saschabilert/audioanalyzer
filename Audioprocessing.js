@@ -111,8 +111,8 @@
 
      calculateGroupDelay();
 
-     console.log(Audiodata.phase);
-     console.log(Audiodata.spectrogram);
+     console.log(Audiodata.groupDelay);
+     console.log(Audiodata.cepstrum);
 
  }
 
@@ -227,10 +227,10 @@
 
  function diff(array) {
 
-     var difference = new Array(array.length);
+     var difference = new Array(array.length - 2);
 
-     for (var i = 2; i < array.length; i++) {
-         difference = array[i] - array[i - 1];
+     for (var i = 1; i < difference.length; i++) {
+         difference[i - 1] = array[i] - array[i - 1];
      }
      return difference;
  }

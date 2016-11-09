@@ -27,10 +27,10 @@ function drawWave() {
 
             if ((i % 2) === 0) {
                 value[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i + 1))) + (WaveData.hightCanvas / 2);
+                    Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
             } else if ((i % 2) === 1) {
                 value[i] = Math.abs(findMin(Audiodata.samples.slice(Audiodata.blockLen * i,
-                    Audiodata.blockLen * (i + 1))) + (WaveData.hightCanvas / 2));
+                    Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
             }
         }
 
