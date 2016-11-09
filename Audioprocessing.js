@@ -107,9 +107,7 @@
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
      }
-
      calculateGroupDelay();
-
  }
 
  function calculateFFT(real, imag) {
@@ -120,15 +118,14 @@
 
      var absValue = calculateAbs(real, imag);
 
-     var logAbsValue;
-
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
      var endIdx = completeReal.length - 1;
 
      for (var k = 0; k < Audiodata.blockLen / 2; k++) {
-         logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
+         // Achtung wird bei 0 -Infinity
+         var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
          completeReal[k + Audiodata.blockLen / 2] = logAbsValue;
          completeReal[Audiodata.blockLen / 2 - k] = logAbsValue;
      }
@@ -150,7 +147,7 @@
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2) + i] * real[(Audiodata.blockLen / 2) + i] + imag[(Audiodata.blockLen / 2) + i] * imag[(Audiodata.blockLen / 2) + i]);
+         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2 - 1) + i] * real[(Audiodata.blockLen / 2 - 1) + i] + imag[(Audiodata.blockLen / 2 - 1) + i] * imag[(Audiodata.blockLen / 2 - 1) + i]);
      }
      return absValue;
  }
@@ -161,9 +158,9 @@
 
      for (i = 0; i < phaseValue.length; i++) {
          if (Audiodata.angle == "radian")
-             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2) + i], imag[(Audiodata.blockLen / 2) + i]);
+             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2 - 1) + i], imag[(Audiodata.blockLen / 2 - 1) + i]);
          else
-             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2) + i], imag[(Audiodata.blockLen / 2) + i]) * (180 / Math.PI);
+             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2 - 1) + i], imag[(Audiodata.blockLen / 2 - 1) + i]) * (180 / Math.PI);
      }
      return phaseValue;
  }
@@ -178,7 +175,7 @@
 
          var dPhase = diff(Audiodata.phase[i]);
 
-         for (var k = 0; k < Audiodata.blockLen / 2 + 1; k++) {
+         for (var k = 0; k < dPhase.length; k++) {
              dPhase[k] = -1 * dPhase[k] / dOmega;
          }
          Audiodata.groupDelay[i] = dPhase;
@@ -228,10 +225,10 @@
 
  function diff(array) {
 
-     var difference = new Array(array.length - 2);
+     var difference = new Array(array.length - 1);
 
-     for (var i = 1; i < difference.length; i++) {
-         difference[i - 1] = array[i] - array[i - 1];
+     for (var i = 0; i < difference.length; i++) {
+         difference[i] = array[i + 1] - array[i];
      }
      return difference;
  }
