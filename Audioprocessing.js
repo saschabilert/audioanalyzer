@@ -21,7 +21,8 @@
      angle: undefined,
      samples: undefined,
      windowFunction: undefined,
-     cepstrum: undefined
+     cepstrum: undefined,
+     hilbert: undefined
  };
  // define global audioContext
  var reader = new FileReader();
@@ -89,6 +90,8 @@
 
      Audiodata.groupDelay = new Array(Audiodata.nPart);
 
+     Audiodata.hilbert = new Array(Audiodata.nPart);
+
      for (var i = 0; i < Audiodata.nPart; i++) {
 
          var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
@@ -106,6 +109,7 @@
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+         Audiodata.hilbert[i] = calculateHilbert(realPart, imagPart);
      }
      calculateGroupDelay();
  }
@@ -142,6 +146,29 @@
      return completeReal;
  }
 
+ function calculateGroupDelay() {
+
+     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
+
+     var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
+
+     for (var i = 0; i < Audiodata.nPart; i++) {
+
+         var dPhase = diff(Audiodata.phase[i]);
+
+         for (var k = 0; k < dPhase.length; k++) {
+             dPhase[k] = -1 * dPhase[k] / dOmega;
+         }
+         Audiodata.groupDelay[i] = dPhase;
+     }
+ }
+
+ function calculateHilbert(real, imag) {
+
+     console.log(real);
+
+ }
+
  function calculateAbs(real, imag) {
 
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
@@ -163,23 +190,6 @@
              phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2 - 1) + i], imag[(Audiodata.blockLen / 2 - 1) + i]) * (180 / Math.PI);
      }
      return phaseValue;
- }
-
- function calculateGroupDelay() {
-
-     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
-
-     var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
-
-     for (var i = 0; i < Audiodata.nPart; i++) {
-
-         var dPhase = diff(Audiodata.phase[i]);
-
-         for (var k = 0; k < dPhase.length; k++) {
-             dPhase[k] = -1 * dPhase[k] / dOmega;
-         }
-         Audiodata.groupDelay[i] = dPhase;
-     }
  }
 
  function applyWindow(windowLen, type) {
