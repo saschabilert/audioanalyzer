@@ -29,6 +29,7 @@ playButton.disabled = true;
 playButton.addEventListener("click",toggleSound);
 
 
+
 function toggleSound() {
     if (!isPlaying) {
         startTime = audioCtx.currentTime;
@@ -47,9 +48,11 @@ function toggleSound() {
         isPlaying = false;
         playButton.innerHTML = "Click to play sound"
     }
+
 }
-
-
+audPlay.addEventListener("ended", function() {
+    isPlaying = true;
+})
 
 document.getElementById('volume').addEventListener('input', function() {
         gainNode.gain.value = this.value;
@@ -60,3 +63,4 @@ document.getElementById('volume').addEventListener('input', function() {
 function enableButton() {
    playButton.disabled = !playButton.disabled;
 }
+
