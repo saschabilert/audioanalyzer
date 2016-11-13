@@ -5,7 +5,7 @@ var SpectroData = {
     lengthCanvas: undefined,
     hightCanvas: undefined,
 };
-
+var TypeColorScale = 1;
 //keyEvent = 0;
 
 function drawSpec() {
@@ -24,7 +24,7 @@ function drawSpec() {
     var specLevelLow = -70;
     var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
     // Variable for color scale
-    var TypeColorScale = 1;
+
 
     //Importing spectrogram data to local variable
     var specData = Audiodata.spectrogram;

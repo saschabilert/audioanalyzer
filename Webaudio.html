@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html" />
 
     <!-- set title of the website -->
-    <title>Load-Audiofile</title>
+    <title>Online Audioprocessing</title>
 
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
 
@@ -32,9 +32,7 @@
     <script type="text/javascript" src="jet.js"></script>
     <script type="text/javascript" src="hsv.js"></script>
 
-    <button id="player" type="button">Click to play sound</button>
-    <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5">
-    <script type="text/javascript" src="MenuScript.js"></script>
+
 
 
 
@@ -42,12 +40,18 @@
     <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
         <!-- set input audiofile and trigger the loadSound function -->
-        <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+        <input type="file" class = "audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+        <label for="myAudio">Choose a file</label>
     </form>
+
+    <button id="player" type="button" class = "playPause">Click to play sound</button>
+    <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class = "Gain">
+    <script type="text/javascript" src="MenuScript.js"></script>
 
     <div class="canvas" id="canvasDivWave" style="margin-top: 10px; margin-left: 5px; width: 1500px; height: 200px; position: absolute; overflow-x: scroll">
         <canvas id="canvasWave" width="1500" height="200" style="position: absolute; z-index: 0"></canvas>
     </div>
+    <br><br>
 
     <!-- generate dropwdown lists-->
 
@@ -57,6 +61,7 @@
             <th>Choose a window type:</th>
             <th>Choose an overlap:</th>
             <th>Draw phase:</th>
+            <th>Choose a colormap</th>
         </tr>
         <tr>
             <td>
@@ -85,6 +90,14 @@
                 <select id="phase" onchange="phaseOn()">
                   <option value="phaseOff">off</option>
                   <option value="phaseOn">on</option>
+                </select>
+            </td>
+            <td>
+                <select id="colormap" onchange="colormap()">
+                    <option value="1">Parula</option>
+                    <option value="2">Gray</option>
+                    <option value="4">Hsv</option>
+                    <option value="3">Jet</option>
                 </select>
             </td>
         </tr>

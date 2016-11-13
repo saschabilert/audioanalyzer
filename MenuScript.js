@@ -31,6 +31,8 @@ playButton.addEventListener("click", toggleSound);
 
 
 
+
+
 function toggleSound() {
     if (!isPlaying) {
         startTime = audioCtx.currentTime;
@@ -39,21 +41,25 @@ function toggleSound() {
         audPlay.start(0, startOffset);
         playButton.innerHTML = "Click to pause sound";
         isPlaying = true;
+        //if(audPlay.addEventListener('ended')){
+         //   toggleSound()
+
         gainNode = audioCtx.createGain();
         audPlay.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         gainNode.gain.value = 0.5;
+
+
     } else {
         audPlay.stop();
         startOffset += audioCtx.currentTime - startTime;
         isPlaying = false;
         playButton.innerHTML = "Click to play sound";
+
     }
 
 }
-audPlay.addEventListener("ended", function() {
-    isPlaying = true;
-})
+
 
 document.getElementById('volume').addEventListener('input', function() {
     gainNode.gain.value = this.value;
@@ -65,24 +71,21 @@ function enableButton() {
    playButton.disabled = !playButton.disabled;
 }
 
+var inputs = document.querySelectorAll( '.audioInput' );
+Array.prototype.forEach.call( inputs, function( input )
+{
+    var label	 = input.nextElementSibling,
+        labelVal = label.innerHTML;
 
-function playSound() {
-    startTime = audioCtx.currentTime;
-    audPlay = audioCtx.createBufferSource();
-    audPlay.buffer = myArrayBuffer;
-    audPlay.loop = false;
-    audPlay.connect(audioCtx.destination);
-    audPlay.start(0, startOffset);
+    input.addEventListener( 'change', function( e )
+    {
+
+          var fileName = e.target.value.split( '\\' ).pop();
+            label.innerHTML = fileName;
+    });
+});
+
+function colormap(){
+    TypeColorScale = +(document.getElementById("colormap").value);
+    changeColorScale();
 }
-
-function pauseSound() {
-    audPlay.stop();
-    startOffset += audioCtx.currentTime - startTime;
-}
-
-function gainChange() {
-    var gainNode = audioCtx.createGain();
-    audPlay.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-}
-
