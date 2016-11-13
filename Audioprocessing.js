@@ -52,7 +52,7 @@
 
              drawSpec();
              drawWave();
-         enableButton();
+             enableButton();
 
          });
      };
@@ -111,6 +111,9 @@
 
      calculateGroupDelay();
 
+     console.log(Audiodata.groupDelay);
+     console.log(Audiodata.cepstrum);
+
  }
 
  function calculateFFT(real, imag) {
@@ -148,7 +151,7 @@
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
+         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2) + i] * real[(Audiodata.blockLen / 2) + i] + imag[(Audiodata.blockLen / 2) + i] * imag[(Audiodata.blockLen / 2) + i]);
      }
      return absValue;
  }
@@ -159,9 +162,9 @@
 
      for (i = 0; i < phaseValue.length; i++) {
          if (Audiodata.angle == "radian")
-             phaseValue[i] = Math.atan2(real[i], imag[i]);
+             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2) + i], imag[(Audiodata.blockLen / 2) + i]);
          else
-             phaseValue[i] = Math.atan2(real[i], imag[i]) * (180 / Math.PI);
+             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2) + i], imag[(Audiodata.blockLen / 2) + i]) * (180 / Math.PI);
      }
      return phaseValue;
  }
@@ -224,13 +227,10 @@
 
  function diff(array) {
 
-     var difference = new Array(array.length);
+     var difference = new Array(array.length - 2);
 
-     for (var i = 2; i < array.length; i++) {
-         difference = array[i] - array[i - 1];
+     for (var i = 1; i < difference.length; i++) {
+         difference[i - 1] = array[i] - array[i - 1];
      }
      return difference;
  }
-
-
-
