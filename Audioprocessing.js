@@ -110,8 +110,11 @@
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
          Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
+        //  Audiodata.modSpec[i] = calculateModSpec(Audiodata.envelope[i]);
      }
      calculateGroupDelay();
+
+     console.log(Audiodata.modSpec);
  }
 
  function calculateCepstrum(real, imag) {
@@ -184,19 +187,15 @@
 
  }
 
- // function calculateModSpec() {
- // 
- //     imag = new Array(Audiodata.envelope[0].length).fill(0);
- //
- //     Audiodata.modSpec = new Array(Audiodata.nPart).fill(0);
- //
- //     for (var i = 0; i < Audiodata.nPart; i++) {
- //
- //         Audiodata.modSpec[i] = transfo;
- //
- //     }
- //
- // }
+ function calculateModSpec(envSignal) {
+
+     imagSignal = new Array(envSignal.length).fill(0);
+
+     transform(envSignal, imagSignal);
+
+     return calculateAbs(envSignal, imagSignal);
+
+ }
 
  function calculateAbs(real, imag) {
 
