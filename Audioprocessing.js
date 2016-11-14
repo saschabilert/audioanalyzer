@@ -184,19 +184,19 @@
 
  }
 
- function calculateModSpec() {
-
-     imag = new Array(Audiodata.envelope[0].length).fill(0);
-
-     Audiodata.modSpec = new Array(Audiodata.nPart).fill(0);
-
-     for (var i = 0; i < Audiodata.nPart; i++) {
-
-         Audiodata.modSpec[i] = transfo;
-
-     }
-
- }
+ // function calculateModSpec() {
+ // 
+ //     imag = new Array(Audiodata.envelope[0].length).fill(0);
+ //
+ //     Audiodata.modSpec = new Array(Audiodata.nPart).fill(0);
+ //
+ //     for (var i = 0; i < Audiodata.nPart; i++) {
+ //
+ //         Audiodata.modSpec[i] = transfo;
+ //
+ //     }
+ //
+ // }
 
  function calculateAbs(real, imag) {
 
