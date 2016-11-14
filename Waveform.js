@@ -53,6 +53,7 @@ function drawWave() {
         // First path
         canvasCtx.beginPath();
         canvasCtx.strokeStyle = 'blue';
+        canvasCtx.lineWidth = 0.5;
         canvasCtx.moveTo(0, 100);
         for (i = 0; i < value.length; i++) {
             canvasCtx.lineTo(i, value[i]);
@@ -62,13 +63,14 @@ function drawWave() {
     } else {
         // canvas-unsupported code here
     }
-  }
+}
 
-  function findMax(array){
+function findMax(array) {
 
     return Math.max(...array);
-  }
-  function findMin(array){
+}
+
+function findMin(array) {
 
     return Math.min(...array);
-  }
+}

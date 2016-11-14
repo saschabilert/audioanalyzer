@@ -22,12 +22,12 @@
      samples: undefined,
      windowFunction: undefined,
      cepstrum: undefined,
-     hilbert: undefined
+     envelope: undefined,
+     modSpec: undefined
  };
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
- var myArrayBuffer;
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
@@ -90,7 +90,7 @@
 
      Audiodata.groupDelay = new Array(Audiodata.nPart);
 
-     Audiodata.hilbert = new Array(Audiodata.nPart);
+     Audiodata.envelope = new Array(Audiodata.nPart);
 
      for (var i = 0; i < Audiodata.nPart; i++) {
 
@@ -104,18 +104,14 @@
 
          endIdx = endIdx + Audiodata.hopsize;
 
-         calculateFFT(realPart, imagPart);
+         transform(realPart, imagPart);
 
          Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
-         Audiodata.hilbert[i] = calculateHilbert(realPart, imagPart);
+         Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
      }
      calculateGroupDelay();
- }
-
- function calculateFFT(real, imag) {
-     transform(real, imag);
  }
 
  function calculateCepstrum(real, imag) {
@@ -128,7 +124,7 @@
      var endIdx = completeReal.length - 1;
 
      for (var k = 0; k < Audiodata.blockLen / 2; k++) {
-         // Achtung wird bei 0 -Infinity
+         // Achtung wird bei 0 zu -Infinity
          var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
          completeReal[k + Audiodata.blockLen / 2] = logAbsValue;
          completeReal[Audiodata.blockLen / 2 - k] = logAbsValue;
@@ -165,7 +161,40 @@
 
  function calculateHilbert(real, imag) {
 
-     console.log(real);
+     analyticWeight = new Array(real.length).fill(0);
+     analyticWeight[0] = 1;
+     analyticWeight[Audiodata.blockLen / 2 - 1] = 1;
+
+     for (var i = 1; i < Audiodata.blockLen / 2 - 1; i++) {
+         analyticWeight[i] = 2;
+     }
+
+     analyticImag = new Array(imag.length).fill(0);
+     analyticReal = new Array(real.length).fill(0);
+
+     for (var k = 0; k < real.length; k++) {
+         analyticReal[k] = real[k] * analyticWeight[k];
+     }
+
+     inverseTransform(analyticReal, analyticImag);
+
+     var envelope = calculateAbs(analyticReal, analyticImag);
+
+     return envelope;
+
+ }
+
+ function calculateModSpec() {
+
+     imag = new Array(Audiodata.envelope[0].length).fill(0);
+
+     Audiodata.modSpec = new Array(Audiodata.nPart).fill(0);
+
+     for (var i = 0; i < Audiodata.nPart; i++) {
+
+         Audiodata.modSpec[i] = transfo;
+
+     }
 
  }
 
@@ -174,7 +203,7 @@
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2 - 1) + i] * real[(Audiodata.blockLen / 2 - 1) + i] + imag[(Audiodata.blockLen / 2 - 1) + i] * imag[(Audiodata.blockLen / 2 - 1) + i]);
+         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
      }
      return absValue;
  }
@@ -185,9 +214,9 @@
 
      for (i = 0; i < phaseValue.length; i++) {
          if (Audiodata.angle == "radian")
-             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2 - 1) + i], imag[(Audiodata.blockLen / 2 - 1) + i]);
+             phaseValue[i] = Math.atan2(real[i], imag[i]);
          else
-             phaseValue[i] = Math.atan2(real[(Audiodata.blockLen / 2 - 1) + i], imag[(Audiodata.blockLen / 2 - 1) + i]) * (180 / Math.PI);
+             phaseValue[i] = Math.atan2(real[i], imag[i]) * (180 / Math.PI);
      }
      return phaseValue;
  }
