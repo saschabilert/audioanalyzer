@@ -4,6 +4,7 @@ var SpectroData = {
     picWidth: undefined,
     lengthCanvas: undefined,
     hightCanvas: undefined,
+    colorScale: undefined,
 };
 
 //keyEvent = 0;
@@ -11,6 +12,8 @@ var SpectroData = {
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
     var ctx = canvas.getContext("2d");
+    var canvasLine = document.getElementById("canvasLine")
+    var ctxLine = canvasLine.getContext("2d")
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var cWidth = canvas.width;
     var cHigh = canvas.height;
@@ -25,6 +28,8 @@ function drawSpec() {
     var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
     // Variable for color scale
     var TypeColorScale = 1;
+
+
 
     //Importing spectrogram data to local variable
     var specData = Audiodata.spectrogram;
@@ -49,6 +54,18 @@ function drawSpec() {
     creatGray();
     creatJet();
     creatHsv();
+
+    if (TypeColorScale == 1) {
+        colorScale = parulaScale;
+    } else if (TypeColorScale == 2) {
+        colorScale = grayScale;
+    } else if (TypeColorScale == 3) {
+        colorScale = jetScale;
+    } else if (TypeColorScale == 4) {
+        colorScale = hsvScale;
+    }
+    SpectroData.colorScale = colorScale;
+
     var noOfColorSteps = parulaScale[1].length;
 
     draw();
@@ -57,15 +74,7 @@ function drawSpec() {
     function draw() {
 
 
-        if (TypeColorScale == 1) {
-            colorScale = parulaScale;
-        } else if (TypeColorScale == 2) {
-            colorScale = grayScale;
-        } else if (TypeColorScale == 3) {
-            colorScale = jetScale;
-        } else if (TypeColorScale == 4) {
-            colorScale = hsvScale;
-        }
+
         // Clear canvas from previous data
         ctx.clearRect(0, 0, cWidth, cHigh);
 
@@ -76,7 +85,7 @@ function drawSpec() {
         var nPictureData = 0;
 
         // Loop for transfering the spectrogram data to image data with converting them into the color scale
-        for (var j = specHight - 1; j > 0; j--) {
+        for (var j = 0; j < specHight; j++) {
 
             for (var i = 0; i < specWidth; i++) {
                 point = 20 * Math.log10(specData[i][j] / 2048);
@@ -111,6 +120,8 @@ function drawSpec() {
 
         // console.log(testdata)
         specData.picData = pictureData;
+        drawLegend()
+
     }
 
     function getMousePos(canvas, evt) {
@@ -122,7 +133,32 @@ function drawSpec() {
     }
 
     // Function for chasing mouse wheel actions
-    canvas.addEventListener("mousewheel", mouseWheelFunction);
+    canvasLine.addEventListener("mousewheel", mouseWheelFunction);
+    canvasLine.addEventListener("click", startPlayHere)
+
+
+    function startPlayHere(evt) {
+        var mousePos = getMousePos(canvas, evt)
+        mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
+        console.log(mouseTime)
+        if (isPlaying) {
+            toggleSound()
+        }
+        startOffset = mouseTime
+        toggleSound()
+        drawLineKlick(mousePos.x)
+    }
+
+    function drawLineKlick(mousePos) {
+        ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+            0 + ')';
+        ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
+        console.log(audioCtx.currentTime)
+    }
+
+
+
 
     function mouseWheelFunction(evt) {
         // console.log(evt)
@@ -157,6 +193,8 @@ function drawSpec() {
         }
         canvas.width = canvas.width * factor;
         cWidth = canvas.width;
+        canvasLine.width=canvasLine.width*factor
+
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
 
@@ -173,6 +211,8 @@ function drawSpec() {
         }
         canvas.height = canvas.height * factor;
         cHigh = canvas.height;
+        canvasLine.height = canvasLine.height * factor;
+
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
     }
@@ -192,6 +232,8 @@ function drawSpec() {
         cHigh = canvas.height;
         canvas.width = canvas.width * factor;
         cWidth = canvas.width;
+        canvasLine.height = canvasLine.height * factor;
+        canvasLine.width=canvasLine.width*factor
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
     }
@@ -233,5 +275,66 @@ function drawSpec() {
         }
         tempCtx.putImageData(specData.picData, 0, 0);
         ctx.drawImage(tempCanvas, 0, 0);
+    }
+
+    /*canvas.addEventListener('mousemove', function(evt) {
+      var mousePos = getMousePos(canvas, evt);
+      alert(mousePos)
+      var message = 'Mouse positions: ' + mousePos.x + ':' + mousePos.y;
+      //writeMessage(canvasDraw, message);
+    }, false);*/
+
+    function drawLegend() {
+        legCanvas = document.getElementById("canvasLegend");
+        ctxLegend = legCanvas.getContext("2d");
+
+        var tempCanvasLEgend = document.createElement("canvas"),
+            tempCtxLegend = tempCanvasLEgend.getContext("2d");
+        tempCtxLegend.clearRect(0, 0, SpectroData.colorScale[0].length, 250);
+        tempCanvasLEgend.width = SpectroData.colorScale[0].length;
+        tempCanvasLEgend.height = 250;
+
+        for (var i = 1; i < 100; i++) {
+            for (var j = 1; j < legCanvas.height; j++) {
+                tempCtxLegend.fillStyle = 'rgb(' + Math.floor(SpectroData.colorScale[0][i]) + ',' + Math.floor(SpectroData.colorScale[1][i]) + ',' +
+                    Math.floor(SpectroData.colorScale[2][i]) + ')';
+                tempCtxLegend.fillRect(i, j, 1, 1);
+            }
+        }
+        ctxLegend.scale(canvasLegend.width / tempCanvasLEgend.width, tempCanvasLEgend.height / canvasLegend.height);
+            // Draw the image from the temp canvas to the scaled canvas
+        ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height);
+        ctxLegend.drawImage(tempCanvasLEgend, 0, 0);
+        //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
+        ctxLegend.beginPath()
+        ctxLegend.moveTo(1,canvasLegend.height-30)
+        ctxLegend.lineTo(1,canvasLegend.height-10)
+
+        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-10)
+        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-30)
+        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-10)
+        ctxLegend.lineTo(canvasLegend.width,canvasLegend.height-10)
+        ctxLegend.lineTo(canvasLegend.width,canvasLegend.height-30)
+      ctxLegend.strokeStyle = '#100719';
+      ctxLegend.lineWidth = 5;
+      ctxLegend.stroke();
+
+    }
+}
+
+
+function drawLinePlay() {
+    var canvasLine = document.getElementById("canvasLine")
+    var ctxLine = canvasLine.getContext("2d")
+
+    if (isPlaying) {
+        ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+
+        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+            0 + ')';
+        ctxLine.fillRect(Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasLine.height);
+
+        window.requestAnimationFrame(drawLinePlay)
+
     }
 }

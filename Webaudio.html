@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 
 <!-- start head with title and metadata -->
@@ -9,6 +9,19 @@
 
     <!-- set title of the website -->
     <title>Load-Audiofile</title>
+
+
+    <!-- start javascript -->
+    <script type="text/javascript" src="fft.js"></script>
+    <script type="text/javascript" src="Audioprocessing.js"></script>
+    <script type="text/javascript" src="MenuScript.js"></script>
+    <script type="text/javascript" src="Spectrogram.js"></script>
+    <script type="text/javascript" src="Waveform.js"></script>
+    <script type="text/javascript" src="parula.js"></script>
+    <script type="text/javascript" src="gray.js"></script>
+    <script type="text/javascript" src="jet.js"></script>
+    <script type="text/javascript" src="hsv.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
 
@@ -92,8 +105,11 @@
 
     <div class="canvas" id="canvasDivSpec" style="margin-top: 20px; margin-left: 5px; width: 1550px; height: 600px; position: absolute; overflow-x: scroll">
         <canvas id="canvasSpec" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasLine" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
     </div>
-
+  <div  class="canvas" id="divCanvasLegend" style="margin-top: 20px; margin-left: 5px; width: 500px; height: 150px; position: relativ; overflow-x: scroll">
+<canvas id="canvasLegend" width="500" height = "150" style="position: absolute; z-index: 3"></canvas>
+</div>
 </body>
 
 </html>

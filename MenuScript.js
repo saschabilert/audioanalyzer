@@ -38,15 +38,20 @@ function toggleSound() {
         audPlay.start(0, startOffset);
         playButton.innerHTML = "Click to pause sound";
         isPlaying = true;
+        window.requestAnimationFrame(drawLinePlay)
         gainNode = audioCtx.createGain();
         audPlay.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         gainNode.gain.value = 0.5;
     } else {
+
         audPlay.stop();
-        startOffset += audioCtx.currentTime - startTime;
         isPlaying = false;
         playButton.innerHTML = "Click to play sound";
+        startOffset += audioCtx.currentTime - startTime;
+
+
+
     }
 }
 
