@@ -9,6 +9,7 @@ var WaveData = {
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
+    var canvasLine=document.getElementById("canvasWaveLine")
 
     if (canvas.getContext) {
         var canvasCtx = canvas.getContext("2d");
@@ -55,13 +56,27 @@ function drawWave() {
     }
 
 
-    /*function getMousePos(canvas, evt) {
+    function getMousePosWave(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
             x: Math.floor(evt.clientX - rect.left),
             y: Math.floor(evt.clientY - rect.top)
         };
-    }*/
+    }
+
+canvasLine.addEventListener("click", startPlayHereWave)
+
+    function startPlayHereWave(evt) {
+        var mousePos = getMousePosWave(canvas, evt)
+        mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
+        console.log(mouseTime)
+        if (isPlaying) {
+            toggleSound()
+        }
+        startOffset = mouseTime
+        toggleSound()
+        drawLineKlick(mousePos.x)
+    }
 
     // Function for chasing mouse wheel actions
   //  canvas.addEventListener("mousewheel", mouseWheelFunction);
