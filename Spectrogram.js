@@ -8,6 +8,11 @@ var SpectroData = {
 };
 var TypeColorScale = 1;
 //keyEvent = 0;
+var specLevelHigh = -30;
+var specLevelLow = -90;
+var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+var tempCanvas = document.createElement("canvas"),
+    tempCtx = tempCanvas.getContext("2d");
 
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
@@ -23,9 +28,7 @@ function drawSpec() {
     SpectroData.hightCanvas = cHigh;
 
     // Set level boarders for color scaling
-    var specLevelHigh = -0;
-    var specLevelLow = -70;
-    var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+
     // Variable for color scale
 
 
@@ -43,8 +46,7 @@ function drawSpec() {
     SpectroData.picWidth = specHight;
 
     // Create temp canvas for temp storing of picture data
-    var tempCanvas = document.createElement("canvas"),
-        tempCtx = tempCanvas.getContext("2d");
+
     tempCtx.clearRect(0, 0, specWidth, specHight);
     tempCanvas.width = specWidth;
     tempCanvas.height = specHight;
@@ -66,7 +68,7 @@ function drawSpec() {
     }
     SpectroData.colorScale = colorScale;
 
-    var noOfColorSteps = parulaScale[1].length;
+    var noOfColorSteps = colorScale[1].length;
 
     draw();
 
@@ -94,10 +96,12 @@ function drawSpec() {
                 point = Math.max(point, 0);
                 point = Math.min(point, specLevelWidth);
 
-                point /= Math.abs(specLevelLow);
-                point *= noOfColorSteps;
-                point = Math.round(point);
-
+                point /= Math.abs(specLevelWidth);
+                point *= noOfColorSteps - 1;
+                point = Math.floor(point);
+                if (point > 99) {
+                    point = 99;
+                }
 
                 for (var kk = 0; kk < 3; kk++) {
                     pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
@@ -193,7 +197,7 @@ function drawSpec() {
         }
         canvas.width = canvas.width * factor;
         cWidth = canvas.width;
-        canvasLine.width=canvasLine.width*factor
+        canvasLine.width = canvasLine.width * factor
 
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
@@ -233,94 +237,20 @@ function drawSpec() {
         canvas.width = canvas.width * factor;
         cWidth = canvas.width;
         canvasLine.height = canvasLine.height * factor;
-        canvasLine.width=canvasLine.width*factor
+        canvasLine.width = canvasLine.width * factor
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
     }
-
-    //Function for changing the color scale and/or the scaling of the color scale
-    function changeColorScale(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 5;
-        } else if (delta > 0) {
-            factor = -5;
-        }
-
-        specLevelHigh += factor;
-        specLevelLow += factor;
-        specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
-        //  console.log(specLevelHigh,specLevelLow)
-        var nPictureData = 0;
-        for (var j = specHight - 1; j > 0; j--) {
-
-            for (var i = 0; i < specWidth; i++) {
-                point = 20 * Math.log10(specData[i][j] / 2048);
-                point += Math.abs(specLevelLow);
-                point = Math.max(point, 0);
-                point = Math.min(point, specLevelWidth);
-
-                point /= Math.abs(specLevelLow);
-                point *= noOfColorSteps;
-                point = Math.round(point);
-
-                for (var kk = 0; kk < 3; kk++) {
-                    specData.picData.data[nPictureData] = Math.round(colorScale[kk][point]);
-                    nPictureData++;
-                }
-                specData.picData.data[nPictureData] = 255;
-                nPictureData++;
-            }
-
-        }
-        tempCtx.putImageData(specData.picData, 0, 0);
-        ctx.drawImage(tempCanvas, 0, 0);
-    }
-
-    /*canvas.addEventListener('mousemove', function(evt) {
-      var mousePos = getMousePos(canvas, evt);
-      alert(mousePos)
-      var message = 'Mouse positions: ' + mousePos.x + ':' + mousePos.y;
-      //writeMessage(canvasDraw, message);
-    }, false);*/
-
-    function drawLegend() {
-        legCanvas = document.getElementById("canvasLegend");
-        ctxLegend = legCanvas.getContext("2d");
-
-        var tempCanvasLEgend = document.createElement("canvas"),
-            tempCtxLegend = tempCanvasLEgend.getContext("2d");
-        tempCtxLegend.clearRect(0, 0, SpectroData.colorScale[0].length, 250);
-        tempCanvasLEgend.width = SpectroData.colorScale[0].length;
-        tempCanvasLEgend.height = 250;
-
-        for (var i = 1; i < 100; i++) {
-            for (var j = 1; j < legCanvas.height; j++) {
-                tempCtxLegend.fillStyle = 'rgb(' + Math.floor(SpectroData.colorScale[0][i]) + ',' + Math.floor(SpectroData.colorScale[1][i]) + ',' +
-                    Math.floor(SpectroData.colorScale[2][i]) + ')';
-                tempCtxLegend.fillRect(i, j, 1, 1);
-            }
-        }
-        ctxLegend.scale(canvasLegend.width / tempCanvasLEgend.width, tempCanvasLEgend.height / canvasLegend.height);
-            // Draw the image from the temp canvas to the scaled canvas
-        ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height);
-        ctxLegend.drawImage(tempCanvasLEgend, 0, 0);
-        //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
-        ctxLegend.beginPath()
-        ctxLegend.moveTo(1,canvasLegend.height-30)
-        ctxLegend.lineTo(1,canvasLegend.height-10)
-
-        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-10)
-        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-30)
-        ctxLegend.lineTo(canvasLegend.width/2,canvasLegend.height-10)
-        ctxLegend.lineTo(canvasLegend.width,canvasLegend.height-10)
-        ctxLegend.lineTo(canvasLegend.width,canvasLegend.height-30)
-      ctxLegend.strokeStyle = '#100719';
-      ctxLegend.lineWidth = 5;
-      ctxLegend.stroke();
-
-    }
 }
+//Function for changing the color scale and/or the scaling of the color scale
+
+/*canvas.addEventListener('mousemove', function(evt) {
+  var mousePos = getMousePos(canvas, evt);
+  alert(mousePos)
+  var message = 'Mouse positions: ' + mousePos.x + ':' + mousePos.y;
+  //writeMessage(canvasDraw, message);
+}, false);*/
+
 
 
 function drawLinePlay() {
@@ -337,4 +267,100 @@ function drawLinePlay() {
         window.requestAnimationFrame(drawLinePlay)
 
     }
+}
+
+function changeColorScale(delta) {
+    var canvas = document.getElementById("canvasSpec");
+    var ctx = canvas.getContext("2d");
+    specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+    //  console.log(specLevelHigh,specLevelLow)
+    if (TypeColorScale == 1) {
+        colorScale = parulaScale;
+    } else if (TypeColorScale == 2) {
+        colorScale = grayScale;
+    } else if (TypeColorScale == 3) {
+        colorScale = jetScale;
+    } else if (TypeColorScale == 4) {
+        colorScale = hsvScale;
+    }
+
+    SpectroData.colorScale = colorScale;
+    var noOfColorSteps = colorScale[1].length;
+    var specData = Audiodata.spectrogram;
+    var specWidth = specData.length;
+    var specHight = specData[1].length;
+
+    var nPictureData = 0;
+    for (var j = 0; j < specHight; j++) {
+
+        for (var i = 0; i < specWidth; i++) {
+            point = 20 * Math.log10(specData[i][j] / 2048);
+            point += Math.abs(specLevelLow);
+            point = Math.max(point, 0);
+            point = Math.min(point, specLevelWidth);
+
+            point /= Math.abs(specLevelLow);
+            point *= noOfColorSteps - 1;
+            point = Math.round(point);
+            if (point > 99) {
+                point = 99
+            }
+            for (var kk = 0; kk < 3; kk++) {
+                specData.picData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                nPictureData++;
+            }
+            specData.picData.data[nPictureData] = 255;
+            nPictureData++;
+        }
+
+    }
+    tempCtx.putImageData(specData.picData, 0, 0);
+    ctx.drawImage(tempCanvas, 0, 0);
+    drawLegend()
+}
+
+function drawLegend() {
+    legCanvas = document.getElementById("canvasLegend");
+    ctxLegend = legCanvas.getContext("2d");
+    ctxLegend.setTransform(1, 0, 0, 1, 0, 0);
+    ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
+
+    var tempCanvasLEgend = document.createElement("canvas"),
+        tempCtxLegend = tempCanvasLEgend.getContext("2d");
+
+    tempCtxLegend.clearRect(0, 0, tempCanvasLEgend.width, tempCanvasLEgend.height);
+    tempCanvasLEgend.width = 300//SpectroData.colorScale[0].length;
+    tempCanvasLEgend.height = 75;
+
+    for (var i = 0; i < 100; i++) {
+        for (var j = 0; j < legCanvas.height; j++) {
+            tempCtxLegend.fillStyle = 'rgb(' + Math.floor(SpectroData.colorScale[0][i]) + ',' + Math.floor(SpectroData.colorScale[1][i]) + ',' +
+                Math.floor(SpectroData.colorScale[2][i]) + ')';
+            tempCtxLegend.fillRect(i*3, j, 3, 1);
+        }
+    }
+    //ctxLegend.scale(canvasLegend.width / tempCanvasLEgend.width, tempCanvasLEgend.height / canvasLegend.height);
+    // Draw the image from the temp canvas to the scaled canvas
+    ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height);
+    ctxLegend.drawImage(tempCanvasLEgend, 0, 0);
+    //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
+    ctxLegend.clearRect(0,canvasLegend.height-15,canvasLegend.width*2,canvasLegend.height)
+    ctxLegend.font="700 15px Arial";
+    ctxLegend.fillText(specLevelLow + ' dB',2,canvasLegend.height - 1);
+    ctxLegend.fillText(specLevelLow+specLevelWidth/2 + ' dB',(canvasLegend.width / 2)-15,canvasLegend.height - 1);
+    ctxLegend.fillText(specLevelHigh + ' dB',(canvasLegend.width - 2)-45,canvasLegend.height - 1);
+    ctxLegend.beginPath()
+
+    ctxLegend.moveTo(1, (canvasLegend.height - 25))
+    ctxLegend.lineTo(1, (canvasLegend.height - 15))
+
+    ctxLegend.lineTo((canvasLegend.width / 2), canvasLegend.height - 15)
+    ctxLegend.lineTo((canvasLegend.width / 2), canvasLegend.height - 25)
+    ctxLegend.moveTo((canvasLegend.width / 2), canvasLegend.height - 15)
+    ctxLegend.lineTo((canvasLegend.width - 1), canvasLegend.height - 15)
+    ctxLegend.lineTo((canvasLegend.width - 1), canvasLegend.height - 25)
+    ctxLegend.strokeStyle = '#100719';
+    ctxLegend.lineWidth = 2;
+    ctxLegend.stroke();
+
 }
