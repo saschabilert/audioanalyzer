@@ -54,6 +54,7 @@ function drawWave() {
         // canvas-unsupported code here
     }
 
+
     /*function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
@@ -148,4 +149,19 @@ function findMin(sampleArray) {
 
     return Math.min(...sampleArray);
 
+}
+function drawLinePlayWave() {
+    var canvasWaveLine = document.getElementById("canvasWaveLine")
+    var ctxLine = canvasWaveLine.getContext("2d")
+
+    if (isPlaying) {
+        ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height)
+
+        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+            0 + ')';
+        ctxLine.fillRect(Math.floor(canvasWaveLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasWaveLine.height);
+
+        window.requestAnimationFrame(drawLinePlayWave)
+
+    }
 }

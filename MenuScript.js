@@ -43,6 +43,7 @@ function toggleSound() {
         isPlaying = true;
 
         window.requestAnimationFrame(drawLinePlay)
+        window.requestAnimationFrame(drawLinePlayWave)
         //if(audPlay.addEventListener('ended')){
          //   toggleSound()
 
