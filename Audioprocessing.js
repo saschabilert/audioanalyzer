@@ -113,8 +113,7 @@
         //  Audiodata.modSpec[i] = calculateModSpec(Audiodata.envelope[i]);
      }
      calculateGroupDelay();
-
-     console.log(Audiodata.modSpec);
+    //  console.log(Audiodata.modSpec);
  }
 
  function calculateCepstrum(real, imag) {
