@@ -25,6 +25,7 @@
      envelope: undefined,
      modSpec: undefined
  };
+
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -110,10 +111,11 @@
          Audiodata.phase[i] = calculatePhase(realPart, imagPart);
          Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
          Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
-        //  Audiodata.modSpec[i] = calculateModSpec(Audiodata.envelope[i]);
      }
      calculateGroupDelay();
-    //  console.log(Audiodata.modSpec);
+     calculateModSpec();
+
+     console.log(Audiodata.modSpec);
  }
 
  function calculateCepstrum(real, imag) {
@@ -123,17 +125,14 @@
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
-     var endIdx = completeReal.length - 1;
-
      for (var k = 0; k < Audiodata.blockLen / 2; k++) {
          // Achtung wird bei 0 zu -Infinity
          var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
-         completeReal[k + Audiodata.blockLen / 2] = logAbsValue;
-         completeReal[Audiodata.blockLen / 2 - k] = logAbsValue;
+         completeReal[k] = logAbsValue;
+         completeReal[(Audiodata.blockLen - 1) - k] = logAbsValue;
      }
 
      inverseTransform(completeReal, completeImag);
-
 
      for (var i = 0; i < completeReal.length; i++) {
          completeReal[i] = Math.abs(completeReal[i]);
@@ -186,14 +185,19 @@
 
  }
 
- function calculateModSpec(envSignal) {
+ function calculateModSpec() {
 
-     imagSignal = new Array(envSignal.length).fill(0);
+     Audiodata.modSpec = new Array(Audiodata.nPart);
 
-     transform(envSignal, imagSignal);
+     imagSignal = new Array(Audiodata.envelope[0].length).fill(0);
 
-     return calculateAbs(envSignal, imagSignal);
-
+     for (var i = 0; i < Audiodata.nPart; i++) {
+         var realSignal = Audiodata.envelope[i];
+         console.log(realSignal);
+         console.log(imagSignal);
+         transform(realSignal, imagSignal);
+         Audiodata.modSpec[i] = calculateAbs(realSignal, imagSignal);
+     }
  }
 
  function calculateAbs(real, imag) {
