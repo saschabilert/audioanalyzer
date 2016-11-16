@@ -48,7 +48,7 @@
              myArrayBuffer = buffer;
 
              Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
-             
+
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
@@ -115,10 +115,7 @@
                  Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
                  break;
              case "Group Delay":
-                 Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-                 if (i == Audiodata.nPart - 1) {
-                     calculateGroupDelay();
-                 }
+                 Audiodata.phase[i] = calculateGroupDelay(realPart, imagPart);
                  break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
@@ -127,63 +124,6 @@
          endIdx = endIdx + Audiodata.hopsize;
      }
  }
-
- // function calculateSpec(buffer) {
- //     // define the block length :: later blockLen as user input
- //     // Audiodata.blockLen = +inputBlock;
- //     // define hopsize 25% of blockLen
- //     Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
- //
- //     Audiodata.samples = buffer.getChannelData(0);
- //
- //     Audiodata.signalLen = Audiodata.samples.length;
- //
- //     // calculate the startpoints for the sample blocks
- //     Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
- //
- //     // create array with zeros for imaginär part to use the fft
- //     var zeros = new Array(Audiodata.blockLen).fill(0);
- //
- //     var endIdx = 0;
- //
- //     var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
- //
- //     var window = applyWindow(windowLen, Audiodata.windowFunction);
- //
- //     Audiodata.spectrogram = new Array(Audiodata.nPart);
- //
- //     Audiodata.phase = new Array(Audiodata.nPart);
- //
- //     Audiodata.cepstrum = new Array(Audiodata.nPart);
- //
- //     Audiodata.groupDelay = new Array(Audiodata.nPart);
- //
- //     Audiodata.envelope = new Array(Audiodata.nPart);
- //
- //     for (var i = 0; i < Audiodata.nPart; i++) {
- //
- //         var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
- //             Audiodata.blockLen + endIdx);
- //         var imagPart = zeros.fill(0);
- //
- //         for (var k = 0; k < Audiodata.blockLen; k++) {
- //             realPart[k] = realPart[k] * window[k];
- //         }
- //
- //         endIdx = endIdx + Audiodata.hopsize;
- //
- //         transform(realPart, imagPart);
- //
- //         Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
- //         Audiodata.phase[i] = calculatePhase(realPart, imagPart);
- //         Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
- //         Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
- //     }
- //     calculateGroupDelay();
- //     calculateModSpec();
- //
- //     console.log(Audiodata.modSpec);
- // }
 
  function calculateCepstrum(real, imag) {
 
@@ -210,21 +150,20 @@
      return completeReal;
  }
 
- function calculateGroupDelay() {
+ function calculateGroupDelay(real, imag) {
+
+     var phase = calculatePhase(real, imag);
 
      var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
 
      var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
 
-     for (var i = 0; i < Audiodata.nPart; i++) {
+     var dPhase = diff(phase);
 
-         var dPhase = diff(Audiodata.phase[i]);
-
-         for (var k = 0; k < dPhase.length; k++) {
-             dPhase[k] = -1 * dPhase[k] / dOmega;
-         }
-         Audiodata.groupDelay[i] = dPhase;
+     for (var k = 0; k < dPhase.length; k++) {
+         dPhase[k] = -1 * dPhase[k] / dOmega;
      }
+     return dPhase;
  }
 
  function calculateModSpec(real, imag) {
@@ -246,26 +185,16 @@
 
      inverseTransform(analyticReal, analyticImag);
 
-     var envelope = calculateAbs(analyticReal, analyticImag);
+     var envelopeReal = calculateAbs(analyticReal, analyticImag);
 
-     return envelope;
+     var envelopeImag = new Array(envelopeReal.length).fill(0);
 
+     transform(envelopeReal,envelopeImag);
+
+     var modSpec = calculateAbs(envelopeReal, envelopeImag);
+
+     return modSpec;
  }
-
- // function calculateModSpec() {
- //
- //     Audiodata.modSpec = new Array(Audiodata.nPart);
- //
- //     imagSignal = new Array(Audiodata.envelope[0].length).fill(0);
- //
- //     for (var i = 0; i < Audiodata.nPart; i++) {
- //         var realSignal = Audiodata.envelope[i];
- //         console.log(realSignal);
- //         console.log(imagSignal);
- //         transform(realSignal, imagSignal);
- //         Audiodata.modSpec[i] = calculateAbs(realSignal, imagSignal);
- //     }
- // }
 
  function calculateAbs(real, imag) {
 
