@@ -15,15 +15,14 @@
      hopsize: undefined,
      overlap: 1 / 4,
      spectrogram: undefined,
-     completeSpectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
-     angle: undefined,
      samples: undefined,
      windowFunction: undefined,
      cepstrum: undefined,
      envelope: undefined,
-     modSpec: undefined
+     modSpec: undefined,
+     display: undefined
  };
 
  // define global audioContext
@@ -35,7 +34,6 @@
 
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
-
 
      // read the data from myAudio as ArrayBuffer
      reader.readAsArrayBuffer(data);
@@ -49,49 +47,45 @@
              Audiodata.numOfChannels = buffer.numberOfChannels;
              myArrayBuffer = buffer;
 
+             Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
+
+             Audiodata.samples = buffer.getChannelData(0);
+
+             Audiodata.signalLen = Audiodata.samples.length;
+
+             // calculate the startpoints for the sample blocks
+             Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+
+             Audiodata.spectrogram = new Array(Audiodata.nPart);
+
+             Audiodata.phase = new Array(Audiodata.nPart);
+
+             Audiodata.cepstrum = new Array(Audiodata.nPart);
+
+             Audiodata.groupDelay = new Array(Audiodata.nPart);
+
+             Audiodata.envelope = new Array(Audiodata.nPart);
+
              // give the decoded Audiodata to the split-function
-             calculateSpec(buffer);
+             calculateDisplay(window, Audiodata.display);
 
              drawSpec();
+
              drawWave();
 
          });
      };
  }
 
- function calculateSpec(buffer) {
-     // define the block length :: later blockLen as user input
-     // Audiodata.blockLen = +inputBlock;
-     // define hopsize 25% of blockLen
-     Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
-
-     Audiodata.samples = buffer.getChannelData(0);
-
-     Audiodata.signalLen = Audiodata.samples.length;
-
-     Audiodata.angle = "radian";
-
-     // calculate the startpoints for the sample blocks
-     Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+ function calculateDisplay(window, type) {
 
      // create array with zeros for imaginär part to use the fft
      var zeros = new Array(Audiodata.blockLen).fill(0);
 
-     var endIdx = 0;
-
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
      var window = applyWindow(windowLen, Audiodata.windowFunction);
-
-     Audiodata.spectrogram = new Array(Audiodata.nPart);
-
-     Audiodata.phase = new Array(Audiodata.nPart);
-
-     Audiodata.cepstrum = new Array(Audiodata.nPart);
-
-     Audiodata.groupDelay = new Array(Audiodata.nPart);
-
-     Audiodata.envelope = new Array(Audiodata.nPart);
+     var endIdx = 0;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
 
@@ -103,20 +97,88 @@
              realPart[k] = realPart[k] * window[k];
          }
 
-         endIdx = endIdx + Audiodata.hopsize;
-
          transform(realPart, imagPart);
 
-         Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
-         Audiodata.phase[i] = calculatePhase(realPart, imagPart);
-         Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
-         Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
+         switch (type) {
+             case "Spectrum":
+                 Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
+                 break;
+             case "Phase":
+                 Audiodata.phase[i] = calculatePhase(realPart, imagPart);
+                 break;
+             case "MFCC":
+                 Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+                 break;
+             case "Modulation Spectrum":
+                 Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
+                 break;
+             case "Group Delay":
+                 calculateGroupDelay();
+                 break;
+             default:
+                 Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
+                 break;
+         }
+         endIdx = endIdx + Audiodata.hopsize;
      }
-     calculateGroupDelay();
-     calculateModSpec();
-
-     console.log(Audiodata.modSpec);
  }
+
+ // function calculateSpec(buffer) {
+ //     // define the block length :: later blockLen as user input
+ //     // Audiodata.blockLen = +inputBlock;
+ //     // define hopsize 25% of blockLen
+ //     Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
+ //
+ //     Audiodata.samples = buffer.getChannelData(0);
+ //
+ //     Audiodata.signalLen = Audiodata.samples.length;
+ //
+ //     // calculate the startpoints for the sample blocks
+ //     Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+ //
+ //     // create array with zeros for imaginär part to use the fft
+ //     var zeros = new Array(Audiodata.blockLen).fill(0);
+ //
+ //     var endIdx = 0;
+ //
+ //     var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+ //
+ //     var window = applyWindow(windowLen, Audiodata.windowFunction);
+ //
+ //     Audiodata.spectrogram = new Array(Audiodata.nPart);
+ //
+ //     Audiodata.phase = new Array(Audiodata.nPart);
+ //
+ //     Audiodata.cepstrum = new Array(Audiodata.nPart);
+ //
+ //     Audiodata.groupDelay = new Array(Audiodata.nPart);
+ //
+ //     Audiodata.envelope = new Array(Audiodata.nPart);
+ //
+ //     for (var i = 0; i < Audiodata.nPart; i++) {
+ //
+ //         var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
+ //             Audiodata.blockLen + endIdx);
+ //         var imagPart = zeros.fill(0);
+ //
+ //         for (var k = 0; k < Audiodata.blockLen; k++) {
+ //             realPart[k] = realPart[k] * window[k];
+ //         }
+ //
+ //         endIdx = endIdx + Audiodata.hopsize;
+ //
+ //         transform(realPart, imagPart);
+ //
+ //         Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
+ //         Audiodata.phase[i] = calculatePhase(realPart, imagPart);
+ //         Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+ //         Audiodata.envelope[i] = calculateHilbert(realPart, imagPart);
+ //     }
+ //     calculateGroupDelay();
+ //     calculateModSpec();
+ //
+ //     console.log(Audiodata.modSpec);
+ // }
 
  function calculateCepstrum(real, imag) {
 
@@ -160,7 +222,7 @@
      }
  }
 
- function calculateHilbert(real, imag) {
+ function calculateModSpec(real, imag) {
 
      analyticWeight = new Array(real.length).fill(0);
      analyticWeight[0] = 1;
@@ -185,20 +247,20 @@
 
  }
 
- function calculateModSpec() {
-
-     Audiodata.modSpec = new Array(Audiodata.nPart);
-
-     imagSignal = new Array(Audiodata.envelope[0].length).fill(0);
-
-     for (var i = 0; i < Audiodata.nPart; i++) {
-         var realSignal = Audiodata.envelope[i];
-         console.log(realSignal);
-         console.log(imagSignal);
-         transform(realSignal, imagSignal);
-         Audiodata.modSpec[i] = calculateAbs(realSignal, imagSignal);
-     }
- }
+ // function calculateModSpec() {
+ //
+ //     Audiodata.modSpec = new Array(Audiodata.nPart);
+ //
+ //     imagSignal = new Array(Audiodata.envelope[0].length).fill(0);
+ //
+ //     for (var i = 0; i < Audiodata.nPart; i++) {
+ //         var realSignal = Audiodata.envelope[i];
+ //         console.log(realSignal);
+ //         console.log(imagSignal);
+ //         transform(realSignal, imagSignal);
+ //         Audiodata.modSpec[i] = calculateAbs(realSignal, imagSignal);
+ //     }
+ // }
 
  function calculateAbs(real, imag) {
 
@@ -215,10 +277,7 @@
      var phaseValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
-         if (Audiodata.angle == "radian")
-             phaseValue[i] = Math.atan2(real[i], imag[i]);
-         else
-             phaseValue[i] = Math.atan2(real[i], imag[i]) * (180 / Math.PI);
+         phaseValue[i] = Math.atan2(real[i], imag[i]);
      }
      return phaseValue;
  }

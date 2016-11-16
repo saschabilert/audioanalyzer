@@ -48,7 +48,7 @@
             <th>Choose a block length:</th>
             <th>Choose a window type:</th>
             <th>Choose an overlap:</th>
-            <th>Draw phase:</th>
+            <th>Choose a Display type:</th>
         </tr>
         <tr>
             <td><select id="blockLength" onchange="blockLength()">
@@ -67,9 +67,12 @@
 <option value="0.5">50%</option>
 <option value="0.25">75%</option>
 </select></td>
-            <td><select id="phase" onchange="phaseOn()">
-<option value="phaseOff">off</option>
-<option value="phaseOn">on</option>
+            <td><select id="display" onchange="chooseDisplay()">
+<option value="Spectrum">spectrum</option>
+<option value="Phase">phase</option>
+<option value="MFCC">MFCC</option>
+<option value="Modulation Spectrum">modulation spectrum</option>
+<option value="Group Delay">group delay</option>
 </select></td>
         </tr>
     </table>

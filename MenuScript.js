@@ -14,10 +14,9 @@ function overlap() {
     audioProcessing();
 }
 
-function phaseOn() {
-    Audiodata.phase = document.getElementById("overlap").value;
+function chooseDisplay() {
+    Audiodata.display = document.getElementById("display").value;
     audioProcessing();
-
 }
 
 var startOffset = 0;
