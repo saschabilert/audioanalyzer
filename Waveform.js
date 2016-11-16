@@ -56,7 +56,7 @@ function drawWave() {
 
         canvasCtx.beginPath();
 
-        canvasCtx.lineWidth = 0.01;
+        canvasCtx.lineWidth = 0.02;
 
         canvasCtx.moveTo(0, 100);
         for (i = 0; i < maxValue.length; i++) {
@@ -92,11 +92,11 @@ function drawWave() {
     }
 
     // Function for chasing mouse wheel actions
-    //  canvas.addEventListener("mousewheel", mouseWheelFunction);
+    // canvasLine.addEventListener("mousewheel", mouseWheelFunction);
 
     function mouseWheelFunction(evt) {
-        // console.log(evt)
-        // console.log(keyEvent)
+        console.log(evt);
+        console.log(keyEvent);
         var delta = evt.deltaY;
         // console.log(delta)
         if (evt.ctrlKey) {
@@ -104,10 +104,10 @@ function drawWave() {
                 delta = evt.deltaX;
                 // console.log(delta)
                 //event.preventDefault();
-                zoomFreq(delta);
+                // zoomFreq(delta);
             } else {
                 event.preventDefault();
-                zoomTime(delta);
+                // zoomTime(delta);
             }
         } else if (evt.shiftKey) {
             delta = evt.deltaX;
@@ -130,21 +130,6 @@ function drawWave() {
         ctx.scale(cWidth / specWidth, cHigh / specHight);
         ctx.drawImage(tempCanvas, 0, 0);
 
-    }
-    // Function for zooming freq axes only
-    function zoomFreq(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 1.1;
-        } else if (delta > 0) {
-            factor = 0.9;
-        } else {
-            factor = 1;
-        }
-        canvas.height = canvas.height * factor;
-        cHigh = canvas.height;
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
     }
 
     // Function for zooming both axes

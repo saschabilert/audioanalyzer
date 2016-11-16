@@ -54,7 +54,7 @@
 
              Audiodata.signalLen = Audiodata.samples.length;
 
-             Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+             Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
              Audiodata.spectrogram = new Array(Audiodata.nPart);
              Audiodata.phase = new Array(Audiodata.nPart);
@@ -125,7 +125,7 @@
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
-
+     var melFreq;
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
@@ -143,6 +143,8 @@
          completeReal[i] = completeReal[i] * completeReal[i];
      }
      return completeReal;
+
+     
  }
 
  function calculateGroupDelay(real, imag) {
