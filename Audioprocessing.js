@@ -67,7 +67,7 @@
              console.log(Audiodata.modSpec);
 
              drawSpec();
-             
+
              drawWave();
 
              enableButton();
@@ -83,7 +83,7 @@
 
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
-     var window = applyWindow(windowLen, Audiodata.windowFunction);
+     window = applyWindow(windowLen, Audiodata.windowFunction);
      var endIdx = 0;
 
      for (var i = 0; i < Audiodata.nPart; i++) {

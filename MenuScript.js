@@ -22,6 +22,7 @@ function chooseDisplay() {
 function colormap(){
     TypeColorScale = +(document.getElementById("colormap").value);
     changeColorScale();
+    drawWave();
 }
 
 var startOffset = 0;
@@ -41,20 +42,20 @@ function toggleSound() {
            audPlay.start(0, startOffset);
            playButton.innerHTML = "&#10074;&#10074;";
            isPlaying = true;
-           window.requestAnimationFrame(drawLinePlay)
-           window.requestAnimationFrame(drawLinePlayWave)
+           window.requestAnimationFrame(drawLinePlay);
+           window.requestAnimationFrame(drawLinePlayWave);
            gainNode = audioCtx.createGain();
            audPlay.connect(gainNode);
            gainNode.connect(audioCtx.destination);
            gainNode.gain.value = 0.5;
            audPlay.onended = function() {
-               playButton.innerHTML = "&#9654;"
+               playButton.innerHTML = "&#9654;";
                if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
                    startTime = 0;
                    startOffset = 0;
                    isPlaying = false;
                }
-           }
+           };
 
        } else {
 
