@@ -1,16 +1,16 @@
 select {
-    background: #f8f8f8;
-    color: #444;
+    background: deepskyblue;
+    color: black;
     padding: 11px;
     font-size: 11px;
-    border: none;
+    border-radius:12px;
     cursor: pointer;
 }
 
 option {
     display: block;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: deepskyblue;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     color: black;
@@ -23,12 +23,58 @@ table {
     border-collapse: collapse;
     width: 50%;
     font-size: 12px;
-    margin-top: 200px;
+    margin-top: 250px;
     margin-left: 20px;
 }
 
 td, th {
     border: none;
-    text-align: center;;
+    text-align: center;
+    margin-top:20px;
     padding: 5px;
+}
+
+.audioInput {
+    width: 0.1px;
+    height:0.1px;
+    opacity:0;
+    overflow:hidden;
+    position:absolute;
+    z-index: -1;
+
+}
+.audioInput + label {
+    font-size:1em;
+    font-weight: 700;
+    color:black;
+    background-color:deepskyblue;
+    display: inline-block;
+    cursor:pointer;
+    border-radius: 12px;
+    padding:14px 40px;
+float:left;
+
+}
+.audioInput + label:hover {
+    background-color: lightgray;
+
+}
+.playPause {
+    margin-left: 10px;
+    font-size:0.85em;
+    font-weight: 700;
+    color:white;
+    background-color:deepskyblue;
+    display: inline-block;
+    cursor:pointer;
+    border-radius: 12px;
+    padding:14px 40px;
+    margin-top:-20px;
+}
+.playPause:hover {
+    background-color:lightgray;
+}
+.Gain {
+    margin-left:10px;
+    margin-top:5px;
 }

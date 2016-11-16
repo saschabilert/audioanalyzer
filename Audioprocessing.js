@@ -73,6 +73,8 @@
 
              drawWave();
 
+             enableButton();
+
          });
      };
  }
@@ -270,7 +272,7 @@
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
+         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2) + i] * real[(Audiodata.blockLen / 2) + i] + imag[(Audiodata.blockLen / 2) + i] * imag[(Audiodata.blockLen / 2) + i]);
      }
      return absValue;
  }
@@ -327,7 +329,7 @@
  }
 
  function diff(array) {
-
+   
      var difference = new Array(array.length - 1);
 
      for (var i = 0; i < difference.length; i++) {

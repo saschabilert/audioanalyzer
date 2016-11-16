@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <!-- start head with title and metadata -->
 
@@ -6,6 +5,7 @@
     <!-- define metadata -->
     <meta http-equiv="content-type" content="text/html">
     <!-- set title of the website -->
+
     <title>Load-Audiofile</title>
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
 </head>
@@ -14,34 +14,33 @@
 <body>
     <!-- define headline -->
     <h1>Welcome to our web based audio engine</h1>
+
     <!-- start javascript -->
-    <script type="text/javascript" src="fft.js">
-    </script>
-    <script type="text/javascript" src="Audioprocessing.js">
-    </script>
-    <script type="text/javascript" src="MenuScript.js">
-    </script>
-    <script type="text/javascript" src="Spectrogram.js">
-    </script>
-    <script type="text/javascript" src="Waveform.js">
-    </script>
-    <script type="text/javascript" src="parula.js">
-    </script>
-    <script type="text/javascript" src="gray.js">
-    </script>
-    <script type="text/javascript" src="jet.js">
-    </script>
-    <script type="text/javascript" src="hsv.js">
-    </script>
-    <form class="" action="index.html" method="post"><input type="button" value="Play Audio" id="play" onclick="playSound()">
-        <input type="button" value="Pause Audio" id="pause" onclick="pauseSound()"> <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5"></form>
+    <script type="text/javascript" src="fft.js"></script>
+    <script type="text/javascript" src="Audioprocessing.js"></script>
+    <script type="text/javascript" src="Spectrogram.js"></script>
+    <script type="text/javascript" src="Waveform.js"></script>
+    <script type="text/javascript" src="parula.js"></script>
+    <script type="text/javascript" src="gray.js"></script>
+    <script type="text/javascript" src="jet.js"></script>
+    <script type="text/javascript" src="hsv.js"></script>
+
     <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
         <!-- set input audiofile and trigger the loadSound function -->
-        <input type="file" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()"></form>
-    <div class="canvas" id="canvasDivWave" style="margin-top: 10px; margin-left: 5px; width: 1500px; height: 200px; position: absolute; overflow-x: scroll">
-        <canvas id="canvasWave" width="1500" height="200" style="position: absolute; z-index: 0"></canvas>
+        <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+        <label for="myAudio">Choose a file</label>
+    </form>
+
+    <button id="player" type="button" class="playPause">Click to play sound</button>
+    <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
+    <script type="text/javascript" src="MenuScript.js"></script>
+
+    <div class="canvas" id="canvasDivWave" style="margin-top: 10px; margin-left: 5px; width: 1550; height: 250; position: absolute; overflow-x: scroll">
+        <canvas id="canvasWave" width="1550" height="200" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasWaveLine" width="1550" height="200" style="position: absolute; z-index: 0"></canvas>
     </div>
+    <br><br>
     <!-- generate dropwdown lists-->
     <table>
         <tr>
@@ -50,34 +49,43 @@
             <th>Choose an overlap:</th>
             <th>Choose a Display type:</th>
         </tr>
-        <tr>
-            <td><select id="blockLength" onchange="blockLength()">
-<option value="1024">1024</option>
-<option value="2048">2048</option>
-<option value="4096">4096</option>
-</select></td>
-            <td><select id="windowType" onchange="windowType()">
-<option value="rectangle">rectangle</option>
-<option value="hann">hann</option>
-<option value="hannpoisson">hannpoisson</option>
-<option value="cosine">cosine</option>
-</select></td>
-            <td><select id="overlap" onchange="overlap()">
-<option value="0.75">25%</option>
-<option value="0.5">50%</option>
-<option value="0.25">75%</option>
-</select></td>
-            <td><select id="display" onchange="chooseDisplay()">
-<option value="Spectrum">spectrum</option>
-<option value="Phase">phase</option>
-<option value="MFCC">MFCC</option>
-<option value="Modulation Spectrum">modulation spectrum</option>
-<option value="Group Delay">group delay</option>
-</select></td>
+        <td><select id="blockLength" onchange="blockLength()">
+                    <option value="1024">1024</option>
+                    <option value="2048">2048</option>
+                    <option value="4096">4096</option>
+                  </select></td>
+        <td><select id="windowType" onchange="windowType()">
+                  <option value="rectangle">rectangle</option>
+                  <option value="hann">hann</option>
+                  <option value="hannpoisson">hannpoisson</option>
+                  <option value="cosine">cosine</option>
+                </select></td>
+        <td><select id="overlap" onchange="overlap()">
+                  <option value="0.75">25%</option>
+                  <option value="0.5">50%</option>
+                  <option value="0.25">75%</option>
+                </select></td>
+        <td><select id="display" onchange="chooseDisplay()">
+                  <option value="Spectrum">spectrum</option>
+                  <option value="Phase">phase</option>
+                  <option value="MFCC">MFCC</option>
+                  <option value="Modulation Spectrum">modulation spectrum</option>
+                  <option value="Group Delay">group delay</option>
+                </select></td>
+        <td><select id="colormap" onchange="colormap()">
+                    <option value="1">Parula</option>
+                    <option value="2">Gray</option>
+                    <option value="4">Hsv</option>
+                    <option value="3">Jet</option>
+                </select></td>
         </tr>
     </table>
     <div class="canvas" id="canvasDivSpec" style="margin-top: 20px; margin-left: 5px; width: 1550px; height: 600px; position: absolute; overflow-x: scroll">
         <canvas id="canvasSpec" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
+        <canvas id="canvasLine" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
+    </div>
+    <div class="canvas" id="divCanvasLegend" style="margin-top: -75px; margin-left: 1000px; width: 300; height: 75; position: absolute;">
+        <canvas id="canvasLegend" width="300" height="75" style="position: absolute; z-index: 0; border:2px solid #000000;"></canvas>
     </div>
 </body>
 
