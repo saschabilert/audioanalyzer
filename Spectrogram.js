@@ -125,6 +125,7 @@ function drawSpec() {
         // console.log(testdata)
         specData.picData = pictureData;
         drawLegend()
+        drawScale()
 
     }
 
@@ -329,14 +330,14 @@ function drawLegend() {
         tempCtxLegend = tempCanvasLEgend.getContext("2d");
 
     tempCtxLegend.clearRect(0, 0, tempCanvasLEgend.width, tempCanvasLEgend.height);
-    tempCanvasLEgend.width = 300//SpectroData.colorScale[0].length;
+    tempCanvasLEgend.width = 300 //SpectroData.colorScale[0].length;
     tempCanvasLEgend.height = 75;
 
     for (var i = 0; i < 100; i++) {
         for (var j = 0; j < legCanvas.height; j++) {
             tempCtxLegend.fillStyle = 'rgb(' + Math.floor(SpectroData.colorScale[0][i]) + ',' + Math.floor(SpectroData.colorScale[1][i]) + ',' +
                 Math.floor(SpectroData.colorScale[2][i]) + ')';
-            tempCtxLegend.fillRect(i*3, j, 3, 1);
+            tempCtxLegend.fillRect(i * 3, j, 3, 1);
         }
     }
     //ctxLegend.scale(canvasLegend.width / tempCanvasLEgend.width, tempCanvasLEgend.height / canvasLegend.height);
@@ -344,11 +345,11 @@ function drawLegend() {
     ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height);
     ctxLegend.drawImage(tempCanvasLEgend, 0, 0);
     //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
-    ctxLegend.clearRect(0,canvasLegend.height-15,canvasLegend.width*2,canvasLegend.height)
-    ctxLegend.font="700 15px Arial";
-    ctxLegend.fillText(specLevelLow + ' dB',2,canvasLegend.height - 1);
-    ctxLegend.fillText(specLevelLow+specLevelWidth/2 + ' dB',(canvasLegend.width / 2)-15,canvasLegend.height - 1);
-    ctxLegend.fillText(specLevelHigh + ' dB',(canvasLegend.width - 2)-45,canvasLegend.height - 1);
+    ctxLegend.clearRect(0, canvasLegend.height - 15, canvasLegend.width * 2, canvasLegend.height)
+    ctxLegend.font = "700 15px Arial";
+    ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
+    ctxLegend.fillText(specLevelLow + specLevelWidth / 2 + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+    ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
     ctxLegend.beginPath()
 
     ctxLegend.moveTo(1, (canvasLegend.height - 25))
@@ -362,5 +363,101 @@ function drawLegend() {
     ctxLegend.strokeStyle = '#100719';
     ctxLegend.lineWidth = 2;
     ctxLegend.stroke();
+
+}
+
+function drawScale() {
+    var canvas = document.getElementById('canvasSpec');
+    var freqMax = Audiodata.sampleRate / 2;
+    var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
+    var logTime = Math.log10(trackLenSec);
+    logTime = Math.pow(10, Math.floor(logTime))
+    var minDistanceNumbersX = 100;
+    var maxDistanceNumbersX = 250;
+    var minDistanceNumbersY = 50;
+    var maxDistanceNumbersY = 150;
+    var freqPerLine = freqMax / canvas.height;
+    var timePerColumn = trackLenSec / canvas.width
+    var stepsX = 100;
+    for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
+        var time = kk * timePerColumn;
+        var quarter = time % (logTime / 4);
+        var half = time % (logTime / 2);
+        var full = time % logTime;
+
+        if (quarter <= (1 / logTime)) {
+            stepsX = kk;
+            break;
+        } else if (half <= 1 / logTime) {
+            stepsX = kk;
+            break;
+        } else if (full <= 1 / logTime) {
+            stepsX = kk;
+            break;
+        }
+    }
+
+    var stepsY = 50;
+    for (var kk = minDistanceNumbersY; kk <= maxDistanceNumbersY; kk++) {
+        var freq = kk * freqPerLine;
+        var quarter = freq % (1000 / 4);
+        var half = freq % (1000 / 2);
+        var full = freq % 1000;
+        console.log(freq,quarter, half,full)
+        if (quarter <= (freqPerLine)) {
+            stepsY = kk;
+            break;
+        } else if (half <= freqPerLine) {
+            stepsY = kk;
+            break;
+        } else if (full <= freqPerLine) {
+            stepsY = kk;
+            break;
+        }
+    }
+
+
+    var canvasScale = document.getElementById('canvasScale');
+    var ctxScale = canvasScale.getContext('2d');
+    var div = document.getElementById('canvasDivSpec')
+    var divWidth = div.offsetWidth;
+    var divHeight = div.offsetHeight;
+    var scaleOfsetLeft = 24
+    var scaleOfsetBottom = 29
+
+
+    ctxScale.clearRect(0, 0, canvasScale.width, canvasScale.height);
+    ctxScale.beginPath();
+    ctxScale.moveTo(scaleOfsetLeft, 0);
+    ctxScale.lineTo(scaleOfsetLeft, canvasScale.height - scaleOfsetBottom)
+    ctxScale.lineTo(canvasScale.width - 1, canvasScale.height - scaleOfsetBottom)
+    ctxScale.strokeStyle = 'black';
+    ctxScale.lineWidth = 1;
+    ctxScale.stroke();
+    ctxScale.beginPath();
+
+    ctxLegend.font = "700 5px Arial";
+
+    for (var kk = canvasScale.height - scaleOfsetBottom; kk >= 0; kk -= stepsY) {
+        ctxScale.moveTo(scaleOfsetLeft, kk);
+        ctxScale.lineTo(scaleOfsetLeft - 5, kk)
+        ctxScale.stroke();
+
+        ctxScale.fillText(Math.floor((((canvasScale.height - scaleOfsetBottom) - kk) * freqPerLine)/10)*10, 1, kk, scaleOfsetLeft - 2);
+    }
+
+    for (var kk = 0; kk <= canvasScale.width; kk += stepsX) {
+        ctxScale.moveTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom);
+        ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
+        ctxScale.stroke();
+        console.log(timePerColumn)
+        ctxScale.fillText((Math.floor((kk) * timePerColumn * logTime)) / logTime, kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
+    }
+
+
+
+
+
+
 
 }

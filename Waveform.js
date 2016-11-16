@@ -75,7 +75,7 @@ canvasLine.addEventListener("click", startPlayHereWave)
         }
         startOffset = mouseTime
         toggleSound()
-        drawLineKlick(mousePos.x)
+        
     }
 
     // Function for chasing mouse wheel actions
