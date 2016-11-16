@@ -14,10 +14,14 @@ function overlap() {
     audioProcessing();
 }
 
-function phaseOn() {
-    Audiodata.phase = document.getElementById("overlap").value;
+function chooseDisplay() {
+    Audiodata.display = document.getElementById("display").value;
     audioProcessing();
+}
 
+function colormap(){
+    TypeColorScale = +(document.getElementById("colormap").value);
+    changeColorScale();
 }
 
 var startOffset = 0;
@@ -28,12 +32,6 @@ var gainNode;
 var playButton = document.getElementById("player");
 playButton.disabled = true;
 playButton.addEventListener("click", toggleSound);
-
-//window.addEventListener("keydown", toggleSound, false);
-
-
-
-
 
 function toggleSound() {
        if (!isPlaying) {
@@ -94,8 +92,3 @@ Array.prototype.forEach.call( inputs, function( input )
             label.innerHTML = fileName;
     });
 });
-
-function colormap(){
-    TypeColorScale = +(document.getElementById("colormap").value);
-    changeColorScale();
-}
