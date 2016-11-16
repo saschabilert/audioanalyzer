@@ -17,8 +17,8 @@ function drawWave() {
         WaveData.lengthCanvas = canvas.width;
         WaveData.hightCanvas = canvas.height;
 
-        var nPart = Math.floor(Audiodata.signalLen / Audiodata.blockLen);
         var canvasBlockLen = Audiodata.signalLen / canvas.width;
+        
         var nPart = Math.floor(Audiodata.signalLen / canvasBlockLen);
 
         console.log(nPart);

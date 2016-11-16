@@ -10,6 +10,7 @@
      blockLen: 1024,
      signalLen: undefined,
      sampleRate: undefined,
+     samples: undefined,
      numOfChannels: undefined,
      nPart: undefined,
      hopsize: undefined,
@@ -17,10 +18,8 @@
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
-     samples: undefined,
      windowFunction: undefined,
      cepstrum: undefined,
-     envelope: undefined,
      modSpec: undefined,
      display: undefined
  };
@@ -38,14 +37,16 @@
      // read the data from myAudio as ArrayBuffer
      reader.readAsArrayBuffer(data);
 
+     // save sampleRate as globalobject variable
      Audiodata.sampleRate = audioCtx.sampleRate;
 
      // trigger the onload function to decode the Audiodata
      reader.onload = function() {
          audioCtx.decodeAudioData(reader.result).then(buffer => {
 
-             Audiodata.numOfChannels = buffer.numberOfChannels;
              myArrayBuffer = buffer;
+
+             Audiodata.numOfChannels = buffer.numberOfChannels;
 
              Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
 
@@ -53,21 +54,17 @@
 
              Audiodata.signalLen = Audiodata.samples.length;
 
-             // calculate the startpoints for the sample blocks
              Audiodata.nPart = Math.floor((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
              Audiodata.spectrogram = new Array(Audiodata.nPart);
-
              Audiodata.phase = new Array(Audiodata.nPart);
-
              Audiodata.cepstrum = new Array(Audiodata.nPart);
-
              Audiodata.groupDelay = new Array(Audiodata.nPart);
+             Audiodata.modSpec = new Array(Audiodata.nPart);
 
-             Audiodata.envelope = new Array(Audiodata.nPart);
-
-             // give the decoded Audiodata to the split-function
              calculateDisplay(window, Audiodata.display);
+
+             console.log(Audiodata.modSpec);
 
              drawSpec();
              
@@ -109,13 +106,13 @@
                  Audiodata.phase[i] = calculatePhase(realPart, imagPart);
                  break;
              case "MFCC":
-                 Audiodata.cepstrum[i] = calculateCepstrum(realPart, imagPart);
+                 Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                  break;
              case "Modulation Spectrum":
                  Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
                  break;
              case "Group Delay":
-                 Audiodata.phase[i] = calculateGroupDelay(realPart, imagPart);
+                 Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
@@ -125,7 +122,7 @@
      }
  }
 
- function calculateCepstrum(real, imag) {
+ function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
 
@@ -133,8 +130,8 @@
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
      for (var k = 0; k < Audiodata.blockLen / 2; k++) {
-         // Achtung wird bei 0 zu -Infinity
-         var logAbsValue = Math.log10(absValue[k] * absValue[k]); // / Audiodata.blockLen;
+
+         var logAbsValue = Math.log10(absValue[k] * absValue[k]);
          completeReal[k] = logAbsValue;
          completeReal[(Audiodata.blockLen - 1) - k] = logAbsValue;
      }
@@ -143,10 +140,8 @@
 
      for (var i = 0; i < completeReal.length; i++) {
          completeReal[i] = Math.abs(completeReal[i]);
-         //  completeReal = completeReal / Audiodata.blockLen;
          completeReal[i] = completeReal[i] * completeReal[i];
      }
-
      return completeReal;
  }
 
@@ -189,7 +184,7 @@
 
      var envelopeImag = new Array(envelopeReal.length).fill(0);
 
-     transform(envelopeReal,envelopeImag);
+     transform(envelopeReal, envelopeImag);
 
      var modSpec = calculateAbs(envelopeReal, envelopeImag);
 
@@ -201,7 +196,7 @@
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
      for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[(Audiodata.blockLen / 2) + i] * real[(Audiodata.blockLen / 2) + i] + imag[(Audiodata.blockLen / 2) + i] * imag[(Audiodata.blockLen / 2) + i]);
+         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
      }
      return absValue;
  }
