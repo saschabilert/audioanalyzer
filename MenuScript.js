@@ -29,46 +29,47 @@ var playButton = document.getElementById("player");
 playButton.disabled = true;
 playButton.addEventListener("click", toggleSound);
 
+//window.addEventListener("keydown", toggleSound, false);
+
 
 
 
 
 function toggleSound() {
-    if (!isPlaying) {
-        startTime = audioCtx.currentTime;
-        audPlay = audioCtx.createBufferSource();
-        audPlay.buffer = myArrayBuffer;
-        audPlay.start(0, startOffset);
-        playButton.innerHTML = "Click to pause sound";
-        isPlaying = true;
+       if (!isPlaying) {
+           startTime = audioCtx.currentTime;
+           audPlay = audioCtx.createBufferSource();
+           audPlay.buffer = myArrayBuffer;
+           audPlay.start(0, startOffset);
+           playButton.innerHTML = "&#10074;&#10074;";
+           isPlaying = true;
+           window.requestAnimationFrame(drawLinePlay)
+           window.requestAnimationFrame(drawLinePlayWave)
+           gainNode = audioCtx.createGain();
+           audPlay.connect(gainNode);
+           gainNode.connect(audioCtx.destination);
+           gainNode.gain.value = 0.5;
+           audPlay.onended = function() {
+               playButton.innerHTML = "&#9654;"
+               if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
+                   startTime = 0;
+                   startOffset = 0;
+                   isPlaying = false;
+               }
+           }
 
-        window.requestAnimationFrame(drawLinePlay)
-        window.requestAnimationFrame(drawLinePlayWave)
-        //if(audPlay.addEventListener('ended')){
-         //   toggleSound()
+       } else {
+
+           audPlay.stop(audPlay.currentTime);
+           isPlaying = false;
+           playButton.innerHTML = "&#9654;";
+
+           startOffset += audioCtx.currentTime - startTime;
 
 
-        gainNode = audioCtx.createGain();
-        audPlay.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        gainNode.gain.value = 0.5;
-
-
-    } else {
-
-        audPlay.stop();
-        isPlaying = false;
-        playButton.innerHTML = "Click to play sound";
-
-        startOffset += audioCtx.currentTime - startTime;
-
-
-
-
-    }
+       }
 
 }
-
 
 document.getElementById('volume').addEventListener('input', function() {
     gainNode.gain.value = this.value;

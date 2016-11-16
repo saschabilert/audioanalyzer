@@ -11,16 +11,7 @@
     <title>Online Audioprocessing</title>
 
 
-    <!-- start javascript -->
-    <script type="text/javascript" src="fft.js"></script>
-    <script type="text/javascript" src="Audioprocessing.js"></script>
-    <script type="text/javascript" src="MenuScript.js"></script>
-    <script type="text/javascript" src="Spectrogram.js"></script>
-    <script type="text/javascript" src="Waveform.js"></script>
-    <script type="text/javascript" src="parula.js"></script>
-    <script type="text/javascript" src="gray.js"></script>
-    <script type="text/javascript" src="jet.js"></script>
-    <script type="text/javascript" src="hsv.js"></script>
+
 
 
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
@@ -57,13 +48,13 @@
         <label for="myAudio">Choose a file</label>
     </form>
 
-    <button id="player" type="button" class = "playPause">Click to play sound</button>
+    <button id="player" type="button" class = "playPause">&#9654;</button>
     <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class = "Gain">
     <script type="text/javascript" src="MenuScript.js"></script>
 
-    <div class="canvas" id="canvasDivWave" style="margin-top: 10px; margin-left: 5px; width: 1550; height: 250; position: absolute; overflow-x: scroll">
-        <canvas id="canvasWave" width="1550" height="200" style="position: absolute; z-index: 0"></canvas>
-          <canvas id="canvasWaveLine" width="1550" height="200" style="position: absolute; z-index: 0"></canvas>
+    <div class="canvas" id="canvasDivWave">
+        <canvas id="canvasWave" width="1550" height="200"></canvas>
+          <canvas id="canvasWaveLine" width="1550" height="200"></canvas>
     </div>
     <br><br>
 
@@ -117,11 +108,11 @@
         </tr>
     </table>
 
-    <div class="canvas" id="canvasDivSpec" style="margin-top: 20px; margin-left: 5px; width: 1550px; height: 600px; position: absolute; overflow-x: scroll">
-        <canvas id="canvasSpec" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
-        <canvas id="canvasLine" width="1550" height="512" style="position: absolute; z-index: 0"></canvas>
+    <div class="canvas" id="canvasDivSpec">
+        <canvas id="canvasSpec" width="1550" height="512"></canvas>
+        <canvas id="canvasLine" width="1550" height="512"></canvas>
     </div>
-      <div  class="canvas" id="divCanvasLegend" style="margin-top: -75px; margin-left: 1000px; width: 300; height: 75; position: absolute;">
+      <div  class="canvas" id="divCanvasLegend">
           <canvas id="canvasLegend" width="300" height = "75" style="position: absolute; z-index: 0; border:2px solid #000000;"></canvas>
       </div>
 </body>
