@@ -80,7 +80,7 @@
  function calculateDisplay(window, type) {
 
      // create array with zeros for imaginär part to use the fft
-     var zeros = new Array(Audiodata.blockLen).fill(0);
+     var zeros = new Array(Audiodata.blockLen);
 
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
@@ -113,7 +113,10 @@
                  Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
                  break;
              case "Group Delay":
-                 calculateGroupDelay();
+                 Audiodata.phase[i] = calculatePhase(realPart, imagPart);
+                 if (i == Audiodata.nPart - 1) {
+                     calculateGroupDelay();
+                 }
                  break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
