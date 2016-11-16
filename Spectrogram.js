@@ -13,8 +13,9 @@ var specLevelLow = -90;
 var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
 var tempCanvas = document.createElement("canvas"),
     tempCtx = tempCanvas.getContext("2d");
-    var scaleOfsetLeft = 24
-    var scaleOfsetBottom = 28
+var scaleOfsetLeft = 24;
+var scaleOfsetBottom = 28;
+
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
     var ctx = canvas.getContext("2d");
@@ -200,15 +201,17 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        canvasScale.width=canvas.width * factor + scaleOfsetLeft
-        canvas.width = canvas.width * factor;
-        cWidth = canvas.width;
-        canvasLine.width = canvasLine.width * factor
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+            canvasScale.width = canvas.width * factor + scaleOfsetLeft
+            canvas.width = canvas.width * factor;
+            cWidth = canvas.width;
+            canvasLine.width = canvasLine.width * factor
 
 
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
+            ctx.scale(cWidth / specWidth, cHigh / specHight);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+        }
 
     }
     // Function for zooming freq axes only
@@ -221,15 +224,17 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        canvasScale.height=canvas.height * factor+scaleOfsetBottom
-        canvas.height = canvas.height * factor;
-        cHigh = canvas.height;
-        canvasLine.height = canvasLine.height * factor;
+        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight) {
+            canvasScale.height = canvas.height * factor + scaleOfsetBottom
+            canvas.height = canvas.height * factor;
+            cHigh = canvas.height;
+            canvasLine.height = canvasLine.height * factor;
 
 
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
+            ctx.scale(cWidth / specWidth, cHigh / specHight);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+        }
     }
 
     // Function for zooming both axes
@@ -243,18 +248,20 @@ function drawSpec() {
             factor = 1;
 
         }
-        canvasScale.height=canvas.height * factor+ scaleOfsetBottom
-        canvasScale.width=canvas.width * factor + scaleOfsetLeft
-        canvas.height = canvas.height * factor;
-        cHigh = canvas.height;
-        canvas.width = canvas.width * factor;
-        cWidth = canvas.width;
-        canvasLine.height = canvasLine.height * factor;
-        canvasLine.width = canvasLine.width * factor
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth) {
+            canvasScale.height = canvas.height * factor + scaleOfsetBottom
+            canvasScale.width = canvas.width * factor + scaleOfsetLeft
+            canvas.height = canvas.height * factor;
+            cHigh = canvas.height;
+            canvas.width = canvas.width * factor;
+            cWidth = canvas.width;
+            canvasLine.height = canvasLine.height * factor;
+            canvasLine.width = canvasLine.width * factor;
 
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
+            ctx.scale(cWidth / specWidth, cHigh / specHight);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+        }
     }
 }
 //Function for changing the color scale and/or the scaling of the color scale
@@ -310,15 +317,16 @@ function changeColorScale(delta) {
 
         for (var i = 0; i < specWidth; i++) {
             point = 20 * Math.log10(specData[i][j] / 2048);
+
             point += Math.abs(specLevelLow);
             point = Math.max(point, 0);
             point = Math.min(point, specLevelWidth);
 
-            point /= Math.abs(specLevelLow);
+            point /= Math.abs(specLevelWidth);
             point *= noOfColorSteps - 1;
-            point = Math.round(point);
+            point = Math.floor(point);
             if (point > 99) {
-                point = 99
+                point = 99;
             }
             for (var kk = 0; kk < 3; kk++) {
                 specData.picData.data[nPictureData] = Math.round(colorScale[kk][point]);
@@ -399,13 +407,13 @@ function drawScale() {
         var half = time % (logTime / 2);
         var full = time % logTime;
 
-        if (quarter <= (0.01*logTime)) {
+        if (quarter <= (0.01 * logTime)) {
             stepsX = kk;
             break;
-        } else if (half <= (0.01*logTime)) {
+        } else if (half <= (0.01 * logTime)) {
             stepsX = kk;
             break;
-        } else if (full <= (0.01*logTime)) {
+        } else if (full <= (0.01 * logTime)) {
             stepsX = kk;
             break;
         }
@@ -417,7 +425,7 @@ function drawScale() {
         var quarter = freq % (1000 / 4);
         var half = freq % (1000 / 2);
         var full = freq % 1000;
-        console.log(freq,quarter, half,full)
+        console.log(freq, quarter, half, full)
         if (quarter <= (freqPerLine)) {
             stepsY = kk;
             break;
@@ -456,7 +464,7 @@ function drawScale() {
         ctxScale.lineTo(scaleOfsetLeft - 5, kk)
         ctxScale.stroke();
 
-        ctxScale.fillText(Math.floor((((canvasScale.height - scaleOfsetBottom) - kk) * freqPerLine)/10)*10, 1, kk, scaleOfsetLeft - 2);
+        ctxScale.fillText(Math.floor((((canvasScale.height - scaleOfsetBottom) - kk) * freqPerLine) / 10) * 10, 1, kk, scaleOfsetLeft - 2);
     }
 
     for (var kk = 0; kk <= canvasScale.width; kk += stepsX) {
@@ -464,13 +472,15 @@ function drawScale() {
         ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
         ctxScale.stroke();
         console.log(timePerColumn)
-        ctxScale.fillText((Math.floor((kk) * timePerColumn * (100/logTime))) / (100/logTime), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
+        ctxScale.fillText((Math.floor((kk) * timePerColumn * (100 / logTime))) / (100 / logTime), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
     }
 
+}
 
-
-
-
-
-
+function getscrollPosition() {
+    div = document.getElementById('canvasDivSpec')
+    return {
+        x: div.scrollLeft,
+        y: div.scrollTop
+    };
 }

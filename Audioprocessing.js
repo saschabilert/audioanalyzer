@@ -70,7 +70,7 @@
              calculateDisplay(window, Audiodata.display);
 
              drawSpec();
-
+             
              drawWave();
 
              enableButton();
