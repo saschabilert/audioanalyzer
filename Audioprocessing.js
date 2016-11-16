@@ -13,7 +13,7 @@
      numOfChannels: undefined,
      nPart: undefined,
      hopsize: undefined,
-     overlap: 1 / 4,
+     overlap: 1 / 2,
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
@@ -47,8 +47,8 @@
              Audiodata.numOfChannels = buffer.numberOfChannels;
              myArrayBuffer = buffer;
 
-             Audiodata.hopsize = Audiodata.blockLen * Audiodata.overlap;
-
+             Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
+             
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
@@ -329,7 +329,7 @@
  }
 
  function diff(array) {
-   
+
      var difference = new Array(array.length - 1);
 
      for (var i = 0; i < difference.length; i++) {
