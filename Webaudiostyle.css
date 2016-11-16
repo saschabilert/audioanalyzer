@@ -63,7 +63,7 @@ float:left;
     margin-left: 10px;
     font-size:0.85em;
     font-weight: 700;
-    color:white;
+    color:black;
     background-color:deepskyblue;
     display: inline-block;
     cursor:pointer;
@@ -77,4 +77,63 @@ float:left;
 .Gain {
     margin-left:10px;
     margin-top:5px;
+}
+
+#canvasDivSpec{
+    margin-top: 20px;
+    margin-left: 5px;
+    min-width: 1200px;
+    height: 545px;
+    position: absolute;
+    overflow-x: scroll
+}
+#canvasSpec{
+    margin-left: 25px;
+    position: absolute;
+    z-index: 0
+}
+#canvasLine{
+    position: absolute;
+    margin-left: 25px;
+    z-index: 0
+}
+
+#canvasScale{
+    border:2px solid #000000;
+    position: absolute;
+    z-index: 0
+
+}
+
+
+#divCanvasLegend{
+    margin-top: -75px;
+    margin-left: 800px;
+    width: 300px;
+    height: 75px;
+    position: absolute;
+}
+#canvasLegend{
+    position: absolute;
+    z-index: 0;
+    border:2px solid #000000;
+}
+
+#canvasDivWave{
+    margin-top: 10px;
+    margin-left: 5px;
+    min-width: 1200px;
+    height: 250px;
+    position: absolute;
+    overflow-x: scroll
+}
+
+#canvasWave{
+    position: absolute;
+    z-index: 0
+}
+
+#canvasWaveLine{
+    position: absolute;
+    z-index: 0
 }

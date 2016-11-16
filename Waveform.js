@@ -9,18 +9,20 @@ var WaveData = {
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
-    var canvasLine=document.getElementById("canvasWaveLine")
+    var canvasLine = document.getElementById("canvasWaveLine")
 
     if (canvas.getContext) {
         var canvasCtx = canvas.getContext("2d");
-        canvasCtx.clearRect(0,0,canvas.width,canvas.height)
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
         WaveData.lengthCanvas = canvas.width;
         WaveData.hightCanvas = canvas.height;
 
-        var canvasBlockLen=Audiodata.signalLen/canvas.width;
+        var nPart = Math.floor(Audiodata.signalLen / Audiodata.blockLen);
+        var canvasBlockLen = Audiodata.signalLen / canvas.width;
         var nPart = Math.floor(Audiodata.signalLen / canvasBlockLen);
 
-        console.log(nPart ,canvas.width,canvasBlockLen );
+        console.log(nPart);
+        console.log(nPart, canvas.width, canvasBlockLen);
 
         var value = new Array(nPart);
 
@@ -28,23 +30,35 @@ function drawWave() {
         for (var i = 0; i < nPart; i++) {
 
             if ((i % 2) === 0) {
-                value[i] = findMax(Audiodata.samples.slice(canvasBlockLen * i,
-                    canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
+                value[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
+                value[i] = findMax(Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
             } else if ((i % 2) === 1) {
-                value[i] = Math.abs(findMin(Audiodata.samples.slice(canvasBlockLen * i,
-                    canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
+                value[i] = Math.abs(findMin(Audiodata.samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
+                value[i] = Math.abs(findMin(Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
             }
         }
 
-        // var samples = new Array(Audiodata.samples.length);
+        // for (var i = 0; i < nPart; i++){
         //
+        //   var currentBlock = samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1));
+        //   var maxValue = Math.max(...currentBlock) + 1;
+        //   var minValue = Math.min(...currentBlock) + 1;
+        //
+        //   if (Math.abs(maxValue) >= Math.abs(minValue)){
+        //     value[i] = maxValue * (WaveData.hightCanvas / 2);
+        //   } else {
+        //     value[i] = minValue * (WaveData.hightCanvas / 2);
+        //   }
+        //
+        // }
+        //
+        // var samples = new Array(Audiodata.samples.length);
         // samples = samples * WaveData.hightCanvas;
-
-        console.log(value);
 
         // First path
         canvasCtx.beginPath();
         canvasCtx.strokeStyle = 'blue';
+        canvasCtx.lineWidth = 0.5;
         canvasCtx.moveTo(0, 100);
         for (i = 0; i < value.length; i++) {
             canvasCtx.lineTo(i, value[i]);
@@ -64,7 +78,7 @@ function drawWave() {
         };
     }
 
-canvasLine.addEventListener("click", startPlayHereWave)
+    canvasLine.addEventListener("click", startPlayHereWave)
 
     function startPlayHereWave(evt) {
         var mousePos = getMousePosWave(canvas, evt)
@@ -79,7 +93,7 @@ canvasLine.addEventListener("click", startPlayHereWave)
     }
 
     // Function for chasing mouse wheel actions
-  //  canvas.addEventListener("mousewheel", mouseWheelFunction);
+    //  canvas.addEventListener("mousewheel", mouseWheelFunction);
 
     function mouseWheelFunction(evt) {
         // console.log(evt)
@@ -154,17 +168,16 @@ canvasLine.addEventListener("click", startPlayHereWave)
     }
 }
 
-function findMax(sampleArray) {
+function findMax(array) {
 
-    return Math.max(...sampleArray);
-
+    return Math.max(...array);
 }
 
-function findMin(sampleArray) {
+function findMin(array) {
 
-    return Math.min(...sampleArray);
-
+    return Math.min(...array);
 }
+
 function drawLinePlayWave() {
     var canvasWaveLine = document.getElementById("canvasWaveLine")
     var ctxLine = canvasWaveLine.getContext("2d")
