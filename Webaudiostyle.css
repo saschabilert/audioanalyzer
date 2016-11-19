@@ -63,12 +63,10 @@ float:left;
     margin-left: 10px;
     font-size:0.85em;
     font-weight: 700;
+    background-color: deepskyblue;
     color:black;
-    background-color:deepskyblue;
     display: inline-block;
     cursor:pointer;
-    border-radius: 12px;
-    padding:14px 40px;
     margin-top:-20px;
 }
 .playPause:hover {
@@ -136,4 +134,20 @@ float:left;
 #canvasWaveLine{
     position: absolute;
     z-index: 0
+}
+#progressBar {
+    border: 1px solid #aaa;
+    color: #fff;
+    width: 295px;
+    height: 20px;
+}
+#progress{
+    background-color: red;
+    height: 20px;
+    display:inline-block;
+}
+#canvas {
+    border-style: solid;
+    border-width:1px;
+    padding: 3px;
 }
