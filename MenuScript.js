@@ -24,7 +24,7 @@ function colormap(){
     changeColorScale();
     drawWave();
 }
-var oAudio = document.getElementById('myAudio');
+var audio = document.getElementById("myAudio");
 var startOffset = 0;
 var startTime = 0;
 var audPlay;
@@ -33,7 +33,14 @@ var gainNode;
 var playButton = document.getElementById("player");
 playButton.disabled = true;
 playButton.addEventListener("click", toggleSound);
-var canvas = document.getElementById('canvas');
+
+var curtime;
+var durtime;
+var seekslider;
+var seeking = false;
+var seekto;
+var info = document.querySelector('[data-js="info"]');
+
 
 
 function toggleSound() {
@@ -50,19 +57,37 @@ function toggleSound() {
            audPlay.connect(gainNode);
            gainNode.connect(audioCtx.destination);
            gainNode.gain.value = 0.5;
-           // audPlay.addEventListener("timeupdate", updateProgress,true);
-           // function updateProgress(){
-           //     var elapsedTime = Math.round(audPlay.currentTime)
-           //     if(canvas.getContext){
-           //         var ctx = canvas.getContext("2d");
-           //         ctx.clearRect(0,0,canvas.clientWidth, canvas.clientHeight);
-           //         ctx.fillStyle = "rgb(255,0,0)";
-           //         var fWidth = (elapsedTime/audPlay.duration)*(canvas.clientWidth);
-           //         if(fWidth>0){
-           //             ctx.fillRect(0,0,fWidth,canvas.clientHeight);
-           //         }
-           //     }
+           // curtime = document.getElementById("curtime");
+           // durtime = document.getElementById("durtime");
+           // audio.addEventListener("timeupdate", timeUpdate(),false);
+           // function timeUpdate(){
+           //     var nt = audioCtx.currentTime-startTime+startOffset*(100/Audiodata.signalLen/Audiodata.sampleRate);
+           //     var curmins = Math.floor(audioCtx.currentTime-startTime+startOffset/60);
+           //     var cursecs = Math.floor(audioCtx.currentTime-startTime+startOffset - curmins*60);
+           //     var durmins = Math.floor(Audiodata.signalLen/Audiodata.sampleRate/60);
+           //     var dursecs = Math.floor(Audiodata.signalLen/Audiodata.sampleRate - durmins*60);
+           //     if(cursecs<10){cursecs = "0"+cursecs;}
+           //     if(dursecs<10){dursecs = "0" + dursecs;}
+           //     if(curmins<10){curmins = "0" + curmins;}
+           //     if(durmins<10){durmins = "0" + durmins;}
+           //     curtime.innerHTML = curmins+":"+cursecs;
+           //     durtime.innerHTML = durmins+":"+dursecs;
            // }
+
+           function update(){
+               window.requestAnimationFrame(update);
+               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+               if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
+                   audioCtx.currentTime = 0;
+                   startTime = 0;
+                   startOffset = 0;
+                   info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+
+               }
+
+           }
+           update();
+
            audPlay.onended = function() {
                playButton.innerHTML = "&#9654;";
                if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
@@ -74,13 +99,15 @@ function toggleSound() {
 
        } else {
 
-           audPlay.stop(audPlay.currentTime);
+           audPlay.stop();
            isPlaying = false;
            playButton.innerHTML = "&#9654;";
            startOffset += audioCtx.currentTime - startTime;
        }
 
+
 }
+
 
 
 
