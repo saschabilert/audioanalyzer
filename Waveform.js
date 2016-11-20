@@ -10,10 +10,12 @@ function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
     var canvasLine = document.getElementById("canvasWaveLine");
+    var canvasRMS = document.getElementById("canvasRMS");
 
     if (canvas.getContext) {
 
         var canvasCtx = canvas.getContext("2d");
+        var canvasCtxRMS = canvas.getContext("2d");
 
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -24,15 +26,20 @@ function drawWave() {
 
         var nPart = Math.floor(Audiodata.signalLen / canvasBlockLen);
 
+        var currentBlock = new Array(canvasBlockLen.length);
         var maxValue = new Array(nPart);
         var minValue = new Array(nPart);
-        var currentBlock = new Array(canvasBlockLen.length);
+        var rms = new Array(nPart);
 
         for (i = 0; i < nPart; i++) {
 
             currentBlock = Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1));
-            maxValue[i] = (Math.max(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2)) - 100;
-            minValue[i] = (Math.min(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2)) - 100;
+
+            maxValue[i] = Math.max(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+
+            minValue[i] = Math.min(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+
+            rms[i] = calculateRMS(currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
 
         }
 
@@ -65,8 +72,31 @@ function drawWave() {
             canvasCtx.stroke();
         }
 
+        canvasCtxRMS.beginPath();
+        canvasCtxRMS.strokeStyle = 'red';
+        canvasCtxRMS.lineWidth = 0.1;
+
+        canvasCtxRMS.moveTo(0, 100);
+        for (i = 0; i < maxValue.length; i++) {
+            canvasCtxRMS.lineTo(i, 100 - rms[i]);
+            canvasCtxRMS.stroke();
+        }
+
     } else {
         // canvas-unsupported code here
+    }
+
+    function calculateRMS(samples) {
+
+        var sum = 0;
+
+        for (var i = 0; i < samples.length; i++) {
+            sum = sum + (samples[i] * samples[i]);
+        }
+
+        var rms = Math.sqrt(sum / (samples.length - 1));
+
+        return rms;
     }
 
     function getMousePosWave(canvas, evt) {
@@ -164,6 +194,5 @@ function drawLinePlayWave() {
         ctxLine.fillRect(Math.floor(canvasWaveLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasWaveLine.height);
 
         window.requestAnimationFrame(drawLinePlayWave);
-
     }
 }

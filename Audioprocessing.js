@@ -143,8 +143,6 @@
          completeReal[i] = completeReal[i] * completeReal[i];
      }
      return completeReal;
-
-     
  }
 
  function calculateGroupDelay(real, imag) {

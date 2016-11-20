@@ -242,6 +242,11 @@ input[type=range]:focus::-ms-fill-upper {
     z-index: 0
 }
 
+#canvasRMS{
+    position: absolute;
+    z-index: 0;
+}
+
 #canvasWaveLine{
     position: absolute;
     z-index: 0
