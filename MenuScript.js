@@ -33,6 +33,8 @@ var gainNode;
 var playButton = document.getElementById("player");
 playButton.disabled = true;
 playButton.addEventListener("click", toggleSound);
+var stopbtn = document.getElementById("stop");
+stopbtn.addEventListener("click", stopButton);
 
 var curtime;
 var durtime;
@@ -104,12 +106,18 @@ function toggleSound() {
            playButton.innerHTML = "&#9654;";
            startOffset += audioCtx.currentTime - startTime;
        }
-
+    stopbtn.onclick = function(){
+        startTime = 0;
+        startOffset = 0;
+        isPlaying = false;
+    }
 
 }
 
 
+function stopButton(){
 
+}
 
 
 
