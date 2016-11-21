@@ -115,10 +115,9 @@ function toggleSound() {
 }
 
 
-function stopButton(){
-
-}
-
+document.getElementById('volume').addEventListener('input',function(){
+    gainNode.gain.value = this.value;
+})
 
 
 
