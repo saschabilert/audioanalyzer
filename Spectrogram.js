@@ -92,7 +92,7 @@ function drawSpec() {
         var nPictureData = 0;
 
         // Loop for transfering the spectrogram data to image data with converting them into the color scale
-        for (var j = 0; j < specHight; j++) {
+        for (var j = specHight-1; j >0 ; j--) {
 
             for (var i = 0; i < specWidth; i++) {
                 point = 20 * Math.log10(specData[i][j] / 2048);
@@ -313,7 +313,7 @@ function changeColorScale(delta) {
     var specHight = specData[1].length;
 
     var nPictureData = 0;
-    for (var j = 0; j < specHight; j++) {
+    for (var j = specHight-1; j >0 ; j--) {
 
         for (var i = 0; i < specWidth; i++) {
             point = 20 * Math.log10(specData[i][j] / 2048);
@@ -401,6 +401,7 @@ function drawScale() {
     var freqPerLine = freqMax / canvas.height;
     var timePerColumn = trackLenSec / canvas.width
     var stepsX = 100;
+
     for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
         var time = kk * timePerColumn;
         var quarter = time % (logTime / 4);
