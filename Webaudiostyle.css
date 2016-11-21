@@ -68,6 +68,7 @@ float:left;
     display: inline-block;
     cursor:pointer;
     margin-top:10px;
+    border:white;
 }
 .playPause:hover {
     background-color:lightgray;
@@ -81,6 +82,7 @@ float:left;
     display: inline-block;
     cursor:pointer;
     margin-top:0px;
+    border:white;
 }
 .stop:hover {
     background-color:lightgray;
@@ -89,6 +91,7 @@ float:left;
 .Gain {
     margin-left: 80px;
     margin-top: -20px;
+    position: absolute;
 
 }
 /*!*Gain button*!*/
