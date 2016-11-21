@@ -9,66 +9,95 @@ var WaveData = {
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
-    var canvasLine = document.getElementById("canvasWaveLine")
+    var canvasLine = document.getElementById("canvasWaveLine");
+    var canvasRMS = document.getElementById("canvasRMS");
 
     if (canvas.getContext) {
+
         var canvasCtx = canvas.getContext("2d");
-        canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
+        var canvasCtxRMS = canvas.getContext("2d");
+
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
         WaveData.lengthCanvas = canvas.width;
         WaveData.hightCanvas = canvas.height;
 
         var canvasBlockLen = Audiodata.signalLen / canvas.width;
-        
+
         var nPart = Math.floor(Audiodata.signalLen / canvasBlockLen);
 
-        console.log(nPart);
-        console.log(nPart, canvas.width, canvasBlockLen);
+        var currentBlock = new Array(canvasBlockLen.length);
+        var maxValue = new Array(nPart);
+        var minValue = new Array(nPart);
+        var rms = new Array(nPart);
 
-        var value = new Array(nPart);
+        for (i = 0; i < nPart; i++) {
 
+            currentBlock = Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1));
 
-        for (var i = 0; i < nPart; i++) {
+            maxValue[i] = Math.max(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
 
-            if ((i % 2) === 0) {
-                value[i] = findMax(Audiodata.samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
-                value[i] = findMax(Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2);
-            } else if ((i % 2) === 1) {
-                value[i] = Math.abs(findMin(Audiodata.samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
-                value[i] = Math.abs(findMin(Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1))) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2));
-            }
+            minValue[i] = Math.min(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+
+            rms[i] = calculateRMS(currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+
         }
 
-        // for (var i = 0; i < nPart; i++){
-        //
-        //   var currentBlock = samples.slice(Audiodata.blockLen * i, Audiodata.blockLen * (i + 1));
-        //   var maxValue = Math.max(...currentBlock) + 1;
-        //   var minValue = Math.min(...currentBlock) + 1;
-        //
-        //   if (Math.abs(maxValue) >= Math.abs(minValue)){
-        //     value[i] = maxValue * (WaveData.hightCanvas / 2);
-        //   } else {
-        //     value[i] = minValue * (WaveData.hightCanvas / 2);
-        //   }
-        //
-        // }
-        //
-        // var samples = new Array(Audiodata.samples.length);
-        // samples = samples * WaveData.hightCanvas;
+        switch (TypeColorScale) {
+            case 1:
+                canvasCtx.strokeStyle = 'blue';
+                break;
+            case 2:
+                canvasCtx.strokeStyle = 'black';
+                break;
+            case 3:
+                canvasCtx.strokeStyle = 'blue';
+                break;
+            case 4:
+                canvasCtx.strokeStyle = 'red';
+                break;
+            default:
+                canvasCtx.strokeStyle = 'blue';
+                break;
+        }
 
-        // First path
         canvasCtx.beginPath();
-        canvasCtx.strokeStyle = 'blue';
-        canvasCtx.lineWidth = 0.5;
+
+        canvasCtx.lineWidth = 0.02;
+
         canvasCtx.moveTo(0, 100);
-        for (i = 0; i < value.length; i++) {
-            canvasCtx.lineTo(i, value[i]);
+        for (i = 0; i < maxValue.length; i++) {
+            canvasCtx.lineTo(i, 100 - maxValue[i]);
+            canvasCtx.lineTo(i, 100 - minValue[i]);
             canvasCtx.stroke();
+        }
+
+        canvasCtxRMS.beginPath();
+        canvasCtxRMS.strokeStyle = 'red';
+        canvasCtxRMS.lineWidth = 0.1;
+
+        canvasCtxRMS.moveTo(0, 100);
+        for (i = 0; i < maxValue.length; i++) {
+            canvasCtxRMS.lineTo(i, 100 - rms[i]);
+            canvasCtxRMS.stroke();
         }
 
     } else {
         // canvas-unsupported code here
     }
 
+    function calculateRMS(samples) {
+
+        var sum = 0;
+
+        for (var i = 0; i < samples.length; i++) {
+            sum = sum + (samples[i] * samples[i]);
+        }
+
+        var rms = Math.sqrt(sum / (samples.length - 1));
+
+        return rms;
+    }
 
     function getMousePosWave(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
@@ -78,26 +107,26 @@ function drawWave() {
         };
     }
 
-    canvasLine.addEventListener("click", startPlayHereWave)
+    canvasLine.addEventListener("click", startPlayHereWave);
 
     function startPlayHereWave(evt) {
-        var mousePos = getMousePosWave(canvas, evt)
-        mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
-        console.log(mouseTime)
+        var mousePos = getMousePosWave(canvas, evt);
+        mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x;
+        console.log(mouseTime);
         if (isPlaying) {
-            toggleSound()
+            toggleSound();
         }
-        startOffset = mouseTime
-        toggleSound()
-        
+        startOffset = mouseTime;
+        toggleSound();
+
     }
 
     // Function for chasing mouse wheel actions
-    //  canvas.addEventListener("mousewheel", mouseWheelFunction);
+    // canvasLine.addEventListener("mousewheel", mouseWheelFunction);
 
     function mouseWheelFunction(evt) {
-        // console.log(evt)
-        // console.log(keyEvent)
+        console.log(evt);
+        console.log(keyEvent);
         var delta = evt.deltaY;
         // console.log(delta)
         if (evt.ctrlKey) {
@@ -105,10 +134,10 @@ function drawWave() {
                 delta = evt.deltaX;
                 // console.log(delta)
                 //event.preventDefault();
-                zoomFreq(delta);
+                // zoomFreq(delta);
             } else {
                 event.preventDefault();
-                zoomTime(delta);
+                // zoomTime(delta);
             }
         } else if (evt.shiftKey) {
             delta = evt.deltaX;
@@ -132,21 +161,6 @@ function drawWave() {
         ctx.drawImage(tempCanvas, 0, 0);
 
     }
-    // Function for zooming freq axes only
-    function zoomFreq(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 1.1;
-        } else if (delta > 0) {
-            factor = 0.9;
-        } else {
-            factor = 1;
-        }
-        canvas.height = canvas.height * factor;
-        cHigh = canvas.height;
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
-    }
 
     // Function for zooming both axes
     function zoomAll(delta) {
@@ -168,28 +182,17 @@ function drawWave() {
     }
 }
 
-function findMax(array) {
-
-    return Math.max(...array);
-}
-
-function findMin(array) {
-
-    return Math.min(...array);
-}
-
 function drawLinePlayWave() {
-    var canvasWaveLine = document.getElementById("canvasWaveLine")
-    var ctxLine = canvasWaveLine.getContext("2d")
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
+    var ctxLine = canvasWaveLine.getContext("2d");
 
     if (isPlaying) {
-        ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height)
+        ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height);
 
         ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
             0 + ')';
         ctxLine.fillRect(Math.floor(canvasWaveLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasWaveLine.height);
 
-        window.requestAnimationFrame(drawLinePlayWave)
-
+        window.requestAnimationFrame(drawLinePlayWave);
     }
 }

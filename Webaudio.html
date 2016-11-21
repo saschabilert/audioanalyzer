@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <!-- start head with title and metadata -->
+
 <head>
 
     <!-- define metadata -->
@@ -13,6 +14,7 @@
 
 </head>
 <!-- start body with html-code -->
+
 <body>
 
     <!-- define headline -->
@@ -36,17 +38,21 @@
     </form>
 
 
-    <button id="player" type="button" class = "playPause">&#9654;</button>
-    <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class = "Gain">
+    <button id="player" type="button" class="playPause">&#9654;</button>
+    <button id = "stop" type="button" class = "stop">&#9724;</button>
+    <div data-js="info"></div>
+    <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
     <script type="text/javascript" src="MenuScript.js"></script>
 
 
     <div class="canvas" id="canvasDivWave">
         <canvas id="canvasWave" width="1550" height="200"></canvas>
-          <canvas id="canvasWaveLine" width="1550" height="200"></canvas>
-        </div>
-
+        <canvas id="canvasRMS" width="1550" height="200"></canvas>
+        <canvas id="canvasWaveLine" width="1550" height="200"></canvas>
+    </div>
+    <!--Space between waveform and table-->
     <br><br>
+
     <!-- generate dropwdown lists-->
     <table>
         <tr>
@@ -56,32 +62,32 @@
             <th>Choose a Display type:</th>
             <th>Choose a Colormap:</th>
         </tr>
-        <td><select id="blockLength" onchange="blockLength()">
+        <tr>
+            <td><select id="blockLength" onchange="blockLength()">
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
                     <option value="4096">4096</option>
                   </select></td>
-        <td><select id="windowType" onchange="windowType()">
+            <td><select id="windowType" onchange="windowType()">
                   <option value="rectangle">rectangle</option>
                   <option value="hann">hann</option>
                   <option value="hannpoisson">hannpoisson</option>
                   <option value="cosine">cosine</option>
                 </select></td>
-        <td><select id="overlap" onchange="overlap()">
+            <td><select id="overlap" onchange="overlap()">
                   <option value="0.5">50%</option>
                   <option value="0.0">0%</option>
                   <option value="0.75">25%</option>
                   <option value="0.25">75%</option>
-                  <option value="0.10">90%</option>
                 </select></td>
-        <td><select id="display" onchange="chooseDisplay()">
+            <td><select id="display" onchange="chooseDisplay()">
                   <option value="Spectrum">spectrum</option>
                   <option value="Phase">phase</option>
                   <option value="MFCC">MFCC</option>
                   <option value="Modulation Spectrum">modulation spectrum</option>
                   <option value="Group Delay">group delay</option>
                 </select></td>
-        <td><select id="colormap" onchange="colormap()">
+            <td><select id="colormap" onchange="colormap()">
                     <option value="1">Parula</option>
                     <option value="2">Gray</option>
                     <option value="3">Jet</option>
@@ -92,12 +98,11 @@
 
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1550" height="512"></canvas>
-        <canvas id="canvasScale" width="1550" height="540" ></canvas>
+        <canvas id="canvasScale" width="1550" height="540"></canvas>
         <canvas id="canvasLine" width="1550" height="512"></canvas>
     </div>
     <div class="canvas" id="divCanvasLegend">
         <canvas id="canvasLegend" width="300" height="75"></canvas>
-
     </div>
 </body>
 
