@@ -84,14 +84,11 @@ function toggleSound() {
            function update(){
 
                window.requestAnimationFrame(update);
-               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
-               stopbtn.onclick = function(){
-                   startTime = 0;
-                   startOffset = 0;
-                   isPlaying = false;
-                   audPlay.stop();
-                   info.innerHTML = "0.0"+"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+               if(isPlaying == false){
+                   return;
                }
+               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+
                if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
                    audioCtx.currentTime = 0;
                    startTime = 0;
@@ -118,7 +115,7 @@ function toggleSound() {
            isPlaying = false;
            playButton.innerHTML = "&#9654;";
            startOffset += audioCtx.currentTime - startTime;
-           info.innerHTML = "hello World";
+
 
        }
     gainNode = audioCtx.createGain();
