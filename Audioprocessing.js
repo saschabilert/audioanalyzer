@@ -64,8 +64,6 @@
 
              calculateDisplay(window, Audiodata.display);
 
-             console.log(Audiodata.modSpec);
-
              drawSpec();
 
              drawWave();
@@ -83,7 +81,7 @@
 
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
-     window = applyWindow(windowLen, Audiodata.windowFunction);
+     window = calculateWindow(windowLen, Audiodata.windowFunction);
      var endIdx = 0;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
@@ -125,7 +123,15 @@
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
-     var melFreq;
+     var absValueFreq = new Array(absValue.length);
+     var melFreq = new Array(absValueFreq.length);
+
+     for (var n = 0; n < absValue.length; n++) {
+         absValueFreq[n] = absValue[n] * (Audiodata.sampleRate / 2);
+     }
+
+     melFreq = calculateMelFreq(absValueFreq);
+
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
 
@@ -211,7 +217,7 @@
      return phaseValue;
  }
 
- function applyWindow(windowLen, type) {
+ function calculateWindow(windowLen, type) {
      var window = new Array(windowLen.length);
      switch (type) {
          case "hann":
@@ -260,4 +266,14 @@
          difference[i] = array[i + 1] - array[i];
      }
      return difference;
+ }
+
+ function calculateMelFreq(freq) {
+
+     var mel = new Array(freq.length);
+
+     for (var i = 0; i < freq.length; i++) {
+         mel[i] = 1127 * Math.log(1 + (freq[i] / 700));
+     }
+     return mel;
  }

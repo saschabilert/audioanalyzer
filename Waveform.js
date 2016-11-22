@@ -29,6 +29,7 @@ function drawWave() {
         var currentBlock = new Array(canvasBlockLen.length);
         var maxValue = new Array(nPart);
         var minValue = new Array(nPart);
+        var peak = new Array(nPart);
         var rms = new Array(nPart);
 
         for (i = 0; i < nPart; i++) {
@@ -40,6 +41,12 @@ function drawWave() {
             minValue[i] = Math.min(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
 
             rms[i] = calculateRMS(currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+
+            if (Math.max(...currentBlock) >= Math.abs(Math.min(...currentBlock))) {
+                peak[i] = Math.max(...currentBlock);
+            } else if (Math.max(...currentBlock) < Math.abs(Math.min(...currentBlock))) {
+                peak[i] = Math.abs(Math.min(...currentBlock));
+            }
 
         }
 
@@ -79,8 +86,13 @@ function drawWave() {
         canvasCtxRMS.moveTo(0, 100);
         for (i = 0; i < maxValue.length; i++) {
             canvasCtxRMS.lineTo(i, 100 - rms[i]);
+            canvasCtxRMS.lineTo(i, 100 + rms[i]);
             canvasCtxRMS.stroke();
         }
+
+        var crestFactor = calculateCrestFactor(peak, rms);
+
+        console.log(crestFactor);
 
     } else {
         // canvas-unsupported code here
@@ -93,10 +105,23 @@ function drawWave() {
         for (var i = 0; i < samples.length; i++) {
             sum = sum + (samples[i] * samples[i]);
         }
-
+        
         var rms = Math.sqrt(sum / (samples.length - 1));
 
         return rms;
+    }
+
+    function calculateCrestFactor(peak, rms) {
+
+        var crestFactor = new Array(rms.length);
+
+        for (var i = 0; i < crestFactor.length; i++) {
+            crestFactor[i] = peak[i] / rms[i];
+            if (rms[i] === 0) {
+                crestFactor[i] = 0;
+            }
+        }
+        return crestFactor;
     }
 
     function getMousePosWave(canvas, evt) {
