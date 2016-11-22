@@ -123,14 +123,11 @@
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
-     var absValueFreq = new Array(absValue.length);
-     var melFreq = new Array(absValueFreq.length);
+     var melFreq = new Array(absValue.length);
 
-     for (var n = 0; n < absValue.length; n++) {
-         absValueFreq[n] = absValue[n] * (Audiodata.sampleRate / 2);
-     }
+     melFreq = calculateMelFreq(absValue);
 
-     melFreq = calculateMelFreq(absValueFreq);
+     console.log(melFreq);
 
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
@@ -273,7 +270,7 @@
      var mel = new Array(freq.length);
 
      for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / 700));
+         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
      }
      return mel;
  }
