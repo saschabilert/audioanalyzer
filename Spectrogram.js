@@ -15,6 +15,9 @@ var tempCanvas = document.createElement("canvas"),
     tempCtx = tempCanvas.getContext("2d");
 var scaleOfsetLeft = 24;
 var scaleOfsetBottom = 28;
+var scrollPositionX=0;
+var scrollPositionY=0;
+
 
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec");
@@ -22,6 +25,7 @@ function drawSpec() {
     var canvasLine = document.getElementById("canvasLine")
     var ctxLine = canvasLine.getContext("2d")
     var div = document.getElementById('canvasDivSpec')
+    div.addEventListener("scroll", setscrollPosition);
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -278,13 +282,17 @@ function drawSpec() {
 function drawLinePlay() {
     var canvasLine = document.getElementById("canvasLine")
     var ctxLine = canvasLine.getContext("2d")
+    var div = document.getElementById("canvasDivSpec")
 
     if (isPlaying) {
         ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
-
+        var linePosition=Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset))
         ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
             0 + ')';
-        ctxLine.fillRect(Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasLine.height);
+        ctxLine.fillRect(linePosition, 0, 2, canvasLine.height);
+        if (linePosition>=scrollPositionX+div.offsetWidth-scaleOfsetLeft ) {
+        div.scrollLeft=div.scrollLeft+div.offsetWidth-20
+        }
 
         window.requestAnimationFrame(drawLinePlay)
 
@@ -478,10 +486,10 @@ function drawScale() {
 
 }
 
-function getscrollPosition() {
+function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
-    return {
-        x: div.scrollLeft,
-        y: div.scrollTop
-    };
+        scrollPositionX= div.scrollLeft,
+      scrollPositionY = div.scrollTop
+  console.log(scrollPositionX,scrollPositionY)
+
 }
