@@ -285,8 +285,14 @@ function drawLinePlay() {
     var div = document.getElementById("canvasDivSpec")
 
     if (isPlaying) {
-        ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
         var linePosition=Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset))
+      console.log(linePosition,scrollPositionX-scaleOfsetLeft,scrollPositionX )
+      if(linePosition<=scrollPositionX-scaleOfsetLeft ){
+        div.scrollLeft=linePosition+scaleOfsetLeft
+      }
+
+        ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+
         ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
             0 + ')';
         ctxLine.fillRect(linePosition, 0, 2, canvasLine.height);
