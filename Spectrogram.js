@@ -55,7 +55,7 @@ function drawSpec() {
                   break;*/
         case "Modulation Spectrum":
             var specData = Audiodata.modSpec;
-            console.log(Audiodata.modSpec)
+
             break;
         case "Group Delay":
             var specData = Audiodata.groupDelay;
@@ -235,7 +235,7 @@ function drawSpec() {
     function startPlayHere(evt) {
         var mousePos = getMousePos(canvas, evt)
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
-        console.log(mouseTime)
+
         if (isPlaying) {
             toggleSound()
         }
@@ -376,7 +376,7 @@ function displayMousePosition(evt) {
     position.innerHTML = mouseX + ' sec' + ' : ' + mouseY + ' Hz';
     //console.log(SpectroData.freqTimeRawData)
     point = SpectroData.freqTimeRawData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)][Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
-    console.log(canvas.height - (mousePos.y + 1))
+
     switch (Audiodata.display) {
         case "Spectrum":
             if (!isNaN(point)) {
@@ -420,7 +420,8 @@ function drawLinePlay() {
 
     if (isPlaying) {
         var linePosition = Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset))
-        console.log(linePosition, scrollPositionX - scaleOfsetLeft, scrollPositionX)
+
+
         if (linePosition <= scrollPositionX - scaleOfsetLeft) {
             div.scrollLeft = linePosition + scaleOfsetLeft
         }
@@ -477,20 +478,22 @@ function changeColorScale(delta) {
                 point = 99;
             }
             for (var kk = 0; kk < 3; kk++) {
-                specData.picData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                SpectroData.picData.data[nPictureData] = Math.round(colorScale[kk][point]);
                 nPictureData++;
             }
-            specData.picData.data[nPictureData] = 255;
+            SpectroData.picData.data[nPictureData] = 255;
             nPictureData++;
         }
 
     }
-    tempCtx.putImageData(specData.picData, 0, 0);
+    tempCtx.putImageData(SpectroData.picData, 0, 0);
     ctx.drawImage(tempCanvas, 0, 0);
     drawLegend()
 }
 
 function drawLegend() {
+  specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+  console.log(specLevelHigh,specLevelLow,specLevelWidth)
     legCanvas = document.getElementById("canvasLegend");
     ctxLegend = legCanvas.getContext("2d");
     ctxLegend.setTransform(1, 0, 0, 1, 0, 0);
@@ -518,7 +521,7 @@ function drawLegend() {
     ctxLegend.clearRect(0, canvasLegend.height - 15, canvasLegend.width * 2, canvasLegend.height)
     ctxLegend.font = "700 15px Arial";
     ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
-    ctxLegend.fillText(specLevelLow + specLevelWidth / 2 + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+    ctxLegend.fillText(specLevelLow + (specLevelWidth / 2) + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
     ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
     ctxLegend.beginPath()
 
@@ -574,7 +577,7 @@ function drawScale() {
         var quarter = freq % (1000 / 4);
         var half = freq % (1000 / 2);
         var full = freq % 1000;
-        console.log(freq, quarter, half, full)
+        //console.log(freq, quarter, half, full)
         if (quarter <= (freqPerLine)) {
             stepsY = kk;
             break;
@@ -620,7 +623,7 @@ function drawScale() {
         ctxScale.moveTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom);
         ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
         ctxScale.stroke();
-        console.log(timePerColumn)
+
         ctxScale.fillText((Math.floor((kk) * timePerColumn * (100 / logTime))) / (100 / logTime), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
     }
 
@@ -630,7 +633,7 @@ function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
     scrollPositionX = div.scrollLeft,
         scrollPositionY = div.scrollTop
-    console.log(scrollPositionX, scrollPositionY)
+
 
 }
 
