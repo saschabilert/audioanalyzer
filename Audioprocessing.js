@@ -146,7 +146,7 @@
 
      melFreq = calculateMelFreq(absValue);
 
-    //  console.log(melFreq);
+     //  console.log(melFreq);
 
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
@@ -178,7 +178,13 @@
      var dPhase = diff(phase);
 
      for (var k = 0; k < dPhase.length; k++) {
-         dPhase[k] = -1 * dPhase[k] / dOmega;
+
+         if (dPhase[k] > Math.round(2 * Math.PI)) {
+           dPhase[k]
+         } else if (dPhase[k] < Math.round(2 * Math.PI)) {
+
+         }
+             dPhase[k] = -1 * dPhase[k] / dOmega;
      }
      return dPhase;
  }
@@ -197,7 +203,7 @@
      analyticReal = new Array(real.length).fill(0);
 
      for (var k = 0; k < real.length; k++) {
-         analyticReal[k] = real[k] * analyticWeight[k];
+         analyticReal[k] = real[k] * analyticWeight[k]; 
      }
 
      inverseTransform(analyticReal, analyticImag);

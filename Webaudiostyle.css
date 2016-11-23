@@ -242,7 +242,8 @@ input[type=range]::-webkit-slider-thumb {
     min-width: 1200px;
     height: 545px;
     position: absolute;
-    overflow-x: scroll
+    overflow-x: scroll;
+    border:1px solid #bfbfbf;
 }
 #canvasSpec{
     margin-left: 25px;
@@ -256,12 +257,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasScale{
-    border:2px solid #000000;
     position: absolute;
     z-index: 0
-
 }
-
 
 #divCanvasLegend{
     margin-top: -75px;
@@ -273,32 +271,41 @@ input[type=range]::-webkit-slider-thumb {
 #canvasLegend{
     position: absolute;
     z-index: 0;
-    border:2px solid #000000;
+    border: 1px solid #bfbfbf;
 }
 
 #canvasDivWave{
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: 5px;
-    min-width: 1200px;
-    height: 200px;
+    min-width: 1205px;
+    height: 230px;
     position: absolute;
-    overflow-x: scroll
+    overflow-x: scroll;
+    border: 1px solid #bfbfbf;
 }
 
 #canvasWave{
+    margin-left: 25px;
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
 
 #canvasRMS{
+    margin-left: 25px;
     position: absolute;
     z-index: 0;
 }
 
 #canvasWaveLine{
+    margin-left: 25px;
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
+
+#canvasWaveSpec{
+
+}
+
 #progressBar {
     border: 1px solid #aaa;
     color: #fff;
