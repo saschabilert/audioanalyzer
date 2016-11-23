@@ -34,6 +34,7 @@ option {
     padding: 12px 16px;
     text-decoration: none;
     border:1px solid gray;
+
 }
 
 table {
@@ -231,6 +232,7 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 15px;
     padding-left:10px;
     padding-right: 10px;
+    border:1px solid gray;
 }
 
 

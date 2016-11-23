@@ -28,9 +28,28 @@
  var reader = new FileReader();
  var audioCtx = new AudioContext();
 
+
  // function triggered by loading a Audiodata
  function audioProcessing() {
+     var inputs = document.querySelectorAll( '.audioInput' );
+     Array.prototype.forEach.call( inputs, function( input )
+     {
+         var label	 = input.nextElementSibling;
 
+
+         input.addEventListener( 'change', function( e )
+         {
+
+             fileName = e.target.value.split( '\\' ).pop();
+             label.innerHTML = fileName;
+             if(fileName == ""){
+                 fileName = "Choose a file";
+                 label.innerHTML = fileName;
+
+             }
+         });
+         return;
+     });
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 

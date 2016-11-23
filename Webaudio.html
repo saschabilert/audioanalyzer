@@ -44,7 +44,7 @@
         </div>
     <div data-js="info"></div>
 
-    <script type="text/javascript" src="MenuScript.js"></script>
+
 
 
     <div class="canvas" id="canvasDivWave">
@@ -63,6 +63,7 @@
             <th>Choose an overlap:</th>
             <th>Choose a Display type:</th>
             <th>Choose a Colormap:</th>
+            <th>Choose min and max for spectogram:</th>
         </tr>
         <tr>
             <td><select id="blockLength" onchange="blockLength()">
@@ -95,9 +96,14 @@
                     <option value="3">Jet</option>
                     <option value="4">Hsv</option>
                 </select></td>
+            <td><p style="margin-top:0px; margin-bottom:0px;">min value:</p>
+                <input type = "text" id="min" onkeypress = "minMaxValue(event)" style="margin-top:0px">
+                <p style="margin-top:0px; margin-bottom:0px;">max value:</p>
+                <input type = "text" id="max" onkeypress = "minMaxValue(event)" style="margin-top:0px">
+            </td>
         </tr>
     </table>
-
+    <script type="text/javascript" src="MenuScript.js"></script>
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1550" height="512"></canvas>
         <canvas id="canvasScale" width="1574" height="540"></canvas>

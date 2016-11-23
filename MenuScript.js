@@ -42,7 +42,7 @@ var seekslider;
 var seeking = false;
 var seekto;
 var info = document.querySelector('[data-js="info"]');
-
+var fileName;
 
 
 
@@ -79,7 +79,7 @@ function toggleSound() {
                startOffset = 0;
                isPlaying = false;
                audPlay.stop();
-               info.innerHTML = "0.0"+"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+               info.innerHTML = "0.0"+":"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
            }
            function update(){
 
@@ -87,14 +87,14 @@ function toggleSound() {
                if(isPlaying == false){
                    return;
                }
-               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +":"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
 
                if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
                    audioCtx.currentTime = 0;
                    startTime = 0;
                    startOffset = 0;
                    isPlaying = false;
-                   info.innerHTML = "0.0"+"/"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+                   info.innerHTML = "0.0"+":"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
 
                }
            }
@@ -141,13 +141,28 @@ function enableButton() {
 var inputs = document.querySelectorAll( '.audioInput' );
 Array.prototype.forEach.call( inputs, function( input )
 {
-    var label	 = input.nextElementSibling,
-        labelVal = label.innerHTML;
+    var label	 = input.nextElementSibling;
 
-    input.addEventListener( 'change', function( e )
-    {
 
-          var fileName = e.target.value.split( '\\' ).pop();
-            label.innerHTML = fileName;
-    });
+     input.addEventListener( 'change', function( e )
+     {
+
+           fileName = e.target.value.split( '\\' ).pop();
+             label.innerHTML = fileName;
+         if(fileName == ""){
+             fileName = "Choose a file";
+             label.innerHTML = fileName;
+         }
+     });
 });
+
+var min;
+var max;
+function minMaxValue(e){
+    if(e.keyCode == 13 || e.which == 13){
+        min = document.getElementById("min").value;
+        console.log(min);
+        max = document.getElementById("max").value;
+        console.log(max);
+    }
+}
