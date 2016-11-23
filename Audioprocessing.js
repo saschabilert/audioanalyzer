@@ -127,7 +127,7 @@
 
      melFreq = calculateMelFreq(absValue);
 
-     console.log(melFreq);
+    //  console.log(melFreq);
 
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
