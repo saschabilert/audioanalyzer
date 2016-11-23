@@ -50,26 +50,9 @@ function drawWave() {
 
         }
 
-        switch (TypeColorScale) {
-            case 1:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-            case 2:
-                canvasCtx.strokeStyle = 'black';
-                break;
-            case 3:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-            case 4:
-                canvasCtx.strokeStyle = 'red';
-                break;
-            default:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-        }
 
         canvasCtx.beginPath();
-
+        canvasCtx.strokeStyle = "#003d99";
         canvasCtx.lineWidth = 0.02;
 
         canvasCtx.moveTo(0, 100);
@@ -80,7 +63,7 @@ function drawWave() {
         }
 
         canvasCtxRMS.beginPath();
-        canvasCtxRMS.strokeStyle = 'red';
+        canvasCtxRMS.strokeStyle = "#66a3ff";
         canvasCtxRMS.lineWidth = 0.1;
 
         canvasCtxRMS.moveTo(0, 100);
@@ -105,7 +88,7 @@ function drawWave() {
         for (var i = 0; i < samples.length; i++) {
             sum = sum + (samples[i] * samples[i]);
         }
-        
+
         var rms = Math.sqrt(sum / (samples.length - 1));
 
         return rms;
