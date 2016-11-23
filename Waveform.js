@@ -12,6 +12,8 @@ function drawWave() {
     var canvasLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
 
+    canvasLine.addEventListener("click", startPlayHereWave);
+
     if (canvas.getContext) {
 
         var canvasCtx = canvas.getContext("2d");
@@ -50,26 +52,10 @@ function drawWave() {
 
         }
 
-        switch (TypeColorScale) {
-            case 1:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-            case 2:
-                canvasCtx.strokeStyle = 'black';
-                break;
-            case 3:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-            case 4:
-                canvasCtx.strokeStyle = 'red';
-                break;
-            default:
-                canvasCtx.strokeStyle = 'blue';
-                break;
-        }
+        drawWaveTimeAxes();
 
         canvasCtx.beginPath();
-
+        canvasCtx.strokeStyle = "#003d99";
         canvasCtx.lineWidth = 0.02;
 
         canvasCtx.moveTo(0, 100);
@@ -80,7 +66,7 @@ function drawWave() {
         }
 
         canvasCtxRMS.beginPath();
-        canvasCtxRMS.strokeStyle = 'red';
+        canvasCtxRMS.strokeStyle = "#66a3ff";
         canvasCtxRMS.lineWidth = 0.1;
 
         canvasCtxRMS.moveTo(0, 100);
@@ -91,8 +77,6 @@ function drawWave() {
         }
 
         var crestFactor = calculateCrestFactor(peak, rms);
-
-        console.log(crestFactor);
 
     } else {
         // canvas-unsupported code here
@@ -105,7 +89,7 @@ function drawWave() {
         for (var i = 0; i < samples.length; i++) {
             sum = sum + (samples[i] * samples[i]);
         }
-        
+
         var rms = Math.sqrt(sum / (samples.length - 1));
 
         return rms;
@@ -132,78 +116,14 @@ function drawWave() {
         };
     }
 
-    canvasLine.addEventListener("click", startPlayHereWave);
-
     function startPlayHereWave(evt) {
         var mousePos = getMousePosWave(canvas, evt);
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x;
-        console.log(mouseTime);
         if (isPlaying) {
             toggleSound();
         }
         startOffset = mouseTime;
         toggleSound();
-
-    }
-
-    // Function for chasing mouse wheel actions
-    // canvasLine.addEventListener("mousewheel", mouseWheelFunction);
-
-    function mouseWheelFunction(evt) {
-        console.log(evt);
-        console.log(keyEvent);
-        var delta = evt.deltaY;
-        // console.log(delta)
-        if (evt.ctrlKey) {
-            if (evt.shiftKey) {
-                delta = evt.deltaX;
-                // console.log(delta)
-                //event.preventDefault();
-                // zoomFreq(delta);
-            } else {
-                event.preventDefault();
-                // zoomTime(delta);
-            }
-        } else if (evt.shiftKey) {
-            delta = evt.deltaX;
-            zoomAll(delta);
-        }
-    }
-
-    // Function for zooming the time axes only
-    function zoomTime(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 1.2;
-        } else if (delta > 0) {
-            factor = 0.8;
-        } else {
-            factor = 1;
-        }
-        canvas.width = canvas.width * factor;
-        cWidth = canvas.width;
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
-
-    }
-
-    // Function for zooming both axes
-    function zoomAll(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 1.1;
-        } else if (delta > 0) {
-            factor = 0.9;
-        } else {
-            factor = 1;
-
-        }
-        canvas.height = canvas.height * factor;
-        cHigh = canvas.height;
-        canvas.width = canvas.width * factor;
-        cWidth = canvas.width;
-        ctx.scale(cWidth / specWidth, cHigh / specHight);
-        ctx.drawImage(tempCanvas, 0, 0);
     }
 }
 
@@ -214,10 +134,54 @@ function drawLinePlayWave() {
     if (isPlaying) {
         ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height);
 
-        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
-            0 + ')';
+        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' + 0 + ')';
         ctxLine.fillRect(Math.floor(canvasWaveLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset)), 0, 2, canvasWaveLine.height);
 
         window.requestAnimationFrame(drawLinePlayWave);
     }
+}
+
+function drawWaveTimeAxes() {
+    var canvasWaveTimeAxes = document.getElementById("canvasWaveSpec");
+    var ctxWaveTimeAxes = canvasWaveTimeAxes.getContext("2d");
+    var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
+
+    var minDistanceNumbersX = 100;
+    var maxDistanceNumbersX = 200;
+
+    var timePerColumn = trackLenSec / canvasWaveTimeAxes.width;
+
+    var stepsX = 100;
+
+    var logTime = Math.log10(trackLenSec);
+    logTime = Math.pow(10, Math.floor(logTime))
+
+    for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
+        var time = kk * timePerColumn;
+        var quarter = time % (logTime / 4);
+        var half = time % (logTime / 2);
+        var full = time % logTime;
+
+        if (quarter <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        } else if (half <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        } else if (full <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        }
+    }
+
+    ctxWaveTimeAxes.beginPath();
+    ctxWaveTimeAxes.strokeStyle = "#000000";
+    ctxWaveTimeAxes.lineWidth = 1;
+
+    ctxWaveTimeAxes.moveTo(24, 0);
+    ctxWaveTimeAxes.lineTo(24, canvasWaveTimeAxes.height);
+    ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
+    ctxWaveTimeAxes.stroke();
+    
+
 }

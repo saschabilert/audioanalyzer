@@ -28,9 +28,28 @@
  var reader = new FileReader();
  var audioCtx = new AudioContext();
 
+
  // function triggered by loading a Audiodata
  function audioProcessing() {
+     var inputs = document.querySelectorAll( '.audioInput' );
+     Array.prototype.forEach.call( inputs, function( input )
+     {
+         var label	 = input.nextElementSibling;
 
+
+         input.addEventListener( 'change', function( e )
+         {
+
+             fileName = e.target.value.split( '\\' ).pop();
+             label.innerHTML = fileName;
+             if(fileName == ""){
+                 fileName = "Choose a file";
+                 label.innerHTML = fileName;
+
+             }
+         });
+         return;
+     });
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -123,14 +142,11 @@
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
-     var absValueFreq = new Array(absValue.length);
-     var melFreq = new Array(absValueFreq.length);
+     var melFreq = new Array(absValue.length);
 
-     for (var n = 0; n < absValue.length; n++) {
-         absValueFreq[n] = absValue[n] * (Audiodata.sampleRate / 2);
-     }
+     melFreq = calculateMelFreq(absValue);
 
-     melFreq = calculateMelFreq(absValueFreq);
+     //  console.log(melFreq);
 
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
@@ -162,7 +178,13 @@
      var dPhase = diff(phase);
 
      for (var k = 0; k < dPhase.length; k++) {
-         dPhase[k] = -1 * dPhase[k] / dOmega;
+
+         if (dPhase[k] > Math.round(2 * Math.PI)) {
+           dPhase[k]
+         } else if (dPhase[k] < Math.round(2 * Math.PI)) {
+
+         }
+             dPhase[k] = -1 * dPhase[k] / dOmega;
      }
      return dPhase;
  }
@@ -181,7 +203,7 @@
      analyticReal = new Array(real.length).fill(0);
 
      for (var k = 0; k < real.length; k++) {
-         analyticReal[k] = real[k] * analyticWeight[k];
+         analyticReal[k] = real[k] * analyticWeight[k]; 
      }
 
      inverseTransform(analyticReal, analyticImag);
@@ -273,7 +295,7 @@
      var mel = new Array(freq.length);
 
      for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / 700));
+         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
      }
      return mel;
  }
