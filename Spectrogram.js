@@ -241,16 +241,11 @@ function drawSpec() {
         }
         startOffset = mouseTime
 
-        drawLineKlick(mousePos.x)
+        drawLineKlick(mouseTime)
+        drawLineKlickWave(mouseTime)
     }
 
-    function drawLineKlick(mousePos) {
-        ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
-        ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
-            0 + ')';
-        ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
-        console.log(audioCtx.currentTime)
-    }
+
 
 
 
@@ -357,6 +352,18 @@ function drawSpec() {
 
 }
 //Function for changing the color scale and/or the scaling of the color scale
+
+function drawLineKlick(mouseTime) {
+    canvasLine=document.getElementById("canvasLine")
+    canvas=document.getElementById("canvasSpec")
+    ctxLine=canvasLine.getContext("2d")
+      mousePos=(mouseTime *canvas.width)/(Audiodata.signalLen / Audiodata.sampleRate)
+    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+        0 + ')';
+    ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
+
+}
 
 function displayMousePosition(evt) {
     var canvas = document.getElementById("canvasSpec");
