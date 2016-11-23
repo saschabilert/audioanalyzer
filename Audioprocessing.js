@@ -21,7 +21,7 @@
      windowFunction: undefined,
      cepstrum: undefined,
      modSpec: undefined,
-     display: undefined
+     display: "Spectrum"
  };
 
  // define global audioContext

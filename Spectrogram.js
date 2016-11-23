@@ -15,8 +15,8 @@ var tempCanvas = document.createElement("canvas"),
     tempCtx = tempCanvas.getContext("2d");
 var scaleOfsetLeft = 24;
 var scaleOfsetBottom = 28;
-var scrollPositionX=0;
-var scrollPositionY=0;
+var scrollPositionX = 0;
+var scrollPositionY = 0;
 
 
 function drawSpec() {
@@ -44,7 +44,28 @@ function drawSpec() {
 
 
     //Importing spectrogram data to local variable
-    var specData = Audiodata.spectrogram;
+    switch (Audiodata.display) {
+        case "Spectrum":
+            var specData = Audiodata.spectrogram;
+            break;
+        case "Phase":
+            var specData = Audiodata.phase;
+
+            break;
+      /*  case "MFCC":
+            Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+            break;*/
+        case "Modulation Spectrum":
+            var specData=Audiodata.modSpec;
+            console.log(Audiodata.modSpec)
+            break;
+        case "Group Delay":
+            var specData=Audiodata.groupDelay;
+
+            break;
+
+    }
+
 
     // Defining varables with no of spectrograms
     var specWidth = specData.length;
@@ -65,6 +86,7 @@ function drawSpec() {
     creatGray();
     creatJet();
     creatHsv();
+    creatTwilight();
 
     if (TypeColorScale == 1) {
         colorScale = parulaScale;
@@ -94,32 +116,95 @@ function drawSpec() {
 
         // Create counter variable for the numbers in the ImageData variable
         var nPictureData = 0;
+        switch (Audiodata.display) {
+            case "Spectrum":
+            for (var j = specHight - 1; j > 0; j--) {
 
-        // Loop for transfering the spectrogram data to image data with converting them into the color scale
-        for (var j = specHight-1; j >0 ; j--) {
+                for (var i = 0; i < specWidth; i++) {
+                    point = 20 * Math.log10(specData[i][j] / 2048);
 
-            for (var i = 0; i < specWidth; i++) {
-                point = 20 * Math.log10(specData[i][j] / 2048);
+                    point += Math.abs(specLevelLow);
+                    point = Math.max(point, 0);
+                    point = Math.min(point, specLevelWidth);
 
-                point += Math.abs(specLevelLow);
-                point = Math.max(point, 0);
-                point = Math.min(point, specLevelWidth);
+                    point /= Math.abs(specLevelWidth);
+                    point *= noOfColorSteps - 1;
+                    point = Math.floor(point);
+                    if (point > 99) {
+                        point = 99;
+                    }
 
-                point /= Math.abs(specLevelWidth);
-                point *= noOfColorSteps - 1;
-                point = Math.floor(point);
-                if (point > 99) {
-                    point = 99;
-                }
-
-                for (var kk = 0; kk < 3; kk++) {
-                    pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                    for (var kk = 0; kk < 3; kk++) {
+                        pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                        nPictureData++;
+                    }
+                    pictureData.data[nPictureData] = 255;
                     nPictureData++;
                 }
-                pictureData.data[nPictureData] = 255;
-                nPictureData++;
             }
+                break;
+            case "Phase":
+            for (var j = specHight - 1; j > 0; j--) {
+
+                for (var i = 0; i < specWidth; i++) {
+                    point = specData[i][j];
+
+                    point += Math.PI;
+
+                    point *= noOfColorSteps - 1;
+                    point /=2*Math.PI;
+                    point = Math.floor(point);
+                    if (point > 99) {
+                        point = 99;
+                    }
+
+                    for (var kk = 0; kk < 3; kk++) {
+                        pictureData.data[nPictureData] = Math.round(twilightScale[kk][point]);
+                        nPictureData++;
+                    }
+                    pictureData.data[nPictureData] = 255;
+                    nPictureData++;
+                }
+            }
+                break;
+            /*case "MFCC":
+                Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                break;*/
+            case "Modulation Spectrum":
+
+                break;
+            case "Group Delay":
+            for (var j = specHight - 1; j > 0; j--) {
+
+                for (var i = 0; i < specWidth; i++) {
+                    point = specData[i][j];
+
+                    point +=0.5*((1/Audiodata.sampleRate)*Audiodata.blockLen)
+                    point *=1000
+
+
+
+                    point *= noOfColorSteps - 1;
+                    point/=((1/Audiodata.sampleRate)*Audiodata.blockLen)*1000
+                    point = Math.floor(point);
+                    if (point > 99) {
+                        point = 99;
+                    }
+
+                    for (var kk = 0; kk < 3; kk++) {
+                        pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                        nPictureData++;
+                    }
+                    pictureData.data[nPictureData] = 255;
+                    nPictureData++;
+                }
+            }
+                break;
+
         }
+
+        // Loop for transfering the spectrogram data to image data with converting them into the color scale
+
 
         // Putting imageData into the temp canvas
         tempCtx.putImageData(pictureData, 0, 0);
@@ -228,7 +313,7 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight) {
+        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor<=(tempCanvas.height*4)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvas.height = canvas.height * factor;
             cHigh = canvas.height;
@@ -252,7 +337,7 @@ function drawSpec() {
             factor = 1;
 
         }
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor<=(tempCanvas.height*4)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.height = canvas.height * factor;
@@ -285,19 +370,19 @@ function drawLinePlay() {
     var div = document.getElementById("canvasDivSpec")
 
     if (isPlaying) {
-        var linePosition=Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset))
-      console.log(linePosition,scrollPositionX-scaleOfsetLeft,scrollPositionX )
-      if(linePosition<=scrollPositionX-scaleOfsetLeft ){
-        div.scrollLeft=linePosition+scaleOfsetLeft
-      }
+        var linePosition = Math.floor(canvasLine.width / (Audiodata.signalLen / Audiodata.sampleRate) * (audioCtx.currentTime - startTime + startOffset))
+        console.log(linePosition, scrollPositionX - scaleOfsetLeft, scrollPositionX)
+        if (linePosition <= scrollPositionX - scaleOfsetLeft) {
+            div.scrollLeft = linePosition + scaleOfsetLeft
+        }
 
         ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
 
         ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
             0 + ')';
         ctxLine.fillRect(linePosition, 0, 2, canvasLine.height);
-        if (linePosition>=scrollPositionX+div.offsetWidth-scaleOfsetLeft ) {
-        div.scrollLeft=div.scrollLeft+div.offsetWidth-20
+        if (linePosition >= scrollPositionX + div.offsetWidth - scaleOfsetLeft) {
+            div.scrollLeft = div.scrollLeft + div.offsetWidth - 20
         }
 
         window.requestAnimationFrame(drawLinePlay)
@@ -327,7 +412,7 @@ function changeColorScale(delta) {
     var specHight = specData[1].length;
 
     var nPictureData = 0;
-    for (var j = specHight-1; j >0 ; j--) {
+    for (var j = specHight - 1; j > 0; j--) {
 
         for (var i = 0; i < specWidth; i++) {
             point = 20 * Math.log10(specData[i][j] / 2048);
@@ -494,8 +579,8 @@ function drawScale() {
 
 function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
-        scrollPositionX= div.scrollLeft,
-      scrollPositionY = div.scrollTop
-  console.log(scrollPositionX,scrollPositionY)
+    scrollPositionX = div.scrollLeft,
+        scrollPositionY = div.scrollTop
+    console.log(scrollPositionX, scrollPositionY)
 
 }
