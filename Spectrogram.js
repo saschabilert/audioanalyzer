@@ -5,6 +5,9 @@ var SpectroData = {
     lengthCanvas: undefined,
     hightCanvas: undefined,
     colorScale: undefined,
+    scaleFactorWidth: undefined,
+    scaleFactorHeight: undefined,
+    freqTimeRawData: undefined,
 };
 var TypeColorScale = 1;
 //keyEvent = 0;
@@ -19,28 +22,23 @@ var scrollPositionX = 0;
 var scrollPositionY = 0;
 
 
+
 function drawSpec() {
-    var canvas = document.getElementById("canvasSpec");
-    var ctx = canvas.getContext("2d");
+    var canvas = document.getElementById("canvasSpec")
+    var ctx = canvas.getContext("2d")
     var canvasLine = document.getElementById("canvasLine")
     var ctxLine = canvasLine.getContext("2d")
-    var div = document.getElementById('canvasDivSpec')
+    var div = document.getElementById("canvasDivSpec")
     div.addEventListener("scroll", setscrollPosition);
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var cWidth = canvas.width;
     var cHigh = canvas.height;
-    //  console.log(cWidth, cHigh)
+
     //Saving actual canvas size to global variable object
     SpectroData.lengthCanvas = cWidth;
     SpectroData.hightCanvas = cHigh;
-
-    // Set level boarders for color scaling
-
-    // Variable for color scale
-
-
 
 
     //Importing spectrogram data to local variable
@@ -52,20 +50,20 @@ function drawSpec() {
             var specData = Audiodata.phase;
 
             break;
-      /*  case "MFCC":
-            Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
-            break;*/
+            /*  case "MFCC":
+                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                  break;*/
         case "Modulation Spectrum":
-            var specData=Audiodata.modSpec;
+            var specData = Audiodata.modSpec;
             console.log(Audiodata.modSpec)
             break;
         case "Group Delay":
-            var specData=Audiodata.groupDelay;
+            var specData = Audiodata.groupDelay;
 
             break;
 
     }
-
+    SpectroData.freqTimeRawData = specData;
 
     // Defining varables with no of spectrograms
     var specWidth = specData.length;
@@ -88,23 +86,24 @@ function drawSpec() {
     creatHsv();
     creatTwilight();
 
-    if (TypeColorScale == 1) {
-        colorScale = parulaScale;
-    } else if (TypeColorScale == 2) {
-        colorScale = grayScale;
-    } else if (TypeColorScale == 3) {
-        colorScale = jetScale;
-    } else if (TypeColorScale == 4) {
-        colorScale = hsvScale;
-    }
-    SpectroData.colorScale = colorScale;
 
-    var noOfColorSteps = colorScale[1].length;
 
     draw();
 
     // Function for drawing a new spectrogram
     function draw() {
+        if (TypeColorScale == 1) {
+            colorScale = parulaScale;
+        } else if (TypeColorScale == 2) {
+            colorScale = grayScale;
+        } else if (TypeColorScale == 3) {
+            colorScale = jetScale;
+        } else if (TypeColorScale == 4) {
+            colorScale = hsvScale;
+        }
+        SpectroData.colorScale = colorScale;
+
+        var noOfColorSteps = colorScale[1].length;
 
 
 
@@ -118,87 +117,87 @@ function drawSpec() {
         var nPictureData = 0;
         switch (Audiodata.display) {
             case "Spectrum":
-            for (var j = specHight - 1; j > 0; j--) {
+                for (var j = specHight - 1; j > 0; j--) {
 
-                for (var i = 0; i < specWidth; i++) {
-                    point = 20 * Math.log10(specData[i][j] / 2048);
+                    for (var i = 0; i < specWidth; i++) {
+                        point = 20 * Math.log10(specData[i][j] / 2048);
 
-                    point += Math.abs(specLevelLow);
-                    point = Math.max(point, 0);
-                    point = Math.min(point, specLevelWidth);
+                        point += Math.abs(specLevelLow);
+                        point = Math.max(point, 0);
+                        point = Math.min(point, specLevelWidth);
 
-                    point /= Math.abs(specLevelWidth);
-                    point *= noOfColorSteps - 1;
-                    point = Math.floor(point);
-                    if (point > 99) {
-                        point = 99;
-                    }
+                        point /= Math.abs(specLevelWidth);
+                        point *= noOfColorSteps - 1;
+                        point = Math.floor(point);
+                        if (point > 99) {
+                            point = 99;
+                        }
 
-                    for (var kk = 0; kk < 3; kk++) {
-                        pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                        for (var kk = 0; kk < 3; kk++) {
+                            pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                            nPictureData++;
+                        }
+                        pictureData.data[nPictureData] = 255;
                         nPictureData++;
                     }
-                    pictureData.data[nPictureData] = 255;
-                    nPictureData++;
                 }
-            }
                 break;
             case "Phase":
-            for (var j = specHight - 1; j > 0; j--) {
+                for (var j = specHight - 1; j > 0; j--) {
 
-                for (var i = 0; i < specWidth; i++) {
-                    point = specData[i][j];
+                    for (var i = 0; i < specWidth; i++) {
+                        point = specData[i][j];
 
-                    point += Math.PI;
+                        point += Math.PI;
 
-                    point *= noOfColorSteps - 1;
-                    point /=2*Math.PI;
-                    point = Math.floor(point);
-                    if (point > 99) {
-                        point = 99;
-                    }
+                        point *= noOfColorSteps - 1;
+                        point /= 2 * Math.PI;
+                        point = Math.floor(point);
+                        if (point > 99) {
+                            point = 99;
+                        }
 
-                    for (var kk = 0; kk < 3; kk++) {
-                        pictureData.data[nPictureData] = Math.round(twilightScale[kk][point]);
+                        for (var kk = 0; kk < 3; kk++) {
+                            pictureData.data[nPictureData] = Math.round(twilightScale[kk][point]);
+                            nPictureData++;
+                        }
+                        pictureData.data[nPictureData] = 255;
                         nPictureData++;
                     }
-                    pictureData.data[nPictureData] = 255;
-                    nPictureData++;
                 }
-            }
                 break;
-            /*case "MFCC":
-                Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
-                break;*/
+                /*case "MFCC":
+                    Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                    break;*/
             case "Modulation Spectrum":
 
                 break;
             case "Group Delay":
-            for (var j = specHight - 1; j > 0; j--) {
+                for (var j = specHight - 1; j > 0; j--) {
 
-                for (var i = 0; i < specWidth; i++) {
-                    point = specData[i][j];
+                    for (var i = 0; i < specWidth; i++) {
+                        point = specData[i][j];
 
-                    point +=0.5*((1/Audiodata.sampleRate)*Audiodata.blockLen)
-                    point *=1000
+                        point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
+                        point *= 1000
 
 
 
-                    point *= noOfColorSteps - 1;
-                    point/=((1/Audiodata.sampleRate)*Audiodata.blockLen)*1000
-                    point = Math.floor(point);
-                    if (point > 99) {
-                        point = 99;
-                    }
+                        point *= noOfColorSteps - 1;
+                        point /= ((1 / Audiodata.sampleRate) * Audiodata.blockLen) * 1000
+                        point = Math.floor(point);
+                        if (point > 99) {
+                            point = 99;
+                        }
 
-                    for (var kk = 0; kk < 3; kk++) {
-                        pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                        for (var kk = 0; kk < 3; kk++) {
+                            pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                            nPictureData++;
+                        }
+                        pictureData.data[nPictureData] = 255;
                         nPictureData++;
                     }
-                    pictureData.data[nPictureData] = 255;
-                    nPictureData++;
                 }
-            }
                 break;
 
         }
@@ -211,29 +210,26 @@ function drawSpec() {
 
         //SCaling the actual cavas to fit the whole Spectrogram
         ctx.scale(cWidth / specWidth, cHigh / specHight);
+        SpectroData.scaleFactorWidth = cWidth / specWidth;
+        SpectroData.scaleFactorHeight = cHigh / specHight;
         // console.log(cWidth / specWidth, cHigh / specHight)
         // Draw the image from the temp canvas to the scaled canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(tempCanvas, 0, 0);
 
         // console.log(testdata)
-        specData.picData = pictureData;
+        SpectroData.picData = pictureData;
         drawLegend()
         drawScale()
 
     }
 
-    function getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-            x: Math.floor(evt.clientX - rect.left),
-            y: Math.floor(evt.clientY - rect.top)
-        };
-    }
+
 
     // Function for chasing mouse wheel actions
     canvasLine.addEventListener("mousewheel", mouseWheelFunction);
     canvasLine.addEventListener("click", startPlayHere)
+    canvasLine.addEventListener('mousemove', displayMousePosition);
 
 
     function startPlayHere(evt) {
@@ -244,7 +240,7 @@ function drawSpec() {
             toggleSound()
         }
         startOffset = mouseTime
-        toggleSound()
+
         drawLineKlick(mousePos.x)
     }
 
@@ -298,6 +294,8 @@ function drawSpec() {
 
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
+            SpectroData.scaleFactorWidth = cWidth / specWidth;
+            SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
         }
@@ -313,7 +311,7 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor<=(tempCanvas.height*4)) {
+        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor <= (tempCanvas.height * 4)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvas.height = canvas.height * factor;
             cHigh = canvas.height;
@@ -321,6 +319,8 @@ function drawSpec() {
 
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
+            SpectroData.scaleFactorWidth = cWidth / specWidth;
+            SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
         }
@@ -337,7 +337,7 @@ function drawSpec() {
             factor = 1;
 
         }
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor<=(tempCanvas.height*4)) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 4)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.height = canvas.height * factor;
@@ -348,19 +348,61 @@ function drawSpec() {
             canvasLine.width = canvasLine.width * factor;
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
+            SpectroData.scaleFactorWidth = cWidth / specWidth;
+            SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
         }
     }
+
 }
 //Function for changing the color scale and/or the scaling of the color scale
 
-/*canvas.addEventListener('mousemove', function(evt) {
-  var mousePos = getMousePos(canvas, evt);
-  alert(mousePos)
-  var message = 'Mouse positions: ' + mousePos.x + ':' + mousePos.y;
-  //writeMessage(canvasDraw, message);
-}, false);*/
+function displayMousePosition(evt) {
+    var canvas = document.getElementById("canvasSpec");
+    var position = document.getElementById("Position");
+    var wert = document.getElementById("wert");
+    var mousePos = getMousePos(canvas, evt);
+    sigLenSec = Audiodata.signalLen / Audiodata.sampleRate;
+    mouseX = Math.round((sigLenSec / canvas.width * mousePos.x) * 100) / 100;
+    mouseY = Math.round(((Audiodata.sampleRate / 2) / canvas.height) * (canvas.height - mousePos.y))
+    position.innerHTML = mouseX + ' sec' + ' : ' + mouseY + ' Hz';
+    //console.log(SpectroData.freqTimeRawData)
+    point = SpectroData.freqTimeRawData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)][Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
+    console.log(canvas.height - (mousePos.y + 1))
+    switch (Audiodata.display) {
+        case "Spectrum":
+            if (!isNaN(point)) {
+                point = 20 * Math.log10(point / 2048);
+                point = Math.max(specLevelLow, point);
+                point = Math.min(point, specLevelHigh)
+                wert.innerHTML = Math.round(point) + 'dB'
+            }
+            break;
+        case "Phase":
+            if (!isNaN(point)) {
+                wert.innerHTML = Math.round(point * 100) / 100
+            }
+            break;
+            /*  case "MFCC":
+                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                  break;*/
+        case "Modulation Spectrum":
+
+            break;
+        case "Group Delay":
+            point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
+            if (!isNaN(point)) {
+                point *= 1000
+                wert.innerHTML = Math.round(point * 100) / 100 + "ms"
+            }
+            break;
+
+    }
+
+
+
+};
 
 
 
@@ -583,4 +625,12 @@ function setscrollPosition() {
         scrollPositionY = div.scrollTop
     console.log(scrollPositionX, scrollPositionY)
 
+}
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: Math.floor(evt.clientX - rect.left),
+        y: Math.floor(evt.clientY - rect.top)
+    };
 }

@@ -21,7 +21,7 @@ function chooseDisplay() {
 
 function colormap(){
     TypeColorScale = +(document.getElementById("colormap").value);
-    changeColorScale();
+    draw();
 }
 var audio = document.getElementById("myAudio");
 var startOffset = 0;
