@@ -31,18 +31,16 @@
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
-     var inputs = document.querySelectorAll( '.audioInput' );
-     Array.prototype.forEach.call( inputs, function( input )
-     {
-         var label	 = input.nextElementSibling;
+     var inputs = document.querySelectorAll('.audioInput');
+     Array.prototype.forEach.call(inputs, function(input) {
+         var label = input.nextElementSibling;
 
 
-         input.addEventListener( 'change', function( e )
-         {
+         input.addEventListener('change', function(e) {
 
-             fileName = e.target.value.split( '\\' ).pop();
+             fileName = e.target.value.split('\\').pop();
              label.innerHTML = fileName;
-             if(fileName == ""){
+             if (fileName == "") {
                  fileName = "Choose a file";
                  label.innerHTML = fileName;
 
@@ -139,6 +137,7 @@
      }
  }
 
+ // Cosine - transform needed to calculate the MFCC's
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
@@ -179,12 +178,12 @@
 
      for (var k = 0; k < dPhase.length; k++) {
 
-         if (dPhase[k] > Math.round(2 * Math.PI)) {
-           dPhase[k]
-         } else if (dPhase[k] < Math.round(2 * Math.PI)) {
-
+         if (dPhase[k] > Math.PI) {
+             dPhase[k] = dPhase[k] - 2 * Math.PI;
+         } else if (dPhase[k] < (-1 * Math.PI)) {
+             dPhase[k] = dPhase[k] + 2 * Math.PI;
          }
-             dPhase[k] = -1 * dPhase[k] / dOmega;
+         dPhase[k] = -1 * dPhase[k] / dOmega;
      }
      return dPhase;
  }
@@ -203,7 +202,7 @@
      analyticReal = new Array(real.length).fill(0);
 
      for (var k = 0; k < real.length; k++) {
-         analyticReal[k] = real[k] * analyticWeight[k]; 
+         analyticReal[k] = real[k] * analyticWeight[k];
      }
 
      inverseTransform(analyticReal, analyticImag);
@@ -298,4 +297,8 @@
          mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
      }
      return mel;
+ }
+
+ function calculateInstFreq() {
+
  }
