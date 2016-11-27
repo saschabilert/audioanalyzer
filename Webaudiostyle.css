@@ -62,6 +62,7 @@ td, th {
     z-index: -1;
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
+    margin-top:10px;
 
 }
 .audioInput + label {
@@ -76,6 +77,7 @@ td, th {
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     border:1px solid gray;
+    margin-top:10px;
 float:left;
 
 }
@@ -228,7 +230,7 @@ input[type=range]::-webkit-slider-thumb {
     text-decoration:none;
     text-align:center;
     text-shadow:1px 1px 0px #ffffff;
-    margin-top:-2px;
+    margin-top:10px;
     border-radius: 15px;
     padding-left:10px;
     padding-right: 10px;
@@ -335,4 +337,50 @@ input[type=range]::-webkit-slider-thumb {
     border-style: solid;
     border-width:1px;
     padding: 3px;
+}
+
+.info {
+margin-left:175px;
+}
+
+
+header{
+    height: 100px;
+    background:#CCC;
+    width:500px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:-22px;
+
+}
+
+a.class1:link {
+    background-color:lightgray;
+    padding:10px 20px;
+    text-align:center;
+    display: inline-block;
+    border-radius:10px;
+    color: black;
+    text-decoration: none;
+    margin-left:50px;
+
+
+}
+a.class1:hover {
+    background-color:darkgray;
+}
+h1{
+    text-align:center;
+}
+
+.Findus{
+    float:right;
+    margin-top:-80px;
+    padding:10px 10px;
+
+}
+a:link{
+    padding:5px 5px;
 }
