@@ -1,10 +1,10 @@
-pa=hsv(100);
+pa=twilight(100);
 
 
     
 fid=fopen(['hsv.js'],'w');
 % Writing the lines representing the header of the new file
-fprintf(fid,'%s\n\n','var hsvScale;');
+fprintf(fid,'%s\n\n','var Scale;');
 fprintf(fid,'%s\n','function creatHsv(){');
 fprintf(fid,'%s','var rgbR=[');
 for kk=1:length(pa)

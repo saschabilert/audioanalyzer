@@ -158,10 +158,34 @@ Array.prototype.forEach.call( inputs, function( input )
 var min;
 var max;
 function minMaxValue(e){
+
     if(e.keyCode == 13 || e.which == 13){
-        min = document.getElementById("min").value;
-        console.log(min);
-        max = document.getElementById("max").value;
-        console.log(max);
+
+        min= document.getElementById("min").value;
+        max= document.getElementById("max").value;
+        if (min!=0) {min=parseInt(min)
+        }
+        if(max!=0){max=parseInt(max)}
+
+
+
+if (min<0 && max<0 && max>min){
+
+  specLevelHigh=max;
+specLevelLow=min;}
+else if (min<0 && max==0 && specLevelHigh>min) {
+
+  specLevelLow=min;
+}
+else if (min==0 && max<0 && specLevelLow<max) {
+
+  specLevelHigh=max;
+}
+else if (min>=0 || max>=0 || max<min ) {
+  alert("Es duerfen nur Werte zwischen 0 und -120 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ")
+}
+
+      changeColorScale();
     }
+
 }

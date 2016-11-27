@@ -123,8 +123,24 @@ function drawWave() {
             toggleSound();
         }
         startOffset = mouseTime;
-        toggleSound();
+        drawLineKlickWave(mouseTime);
+        drawLineKlick(mouseTime)
     }
+
+
+
+
+}
+
+function drawLineKlickWave(mouseTime) {
+  var canvasWaveLine = document.getElementById("canvasWaveLine");
+  var canvas = document.getElementById("canvasWave")
+  var ctxLine = canvasWaveLine.getContext("2d");
+  mousePos=(mouseTime *canvas.width)/(Audiodata.signalLen / Audiodata.sampleRate)
+    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+        0 + ')';
+    ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
 }
 
 function drawLinePlayWave() {
@@ -182,6 +198,6 @@ function drawWaveTimeAxes() {
     ctxWaveTimeAxes.lineTo(24, canvasWaveTimeAxes.height);
     ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
     ctxWaveTimeAxes.stroke();
-    
+
 
 }
