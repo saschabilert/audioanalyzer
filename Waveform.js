@@ -126,10 +126,6 @@ function drawWave() {
         drawLineKlickWave(mouseTime);
         drawLineKlick(mouseTime)
     }
-
-
-
-
 }
 
 function drawLineKlickWave(mouseTime) {
@@ -160,6 +156,10 @@ function drawLinePlayWave() {
 function drawWaveTimeAxes() {
     var canvasWaveTimeAxes = document.getElementById("canvasWaveSpec");
     var ctxWaveTimeAxes = canvasWaveTimeAxes.getContext("2d");
+    var div = document.getElementById('canvasDivWave')
+    var divWidth = div.offsetWidth;
+    var divHeight = div.offsetHeight;
+
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
     var minDistanceNumbersX = 100;
@@ -189,6 +189,17 @@ function drawWaveTimeAxes() {
             break;
         }
     }
+
+
+    ctxWaveTimeAxes.clearRect(0, 0, canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
+    ctxWaveTimeAxes.beginPath();
+    ctxWaveTimeAxes.moveTo(scaleOfsetLeft, 0);
+    ctxWaveTimeAxes.lineTo(scaleOfsetLefTimt, canvasWaveTimeAxes.height - scaleOfsetBottom)
+    ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width - 1, canvasWaveTimeAxes.height - scaleOfsetBottom)
+    ctxWaveTimeAxes.strokeStyle = 'black';
+    ctxWaveTimeAxes.lineWidth = 1;
+    ctxWaveTimeAxes.stroke();
+    ctxWaveTimeAxes.beginPath();
 
     ctxWaveTimeAxes.beginPath();
     ctxWaveTimeAxes.strokeStyle = "#000000";
