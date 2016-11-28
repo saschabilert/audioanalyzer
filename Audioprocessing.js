@@ -17,16 +17,17 @@
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
+     instantFreq: undefined,
      windowFunction: undefined,
      cepstrum: undefined,
      modSpec: undefined,
      display: "Spectrum"
  };
+
  enableButton();
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
-
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
@@ -110,6 +111,8 @@
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
+             case "Instant Frequency":
+                 Audiodata.instantFreq = calculateInstantFreq(realPart, imagPart);
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
                  break;
@@ -167,6 +170,10 @@
          dPhase[k] = -1 * dPhase[k] / dOmega;
      }
      return dPhase;
+ }
+
+ function calculateInstantFreq(real, imag) {
+
  }
 
  function calculateModSpec(real, imag) {
@@ -278,8 +285,4 @@
          mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
      }
      return mel;
- }
-
- function calculateInstFreq() {
-
  }

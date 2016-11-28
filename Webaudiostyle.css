@@ -291,9 +291,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasDivWave{
-    margin-top: 40px;
+    margin-top: 50px;
     margin-left: 5px;
-    min-width: 1205px;
+    min-width: 1200px;
     height: 230px;
     position: absolute;
     overflow-x: scroll;
@@ -319,7 +319,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasWaveSpec{
-
+    margin-left: 25px;
+    position: absolute;
+    z-index: 0;
 }
 
 #progressBar {

@@ -129,10 +129,10 @@ function drawWave() {
 }
 
 function drawLineKlickWave(mouseTime) {
-  var canvasWaveLine = document.getElementById("canvasWaveLine");
-  var canvas = document.getElementById("canvasWave")
-  var ctxLine = canvasWaveLine.getContext("2d");
-  mousePos=(mouseTime *canvas.width)/(Audiodata.signalLen / Audiodata.sampleRate)
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
+    var canvas = document.getElementById("canvasWave")
+    var ctxLine = canvasWaveLine.getContext("2d");
+    mousePos = (mouseTime * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
     ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
@@ -160,46 +160,13 @@ function drawWaveTimeAxes() {
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
 
-    var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
+    var trackLenSec = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
 
-    var minDistanceNumbersX = 100;
-    var maxDistanceNumbersX = 200;
+    var timePoint = canvasWaveTimeAxes.width / trackLenSec;
 
-    var timePerColumn = trackLenSec / canvasWaveTimeAxes.width;
+    console.log(timePoint);
 
-    var stepsX = 100;
-
-    var logTime = Math.log10(trackLenSec);
-    logTime = Math.pow(10, Math.floor(logTime))
-
-    for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
-        var time = kk * timePerColumn;
-        var quarter = time % (logTime / 4);
-        var half = time % (logTime / 2);
-        var full = time % logTime;
-
-        if (quarter <= (0.01 * logTime)) {
-            stepsX = kk;
-            break;
-        } else if (half <= (0.01 * logTime)) {
-            stepsX = kk;
-            break;
-        } else if (full <= (0.01 * logTime)) {
-            stepsX = kk;
-            break;
-        }
-    }
-
-
-    ctxWaveTimeAxes.clearRect(0, 0, canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
-    ctxWaveTimeAxes.beginPath();
-    ctxWaveTimeAxes.moveTo(scaleOfsetLeft, 0);
-    ctxWaveTimeAxes.lineTo(scaleOfsetLefTimt, canvasWaveTimeAxes.height - scaleOfsetBottom)
-    ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width - 1, canvasWaveTimeAxes.height - scaleOfsetBottom)
-    ctxWaveTimeAxes.strokeStyle = 'black';
-    ctxWaveTimeAxes.lineWidth = 1;
-    ctxWaveTimeAxes.stroke();
-    ctxWaveTimeAxes.beginPath();
+    console.log(canvasWaveTimeAxes.width);
 
     ctxWaveTimeAxes.beginPath();
     ctxWaveTimeAxes.strokeStyle = "#000000";
@@ -209,6 +176,17 @@ function drawWaveTimeAxes() {
     ctxWaveTimeAxes.lineTo(24, canvasWaveTimeAxes.height);
     ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
     ctxWaveTimeAxes.stroke();
+
+    for (var i = 0; i <= trackLenSec; i++) {
+
+      ctxWaveTimeAxes.beginPath();
+      ctxWaveTimeAxes.strokeStyle = "#000000";
+      ctxWaveTimeAxes.lineWidth = 3;
+      ctxWaveTimeAxes.moveTo((timePoint * i) + 24, canvasWaveTimeAxes.height);
+      ctxWaveTimeAxes.lineTo((timePoint * i) + 24, canvasWaveTimeAxes.height + 10);
+      ctxWaveTimeAxes.stroke();
+      
+    }
 
 
 }
