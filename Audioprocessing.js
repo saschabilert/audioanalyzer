@@ -25,6 +25,7 @@
  };
 
  enableButton();
+
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -111,8 +112,9 @@
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
-             case "Instant Frequency":
+             case "Instantaneous Frequency":
                  Audiodata.instantFreq = calculateInstantFreq(realPart, imagPart);
+                 break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
                  break;
@@ -160,20 +162,37 @@
 
      var dPhase = diff(phase);
 
-     for (var k = 0; k < dPhase.length; k++) {
+     var groupDelay = new Array(dPhase.length);
 
+     for (var k = 0; k < dPhase.length; k++) {
          if (dPhase[k] > Math.PI) {
              dPhase[k] = dPhase[k] - 2 * Math.PI;
          } else if (dPhase[k] < (-1 * Math.PI)) {
              dPhase[k] = dPhase[k] + 2 * Math.PI;
          }
-         dPhase[k] = -1 * dPhase[k] / dOmega;
+         groupDelay[k] = -1 * dPhase[k] / dOmega;
      }
-     return dPhase;
+     return groupDelay;
  }
 
  function calculateInstantFreq(real, imag) {
 
+     var phase = calculatePhase(real, imag);
+
+     var time = Math.round(Audiodata.samples / Audiodata.sampleRate);
+
+     var timeVector = linspace(0, time, phase.length);
+
+     var dTime = (timeVector[2] - timeVector[1]);
+
+     var dPhase = diff(phase);
+
+     var instantFreq = new Array(dPhase.length);
+
+     for (var k = 0; k < dPhase.length; k++) {
+         instantFreq[k] = (1 / 2 * Math.PI) * dPhase[k] / dTime;
+     }
+     return instantFreq;
  }
 
  function calculateModSpec(real, imag) {

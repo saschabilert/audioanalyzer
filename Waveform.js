@@ -154,38 +154,43 @@ function drawLinePlayWave() {
 }
 
 function drawWaveTimeAxes() {
-    var canvasWaveTimeAxes = document.getElementById("canvasWaveSpec");
-    var ctxWaveTimeAxes = canvasWaveTimeAxes.getContext("2d");
+    var canvasWaveScale = document.getElementById("canvasWaveScale");
+    var ctxWaveScale = canvasWaveScale.getContext("2d");
     var div = document.getElementById('canvasDivWave')
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
 
     var trackLenSec = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
 
-    var timePoint = canvasWaveTimeAxes.width / trackLenSec;
+    var timePoint = canvasWaveScale.width / trackLenSec;
 
     console.log(timePoint);
 
-    console.log(canvasWaveTimeAxes.width);
+    console.log(canvasWaveScale.width);
 
-    ctxWaveTimeAxes.beginPath();
-    ctxWaveTimeAxes.strokeStyle = "#000000";
-    ctxWaveTimeAxes.lineWidth = 1;
+    ctxWaveScale.beginPath();
+    ctxWaveScale.strokeStyle = "#000000";
+    ctxWaveScale.lineWidth = 1;
 
-    ctxWaveTimeAxes.moveTo(24, 0);
-    ctxWaveTimeAxes.lineTo(24, canvasWaveTimeAxes.height);
-    ctxWaveTimeAxes.lineTo(canvasWaveTimeAxes.width, canvasWaveTimeAxes.height);
-    ctxWaveTimeAxes.stroke();
+    ctxWaveScale.moveTo(24, 0);
+    ctxWaveScale.lineTo(24, canvasWaveScale.height);
+    ctxWaveScale.lineTo(canvasWaveScale.width, canvasWaveScale.height);
+    ctxWaveScale.stroke();
+
+    ctxWaveScale.beginPath();
+    ctxWaveScale.strokeStyle = "#000000";
+    ctxWaveScale.lineWidth = 3;
+
+    ctxWaveScale.moveTo(24, canvasWaveScale.height);
+    ctxWaveScale.lineTo(24, canvasWaveScale.height + 10);
+    ctxWaveScale.stroke();
 
     for (var i = 0; i <= trackLenSec; i++) {
 
-      ctxWaveTimeAxes.beginPath();
-      ctxWaveTimeAxes.strokeStyle = "#000000";
-      ctxWaveTimeAxes.lineWidth = 3;
-      ctxWaveTimeAxes.moveTo((timePoint * i) + 24, canvasWaveTimeAxes.height);
-      ctxWaveTimeAxes.lineTo((timePoint * i) + 24, canvasWaveTimeAxes.height + 10);
-      ctxWaveTimeAxes.stroke();
-      
+      ctxWaveScale.moveTo((Math.round(timePoint * i)) + 24, canvasWaveScale.height);
+      ctxWaveScale.lineTo((Math.round(timePoint * i)) + 24, canvasWaveScale.height + 10);
+      ctxWaveScale.stroke();
+
     }
 
 

@@ -28,10 +28,6 @@
         <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts"><img src="facebook.png" width="30" height="30" border=0></a>
     </div>
 
-    <!-- <form class="" action="index.html" method="post">
-
-    </form> -->
-
     <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
         <!-- set input audiofile and trigger the loadSound function -->
@@ -47,12 +43,13 @@
     <div data-js="info" class="info"></div>
 
     <div class="canvas" id="canvasDivWave">
-        <canvas id="canvasWave" width="1200" height="200"></canvas>
-        <canvas id="canvasRMS" width="1200" height="200"></canvas>
-        <canvas id="canvasWaveLine" width="1200" height="200"></canvas>
-        <canvas id="canvasWaveSpec" width="1200" height="200"></canvas>
+        <canvas id="canvasWave" width="1550" height="200"></canvas>
+        <canvas id="canvasRMS" width="1550" height="200"></canvas>
+        <canvas id="canvasWaveLine" width="1550" height="200"></canvas>
+        <canvas id="canvasWaveScale" width="1574" height="200"></canvas>
         <!-- <canvas id="canvasWaveSelect" width="300" height="200"></canvas> -->
     </div>
+
     <!--Space between waveform and table-->
     <br><br>
 
@@ -90,6 +87,7 @@
                   <option value="MFCC">MFCC</option>
                   <option value="Modulation Spectrum">modulation spectrum</option>
                   <option value="Group Delay">group delay</option>
+                  <option value="Instantaneous Frequency">instantaneous frequency</option>
                 </select></td>
             <td><select id="colormap" onchange="colormap()">
                     <option value="1">Parula</option>
@@ -123,17 +121,15 @@
         <canvas id="canvasScale" width="1574" height="540"></canvas>
         <canvas id="canvasLine" width="1550" height="512"></canvas>
     </div>
+
     <div id="divPosition">
         <p id="Position"></p>
         <p id="wert"></p>
     </div>
+
     <div class="canvas" id="divCanvasLegend">
         <canvas id="canvasLegend" width="300" height="75"></canvas>
     </div>
-
-    <footer>
-
-    </footer>
 
 </body>
 

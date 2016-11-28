@@ -237,7 +237,6 @@ input[type=range]::-webkit-slider-thumb {
     border:1px solid gray;
 }
 
-
 #canvasDivSpec{
     margin-top: 20px;
     margin-left: 5px;
@@ -265,7 +264,7 @@ input[type=range]::-webkit-slider-thumb {
 
 #divCanvasLegend{
     margin-top: -75px;
-    margin-left: 800px;
+    margin-left: 905px;
     width: 300px;
     height: 75px;
     position: absolute;
@@ -294,7 +293,7 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: 50px;
     margin-left: 5px;
     min-width: 1200px;
-    height: 230px;
+    height: 220px;
     position: absolute;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
@@ -313,13 +312,12 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasWaveLine{
-    margin-left: 25px;
     position: absolute;
+    margin-left: 25px;
     z-index: 0;
 }
 
-#canvasWaveSpec{
-    margin-left: 25px;
+#canvasWaveScale{
     position: absolute;
     z-index: 0;
 }
