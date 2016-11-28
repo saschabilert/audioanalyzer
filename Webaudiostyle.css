@@ -271,7 +271,7 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
 }
 #divPosition{
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 40px;
     width: 150px;
     height: 50px;
@@ -291,7 +291,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasDivWave{
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 5px;
     min-width: 1205px;
     height: 230px;
@@ -340,7 +340,8 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .info {
-margin-left:175px;
+    margin-left:360px;
+    margin-top:-35px;
 }
 
 

@@ -5,7 +5,6 @@
      }
      window.AudioContext = window.webkitAudioContext;
  }
-
  var Audiodata = {
      blockLen: 1024,
      signalLen: undefined,
@@ -23,7 +22,7 @@
      modSpec: undefined,
      display: "Spectrum"
  };
-
+ enableButton();
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -31,6 +30,7 @@
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
+
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -67,8 +67,6 @@
              drawSpec();
 
              drawWave();
-
-             enableButton();
 
          });
      };

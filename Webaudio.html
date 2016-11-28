@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html">
 
     <!-- set title of the website -->
-    <title>Online Audioprocessing</title>
+    <title>Online Audioanalyser</title>
 
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
 
@@ -18,7 +18,7 @@
 <body>
 
    <header>
-       <h1>Audioprocessing webpage</h1>
+       <h1>Audioanalyser</h1>
        <a href = "Webaudio.html" class = "class1">Home</a>
        <a href = "Instructions.html" class = "class1">Instructions</a>
        <a href = "About us.html" class = "class1">About us</a>
@@ -26,7 +26,7 @@
 
     <!-- start javascript -->
     <script type="text/javascript" src="fft.js"></script>
-    <script type="text/javascript" src="Audioprocessing.js"></script>
+
     <script type="text/javascript" src="Spectrogram.js"></script>
     <script type="text/javascript" src="Waveform.js"></script>
     <script type="text/javascript" src="parula.js"></script>
@@ -49,7 +49,7 @@
     <button id = "stop" type="button" class = "stop">&#9724;</button>
     <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
         </div>
-    <div data-js="info" class = "info"></div>
+    <div data-js="info" class = "info">00:00</div>
 
 
 
@@ -112,6 +112,7 @@
         </tr>
     </table>
     <script type="text/javascript" src="MenuScript.js"></script>
+   <script type="text/javascript" src="Audioprocessing.js"></script>
 
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1550" height="512"></canvas>
