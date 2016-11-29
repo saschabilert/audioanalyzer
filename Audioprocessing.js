@@ -152,6 +152,16 @@
      return completeReal;
  }
 
+ function calculateMelFreq(freq) {
+
+     var mel = new Array(freq.length);
+
+     for (var i = 0; i < freq.length; i++) {
+         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
+     }
+     return mel;
+ }
+
  function calculateGroupDelay(real, imag) {
 
      var phase = calculatePhase(real, imag);
@@ -294,14 +304,4 @@
          difference[i] = array[i + 1] - array[i];
      }
      return difference;
- }
-
- function calculateMelFreq(freq) {
-
-     var mel = new Array(freq.length);
-
-     for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
-     }
-     return mel;
  }

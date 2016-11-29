@@ -52,6 +52,7 @@ function drawWave() {
 
         }
 
+        drawWaveGrid();
         drawWaveTimeAxes();
 
         canvasCtx.beginPath();
@@ -154,13 +155,21 @@ function drawLinePlayWave() {
 }
 
 function drawWaveTimeAxes() {
+
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var ctxWaveScale = canvasWaveScale.getContext("2d");
     var div = document.getElementById('canvasDivWave')
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
+    var offSetLeft = 24;
+    var offSetBottom = 20;
+    var offSetTextLeft = 8;
+    var offSetTextBottom = 4;
+    var tickLen = 15;
 
     var trackLenSec = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
+
+    console.log(trackLenSec);
 
     var timePoint = canvasWaveScale.width / trackLenSec;
 
@@ -168,30 +177,69 @@ function drawWaveTimeAxes() {
 
     console.log(canvasWaveScale.width);
 
+    ctxWaveScale.clearRect(0, 0, canvasWaveScale.width, canvasWaveScale.height);
+
     ctxWaveScale.beginPath();
     ctxWaveScale.strokeStyle = "#000000";
     ctxWaveScale.lineWidth = 1;
 
-    ctxWaveScale.moveTo(24, 0);
-    ctxWaveScale.lineTo(24, canvasWaveScale.height);
-    ctxWaveScale.lineTo(canvasWaveScale.width, canvasWaveScale.height);
+    ctxWaveScale.moveTo(offSetLeft, 0);
+    ctxWaveScale.lineTo(offSetLeft, canvasWaveScale.height - offSetBottom);
+    ctxWaveScale.lineTo(canvasWaveScale.width, canvasWaveScale.height - offSetBottom);
     ctxWaveScale.stroke();
 
     ctxWaveScale.beginPath();
-    ctxWaveScale.strokeStyle = "#000000";
-    ctxWaveScale.lineWidth = 3;
+    ctxWaveScale.strokeStyle = "black";
+    ctxWaveScale.lineWidth = 2;
+    ctxWaveScale.font = "12px Arial";
+    ctxWaveScale.moveTo(offSetLeft, canvasWaveScale.height - offSetBottom);
+    ctxWaveScale.lineTo(offSetLeft, canvasWaveScale.height - tickLen);
 
-    ctxWaveScale.moveTo(24, canvasWaveScale.height);
-    ctxWaveScale.lineTo(24, canvasWaveScale.height + 10);
-    ctxWaveScale.stroke();
 
     for (var i = 0; i <= trackLenSec; i++) {
 
-      ctxWaveScale.moveTo((Math.round(timePoint * i)) + 24, canvasWaveScale.height);
-      ctxWaveScale.lineTo((Math.round(timePoint * i)) + 24, canvasWaveScale.height + 10);
-      ctxWaveScale.stroke();
+        ctxWaveScale.moveTo((Math.round(timePoint * i)) + offSetLeft, canvasWaveScale.height - offSetBottom);
+        ctxWaveScale.lineTo((Math.round(timePoint * i)) + offSetLeft, canvasWaveScale.height - tickLen);
+        ctxWaveScale.stroke();
+        ctxWaveScale.fillText(i.toString().concat('.0'), (Math.round(timePoint * i)) + offSetLeft - offSetTextLeft, canvasWaveScale.height - offSetTextBottom);
 
     }
+}
+
+function drawWaveGrid() {
+
+    var canvasWaveGrid = document.getElementById("canvasWaveGrid");
+    var ctxWaveGrid = canvasWaveGrid.getContext("2d");
+
+    var offSetLeft = 24;
+
+    var divHorizontal = 15;
+    var divVertical = 15;
+
+    var numHorizontal = canvasWaveGrid.height / divHorizontal;
+    var numVertical = (canvasWaveGrid.width - offSetLeft) / divVertical;
+
+    ctxWaveGrid.clearRect(0, 0, canvasWaveGrid.width, canvasWaveGrid.height);
+
+    ctxWaveGrid.beginPath();
+    ctxWaveGrid.strokeStyle = "#d9d9d9";
+    ctxWaveGrid.lineWidth = 0.5;
+
+    console.log(canvasWaveGrid.width);
+
+    for (var i = 1; i < numHorizontal; i++) {
+        ctxWaveGrid.moveTo(offSetLeft + 1, divHorizontal * i);
+        ctxWaveGrid.lineTo(canvasWaveGrid.width, divHorizontal * i);
+        ctxWaveGrid.stroke();
+    }
+
+    for (var k = 1; k <= numVertical; k++) {
+        ctxWaveGrid.moveTo(offSetLeft + divVertical * k, 0);
+        ctxWaveGrid.lineTo(offSetLeft + divVertical * k, canvasWaveGrid.height - 1);
+        ctxWaveGrid.stroke();
+    }
+
+
 
 
 }
