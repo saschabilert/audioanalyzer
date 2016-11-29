@@ -249,17 +249,18 @@ input[type=range]::-webkit-slider-thumb {
 #canvasSpec{
     margin-left: 25px;
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
 #canvasLine{
     position: absolute;
     margin-left: 25px;
-    z-index: 0
+    z-index: 0;
+    opacity: 0.65;
 }
 
 #canvasScale{
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
 
 #divCanvasLegend{
@@ -277,10 +278,10 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     font-family: arial;
     line-height: 0.5;
-    background-color:  rgba(250, 250, 255, 0.7);
-    font-size:14px;
-    font-weight:bold;
-    z-index: 0
+    background-color: rgba(250, 250, 255, 0.7);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 0;
 
 }
 #canvasLegend{
@@ -303,6 +304,7 @@ input[type=range]::-webkit-slider-thumb {
     margin-left: 25px;
     position: absolute;
     z-index: 0;
+    opacity: 0.85;
 }
 
 #canvasRMS{
@@ -315,6 +317,7 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     margin-left: 25px;
     z-index: 0;
+    opacity: 0.65;
 }
 
 #canvasWaveGrid{
