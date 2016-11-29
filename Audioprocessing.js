@@ -5,7 +5,6 @@
      }
      window.AudioContext = window.webkitAudioContext;
  }
-
  var Audiodata = {
      blockLen: 1024,
      signalLen: undefined,
@@ -18,36 +17,22 @@
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
+     instantFreq: undefined,
      windowFunction: undefined,
      cepstrum: undefined,
      modSpec: undefined,
      display: "Spectrum"
  };
 
+ enableButton();
+
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
 
-
  // function triggered by loading a Audiodata
  function audioProcessing() {
-     var inputs = document.querySelectorAll('.audioInput');
-     Array.prototype.forEach.call(inputs, function(input) {
-         var label = input.nextElementSibling;
 
-
-         input.addEventListener('change', function(e) {
-
-             fileName = e.target.value.split('\\').pop();
-             label.innerHTML = fileName;
-             if (fileName == "") {
-                 fileName = "Choose a file";
-                 label.innerHTML = fileName;
-
-             }
-         });
-         return;
-     });
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -84,8 +69,6 @@
              drawSpec();
 
              drawWave();
-
-             enableButton();
 
          });
      };
@@ -129,6 +112,9 @@
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
+             case "Instantaneous Frequency":
+                 Audiodata.instantFreq = calculateInstantFreq(realPart, imagPart);
+                 break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
                  break;
@@ -166,6 +152,16 @@
      return completeReal;
  }
 
+ function calculateMelFreq(freq) {
+
+     var mel = new Array(freq.length);
+
+     for (var i = 0; i < freq.length; i++) {
+         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
+     }
+     return mel;
+ }
+
  function calculateGroupDelay(real, imag) {
 
      var phase = calculatePhase(real, imag);
@@ -176,16 +172,37 @@
 
      var dPhase = diff(phase);
 
-     for (var k = 0; k < dPhase.length; k++) {
+     var groupDelay = new Array(dPhase.length);
 
+     for (var k = 0; k < dPhase.length; k++) {
          if (dPhase[k] > Math.PI) {
              dPhase[k] = dPhase[k] - 2 * Math.PI;
          } else if (dPhase[k] < (-1 * Math.PI)) {
              dPhase[k] = dPhase[k] + 2 * Math.PI;
          }
-         dPhase[k] = -1 * dPhase[k] / dOmega;
+         groupDelay[k] = -1 * dPhase[k] / dOmega;
      }
-     return dPhase;
+     return groupDelay;
+ }
+
+ function calculateInstantFreq(real, imag) {
+
+     var phase = calculatePhase(real, imag);
+
+     var time = Math.round(Audiodata.samples / Audiodata.sampleRate);
+
+     var timeVector = linspace(0, time, phase.length);
+
+     var dTime = (timeVector[2] - timeVector[1]);
+
+     var dPhase = diff(phase);
+
+     var instantFreq = new Array(dPhase.length);
+
+     for (var k = 0; k < dPhase.length; k++) {
+         instantFreq[k] = (1 / 2 * Math.PI) * dPhase[k] / dTime;
+     }
+     return instantFreq;
  }
 
  function calculateModSpec(real, imag) {
@@ -287,18 +304,4 @@
          difference[i] = array[i + 1] - array[i];
      }
      return difference;
- }
-
- function calculateMelFreq(freq) {
-
-     var mel = new Array(freq.length);
-
-     for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
-     }
-     return mel;
- }
-
- function calculateInstFreq() {
-
  }

@@ -43,6 +43,12 @@ var seekto;
 var info = document.querySelector('[data-js="info"]');
 var fileName;
 
+document.onkeydown = function(e){
+    var keyCode = e.keyCode;
+    if(keyCode == 13){
+        toggleSound();
+    }
+}
 
 
 function toggleSound() {
@@ -56,23 +62,6 @@ function toggleSound() {
 
            window.requestAnimationFrame(drawLinePlay);
            window.requestAnimationFrame(drawLinePlayWave);
-
-           // curtime = document.getElementById("curtime");
-           // durtime = document.getElementById("durtime");
-           // audio.addEventListener("timeupdate", timeUpdate(),false);
-           // function timeUpdate(){
-           //     var nt = audioCtx.currentTime-startTime+startOffset*(100/Audiodata.signalLen/Audiodata.sampleRate);
-           //     var curmins = Math.floor(audioCtx.currentTime-startTime+startOffset/60);
-           //     var cursecs = Math.floor(audioCtx.currentTime-startTime+startOffset - curmins*60);
-           //     var durmins = Math.floor(Audiodata.signalLen/Audiodata.sampleRate/60);
-           //     var dursecs = Math.floor(Audiodata.signalLen/Audiodata.sampleRate - durmins*60);
-           //     if(cursecs<10){cursecs = "0"+cursecs;}
-           //     if(dursecs<10){dursecs = "0" + dursecs;}
-           //     if(curmins<10){curmins = "0" + curmins;}
-           //     if(durmins<10){durmins = "0" + durmins;}
-           //     curtime.innerHTML = curmins+":"+cursecs;
-           //     durtime.innerHTML = durmins+":"+dursecs;
-           // }
            stopbtn.onclick = function(){
                startTime = 0;
                startOffset = 0;
@@ -133,7 +122,7 @@ document.getElementById('volume').addEventListener('input',function(){
 
 
 function enableButton() {
-   playButton.disabled = !playButton.disabled;
+  playButton.disabled = !playButton.disabled;
     stopbtn.disabled = !stopbtn.disabled;
 }
 
