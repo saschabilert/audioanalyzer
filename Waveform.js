@@ -228,7 +228,7 @@ function drawWaveGrid() {
     ctxWaveGrid.clearRect(0, 0, canvasWaveGrid.width, canvasWaveGrid.height);
 
     ctxWaveGrid.beginPath();
-    ctxWaveGrid.strokeStyle = "#d9d9d9";
+    ctxWaveGrid.strokeStyle = "#f2f2f2";
     ctxWaveGrid.lineWidth = 0.5;
 
     console.log(canvasWaveGrid.width);

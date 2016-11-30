@@ -1,4 +1,4 @@
-body{
+html,body{
     min-width: 1200px;
 }
 
@@ -235,6 +235,7 @@ input[type=range]::-webkit-slider-thumb {
     padding-left:10px;
     padding-right: 10px;
     border:1px solid gray;
+    position:relative;
 }
 
 #canvasDivSpec{
@@ -249,17 +250,18 @@ input[type=range]::-webkit-slider-thumb {
 #canvasSpec{
     margin-left: 25px;
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
 #canvasLine{
     position: absolute;
     margin-left: 25px;
-    z-index: 0
+    z-index: 0;
+    opacity: 0.65;
 }
 
 #canvasScale{
     position: absolute;
-    z-index: 0
+    z-index: 0;
 }
 
 #divCanvasLegend{
@@ -277,10 +279,13 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     font-family: arial;
     line-height: 0.5;
-    background-color:  rgba(250, 250, 255, 0.7);
-    font-size:14px;
-    font-weight:bold;
-    z-index: 0
+    background-color: rgba(250, 250, 255, 0.7);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 0;
+    border-radius: 15px;
+    border:1px solid gray;
+    text-align:center;
 
 }
 #canvasLegend{
@@ -303,6 +308,7 @@ input[type=range]::-webkit-slider-thumb {
     margin-left: 25px;
     position: absolute;
     z-index: 0;
+    opacity: 0.85;
 }
 
 #canvasSelect{
@@ -320,6 +326,7 @@ input[type=range]::-webkit-slider-thumb {
     position: absolute;
     margin-left: 25px;
     z-index: 0;
+    opacity: 0.65;
 }
 
 #canvasWaveGrid{
@@ -392,10 +399,10 @@ header{
     width:500px;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    margin-left:auto;
-    margin-right:auto;
     margin-top:-22px;
-
+    position:relative;
+    display:block;
+    margin-left:450px;
 }
 
 a.class1:link {
@@ -418,11 +425,46 @@ h1{
 }
 
 .Findus{
-    float:right;
     margin-top:-80px;
     padding:10px 10px;
+    position:absolute;
+    margin-left:1150px;
 
 }
 a:link{
     padding:5px 5px;
+}
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#container{
+    position: absolute;
+    width: 100%;
+    height:100%;
+    background: white;
+    opacity: 0.5;
 }

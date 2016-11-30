@@ -29,10 +29,12 @@
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
+ //Loading message
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
-
+     document.getElementById("loading").style.display = "block";
+     document.getElementById("container").style.display = "block"
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -69,7 +71,8 @@
              drawSpec();
 
              drawWave();
-
+         document.getElementById("loading").style.display = "none";
+         document.getElementById("container").style.display = "none";
          });
      };
  }
@@ -123,15 +126,13 @@
      }
  }
 
- // Cosine - transform needed to calculate the MFCC's
+ // Cosine - transform needed to calculate the MFCC's so we deferred it
  function calculateMFCC(real, imag) {
 
      var absValue = calculateAbs(real, imag);
      var melFreq = new Array(absValue.length);
 
      melFreq = calculateMelFreq(absValue);
-
-     //  console.log(melFreq);
 
      var completeReal = new Array(Audiodata.blockLen);
      var completeImag = new Array(Audiodata.blockLen).fill(0);
@@ -187,9 +188,26 @@
 
  function calculateInstantFreq(real, imag) {
 
-     var phase = calculatePhase(real, imag);
+     var analyticWeight = new Array(real.length).fill(0);
+     analyticWeight[0] = 1;
+     analyticWeight[Audiodata.blockLen / 2 - 1] = 1;
 
-     var time = Math.round(Audiodata.samples / Audiodata.sampleRate);
+     for (var i = 1; i < Audiodata.blockLen / 2 - 1; i++) {
+         analyticWeight[i] = 2;
+     }
+
+     analyticImag = new Array(imag.length).fill(0);
+     analyticReal = new Array(real.length).fill(0);
+
+     for (var k = 0; k < real.length; k++) {
+         analyticReal[k] = real[k] * analyticWeight[k];
+     }
+
+     inverseTransform(analyticReal, analyticImag);
+
+     var phase = calculatePhase(analyticReal, analyticImag);
+
+     var time = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
 
      var timeVector = linspace(0, time, phase.length);
 
@@ -197,9 +215,9 @@
 
      var dPhase = diff(phase);
 
-     var instantFreq = new Array(dPhase.length);
+     var instantFreq = new Array(dPhase.length + 1).fill(0);
 
-     for (var k = 0; k < dPhase.length; k++) {
+     for (var k = 1; k < dPhase.length; k++) {
          instantFreq[k] = (1 / 2 * Math.PI) * dPhase[k] / dTime;
      }
      return instantFreq;
@@ -207,7 +225,7 @@
 
  function calculateModSpec(real, imag) {
 
-     analyticWeight = new Array(real.length).fill(0);
+     var analyticWeight = new Array(real.length).fill(0);
      analyticWeight[0] = 1;
      analyticWeight[Audiodata.blockLen / 2 - 1] = 1;
 
@@ -231,6 +249,10 @@
      transform(envelopeReal, envelopeImag);
 
      var modSpec = calculateAbs(envelopeReal, envelopeImag);
+
+     for (var l = 0; l < modSpec.length; l++) {
+         modSpec[l] = modSpec[l] / (2 * Math.PI);
+     }
 
      return modSpec;
  }

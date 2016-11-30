@@ -45,8 +45,9 @@ var fileName;
 
 document.onkeydown = function(e){
     var keyCode = e.keyCode;
-    if(keyCode == 13){
+    if(keyCode == 32){
         toggleSound();
+        e.preventDefault();
     }
 }
 
@@ -182,3 +183,4 @@ else if (min>=0 || max>=0 || max<min ) {
     }
 
 }
+
