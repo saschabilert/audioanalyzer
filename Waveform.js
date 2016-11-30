@@ -6,14 +6,20 @@ var WaveData = {
     hightCanvas: undefined,
 };
 
+var mouseUsed = 0;
+var intervalDrawSelect;
+var selectionX =0;
+var startSelection=0;
+
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
     var canvasLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
-
-    canvasLine.addEventListener("click", startPlayHereWave);
-
+    var CanvasSelect = document.getElementById("CanvasSelect")
+    canvasLine.addEventListener("mousedown", startPlayHereWave);
+    canvasLine.addEventListener("mousedown", waveOnMouseDown);
+    canvasLine.addEventListener("mouseup", waveOnMouseUp);
     if (canvas.getContext) {
 
         var canvasCtx = canvas.getContext("2d");
@@ -118,7 +124,7 @@ function drawWave() {
     }
 
     function startPlayHereWave(evt) {
-        var mousePos = getMousePosWave(canvas, evt);
+        var mousePos = getMousePosWave(canvas,evt);
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x;
         if (isPlaying) {
             toggleSound();
@@ -137,7 +143,7 @@ function drawLineKlickWave(mouseTime) {
     ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
-    ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
+    ctxLine.fillRect(mousePos, 0, 2, canvasWaveLine.height);
 }
 
 function drawLinePlayWave() {
@@ -242,4 +248,56 @@ function drawWaveGrid() {
 
 
 
+}
+
+function waveOnMouseDown(evt) {
+    var canvas = document.getElementById("canvasWave")
+      var canvasLine= document.getElementById("canvasWaveLine")
+      canvasLine.addEventListener("mousemove",onMouseMove)
+
+    mouseUsed = 1;
+    var mousePos = getMousePos(canvas, evt)
+    startSelection=mousePos.x;
+    intervalDrawSelect=setInterval(function(){drawSelection(mousePos.x, 1,  evt);},30)
+
+}
+
+function drawSelection(startPos, caller,endPos) {
+    var canvas = document.getElementById("canvasWave")
+    var canvasSelect = document.getElementById("canvasSelect")
+    var ctxSelect = canvasSelect.getContext("2d")
+
+    if(caller==1){
+        var start = startPos;
+        var actualPosition = selectionX;
+        var widthSelection = (actualPosition - startPos);
+}
+else if (caller==2) {
+  var start = (startPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
+  var actualPosition = (endPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
+  var widthSelection = (actualPosition - start);
+}
+        ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height)
+        ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' +
+            0 +',' + 0.2 +')';
+        ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
+
+}
+
+
+function waveOnMouseUp(evt) {
+canvasLine=  document.getElementById("canvasWaveLine")
+var canvas = document.getElementById("canvasWave")
+    mousePos=getMousePos(canvasLine,evt)
+    mouseUsed = 0;
+    canvasLine.removeEventListener("mousemove",onMouseMove)
+    clearInterval(intervalDrawSelect)
+    zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
+    startSelection , (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x)
+}
+
+function onMouseMove(evt){
+canvasLine=  document.getElementById("canvasWaveLine")
+  mousePos=getMousePos(canvasLine,evt);
+selectionX=mousePos.x;
 }

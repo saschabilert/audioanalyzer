@@ -76,7 +76,6 @@ function drawSpec() {
     // Defining varables with no of spectrograms
     specWidth = specData.length;
     specHight = specData[1].length;
-     console.log(specWidth, specHight)
     // Storing spectrogram specs to global variable
     SpectroData.picLength = specWidth;
     SpectroData.picWidth = specHight;
@@ -94,12 +93,11 @@ function drawSpec() {
     creatHsv();
     creatTwilight();
 
-
-
+    // Start draw spectrogram
     draw();
 
 
-    // Function for chasing mouse wheel actions
+    // Functions for chasing mouse actions
     canvasLine.addEventListener("mousewheel", mouseWheelFunction);
     canvasLine.addEventListener("click", startPlayHere)
     canvasLine.addEventListener('mousemove', displayMousePosition);
@@ -117,11 +115,6 @@ function drawSpec() {
         drawLineKlick(mouseTime)
         drawLineKlickWave(mouseTime)
     }
-
-
-
-
-
 
     function mouseWheelFunction(evt) {
         // console.log(evt)
@@ -167,6 +160,8 @@ function drawSpec() {
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
+            section=getSectionDisplayed()
+          drawSelection(section.min,2,section.max);
         }
 
     }
@@ -192,6 +187,8 @@ function drawSpec() {
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
+            section=getSectionDisplayed()
+          drawSelection(section.min,2,section.max);
         }
     }
 
@@ -221,12 +218,12 @@ function drawSpec() {
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
+            section=getSectionDisplayed()
+          drawSelection(section.min,2,section.max);
         }
     }
 
 }
-//Function for changing the color scale and/or the scaling of the color scale
-
 
 // Function for drawing a new spectrogram
 function draw() {
@@ -345,8 +342,6 @@ function draw() {
 
     }
 
-    // Loop for transfering the spectrogram data to image data with converting them into the color scale
-
 
     // Putting imageData into the temp canvas
     tempCtx.putImageData(pictureData, 0, 0);
@@ -364,11 +359,10 @@ function draw() {
     SpectroData.picData = pictureData;
     drawLegend(colorScale)
     drawScale()
+    section=getSectionDisplayed()
+  drawSelection(section.min,2,section.max);
 
 }
-
-
-
 
 function drawLineKlick(mouseTime) {
     canvasLine = document.getElementById("canvasLine")
@@ -423,10 +417,7 @@ function displayMousePosition(evt) {
 
     }
 
-
-
 };
-
 
 
 function drawLinePlay() {
@@ -454,6 +445,13 @@ function drawLinePlay() {
         window.requestAnimationFrame(drawLinePlay)
 
     }
+  else {
+    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+
+    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
+        0 + ')';
+    ctxLine.fillRect(0, 0, 2, canvasLine.height);
+  }
 }
 
 function drawLegend(colorScale) {
@@ -597,11 +595,13 @@ function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
     scrollPositionX = div.scrollLeft,
         scrollPositionY = div.scrollTop
+        section=getSectionDisplayed()
+      drawSelection(section.min,2,section.max);
 
 
 }
 
-function getMousePos(canvas, evt) {
+function getMousePos(canvas,evt) {
     var rect = canvas.getBoundingClientRect();
     return {
         x: Math.floor(evt.clientX - rect.left),
@@ -629,4 +629,73 @@ function onKeyUp(evt) {
             strgPressed = 0;
             break;
     }
+}
+
+function zoomToSelection(timeStart , timeEnd){
+  var canvas = document.getElementById("canvasSpec")
+
+  var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+  var lineEnd = (timeEnd * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+  var lengthSelect=(lineEnd-lineStart);
+
+
+}
+
+function zoomToSelection(timeStart , timeEnd){
+    var canvas = document.getElementById("canvasSpec")
+    var ctx = canvas.getContext("2d")
+    var div = document.getElementById("canvasDivSpec")
+    var canvasLine = document.getElementById("canvasLine")
+    var divWidth = div.offsetWidth;
+
+if(timeEnd<timeStart){
+var tempTimeStart=timeStart;
+timeStart=timeEnd;
+timeEnd=tempTimeStart;
+}
+  var lengthSelect=(timeEnd-timeStart);
+    var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
+    var timePerColumn = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width
+    var timePerSide=(divWidth-scaleOfsetLeft)*timePerColumn
+
+    if (timePerSide==lengthSelect){
+      var factor=1;
+
+  }
+  if(timePerSide!=lengthSelect){
+    factor=timePerSide/lengthSelect;
+    console.log(timePerSide,factor,divWidth,lengthSelect)
+  }
+
+  if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+
+
+      canvasScale.width = canvas.width * factor + scaleOfsetLeft
+      canvas.width = canvas.width * factor;
+      cWidth = canvas.width;
+      canvasLine.width = canvasLine.width * factor
+
+
+      ctx.scale(cWidth / specWidth, cHigh / specHight);
+      SpectroData.scaleFactorWidth = cWidth / specWidth;
+      SpectroData.scaleFactorHeight = cHigh / specHight;
+      ctx.drawImage(tempCanvas, 0, 0);
+      drawScale()
+
+
+
+      var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+        console.log(lineStart)
+        div.scrollLeft=lineStart;
+    }
+}
+
+function getSectionDisplayed(){
+  var canvas = document.getElementById("canvasSpec")
+  var div = document.getElementById("canvasDivSpec")
+console.log(scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),(scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)-(scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))
+  return {
+      min:   scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
+      max:   (scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
+  };
 }

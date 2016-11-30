@@ -305,6 +305,11 @@ input[type=range]::-webkit-slider-thumb {
     z-index: 0;
 }
 
+#canvasSelect{
+    margin-left: 25px;
+    position: absolute;
+    z-index: 0;
+}
 #canvasRMS{
     margin-left: 25px;
     position: absolute;
