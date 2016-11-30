@@ -373,7 +373,7 @@ function drawLineKlick(mouseTime) {
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
-
+drawLinePlay()
 }
 
 function displayMousePosition(evt) {
@@ -445,13 +445,7 @@ function drawLinePlay() {
         window.requestAnimationFrame(drawLinePlay)
 
     }
-  else {
-    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
 
-    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
-        0 + ')';
-    ctxLine.fillRect(0, 0, 2, canvasLine.height);
-  }
 }
 
 function drawLegend(colorScale) {

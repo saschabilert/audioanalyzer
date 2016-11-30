@@ -78,7 +78,7 @@ function toggleSound() {
                if(isPlaying == false){
                    return;
                }
-               info.innerHTML = (audioCtx.currentTime-(startTime+startOffset)).toFixed(1) +":"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
+               info.innerHTML = (audioCtx.currentTime-startTime+startOffset).toFixed(1) +":"+(Audiodata.signalLen/Audiodata.sampleRate).toFixed(1);
 
                if((audioCtx.currentTime-startTime+startOffset)>Audiodata.signalLen/Audiodata.sampleRate){
                    audioCtx.currentTime = 0;
@@ -183,4 +183,3 @@ else if (min>=0 || max>=0 || max<min ) {
     }
 
 }
-
