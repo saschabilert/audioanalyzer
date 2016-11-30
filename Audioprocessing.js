@@ -18,7 +18,7 @@
      phase: undefined,
      groupDelay: undefined,
      instantFreq: undefined,
-     windowFunction: undefined,
+     windowFunction: "hann",
      cepstrum: undefined,
      modSpec: undefined,
      display: "Spectrum"
@@ -65,6 +65,7 @@
              Audiodata.cepstrum = new Array(Audiodata.nPart);
              Audiodata.groupDelay = new Array(Audiodata.nPart);
              Audiodata.modSpec = new Array(Audiodata.nPart);
+             Audiodata.instantFreq = new Array(Audiodata.nPart);
 
              calculateDisplay(window, Audiodata.display);
 
@@ -84,20 +85,21 @@
 
      var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
-     window = calculateWindow(windowLen, Audiodata.windowFunction);
+     var window = calculateWindow(windowLen, Audiodata.windowFunction);
+
      var endIdx = 0;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
 
-         var realPart = Audiodata.samples.slice(Audiodata.hopsize * i,
+         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i,
              Audiodata.blockLen + endIdx);
-         var imagPart = zeros.fill(0);
 
-         for (var k = 0; k < Audiodata.blockLen; k++) {
-             realPart[k] = realPart[k] * window[k];
+         if (type != "Instantaneous Frequency") {
+             for (var k = 0; k < Audiodata.blockLen; k++) {
+                 sampleBlock[k] = sampleBlock[k] * window[k];
+             }
+             var [realPart, imagPart] = calculateRFFT(sampleBlock);
          }
-
-         transform(realPart, imagPart);
 
          switch (type) {
              case "Spectrum":
@@ -106,6 +108,7 @@
              case "Phase":
                  Audiodata.phase[i] = calculatePhase(realPart, imagPart);
                  break;
+                 // Not working so far try to implement in upcomming version
              case "MFCC":
                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                  break;
@@ -116,7 +119,8 @@
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
              case "Instantaneous Frequency":
-                 Audiodata.instantFreq = calculateInstantFreq(realPart, imagPart);
+                 Audiodata.instantFreq[i] = calculateInstantFreq(sampleBlock,
+                     Audiodata.windowFunction);
                  break;
              default:
                  Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
@@ -124,6 +128,14 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
+     console.log(Audiodata.instantFreq);
+ }
+
+ function calculateRFFT(sampleBlock) {
+     var imag = new Array(sampleBlock.length).fill(0);
+     var real = sampleBlock;
+     transform(real, imag);
+     return [real, imag];
  }
 
  // Cosine - transform needed to calculate the MFCC's so we deferred it
@@ -167,6 +179,7 @@
 
      var phase = calculatePhase(real, imag);
 
+     //TODO: Is not useful here, fix later
      var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
 
      var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
@@ -186,39 +199,50 @@
      return groupDelay;
  }
 
- function calculateInstantFreq(real, imag) {
+ function calculateInstantFreq(sampleBlock, windowType) {
 
-     var analyticWeight = new Array(real.length).fill(0);
-     analyticWeight[0] = 1;
-     analyticWeight[Audiodata.blockLen / 2 - 1] = 1;
+     var overlap = 1 / 1.024;
 
-     for (var i = 1; i < Audiodata.blockLen / 2 - 1; i++) {
-         analyticWeight[i] = 2;
+     var newSampleBlockLen = sampleBlock.length * overlap;
+
+     var windowLen = linspace(0, newSampleBlockLen, newSampleBlockLen);
+
+     var window = calculateWindow(windowLen, windowType);
+
+     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen - 1);
+
+     var secondSampleBlock = sampleBlock.slice(sampleBlock.length -
+         newSampleBlockLen - 1, sampleBlock.length - 1);
+
+     for (var i = 0; i < newSampleBlockLen; i++) {
+         firstSampleBlock[i] = firstSampleBlock[i] * window[i];
+         secondSampleBlock[i] = secondSampleBlock[i] * window[i];
      }
 
-     analyticImag = new Array(imag.length).fill(0);
-     analyticReal = new Array(real.length).fill(0);
+     var [firstReal, firstImag] = calculateRFFT(firstSampleBlock);
+     var [secondReal, secondImag] = calculateRFFT(secondSampleBlock);
 
-     for (var k = 0; k < real.length; k++) {
-         analyticReal[k] = real[k] * analyticWeight[k];
-     }
+     var firstPhase = calculatePhase(firstReal, firstImag);
 
-     inverseTransform(analyticReal, analyticImag);
+     var secondPhase = calculatePhase(secondReal, secondImag);
 
-     var phase = calculatePhase(analyticReal, analyticImag);
+     var dPhase = new Array(newSampleBlockLen);
 
-     var time = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
+     var dTime = (sampleBlock.length - newSampleBlockLen) / Audiodata.sampleRate;
 
-     var timeVector = linspace(0, time, phase.length);
+     var instantFreq = new Array(dPhase.length).fill(0);
 
-     var dTime = (timeVector[2] - timeVector[1]);
-
-     var dPhase = diff(phase);
-
-     var instantFreq = new Array(dPhase.length + 1).fill(0);
-
-     for (var k = 1; k < dPhase.length; k++) {
-         instantFreq[k] = (1 / 2 * Math.PI) * dPhase[k] / dTime;
+     for (var k = 0; k < dPhase.length; k++) {
+         dPhase[k] = secondPhase[k] - firstPhase[k];
+         instantFreq[k] = 1 / (2 * Math.PI) * dPhase[k] / dTime;
+         var freq = k / dPhase.length * Audiodata.sampleRate / 2;
+         //  unwrap freq achtung modulo
+         while (instantFreq[k] > freq + (dTime / 2)) {
+             instantFreq[k] = instantFreq[k] - (1 / dTime);
+         }
+         while (instantFreq[k] < freq - (dTime / 2)) {
+             instantFreq[k] = instantFreq[k] + (1 / dTime);
+         }
      }
      return instantFreq;
  }
@@ -286,7 +310,7 @@
              }
              break;
          case "hannpoisson":
-             // α is a parameter that controls the slope of the exponential (wiki)
+             // alpha is a parameter that controls the slope of the exponential (wiki)
              var alpha = 2;
 
              for (i = 0; i < windowLen.length; i++) {
@@ -299,7 +323,7 @@
                  window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
              }
              break;
-         default:
+         case "rect":
              window.fill(1);
              break;
      }
