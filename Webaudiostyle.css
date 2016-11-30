@@ -1,4 +1,4 @@
-body{
+html,body{
     min-width: 1200px;
 }
 
@@ -235,6 +235,7 @@ input[type=range]::-webkit-slider-thumb {
     padding-left:10px;
     padding-right: 10px;
     border:1px solid gray;
+    position:relative;
 }
 
 #canvasDivSpec{
@@ -393,11 +394,10 @@ header{
     width:500px;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    margin-left:auto;
-    margin-right:auto;
     margin-top:-22px;
     position:relative;
-
+    display:block;
+    margin-left:450px;
 }
 
 a.class1:link {
@@ -420,9 +420,10 @@ h1{
 }
 
 .Findus{
-    float:right;
     margin-top:-80px;
     padding:10px 10px;
+    position:absolute;
+    margin-left:1150px;
 
 }
 a:link{
