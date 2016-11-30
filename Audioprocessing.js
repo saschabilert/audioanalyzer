@@ -29,10 +29,12 @@
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
+ //Loading message
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
-
+     document.getElementById("loading").style.display = "block";
+     document.getElementById("container").style.display = "block"
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -69,7 +71,8 @@
              drawSpec();
 
              drawWave();
-
+         document.getElementById("loading").style.display = "none";
+         document.getElementById("container").style.display = "none";
          });
      };
  }
