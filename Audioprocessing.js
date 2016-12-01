@@ -24,8 +24,26 @@
      display: "Spectrum"
  };
 
- enableButton();
 
+ var inputs = document.querySelectorAll( '.audioInput' );
+ Array.prototype.forEach.call( inputs, function( input )
+ {
+     var label	 = input.nextElementSibling;
+
+
+     input.addEventListener( 'change', function( e )
+     {
+
+         var fileName = e.target.value.split( '\\' ).pop();
+         label.innerHTML = fileName;
+         if(fileName == ""){
+             fileName = "Choose a file";
+             label.innerHTML = fileName;
+             document.getElementById("loading").style.display = "none";
+             document.getElementById("container").style.display = "none";
+         }
+         });
+});
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -33,6 +51,7 @@
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
+     enableButton();
      document.getElementById("loading").style.display = "block";
      document.getElementById("container").style.display = "block"
      // get the first file data with the id "myAudio"

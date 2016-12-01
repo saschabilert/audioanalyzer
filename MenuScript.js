@@ -1,4 +1,12 @@
 // process audio signal with a new block length
+document.getElementById("blockLength").disabled = true;
+document.getElementById("windowType").disabled = true;
+document.getElementById("overlap").disabled = true;
+document.getElementById("display").disabled = true;
+document.getElementById("colormap").disabled = true;
+document.getElementById("min").disabled = true;
+document.getElementById("max").disabled = true;
+
 function blockLength() {
     Audiodata.blockLen = +(document.getElementById("blockLength").value);
     audioProcessing();
@@ -17,6 +25,14 @@ function overlap() {
 function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     audioProcessing();
+    if(Audiodata.display == "Phase" || Audiodata.display == "MFCC" || Audiodata.display == "Modulation Spectrum" || Audiodata.display == "Group Delay" || Audiodata.display == "Instantaneous Frequency"){
+        document.getElementById("blockLength").disabled = true;
+        document.getElementById("windowType").disabled = true;
+        document.getElementById("overlap").disabled = true;
+        document.getElementById("colormap").disabled = true;
+        document.getElementById("min").disabled = true;
+        document.getElementById("max").disabled = true;
+    }
 }
 
 function colormap(){
@@ -129,25 +145,16 @@ document.getElementById('volume').addEventListener('input',function(){
 function enableButton() {
   playButton.disabled = !playButton.disabled;
     stopbtn.disabled = !stopbtn.disabled;
+    document.getElementById("blockLength").disabled = false;
+    document.getElementById("windowType").disabled = false;
+    document.getElementById("overlap").disabled = false;
+    document.getElementById("display").disabled = false;
+    document.getElementById("colormap").disabled = false;
+    document.getElementById("min").disabled = false;
+    document.getElementById("max").disabled = false;
 }
 
-var inputs = document.querySelectorAll( '.audioInput' );
-Array.prototype.forEach.call( inputs, function( input )
-{
-    var label	 = input.nextElementSibling;
 
-
-     input.addEventListener( 'change', function( e )
-     {
-
-           fileName = e.target.value.split( '\\' ).pop();
-             label.innerHTML = fileName;
-         if(fileName == ""){
-             fileName = "Choose a file";
-             label.innerHTML = fileName;
-         }
-     });
-});
 
 var min;
 var max;
