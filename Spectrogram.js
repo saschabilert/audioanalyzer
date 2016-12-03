@@ -350,7 +350,6 @@ function draw() {
     ctx.scale(cWidth / specWidth, cHigh / specHight);
     SpectroData.scaleFactorWidth = cWidth / specWidth;
     SpectroData.scaleFactorHeight = cHigh / specHight;
-    console.log(cWidth / specWidth, cHigh / specHight)
     // Draw the image from the temp canvas to the scaled canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(tempCanvas, 0, 0);
@@ -507,6 +506,7 @@ function drawScale() {
     var maxDistanceNumbersY = 150;
     var freqPerLine = freqMax / canvas.height;
     var timePerColumn = trackLenSec / canvas.width
+
     var stepsX = 100;
 
     for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
@@ -658,7 +658,6 @@ timeEnd=tempTimeStart;
   }
   if(timePerSide!=lengthSelect){
     factor=timePerSide/lengthSelect;
-    console.log(timePerSide,factor,divWidth,lengthSelect)
   }
 
   if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
@@ -679,7 +678,6 @@ timeEnd=tempTimeStart;
 
 
       var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
-        console.log(lineStart)
         div.scrollLeft=lineStart;
     }
 }
@@ -687,7 +685,6 @@ timeEnd=tempTimeStart;
 function getSectionDisplayed(){
   var canvas = document.getElementById("canvasSpec")
   var div = document.getElementById("canvasDivSpec")
-console.log(scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),(scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)-(scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))
   return {
       min:   scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
       max:   (scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)

@@ -25,8 +25,10 @@
         <a href="About us.html" class="class1">About us</a>
     </header>
     <content>
-        <div id="container" class="container" style="display:none;"><div id = "message" class = "message">Processing...</div></div>
-        <div id="loading" class="loading" style="display:none;" >
+        <div id="container" class="container" style="display:none;">
+            <div id="message" class="message">Processing...</div>
+        </div>
+        <div id="loading" class="loading" style="display:none;">
 
         </div>
 
@@ -42,13 +44,23 @@
             <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
             <label for="myAudio">Choose a file</label>
         </form>
-
         <div class="buttons">
             <button id="player" type="button" class="playPause">&#9654;</button>
             <button id="stop" type="button" class="stop">&#9724;</button>
             <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
         </div>
         <div data-js="info" class="info">00:00</div>
+
+        <tr>
+            <th>Choose a grid size:</th>
+        </tr>
+        <tr>
+            <td><select id="grid" onchange="gridSize()">
+            <option value="10">small</option>
+            <<option value="20">medium</option>
+            <option value="50">big</option>
+        </select></td>
+        </tr>
 
         <div class="canvas" id="canvasDivWave">
             <canvas id="canvasWaveScale" width="1200" height="220"></canvas>

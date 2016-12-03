@@ -1,15 +1,15 @@
 var WaveData = {
-    picData: undefined,
-    picLength: undefined,
-    picWidth: undefined,
     lengthCanvas: undefined,
     hightCanvas: undefined,
+    gridSize: 10
 };
 
 var mouseUsed = 0;
 var intervalDrawSelect;
 var selectionX = 0;
 var startSelection = 0;
+var offSetLeft = 24;
+var offSetBottom = 20;
 
 function drawWave() {
 
@@ -108,7 +108,7 @@ function drawWave() {
 
         for (var i = 0; i < crestFactor.length; i++) {
             crestFactor[i] = peak[i] / rms[i];
-            if (rms[i] === 0) {
+            if (isNaN(crestFactor[i])) {
                 crestFactor[i] = 0;
             }
         }
@@ -164,24 +164,37 @@ function drawWaveTimeAxes() {
 
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var ctxWaveScale = canvasWaveScale.getContext("2d");
-    var div = document.getElementById('canvasDivWave')
-    var divWidth = div.offsetWidth;
-    var divHeight = div.offsetHeight;
-    var offSetLeft = 24;
-    var offSetBottom = 20;
-    var offSetTextLeft = 8;
-    var offSetTextBottom = 4;
-    var tickLen = 15;
+    var canvasWave = document.getElementById('canvasWave');
 
-    var trackLenSec = Math.round(Audiodata.signalLen / Audiodata.sampleRate);
+    var minDistanceNumbersX = 100;
+    var maxDistanceNumbersX = 250;
 
-    console.log(trackLenSec);
+    var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
-    var timePoint = canvasWaveScale.width / trackLenSec;
+    var logTime = Math.log10(trackLenSec);
+    logTime = Math.pow(10, Math.floor(logTime));
 
-    console.log(timePoint);
+    var timePoint = trackLenSec / canvasWave.width;
 
-    console.log(canvasWaveScale.width);
+    var stepsX = 100;
+
+    for (var i = minDistanceNumbersX; i <= minDistanceNumbersX; i++) {
+        var time = timePoint * i;
+        var quarter = time % (logTime / 4);
+        var half = time % (logTime / 2);
+        var full = time % logTime;
+
+        if (quarter <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        } else if (half <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        } else if (full <= (0.01 * logTime)) {
+            stepsX = kk;
+            break;
+        }
+    }
 
     ctxWaveScale.clearRect(0, 0, canvasWaveScale.width, canvasWaveScale.height);
 
@@ -191,24 +204,19 @@ function drawWaveTimeAxes() {
 
     ctxWaveScale.moveTo(offSetLeft, 0);
     ctxWaveScale.lineTo(offSetLeft, canvasWaveScale.height - offSetBottom);
-    ctxWaveScale.lineTo(canvasWaveScale.width, canvasWaveScale.height - offSetBottom);
+    ctxWaveScale.lineTo(canvasWaveScale.width - 1, canvasWaveScale.height - offSetBottom);
     ctxWaveScale.stroke();
 
     ctxWaveScale.beginPath();
-    ctxWaveScale.strokeStyle = "black";
     ctxWaveScale.lineWidth = 2;
-    ctxWaveScale.font = "12px Arial";
-    ctxWaveScale.moveTo(offSetLeft, canvasWaveScale.height - offSetBottom);
-    ctxWaveScale.lineTo(offSetLeft, canvasWaveScale.height - tickLen);
+    ctxWaveScale.font = "700 12px Arial";
 
-
-    for (var i = 0; i <= trackLenSec; i++) {
-
-        ctxWaveScale.moveTo((Math.round(timePoint * i)) + offSetLeft, canvasWaveScale.height - offSetBottom);
-        ctxWaveScale.lineTo((Math.round(timePoint * i)) + offSetLeft, canvasWaveScale.height - tickLen);
+    for (var i = 0; i <= canvasWaveScale.width; i += stepsX) {
+        ctxWaveScale.moveTo(i + offSetLeft, canvasWaveScale.height - offSetBottom);
+        ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
-        ctxWaveScale.fillText(i.toString().concat('.0'), (Math.round(timePoint * i)) + offSetLeft - offSetTextLeft, canvasWaveScale.height - offSetTextBottom);
 
+        ctxWaveScale.fillText((Math.floor((i) * timePoint * (100 / logTime))) / (100 / logTime), i + offSetLeft - 9, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
@@ -217,10 +225,8 @@ function drawWaveGrid() {
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
     var ctxWaveGrid = canvasWaveGrid.getContext("2d");
 
-    var offSetLeft = 24;
-
-    var divHorizontal = 16;
-    var divVertical = 16;
+    var divHorizontal = WaveData.gridSize;
+    var divVertical = WaveData.gridSize;
 
     var numHorizontal = canvasWaveGrid.height / divHorizontal;
     var numVertical = (canvasWaveGrid.width - offSetLeft) / divVertical;
@@ -230,8 +236,6 @@ function drawWaveGrid() {
     ctxWaveGrid.beginPath();
     ctxWaveGrid.strokeStyle = "#f2f2f2";
     ctxWaveGrid.lineWidth = 0.5;
-
-    console.log(canvasWaveGrid.width);
 
     for (var i = 1; i < numHorizontal; i++) {
         ctxWaveGrid.moveTo(offSetLeft + 1, divHorizontal * i);

@@ -144,7 +144,6 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
-     console.log(Audiodata.instantFreq);
  }
 
  function calculateRFFT(sampleBlock) {
@@ -153,7 +152,7 @@
      var real = sampleBlock;
 
      transform(real, imag);
-     
+
      return [real, imag];
  }
 
@@ -253,7 +252,10 @@
 
      for (var k = 0; k < dPhase.length; k++) {
          dPhase[k] = secondPhase[k] - firstPhase[k];
-         instantFreq[k] = 1 / (2 * Math.PI) * dPhase[k] / dTime;
+
+         console.log(dPhase);
+
+         instantFreq[k] = 1 / (2 * Math.PI) * (dPhase[k] / dTime);
          var freq = k / dPhase.length * Audiodata.sampleRate / 2;
          //  unwrap freq achtung modulo
          while (instantFreq[k] > freq + (dTime / 2)) {
@@ -266,7 +268,7 @@
      return instantFreq;
  }
 
-// is not correct so far
+ // is not correct so far
  function calculateModSpec(real, imag) {
 
      var analyticWeight = new Array(real.length).fill(0);
@@ -293,10 +295,6 @@
      transform(envelopeReal, envelopeImag);
 
      var modSpec = calculateAbs(envelopeReal, envelopeImag);
-
-     for (var l = 0; l < modSpec.length; l++) {
-         modSpec[l] = modSpec[l] / (2 * Math.PI);
-     }
 
      return modSpec;
  }
@@ -349,14 +347,14 @@
              var numer = Math.PI * alpha;
 
              for (i = 0; i < windowLen.length; i++) {
-                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (windowLen[i] / (windowLen.length/2)) * (windowLen[i] / (windowLen.length/2)));
+                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (windowLen[i] / (windowLen.length / 2)) * (windowLen[i] / (windowLen.length / 2)));
              }
 
              numer = besselfkt(numer);
              denom = besselfkt(denom);
 
              for (k = 0; k < denom.length; k++) {
-                window[k] = denom[k] / numer;
+                 window[k] = denom[k] / numer;
              }
              break;
          case "rect":
