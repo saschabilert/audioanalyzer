@@ -1,6 +1,7 @@
 html,body{
     min-width: 1200px;
-    max-width:100%
+    max-width:100%;
+    position:relative;
 }
 
 select {
@@ -408,7 +409,6 @@ header{
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
     margin-top:-22px;
-    position:relative;
     display:block;
     margin-left:450px;
 }
@@ -473,4 +473,13 @@ a:link{
     height:100%;
     background: white;
     opacity: 0.8;
+
+}
+#message{
+    margin-top:300px;
+    text-align:center;
+    font-size:30px;
+    margin-left:20px;
+    color:black;
+    text-shadow:1px 1px 0px #ffffff;
 }
