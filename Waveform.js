@@ -216,7 +216,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText((Math.floor((i) * timePoint * (100 / logTime))) / (100 / logTime), i + offSetLeft - 9, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText((Math.floor((i) * timePoint * (100 / logTime))) / (100 / logTime), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
@@ -234,8 +234,8 @@ function drawWaveGrid() {
     ctxWaveGrid.clearRect(0, 0, canvasWaveGrid.width, canvasWaveGrid.height);
 
     ctxWaveGrid.beginPath();
-    ctxWaveGrid.strokeStyle = "#f2f2f2";
-    ctxWaveGrid.lineWidth = 0.5;
+    ctxWaveGrid.strokeStyle = "#bfbfbf";
+    ctxWaveGrid.lineWidth = 1;
 
     for (var i = 1; i < numHorizontal; i++) {
         ctxWaveGrid.moveTo(offSetLeft + 1, divHorizontal * i);
