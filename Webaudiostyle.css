@@ -1,6 +1,6 @@
 html,body{
     min-width: 1200px;
-    max-width:100%
+
 }
 
 select {
@@ -13,7 +13,7 @@ select {
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     border:1px solid gray;
-    width:120px;
+    display:inline-block;
 
 }
 select:hover {
@@ -57,7 +57,7 @@ td, th {
     text-align: center;
     margin-top:20px;
     padding: 10px;
-    p
+    
 }
 
 .audioInput {
