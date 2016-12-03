@@ -24,26 +24,23 @@
      display: "Spectrum"
  };
 
+ var inputs = document.querySelectorAll('.audioInput');
+ Array.prototype.forEach.call(inputs, function(input) {
+     var label = input.nextElementSibling;
 
- var inputs = document.querySelectorAll( '.audioInput' );
- Array.prototype.forEach.call( inputs, function( input )
- {
-     var label	 = input.nextElementSibling;
+     input.addEventListener('change', function(e) {
 
-
-     input.addEventListener( 'change', function( e )
-     {
-
-         var fileName = e.target.value.split( '\\' ).pop();
+         var fileName = e.target.value.split('\\').pop();
          label.innerHTML = fileName;
-         if(fileName == ""){
+         if (fileName == "") {
              fileName = "Choose a file";
              label.innerHTML = fileName;
              document.getElementById("loading").style.display = "none";
              document.getElementById("container").style.display = "none";
          }
-         });
-});
+     });
+ });
+
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -54,7 +51,7 @@
      enableButton();
      document.getElementById("loading").style.display = "block";
      document.getElementById("container").style.display = "block"
-     // get the first file data with the id "myAudio"
+         // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
      // read the data from myAudio as ArrayBuffer
@@ -91,8 +88,8 @@
              drawSpec();
 
              drawWave();
-         document.getElementById("loading").style.display = "none";
-         document.getElementById("container").style.display = "none";
+             document.getElementById("loading").style.display = "none";
+             document.getElementById("container").style.display = "none";
          });
      };
  }
@@ -151,9 +148,12 @@
  }
 
  function calculateRFFT(sampleBlock) {
+
      var imag = new Array(sampleBlock.length).fill(0);
      var real = sampleBlock;
+
      transform(real, imag);
+     
      return [real, imag];
  }
 
@@ -266,6 +266,7 @@
      return instantFreq;
  }
 
+// is not correct so far
  function calculateModSpec(real, imag) {
 
      var analyticWeight = new Array(real.length).fill(0);
@@ -342,6 +343,22 @@
                  window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
              }
              break;
+         case "kaiser-bessel":
+             var alpha = 2.5;
+             var denom = new Array(windowLen.length);
+             var numer = Math.PI * alpha;
+
+             for (i = 0; i < windowLen.length; i++) {
+                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (windowLen[i] / (windowLen.length/2)) * (windowLen[i] / (windowLen.length/2)));
+             }
+
+             numer = besselfkt(numer);
+             denom = besselfkt(denom);
+
+             for (k = 0; k < denom.length; k++) {
+                window[k] = denom[k] / numer;
+             }
+             break;
          case "rect":
              window.fill(1);
              break;
@@ -369,4 +386,24 @@
          difference[i] = array[i + 1] - array[i];
      }
      return difference;
+ }
+
+ function besselfkt(array) {
+
+     var bessel = new Array(array.length);
+
+     for (var i = 0; i < bessel.length; i++) {
+         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / fakultaet(i), 2);
+     }
+     return bessel;
+ }
+
+ function fakultaet(n) {
+
+     var fak = 1;
+
+     for (var i = 1; i <= n; i++) {
+         fak = fak * i;
+     }
+     return fak;
  }

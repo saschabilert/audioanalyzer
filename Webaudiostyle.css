@@ -1,6 +1,6 @@
 html,body{
     min-width: 1200px;
-
+    max-width:100%
 }
 
 select {
@@ -13,7 +13,10 @@ select {
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     border:1px solid gray;
-    display:inline-block;
+    width:120px;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
 
 }
 select:hover {
@@ -23,7 +26,6 @@ select:hover {
     background-color:#dfdfdf;
 }
 select:active {
-
      top:1px;
  }
 
@@ -290,7 +292,6 @@ input[type=range]::-webkit-slider-thumb {
     font-size: 14px;
     font-weight: bold;
     z-index: 0;
-    border-radius: 15px;
     border:1px solid gray;
     text-align:center;
 
