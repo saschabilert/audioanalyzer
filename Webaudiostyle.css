@@ -60,7 +60,7 @@ td, th {
     text-align: center;
     margin-top:20px;
     padding: 10px;
-    
+
 }
 
 .audioInput {
@@ -281,6 +281,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 75px;
     position: absolute;
 }
+
 #divPosition{
     margin-top: 40px;
     margin-left: 40px;
@@ -295,8 +296,8 @@ input[type=range]::-webkit-slider-thumb {
     z-index: 0;
     border:1px solid gray;
     text-align:center;
-
 }
+
 #canvasLegend{
     position: absolute;
     z-index: 0;
@@ -307,10 +308,26 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: 20px;
     margin-left: 5px;
     min-width: 1200px;
-    height: 220px;
+    height: 280px;
     position: absolute;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
+}
+
+#divWavePosition{
+    margin-top: 40px;
+    margin-left: 40px;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    font-family: arial;
+    line-height: 0.5;
+    background-color: rgba(250, 250, 255, 0.7);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 0;
+    border:1px solid gray;
+    text-align:center;
 }
 
 #canvasWave{

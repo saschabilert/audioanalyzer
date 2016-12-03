@@ -28,11 +28,7 @@
         <div id="container" class="container" style="display:none;">
             <div id="message" class="message">Processing...</div>
         </div>
-        <div id="loading" class="loading" style="display:none;">
-
-        </div>
-
-
+        <div id="loading" class="loading" style="display:none;"></div>
 
         <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a>
             <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts" target="_blank"><img src="facebook.png" width="30" height="30" border=0></a>
@@ -63,16 +59,22 @@
         </tr>
 
         <div class="canvas" id="canvasDivWave">
-            <canvas id="canvasWaveScale" width="1200" height="220"></canvas>
-            <canvas id="canvasWaveGrid" width="1200" height="200"></canvas>
-            <canvas id="canvasWave" width="1176" height="200"></canvas>
-            <canvas id="canvasRMS" width="1176" height="200"></canvas>
-            <canvas id="canvasSelect" width="1176" height="200"></canvas>
-            <canvas id="canvasWaveLine" width="1176" height="200"></canvas>
-            <!-- <canvas id="canvasWaveSelect" width="300" height="200"></canvas> -->
+            <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
+            <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
+            <canvas id="canvasWave" width="1176" height="260"></canvas>
+            <canvas id="canvasRMS" width="1176" height="260"></canvas>
+            <canvas id="canvasSelect" width="1176" height="260"></canvas>
+            <canvas id="canvasWaveLine" width="1176" height="260"></canvas>
+        </div>
+
+        <div id="divWavePosition">
+            <p id="wavePosition"></p>
+            <p id="crestValue"></p>
         </div>
 
         <!--Space between waveform and table-->
+        <br><br>
+        <br><br>
         <br><br>
 
         <!-- generate dropwdown lists-->

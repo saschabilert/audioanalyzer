@@ -1,7 +1,6 @@
 var WaveData = {
-    lengthCanvas: undefined,
-    hightCanvas: undefined,
-    gridSize: 10
+    gridSize: 10,
+    crestFactor: undefined
 };
 
 var mouseUsed = 0;
@@ -16,19 +15,24 @@ function drawWave() {
     var canvas = document.getElementById("canvasWave");
     var canvasLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
-    var CanvasSelect = document.getElementById("CanvasSelect")
+
     canvasLine.addEventListener("mousedown", startPlayHereWave);
     canvasLine.addEventListener("mousedown", waveOnMouseDown);
     canvasLine.addEventListener("mouseup", waveOnMouseUp);
+    canvasLine.addEventListener("mousemove", displayWavePosition);
+
     if (canvas.getContext) {
 
         var canvasCtx = canvas.getContext("2d");
         var canvasCtxRMS = canvas.getContext("2d");
 
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasCtxRMS.clearRect(0, 0, canvasCtx.width, canvasCtx.height);
 
-        WaveData.lengthCanvas = canvas.width;
-        WaveData.hightCanvas = canvas.height;
+        var halfHeight = canvas.height / 2;
+
+        var waveScale = 80;
+        var offSetTop = 30;
 
         var canvasBlockLen = Audiodata.signalLen / canvas.width;
 
@@ -44,11 +48,11 @@ function drawWave() {
 
             currentBlock = Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1));
 
-            maxValue[i] = Math.max(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+            maxValue[i] = Math.max(...currentBlock) * waveScale;
 
-            minValue[i] = Math.min(...currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+            minValue[i] = Math.min(...currentBlock) * waveScale;
 
-            rms[i] = calculateRMS(currentBlock) * (WaveData.hightCanvas / 2) + (WaveData.hightCanvas / 2) - 100;
+            rms[i] = calculateRMS(currentBlock) * waveScale;
 
             if (Math.max(...currentBlock) >= Math.abs(Math.min(...currentBlock))) {
                 peak[i] = Math.max(...currentBlock);
@@ -65,10 +69,10 @@ function drawWave() {
         canvasCtx.strokeStyle = "#003d99";
         canvasCtx.lineWidth = 0.02;
 
-        canvasCtx.moveTo(0, 100);
+        canvasCtx.moveTo(0, halfHeight + offSetTop);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtx.lineTo(i, 100 - maxValue[i]);
-            canvasCtx.lineTo(i, 100 - minValue[i]);
+            canvasCtx.lineTo(i, halfHeight + offSetTop - maxValue[i]);
+            canvasCtx.lineTo(i, halfHeight + offSetTop - minValue[i]);
             canvasCtx.stroke();
         }
 
@@ -76,14 +80,14 @@ function drawWave() {
         canvasCtxRMS.strokeStyle = "#66a3ff";
         canvasCtxRMS.lineWidth = 0.1;
 
-        canvasCtxRMS.moveTo(0, 100);
+        canvasCtxRMS.moveTo(0, halfHeight + offSetTop);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtxRMS.lineTo(i, 100 - rms[i]);
-            canvasCtxRMS.lineTo(i, 100 + rms[i]);
+            canvasCtxRMS.lineTo(i, halfHeight + offSetTop - rms[i]);
+            canvasCtxRMS.lineTo(i, halfHeight + offSetTop + rms[i]);
             canvasCtxRMS.stroke();
         }
 
-        var crestFactor = calculateCrestFactor(peak, rms);
+        WaveData.crestFactor = calculateCrestFactor(peak, rms);
 
     } else {
         // canvas-unsupported code here
@@ -248,6 +252,23 @@ function drawWaveGrid() {
         ctxWaveGrid.lineTo(offSetLeft + divVertical * k, canvasWaveGrid.height - 1);
         ctxWaveGrid.stroke();
     }
+}
+
+function displayWavePosition(evt) {
+    var canvasWave = document.getElementById("canvasWave");
+    var wavePosition = document.getElementById("wavePosition");
+    var rmsWert = document.getElementById("rmsWert");
+
+    var mousePos = getMousePos(canvasWave, evt);
+    var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
+
+    var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
+    wavePosition.innerHTML = 'Time: ' + mouseX + ' sec';
+
+    var point = WaveData.crestFactor[Math.round(mouseX)];
+
+    point = 20 * Math.log10(point);
+    crestValue.innerHTML = 'Crest: ' + Math.round(point) + ' dB';
 }
 
 function waveOnMouseDown(evt) {

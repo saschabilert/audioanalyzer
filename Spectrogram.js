@@ -392,7 +392,7 @@ function displayMousePosition(evt) {
                 point = 20 * Math.log10(point / 2048);
                 point = Math.max(specLevelLow, point);
                 point = Math.min(point, specLevelHigh)
-                wert.innerHTML = Math.round(point) + 'dB'
+                wert.innerHTML = Math.round(point) + ' dB'
             }
             break;
         case "Phase":
@@ -410,7 +410,7 @@ function displayMousePosition(evt) {
             point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
             if (!isNaN(point)) {
                 point *= 1000
-                wert.innerHTML = Math.round(point * 100) / 100 + "ms"
+                wert.innerHTML = Math.round(point * 100) / 100 + " ms"
             }
             break;
 
