@@ -9,11 +9,12 @@ var SpectroData = {
     scaleFactorHeight: undefined,
     freqTimeRawData: undefined,
 };
+// Definition of several global variables needed for processing
 var TypeColorScale = 1;
-//keyEvent = 0;
 var specLevelHigh = -30;
 var specLevelLow = -90;
 var specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+// Creating a temp canvas that will hold the unscaled spectrogram data
 var tempCanvas = document.createElement("canvas"),
     tempCtx = tempCanvas.getContext("2d");
 var scaleOfsetLeft = 24;
@@ -28,7 +29,8 @@ var cHigh;
 var specWidth;
 var specHight;
 
-
+// Main function that fills most global variables with numbers and creats the
+// colorscales
 function drawSpec() {
     var canvas = document.getElementById("canvasSpec")
     var ctx = canvas.getContext("2d")
@@ -116,6 +118,8 @@ function drawSpec() {
         drawLineKlickWave(mouseTime)
     }
 
+// This function calls a zoom function in dependency on the keys that are
+// pressed while using the mousewheel
     function mouseWheelFunction(evt) {
         // console.log(evt)
         // console.log(keyEvent)
@@ -243,8 +247,6 @@ function draw() {
 
     var noOfColorSteps = colorScale[1].length;
 
-
-
     // Clear canvas from previous data
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -258,6 +260,7 @@ function draw() {
             for (var j = specHight - 1; j > 0; j--) {
 
                 for (var i = 0; i < specWidth; i++) {
+                  //Scaling the input Data onto the colorscale
                     point = 20 * Math.log10(specData[i][j] / 2048);
 
                     point += Math.abs(specLevelLow);
@@ -309,9 +312,10 @@ function draw() {
                 Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                 break;*/
         case "Modulation Spectrum":
-
+        console.log(specData)
             break;
         case "Group Delay":
+        console.log(specData)
             for (var j = specHight - 1; j > 0; j--) {
 
                 for (var i = 0; i < specWidth; i++) {
@@ -356,9 +360,12 @@ function draw() {
 
     // console.log(testdata)
     SpectroData.picData = pictureData;
+    // Call function for drawing the legend
     drawLegend(colorScale)
+    // Call function for creating the scale arround the spectrgram
     drawScale()
     section=getSectionDisplayed()
+    // Mark the section of the signa that is currently displayed
   drawSelection(section.min,2,section.max);
 
 }
@@ -475,9 +482,34 @@ function drawLegend(colorScale) {
     //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
     ctxLegend.clearRect(0, canvasLegend.height - 15, canvasLegend.width * 2, canvasLegend.height)
     ctxLegend.font = "700 15px Arial";
-    ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
-    ctxLegend.fillText(specLevelLow + (specLevelWidth / 2) + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
-    ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+    switch (Audiodata.display) {
+        case "Spectrum":
+        ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
+        ctxLegend.fillText(specLevelLow + (specLevelWidth / 2) + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+        ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+            break;
+        case "Phase":
+        ctxLegend.fillText('-\u03C0' , 2, canvasLegend.height - 1);
+        ctxLegend.fillText(0 , (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+        ctxLegend.fillText('\u03C0' , (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
+
+            break;
+            /*  case "MFCC":
+                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                  break;*/
+        case "Modulation Spectrum":
+            specData = Audiodata.modSpec;
+
+            break;
+        case "Group Delay":
+        ctxLegend.fillText(0 + 'ms', 2, canvasLegend.height - 1);
+        ctxLegend.fillText((((Audiodata.blockLen/Audiodata.sampleRate)*1000)/2).toFixed(1) +'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+        ctxLegend.fillText(((Audiodata.blockLen/Audiodata.sampleRate)*1000).toFixed(1) + 'ms' ,(canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+
+            break;
+
+    }
+
     ctxLegend.beginPath()
 
     ctxLegend.moveTo(1, (canvasLegend.height - 25))
