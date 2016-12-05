@@ -28,7 +28,7 @@ var cWidth;
 var cHigh;
 var specWidth;
 var specHight;
-var endTimeSelection=0;
+var endTimeSelection=Audiodata.signalLen/Audiodata.sampleRate;
 
 // Main function that fills most global variables with numbers and creats the
 // colorscales
@@ -439,7 +439,7 @@ function drawLinePlay() {
 
 
         if (linePosition <= scrollPositionX - scaleOfsetLeft) {
-            div.scrollLeft = linePosition + scaleOfsetLeft
+            div.scrollLeft = linePosition + scaleOfsetLeft-50
         }
 
         ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
@@ -448,7 +448,7 @@ function drawLinePlay() {
             0 + ')';
         ctxLine.fillRect(linePosition, 0, 2, canvasLine.height);
         if (linePosition >= scrollPositionX + div.offsetWidth - scaleOfsetLeft) {
-            div.scrollLeft = div.scrollLeft + div.offsetWidth - 20
+            div.scrollLeft = div.scrollLeft + div.offsetWidth - 50
         }
 
         window.requestAnimationFrame(drawLinePlay)
@@ -683,7 +683,7 @@ timeStart=timeEnd;
 timeEnd=tempTimeStart;
 }
 else if (timeEnd==timeStart) {
-  alert('hier')
+endTimeSelection=Audiodata.signalLen/Audiodata.sampleRate;
   console.log((timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))+(divWidth/4))
   div.scrollLeft=(timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))-divWidth/8;
   return;

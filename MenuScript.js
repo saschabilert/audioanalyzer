@@ -110,6 +110,14 @@ function toggleSound() {
                 drawLineKlick(0)
                 drawLineKlickWave(0)
             }
+            else if (((audioCtx.currentTime - startTime + startOffset) >=endTimeSelection)) {
+              audioCtx.currentTime = 0;
+              //startTime = startTime;
+              //startOffset = startOffset;
+              isPlaying = false;
+              info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) +  " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+              audPlay.stop();
+            }
         }
         update();
 
