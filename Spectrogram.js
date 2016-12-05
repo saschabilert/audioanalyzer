@@ -28,6 +28,7 @@ var cWidth;
 var cHigh;
 var specWidth;
 var specHight;
+var endTimeSelection=0;
 
 // Main function that fills most global variables with numbers and creats the
 // colorscales
