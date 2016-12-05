@@ -87,7 +87,7 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
             drawLineKlick(0)
             drawLineKlickWave(0)
         }
@@ -98,14 +98,14 @@ function toggleSound() {
             if (isPlaying == false) {
                 return;
             }
-            info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
 
             if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
                 audioCtx.currentTime = 0;
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+                info.innerHTML = "0.00" +  " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
                 drawLineKlick(0)
                 drawLineKlickWave(0)
             }

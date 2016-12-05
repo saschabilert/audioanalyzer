@@ -74,7 +74,7 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-         info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+         info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(2);
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
