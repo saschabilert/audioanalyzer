@@ -74,7 +74,7 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-         info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(2);
+             info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(2);
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
@@ -86,8 +86,6 @@
              Audiodata.instantFreq = new Array(Audiodata.nPart);
 
              calculateDisplay(window, Audiodata.display);
-
-             drawSpec();
 
              drawWave();
              document.getElementById("loading").style.display = "none";
@@ -146,6 +144,7 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
+     drawSpec();
  }
 
  function calculateRFFT(sampleBlock) {
