@@ -70,10 +70,10 @@ function drawWave() {
         canvasCtx.strokeStyle = "#003d99";
         canvasCtx.lineWidth = 0.02;
 
-        canvasCtx.moveTo(0, halfHeight + offSetTop);
+        canvasCtx.moveTo(0, halfHeight);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtx.lineTo(i, halfHeight + offSetTop - maxValue[i]);
-            canvasCtx.lineTo(i, halfHeight + offSetTop - minValue[i]);
+            canvasCtx.lineTo(i, halfHeight - maxValue[i]);
+            canvasCtx.lineTo(i, halfHeight - minValue[i]);
             canvasCtx.stroke();
         }
 
@@ -81,10 +81,10 @@ function drawWave() {
         canvasCtxRMS.strokeStyle = "#66a3ff";
         canvasCtxRMS.lineWidth = 0.1;
 
-        canvasCtxRMS.moveTo(0, halfHeight + offSetTop);
+        canvasCtxRMS.moveTo(0, halfHeight);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtxRMS.lineTo(i, halfHeight + offSetTop - rms[i]);
-            canvasCtxRMS.lineTo(i, halfHeight + offSetTop + rms[i]);
+            canvasCtxRMS.lineTo(i, halfHeight - rms[i]);
+            canvasCtxRMS.lineTo(i, halfHeight + rms[i]);
             canvasCtxRMS.stroke();
         }
 

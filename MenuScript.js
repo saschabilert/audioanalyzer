@@ -16,21 +16,25 @@ function gridSize() {
 function blockLength() {
     Audiodata.blockLen = +(document.getElementById("blockLength").value);
     audioProcessing();
+    Audiodata.drawCheck = false;
 }
 // process audio signal with a new window type
 function windowType() {
     Audiodata.windowFunction = document.getElementById("windowType").value;
     audioProcessing();
+    Audiodata.drawCheck = false;
 }
 
 function overlap() {
     Audiodata.overlap = +(document.getElementById("overlap").value);
     audioProcessing();
+    Audiodata.drawCheck = false;
 }
 
 function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     audioProcessing();
+    Audiodata.drawCheck = false;
     if (Audiodata.display == "Phase" || Audiodata.display == "MFCC" || Audiodata.display == "Modulation Spectrum" || Audiodata.display == "Group Delay" || Audiodata.display == "Instantaneous Frequency") {
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
@@ -42,6 +46,7 @@ function colormap() {
     TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
+
 var audio = document.getElementById("myAudio");
 var startOffset = 0;
 var startTime = 0;
