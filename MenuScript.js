@@ -6,6 +6,7 @@ document.getElementById("display").disabled = true;
 document.getElementById("colormap").disabled = true;
 document.getElementById("min").disabled = true;
 document.getElementById("max").disabled = true;
+document.getElementById("grid").disabled = true;
 
 function gridSize() {
   WaveData.gridSize = document.getElementById("grid").value;
@@ -31,9 +32,6 @@ function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     audioProcessing();
     if (Audiodata.display == "Phase" || Audiodata.display == "MFCC" || Audiodata.display == "Modulation Spectrum" || Audiodata.display == "Group Delay" || Audiodata.display == "Instantaneous Frequency") {
-        document.getElementById("blockLength").disabled = true;
-        document.getElementById("windowType").disabled = true;
-        document.getElementById("overlap").disabled = true;
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
         document.getElementById("max").disabled = true;
@@ -61,7 +59,8 @@ var durtime;
 var seekslider;
 var seeking = false;
 var seekto;
-var info = document.querySelector('[data-js="info"]');
+var info = document.querySelector('[data-js="info"]')
+
 var fileName;
 
 document.onkeydown = function(e) {
@@ -89,7 +88,7 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "0.0" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
             drawLineKlick(0)
             drawLineKlickWave(0)
         }
@@ -100,14 +99,14 @@ function toggleSound() {
             if (isPlaying == false) {
                 return;
             }
-            info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
 
             if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
                 audioCtx.currentTime = 0;
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "0.0" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+                info.innerHTML = "0.00" +  " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
                 drawLineKlick(0)
                 drawLineKlickWave(0)
             }
@@ -158,6 +157,7 @@ function enableButton() {
     document.getElementById("colormap").disabled = false;
     document.getElementById("min").disabled = false;
     document.getElementById("max").disabled = false;
+    document.getElementById("grid").disabled = false;
 }
 
 
