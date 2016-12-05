@@ -60,6 +60,7 @@
      // save sampleRate as globalobject variable
      Audiodata.sampleRate = audioCtx.sampleRate;
 
+
      // trigger the onload function to decode the Audiodata
      reader.onload = function() {
          audioCtx.decodeAudioData(reader.result).then(buffer => {
@@ -73,6 +74,7 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
+         info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 

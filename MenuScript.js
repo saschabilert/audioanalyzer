@@ -31,9 +31,6 @@ function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     audioProcessing();
     if (Audiodata.display == "Phase" || Audiodata.display == "MFCC" || Audiodata.display == "Modulation Spectrum" || Audiodata.display == "Group Delay" || Audiodata.display == "Instantaneous Frequency") {
-        document.getElementById("blockLength").disabled = true;
-        document.getElementById("windowType").disabled = true;
-        document.getElementById("overlap").disabled = true;
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
         document.getElementById("max").disabled = true;
@@ -61,7 +58,8 @@ var durtime;
 var seekslider;
 var seeking = false;
 var seekto;
-var info = document.querySelector('[data-js="info"]');
+var info = document.querySelector('[data-js="info"]')
+
 var fileName;
 
 document.onkeydown = function(e) {
@@ -89,7 +87,7 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "0.0" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
             drawLineKlick(0)
             drawLineKlickWave(0)
         }
@@ -107,7 +105,7 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "0.0" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+                info.innerHTML = "00" + ":" + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
                 drawLineKlick(0)
                 drawLineKlickWave(0)
             }
