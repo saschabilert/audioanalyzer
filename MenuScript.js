@@ -6,6 +6,7 @@ document.getElementById("display").disabled = true;
 document.getElementById("colormap").disabled = true;
 document.getElementById("min").disabled = true;
 document.getElementById("max").disabled = true;
+document.getElementById("grid").disabled = true;
 
 function gridSize() {
   WaveData.gridSize = document.getElementById("grid").value;
@@ -156,6 +157,7 @@ function enableButton() {
     document.getElementById("colormap").disabled = false;
     document.getElementById("min").disabled = false;
     document.getElementById("max").disabled = false;
+    document.getElementById("grid").disabled = false;
 }
 
 

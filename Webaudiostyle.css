@@ -55,12 +55,17 @@ table {
     max-width:100%;
 }
 
+#table1 {
+    margin-left:800px;
+    margin-top: -50px;
+    padding:10px;
+}
+
 td, th {
     border: none;
     text-align: center;
     margin-top:20px;
     padding: 5px;
-
 }
 
 .audioInput {
@@ -492,11 +497,6 @@ a:link{
     opacity: 0.8;
 
 }
-#message{
-    margin-top:300px;
-    text-align:center;
-    font-size:30px;
-    margin-left:20px;
-    color:black;
-    text-shadow:1px 1px 0px #ffffff;
-}
+
+
+
