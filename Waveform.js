@@ -189,13 +189,13 @@ function drawWaveTimeAxes() {
         var full = time % logTime;
 
         if (quarter <= (0.01 * logTime)) {
-            stepsX = kk;
+            stepsX = i;
             break;
         } else if (half <= (0.01 * logTime)) {
-            stepsX = kk;
+            stepsX = i;
             break;
         } else if (full <= (0.01 * logTime)) {
-            stepsX = kk;
+            stepsX = i;
             break;
         }
     }
