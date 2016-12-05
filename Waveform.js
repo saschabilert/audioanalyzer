@@ -5,8 +5,8 @@ var WaveData = {
 
 var mouseUsed = 0;
 var intervalDrawSelect;
-var selectionX = 0;
-var startSelection = 0;
+var selectionX = NaN;
+var startSelection = NaN;
 var offSetLeft = 24;
 var offSetBottom = 20;
 
@@ -317,19 +317,22 @@ function waveOnMouseUp(evt) {
     canvasLine = document.getElementById("canvasWaveLine")
     var canvas = document.getElementById("canvasWave")
     mousePos = getMousePos(canvasLine, evt)
+    mousePos=mousePos.x
     mouseUsed = 0;
-    endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
+    endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos
+
     if (selectionX<startSelection) {
       drawLineKlickWave(endTimeSelection)
       startOffset=endTimeSelection;
     }
-    selectionX=NaN;
-    console.log(endTimeSelection)
     canvasLine.removeEventListener("mousemove", onMouseMove)
     clearInterval(intervalDrawSelect)
     zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
-        startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x)
+        startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos)
+        console.log((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
+            startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos)
         startSelection=NaN;
+          selectionX=NaN;
 }
 
 function onMouseMove(evt) {
@@ -343,7 +346,5 @@ var canvasSelect = document.getElementById("canvasSelect")
 var ctxSelect = canvasSelect.getContext("2d")
 endTimeSelection=0;
 ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height)
-
-
 
 }

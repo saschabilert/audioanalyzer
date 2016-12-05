@@ -335,7 +335,7 @@ function draw() {
                     }
 
                     for (var kk = 0; kk < 3; kk++) {
-                        pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                        pictureData.data[nPictureData] = Math.round(twilightScale[kk][point]);
                         nPictureData++;
                     }
                     pictureData.data[nPictureData] = 255;
@@ -380,6 +380,8 @@ function drawLineKlick(mouseTime) {
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
+    info.innerHTML = (mouseTime).toFixed(1) + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+
 drawLinePlay()
 }
 
@@ -680,6 +682,12 @@ var tempTimeStart=timeStart;
 timeStart=timeEnd;
 timeEnd=tempTimeStart;
 }
+else if (timeEnd==timeStart) {
+  alert('hier')
+  console.log((timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))+(divWidth/4))
+  div.scrollLeft=(timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))-divWidth/8;
+  return;
+}
   var lengthSelect=(timeEnd-timeStart);
     var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
     var timePerColumn = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width
@@ -695,20 +703,16 @@ timeEnd=tempTimeStart;
 
   if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
 
-
       canvasScale.width = canvas.width * factor + scaleOfsetLeft
       canvas.width = canvas.width * factor;
       cWidth = canvas.width;
       canvasLine.width = canvasLine.width * factor
-
 
       ctx.scale(cWidth / specWidth, cHigh / specHight);
       SpectroData.scaleFactorWidth = cWidth / specWidth;
       SpectroData.scaleFactorHeight = cHigh / specHight;
       ctx.drawImage(tempCanvas, 0, 0);
       drawScale()
-
-
 
       var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         div.scrollLeft=lineStart;
