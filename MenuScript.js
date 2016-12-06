@@ -49,8 +49,9 @@ var audPlay;
 var isPlaying = false;
 var gainNode;
 var playButton = document.getElementById("player");
-playButton.disabled = true;
 playButton.addEventListener("click", toggleSound);
+//playButton.disabled = true;
+
 var stopbtn = document.getElementById("stop");
 stopbtn.disabled = true;
 
@@ -61,7 +62,6 @@ var seeking = false;
 var seekto;
 var info = document.querySelector('[data-js="info"]')
 
-var fileName;
 
 document.onkeydown = function(e) {
     var keyCode = e.keyCode;
@@ -144,12 +144,27 @@ document.getElementById('volume').addEventListener('input', function() {
     gainNode.gain.value = this.value;
 });
 
+var inputs = document.querySelectorAll('.audioInput');
+Array.prototype.forEach.call(inputs, function(input) {
+    var label = input.nextElementSibling;
 
+    input.addEventListener('change', function(e) {
+
+        var fileName = e.target.value.split('\\').pop();
+        label.innerHTML = fileName;
+        if (fileName == "") {
+            fileName = "Choose a file";
+            label.innerHTML = fileName;
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
+        }
+    });
+});
 
 
 function enableButton() {
-    playButton.disabled = !playButton.disabled;
-    stopbtn.disabled = !stopbtn.disabled;
+    playButton.disabled = false;
+    stopbtn.disabled = false;
     document.getElementById("blockLength").disabled = false;
     document.getElementById("windowType").disabled = false;
     document.getElementById("overlap").disabled = false;
