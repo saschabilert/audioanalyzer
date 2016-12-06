@@ -11,6 +11,7 @@
      sampleRate: undefined,
      samples: undefined,
      numOfChannels: undefined,
+     drawCheck: true,
      nPart: undefined,
      hopsize: undefined,
      overlap: 1 / 2,
@@ -33,9 +34,12 @@
 
  // function triggered by loading a Audiodata
  function audioProcessing() {
+
      enableButton();
+
      document.getElementById("loading").style.display = "block";
      document.getElementById("container").style.display = "block"
+
          // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
@@ -44,7 +48,6 @@
 
      // save sampleRate as globalobject variable
      Audiodata.sampleRate = audioCtx.sampleRate;
-
 
      // trigger the onload function to decode the Audiodata
      reader.onload = function() {
@@ -72,7 +75,12 @@
 
              calculateDisplay(window, Audiodata.display);
 
-             drawWave();
+             drawSpec();
+
+             if (Audiodata.drawCheck) {
+               drawWave();
+             }
+
              document.getElementById("loading").style.display = "none";
              document.getElementById("container").style.display = "none";
          });
@@ -99,7 +107,7 @@
              for (var k = 0; k < Audiodata.blockLen; k++) {
                  sampleBlock[k] = sampleBlock[k] * window[k];
              }
-             var [realPart, imagPart] = calculateRFFT(sampleBlock);
+             var [realPart, imagPart] = calculateFFT(sampleBlock);
          }
 
          switch (type) {
@@ -129,10 +137,9 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
-     drawSpec();
  }
 
- function calculateRFFT(sampleBlock) {
+ function calculateFFT(sampleBlock) {
 
      var imag = new Array(sampleBlock.length).fill(0);
      var real = sampleBlock;
@@ -223,8 +230,8 @@
          secondSampleBlock[i] = secondSampleBlock[i] * window[i];
      }
 
-     var [firstReal, firstImag] = calculateRFFT(firstSampleBlock);
-     var [secondReal, secondImag] = calculateRFFT(secondSampleBlock);
+     var [firstReal, firstImag] = calculateFFT(firstSampleBlock);
+     var [secondReal, secondImag] = calculateFFT(secondSampleBlock);
 
      var firstPhase = calculatePhase(firstReal, firstImag);
 
