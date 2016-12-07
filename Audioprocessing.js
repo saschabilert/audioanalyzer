@@ -261,7 +261,7 @@
 
          var multi = Math.round(step / (1 / dTime));
 
-        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) - freq;
+        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) ;
      }
      return instantFreqDev
  }
