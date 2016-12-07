@@ -46,7 +46,10 @@ function colormap() {
     TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
-
+var currentMin;
+var currentSec;
+var durationMin;
+var durationSec;
 var audio = document.getElementById("myAudio");
 var startOffset = 0;
 var startTime = 0;
@@ -93,12 +96,12 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+            info.innerHTML = "00:00.0" + " " + "/" + " " + durationMin + ":" + durationSec;
             drawLineKlick(0)
             drawLineKlickWave(0)
         }
 
-        function update() {
+        /*function update() {
 
             window.requestAnimationFrame(update);
             if (isPlaying == false) {
@@ -122,6 +125,40 @@ function toggleSound() {
               isPlaying = false;
               info.innerHTML = (audioCtx.currentTime - startTime + startOffset).toFixed(1) +  " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
               audPlay.stop();
+            }
+        }*/
+
+        function update(){
+            window.requestAnimationFrame(update);
+            if (isPlaying == false) {
+                return;
+            }
+            var currentMin = Math.floor((audioCtx.currentTime - startTime + startOffset)/60);
+            var currentSec = Math.floor((audioCtx.currentTime - startTime + startOffset)-currentMin*60);
+            var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)/60);
+            var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)-durationMin*60);
+            if (currentSec < 10) {currentSec = "0" + currentSec;}
+            if (currentMin < 10) {currentMin = "0" + currentMin;}
+            if (durationMin < 10) {durationMin = "0" + durationMin;}
+            if (durationSec < 10) {durationSec = "0" + durationSec;}
+            info.innerHTML = currentMin + ":" + currentSec + "/" + durationMin + ":" + durationSec;
+
+            if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
+                audioCtx.currentTime = 0;
+                startTime = 0;
+                startOffset = 0;
+                isPlaying = false;
+                info.innerHTML = "00:00"  + "/"  + durationMin + ":" + durationSec;
+                drawLineKlick(0)
+                drawLineKlickWave(0)
+            }
+            else if (((audioCtx.currentTime - startTime + startOffset) >=endTimeSelection)) {
+                audioCtx.currentTime = 0;
+                //startTime = startTime;
+                //startOffset = startOffset;
+                isPlaying = false;
+                info.innerHTML = currentMin + ":" + currentSec +  "/"  + durationMin + ":" + durationSec;
+                audPlay.stop();
             }
         }
         update();
@@ -226,3 +263,4 @@ function minMaxValue(e) {
     }
 
 }
+

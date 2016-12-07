@@ -4,8 +4,9 @@ html,body{
     position:relative;
 }
 #loop {
-    margin-left:550px;
+    margin-left:10px;
     margin-top:-40px;
+    display:inline-block;
 }
 select {
     background-color:#ededed;
@@ -59,9 +60,10 @@ table {
 }
 
 #table1 {
-    margin-left:800px;
-    margin-top: -50px;
+    margin-left:1050px;
+    margin-top: -70px;
     padding:10px;
+    display:inline-block;
 }
 
 td, th {
@@ -313,7 +315,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #canvasDivWave{
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 5px;
     min-width: 1200px;
     height: 280px;
