@@ -66,7 +66,7 @@ var seekslider;
 var seeking = false;
 var seekto;
 var info = document.querySelector('[data-js="info"]')
-
+var loopSelection= false
 
 document.onkeydown = function(e) {
     var keyCode = e.keyCode;
@@ -268,11 +268,19 @@ function timeUpdate(){
         isPlaying = false;
         info.innerHTML = currentTime +  "/"  + trackDuration;
         audPlay.stop();
+        if (loopSelection){
+          toggleSound()
+        }
     }
 return {
     currentTime: currentTime,
     trackDuration: trackDuration
 };
 
+
+}
+function setLoop(){
+
+  loopSelection=document.getElementById("LoopCheck").checked;
 
 }
