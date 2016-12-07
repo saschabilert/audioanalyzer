@@ -78,7 +78,7 @@
              Audiodata.cepstrum = new Array(Audiodata.nPart);
              Audiodata.groupDelay = new Array(Audiodata.nPart);
              Audiodata.modSpec = new Array(Audiodata.nPart);
-             Audiodata.instantFreq = new Array(Audiodata.nPart);
+             Audiodata.instantFreqDev = new Array(Audiodata.nPart);
 
              calculateDisplay(window, Audiodata.display);
 
@@ -145,7 +145,7 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
-     console.log(Audiodata.instantFreq);
+     console.log(Audiodata.instantFreqDev);
  }
 
  function calculateFFT(sampleBlock) {
@@ -250,18 +250,18 @@
 
      var instantFreqDev = new Array(newSampleBlockLen / 2 + 1).fill(0);
 
-     for (var k = 0; k < instantFreq.length; k++) {
+     for (var k = 0; k < instantFreqDev.length; k++) {
          var dPhase = secondPhase[k] - firstPhase[k];
 
          instantFreqDev[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
 
-         var freq = k / instantFreq.length * Audiodata.sampleRate / 2;
+         var freq = k / instantFreqDev.length * Audiodata.sampleRate / 2;
 
          var step = instantFreqDev[k] - freq;
 
          var multi = Math.round(step / (1 / dTime));
 
-        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) - freq;
+        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) ;
      }
      return instantFreqDev
  }

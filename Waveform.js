@@ -171,8 +171,8 @@ function drawWaveTimeAxes() {
     var ctxWaveScale = canvasWaveScale.getContext("2d");
     var canvasWave = document.getElementById('canvasWave');
 
-    var minDistanceNumbersX = 100;
-    var maxDistanceNumbersX = 250;
+    var minDistanceNumbersX = 50;
+    var maxDistanceNumbersX = 320;
 
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
@@ -190,15 +190,15 @@ function drawWaveTimeAxes() {
         var half = time % (logTime / 2);
         var full = time % logTime;
 
-        if (quarter <= (0.01 * logTime)) {
+        if (quarter <= (logTime) && (logTime / 4)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=(logTime / 4)
             break;
-        } else if (half <= (0.01 * logTime)) {
+        } else if (half <= (logTime) && (logTime / 2)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=(logTime / 2)
             break;
-        } else if (full <= (0.01 * logTime)) {
+        } else if (full <= (logTime) && (logTime )*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=logTime
             break;
@@ -328,14 +328,13 @@ function waveOnMouseUp(evt) {
     if (selectionX<startSelection) {
       drawLineKlickWave(endTimeSelection)
       startOffset=endTimeSelection;
+      endTimeSelection=mousePos
     }
     canvasLine.removeEventListener("mousemove", onMouseMove)
     clearInterval(intervalDrawSelect)
     zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
         startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos)
-        console.log((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
-            startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos)
-        startSelection=NaN;
+                startSelection=NaN;
           selectionX=NaN;
 }
 

@@ -28,7 +28,7 @@ var cWidth;
 var cHigh;
 var specWidth;
 var specHight;
-var endTimeSelection=Audiodata.signalLen/Audiodata.sampleRate;
+var endTimeSelection = Audiodata.signalLen / Audiodata.sampleRate;
 
 // Main function that fills most global variables with numbers and creats the
 // colorscales
@@ -68,10 +68,16 @@ function drawSpec() {
             specData = Audiodata.modSpec;
 
             break;
+
+            case "Instantaneous Frequency Deviation":
+            console.log(Audiodata.instantFreqDev)
+                specData = Audiodata.instantFreqDev
+                break;
         case "Group Delay":
             specData = Audiodata.groupDelay;
 
             break;
+
 
     }
     SpectroData.freqTimeRawData = specData;
@@ -119,8 +125,8 @@ function drawSpec() {
         drawLineKlickWave(mouseTime)
     }
 
-// This function calls a zoom function in dependency on the keys that are
-// pressed while using the mousewheel
+    // This function calls a zoom function in dependency on the keys that are
+    // pressed while using the mousewheel
     function mouseWheelFunction(evt) {
         // console.log(evt)
         // console.log(keyEvent)
@@ -157,17 +163,23 @@ function drawSpec() {
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.width = canvas.width * factor;
             cWidth = canvas.width;
-            canvasLine.width = canvasLine.width * factor
+            canvasLine.width = canvasLine.width * factor}
+        else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth) {
+          canvasScale.width = divWidth
+          canvas.width = divWidth-scaleOfsetLeft
+          cWidth = canvas.width;
+          canvasLine.width = divWidth-scaleOfsetLeft
 
+        }
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
             SpectroData.scaleFactorWidth = cWidth / specWidth;
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
-            section=getSectionDisplayed()
-          drawSelection(section.min,2,section.max);
-        }
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
+
 
     }
     // Function for zooming freq axes only
@@ -180,11 +192,17 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor <= (tempCanvas.height * 4)) {
+        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvas.height = canvas.height * factor;
             cHigh = canvas.height;
-            canvasLine.height = canvasLine.height * factor;
+            canvasLine.height = canvasLine.height * factor;}
+            else if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor < divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+              canvasScale.height = divHeight
+              canvas.height = divHeight- scaleOfsetBottom
+              cHigh = canvas.height;
+              canvasLine.height = divHeight- scaleOfsetBottom
+            }
 
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
@@ -192,9 +210,9 @@ function drawSpec() {
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
-            section=getSectionDisplayed()
-          drawSelection(section.min,2,section.max);
-        }
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
+
     }
 
     // Function for zooming both axes
@@ -208,7 +226,7 @@ function drawSpec() {
             factor = 1;
 
         }
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 4)) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.height = canvas.height * factor;
@@ -216,25 +234,37 @@ function drawSpec() {
             canvas.width = canvas.width * factor;
             cWidth = canvas.width;
             canvasLine.height = canvasLine.height * factor;
-            canvasLine.width = canvasLine.width * factor;
+            canvasLine.width = canvasLine.width * factor;}
+          else if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && (canvas.height * factor > divHeight || canvas.width * factor > divWidth) && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            canvasScale.height = divHeight
+            canvas.height = divHeight- scaleOfsetBottom
+            cHigh = canvas.height;
+            canvasLine.height = divHeight- scaleOfsetBottom
+            canvasScale.width = divWidth
+            canvas.width = divWidth-scaleOfsetLeft
+            cWidth = canvas.width;
+            canvasLine.width = divWidth-scaleOfsetLeft
+
+
+  }
 
             ctx.scale(cWidth / specWidth, cHigh / specHight);
             SpectroData.scaleFactorWidth = cWidth / specWidth;
             SpectroData.scaleFactorHeight = cHigh / specHight;
             ctx.drawImage(tempCanvas, 0, 0);
             drawScale()
-            section=getSectionDisplayed()
-          drawSelection(section.min,2,section.max);
-        }
-    }
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
+
+}
 
 }
 
 // Function for drawing a new spectrogram
 function draw() {
-  var canvas = document.getElementById("canvasSpec");
-  var ctx = canvas.getContext("2d");
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+    var canvas = document.getElementById("canvasSpec");
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (TypeColorScale == 1) {
         colorScale = parulaScale;
     } else if (TypeColorScale == 2) {
@@ -261,7 +291,7 @@ function draw() {
             for (var j = specHight - 1; j > 0; j--) {
 
                 for (var i = 0; i < specWidth; i++) {
-                  //Scaling the input Data onto the colorscale
+                    //Scaling the input Data onto the colorscale
                     point = 20 * Math.log10(specData[i][j] / 2048);
 
                     point += Math.abs(specLevelLow);
@@ -307,16 +337,39 @@ function draw() {
                     nPictureData++;
                 }
             }
-            colorScale=twilightScale;
+            colorScale = twilightScale;
             break;
             /*case "MFCC":
                 Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                 break;*/
         case "Modulation Spectrum":
-        console.log(specData)
+            console.log(specData)
+            break;
+        case "Instantaneous Frequency Deviation":
+        for (var j = specHight - 1; j > 0; j--) {
+
+            for (var i = 0; i < specWidth; i++) {
+                point = specData[i][j];
+              //  point += 900
+                point *= noOfColorSteps - 1;
+                point /=22100
+
+                point = Math.floor(point);
+                if (point > 99) {
+                    point = 99;
+                }
+
+                for (var kk = 0; kk < 3; kk++) {
+                    pictureData.data[nPictureData] = Math.round(colorScale[kk][point]);
+                    nPictureData++;
+                }
+                pictureData.data[nPictureData] = 255;
+                nPictureData++;
+            }
+        }
             break;
         case "Group Delay":
-        console.log(specData)
+            console.log(specData)
             for (var j = specHight - 1; j > 0; j--) {
 
                 for (var i = 0; i < specWidth; i++) {
@@ -342,7 +395,7 @@ function draw() {
                     nPictureData++;
                 }
             }
-              colorScale=twilightScale;
+            colorScale = twilightScale;
             break;
 
     }
@@ -363,11 +416,11 @@ function draw() {
     SpectroData.picData = pictureData;
     // Call function for drawing the legend
     drawLegend(colorScale)
-    // Call function for creating the scale arround the spectrgram
+        // Call function for creating the scale arround the spectrgram
     drawScale()
-    section=getSectionDisplayed()
-    // Mark the section of the signa that is currently displayed
-  drawSelection(section.min,2,section.max);
+    section = getSectionDisplayed()
+        // Mark the section of the signa that is currently displayed
+    drawSelection(section.min, 2, section.max);
 
 }
 
@@ -382,7 +435,7 @@ function drawLineKlick(mouseTime) {
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
     info.innerHTML = (mouseTime).toFixed(1) + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
 
-drawLinePlay()
+    drawLinePlay()
 }
 
 function displayMousePosition(evt) {
@@ -416,6 +469,15 @@ function displayMousePosition(evt) {
         case "Modulation Spectrum":
 
             break;
+
+            case "Instantaneous Frequency Deviation":
+
+
+                    //point += 900
+
+
+                      wert.innerHTML = Math.round(point)+ " Hz"
+                      break
         case "Group Delay":
             point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
             if (!isNaN(point)) {
@@ -439,7 +501,7 @@ function drawLinePlay() {
 
 
         if (linePosition <= scrollPositionX - scaleOfsetLeft) {
-            div.scrollLeft = linePosition + scaleOfsetLeft-50
+            div.scrollLeft = linePosition + scaleOfsetLeft - 50
         }
 
         ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
@@ -487,14 +549,14 @@ function drawLegend(colorScale) {
     ctxLegend.font = "700 15px Arial";
     switch (Audiodata.display) {
         case "Spectrum":
-        ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
-        ctxLegend.fillText(specLevelLow + (specLevelWidth / 2) + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
-        ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+            ctxLegend.fillText(specLevelLow + ' dB', 2, canvasLegend.height - 1);
+            ctxLegend.fillText(specLevelLow + (specLevelWidth / 2) + ' dB', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText(specLevelHigh + ' dB', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
             break;
         case "Phase":
-        ctxLegend.fillText('-\u03C0' , 2, canvasLegend.height - 1);
-        ctxLegend.fillText(0 , (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
-        ctxLegend.fillText('\u03C0' , (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
+            ctxLegend.fillText('-\u03C0', 2, canvasLegend.height - 1);
+            ctxLegend.fillText(0, (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText('\u03C0', (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
 
             break;
             /*  case "MFCC":
@@ -505,9 +567,9 @@ function drawLegend(colorScale) {
 
             break;
         case "Group Delay":
-        ctxLegend.fillText(0 + 'ms', 2, canvasLegend.height - 1);
-        ctxLegend.fillText((((Audiodata.blockLen/Audiodata.sampleRate)*1000)/2).toFixed(1) +'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
-        ctxLegend.fillText(((Audiodata.blockLen/Audiodata.sampleRate)*1000).toFixed(1) + 'ms' ,(canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+            ctxLegend.fillText(0 + 'ms', 2, canvasLegend.height - 1);
+            ctxLegend.fillText((((Audiodata.blockLen / Audiodata.sampleRate) * 1000) / 2).toFixed(1) + 'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText(((Audiodata.blockLen / Audiodata.sampleRate) * 1000).toFixed(1) + 'ms', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
 
             break;
 
@@ -531,23 +593,24 @@ function drawLegend(colorScale) {
 
 function drawScale() {
     var canvas = document.getElementById('canvasSpec');
-    div=document.getElementById('canvasDivSpec')
+    div = document.getElementById('canvasDivSpec')
     var freqMax = Audiodata.sampleRate / 2;
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
     var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
     var timePerColumn = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width
-    var timePerSide=(div.offsetWidth-scaleOfsetLeft)*timePerColumn
-    var freqPerSide=(div.offsetHeight-scaleOfsetBottom)*freqPerLine
+    var timePerSide = (div.offsetWidth - scaleOfsetLeft) * timePerColumn
+    var freqPerSide = (div.offsetHeight - scaleOfsetBottom) * freqPerLine
 
     var logTime = Math.log10(timePerSide);
     logTime = Math.pow(10, Math.floor(logTime))
-    var logFreq=Math.log10(freqPerSide);
+    var logFreq = Math.log10(freqPerSide);
     logFreq = Math.pow(10, Math.floor(logFreq))
-    console.log(logFreq,freqPerSide)
-    var minDistanceNumbersX = 100;
-    var maxDistanceNumbersX = 250;
-    var minDistanceNumbersY = 50;
-    var maxDistanceNumbersY = 150;
+    console.log(logFreq, freqPerSide)
+    console.log(logTime, timePerSide)
+    var minDistanceNumbersX = 50;
+    var maxDistanceNumbersX = 320;
+    var minDistanceNumbersY = 25;
+    var maxDistanceNumbersY = 300;
     var tickNumX;
     var tickNumY;
     var freqPerLine = freqMax / canvas.height;
@@ -560,18 +623,19 @@ function drawScale() {
         var quarter = time % (logTime / 4);
         var half = time % (logTime / 2);
         var full = time % logTime;
-        if (quarter <= (0.01 * logTime)) {
-            stepsX = kk;
-            tickNumX=logTime/4;
-            break;
-        } else if (half <= (0.01 * logTime)) {
-            stepsX = kk;
-            tickNumX=logTime/2
-            break;
-        } else  {
-            stepsX = kk;
-            tickNumX=logTime
 
+        if (quarter <= (timePerColumn) && (logTime / 4)*Math.ceil(canvas.width/kk)>=trackLenSec) {
+            stepsX = kk;
+            tickNumX = logTime / 4;
+            break
+        } else if (half <= (timePerColumn) && (logTime / 2)*Math.ceil(canvas.width/kk)>=trackLenSec) {
+            stepsX = kk;
+            tickNumX = logTime / 2
+            break
+        } else if (full <= (timePerColumn) && logTime*Math.ceil(canvas.width/kk)>=trackLenSec){
+            stepsX = kk;
+            tickNumX = logTime
+            break
         }
 
     }
@@ -582,18 +646,18 @@ function drawScale() {
         var quarter = freq % (logFreq / 4);
         var half = freq % (logFreq / 2);
         var full = freq % logFreq;
-        //console.log(freq, quarter, half, full)
-        if (quarter <= (freqPerLine)) {
+    console.log(freq,kk,freqPerLine,quarter,half,full,logFreq,(logFreq / 4)*Math.ceil(canvas.width/kk),(logFreq / 2)*Math.ceil(canvas.width/kk),logFreq*Math.ceil(canvas.width/kk),Audiodata.sampleRate/2)
+        if (quarter <= (freqPerLine*1.5) && (logFreq / 4)*Math.ceil(canvas.width/kk)>=20000) {
             stepsY = kk;
-            tickNumY=logFreq/4;
+            tickNumY = logFreq / 4;
             break;
-        } else if (half <= freqPerLine) {
+        } else if (half <= freqPerLine*1.5 && (logFreq / 2)*Math.ceil(canvas.width/kk)>=20000) {
             stepsY = kk;
-            tickNumY=logFreq/2;
+            tickNumY = logFreq / 2;
             break;
-        } else if (full <= freqPerLine) {
+        } else if (full <= freqPerLine*1.5 && (logFreq )*Math.ceil(canvas.width/kk)>=20000) {
             stepsY = kk;
-            tickNumY=logFreq;
+            tickNumY = logFreq;
             break;
         }
     }
@@ -624,15 +688,14 @@ function drawScale() {
         ctxScale.lineTo(scaleOfsetLeft - 5, kk)
         ctxScale.stroke();
 
-        ctxScale.fillText(tickNumY*((canvasScale.height - scaleOfsetBottom-kk)/stepsY), 1, kk, scaleOfsetLeft - 2);
+        ctxScale.fillText(tickNumY * ((canvasScale.height - scaleOfsetBottom - kk) / stepsY), 1, kk, scaleOfsetLeft - 2);
     }
 
     for (var kk = 0; kk <= canvasScale.width; kk += stepsX) {
         ctxScale.moveTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom);
         ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
         ctxScale.stroke();
-        console.log(tickNumX*(kk/stepsX))
-        ctxScale.fillText((tickNumX*(kk/stepsX)).toFixed(3), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
+        ctxScale.fillText((tickNumX * (kk / stepsX)).toFixed(3), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
     }
 
 }
@@ -641,13 +704,13 @@ function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
     scrollPositionX = div.scrollLeft,
         scrollPositionY = div.scrollTop
-        section=getSectionDisplayed()
-      drawSelection(section.min,2,section.max);
+    section = getSectionDisplayed()
+    drawSelection(section.min, 2, section.max);
 
 
 }
 
-function getMousePos(canvas,evt) {
+function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
         x: Math.floor(evt.clientX - rect.left),
@@ -687,60 +750,60 @@ function onKeyUp(evt) {
 
 }*/
 
-function zoomToSelection(timeStart , timeEnd){
+function zoomToSelection(timeStart, timeEnd) {
     var canvas = document.getElementById("canvasSpec")
     var ctx = canvas.getContext("2d")
     var div = document.getElementById("canvasDivSpec")
     var canvasLine = document.getElementById("canvasLine")
     var divWidth = div.offsetWidth;
 
-if(timeEnd<timeStart){
-var tempTimeStart=timeStart;
-timeStart=timeEnd;
-timeEnd=tempTimeStart;
-}
-else if (timeEnd==timeStart) {
-endTimeSelection=Audiodata.signalLen/Audiodata.sampleRate;
-  console.log((timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))+(divWidth/4))
-  div.scrollLeft=(timeStart/((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width))-divWidth/8;
-  return;
-}
-  var lengthSelect=(timeEnd-timeStart);
+    if (timeEnd < timeStart) {
+        var tempTimeStart = timeStart;
+        timeStart = timeEnd;
+        timeEnd = tempTimeStart;
+        endTimeSelection=timeEnd
+    } else if (timeEnd == timeStart) {
+        endTimeSelection = Audiodata.signalLen / Audiodata.sampleRate;
+        console.log((timeStart / ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)) + (divWidth / 4))
+        div.scrollLeft = (timeStart / ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)) - divWidth / 8;
+        return;
+    }
+    var lengthSelect = (timeEnd - timeStart);
     var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
     var timePerColumn = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width
-    var timePerSide=(divWidth-scaleOfsetLeft)*timePerColumn
+    var timePerSide = (divWidth - scaleOfsetLeft) * timePerColumn
 
-    if (timePerSide==lengthSelect){
-      var factor=1;
+    if (timePerSide == lengthSelect) {
+        var factor = 1;
 
-  }
-  if(timePerSide!=lengthSelect){
-    factor=timePerSide/lengthSelect;
-  }
+    }
+    if (timePerSide != lengthSelect) {
+        factor = timePerSide / lengthSelect;
+    }
 
-  if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+    if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
 
-      canvasScale.width = canvas.width * factor + scaleOfsetLeft
-      canvas.width = canvas.width * factor;
-      cWidth = canvas.width;
-      canvasLine.width = canvasLine.width * factor
+        canvasScale.width = canvas.width * factor + scaleOfsetLeft
+        canvas.width = canvas.width * factor;
+        cWidth = canvas.width;
+        canvasLine.width = canvasLine.width * factor
 
-      ctx.scale(cWidth / specWidth, cHigh / specHight);
-      SpectroData.scaleFactorWidth = cWidth / specWidth;
-      SpectroData.scaleFactorHeight = cHigh / specHight;
-      ctx.drawImage(tempCanvas, 0, 0);
-      drawScale()
+        ctx.scale(cWidth / specWidth, cHigh / specHight);
+        SpectroData.scaleFactorWidth = cWidth / specWidth;
+        SpectroData.scaleFactorHeight = cHigh / specHight;
+        ctx.drawImage(tempCanvas, 0, 0);
+        drawScale()
 
-      var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
-        div.scrollLeft=lineStart;
+        var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+        div.scrollLeft = lineStart;
     }
 }
 
-function getSectionDisplayed(){
-  var canvas = document.getElementById("canvasSpec")
-  var div = document.getElementById("canvasDivSpec")
-  return {
-      min:   scrollPositionX*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
-      max:   (scrollPositionX+div.offsetWidth)*((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
-  };
+function getSectionDisplayed() {
+    var canvas = document.getElementById("canvasSpec")
+    var div = document.getElementById("canvasDivSpec")
+    return {
+        min: scrollPositionX * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
+        max: (scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
+    };
 }
