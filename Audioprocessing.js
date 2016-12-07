@@ -18,7 +18,7 @@
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
-     instantFreq: undefined,
+     instantFreqDev: undefined,
      windowFunction: "hann",
      cepstrum: undefined,
      modSpec: undefined,
@@ -128,14 +128,15 @@
              case "MFCC":
                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                  break;
+                 // Not working so far try to implement in upcomming verion
              case "Modulation Spectrum":
                  Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
                  break;
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
-             case "Instantaneous Frequency":
-                 Audiodata.instantFreq[i] = calculateInstantFreq(sampleBlock,
+             case "Instantaneous Frequency Deviation":
+                 Audiodata.instantFreqDev[i] = calculateInstantFreqDev(sampleBlock,
                      Audiodata.windowFunction);
                  break;
              default:
@@ -218,7 +219,7 @@
      return groupDelay;
  }
 
- function calculateInstantFreq(sampleBlock, windowType) {
+ function calculateInstantFreqDev(sampleBlock, windowType) {
 
      var overlap = 1 / 1.024;
 
@@ -247,22 +248,22 @@
 
      var dTime = (sampleBlock.length - newSampleBlockLen) / Audiodata.sampleRate;
 
-     var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
+     var instantFreqDev = new Array(newSampleBlockLen / 2 + 1).fill(0);
 
      for (var k = 0; k < instantFreq.length; k++) {
          var dPhase = secondPhase[k] - firstPhase[k];
 
-         instantFreq[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
+         instantFreqDev[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
 
          var freq = k / instantFreq.length * Audiodata.sampleRate / 2;
 
-         var step = instantFreq[k] - freq;
+         var step = instantFreqDev[k] - freq;
 
          var multi = Math.round(step / (1 / dTime));
 
-        instantFreq[k] = instantFreq[k] - (multi * (1 / dTime)) - freq;
+        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) - freq;
      }
-     return instantFreq
+     return instantFreqDev
  }
 
  // is not correct so far
