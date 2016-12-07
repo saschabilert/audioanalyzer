@@ -62,7 +62,11 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-             info.innerHTML = "0.00" + " " + ":" + " " + (Audiodata.signalLen / Audiodata.sampleRate).toFixed(2);
+         var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)/60);
+         var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)-durationMin*60);
+         if (durationMin < 10) {durationMin = "0" + durationMin;}
+         if (durationSec < 10) {durationSec = "0" + durationSec;}
+             info.innerHTML = "00:00" + "/"  + durationMin + ":" + durationSec;
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 

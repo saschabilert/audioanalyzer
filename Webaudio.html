@@ -45,7 +45,8 @@
             <button id="stop" type="button" class="stop">&#9724;</button>
             <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
         </div>
-        <div data-js="info" class="info">0.00 : 0.00</div>
+        <div data-js="info" class="info">00:00/00:00</div>
+        <div id = "loop">Loop:<input type = "checkbox" id = "myCheck"></div>
         <table id = "table1">
         <tr>
             <th style = "margin-top:50px;">Choose a grid size:</th>
@@ -58,7 +59,7 @@
         </select></td>
         </tr>
         </table>
-        <div id = "loop">Loop:<input type = "checkbox" id = "myCheck"></div>
+
         <div class="canvas" id="canvasDivWave">
             <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
             <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
