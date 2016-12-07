@@ -531,14 +531,25 @@ function drawLegend(colorScale) {
 
 function drawScale() {
     var canvas = document.getElementById('canvasSpec');
+    div=document.getElementById('canvasDivSpec')
     var freqMax = Audiodata.sampleRate / 2;
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
-    var logTime = Math.log10(trackLenSec);
+    var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
+    var timePerColumn = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width
+    var timePerSide=(div.offsetWidth-scaleOfsetLeft)*timePerColumn
+    var freqPerSide=(div.offsetHeight-scaleOfsetBottom)*freqPerLine
+
+    var logTime = Math.log10(timePerSide);
     logTime = Math.pow(10, Math.floor(logTime))
+    var logFreq=Math.log10(freqPerSide);
+    logFreq = Math.pow(10, Math.floor(logFreq))
+    console.log(logFreq,freqPerSide)
     var minDistanceNumbersX = 100;
     var maxDistanceNumbersX = 250;
     var minDistanceNumbersY = 50;
     var maxDistanceNumbersY = 150;
+    var tickNumX;
+    var tickNumY;
     var freqPerLine = freqMax / canvas.height;
     var timePerColumn = trackLenSec / canvas.width
 
@@ -549,34 +560,40 @@ function drawScale() {
         var quarter = time % (logTime / 4);
         var half = time % (logTime / 2);
         var full = time % logTime;
-
         if (quarter <= (0.01 * logTime)) {
             stepsX = kk;
+            tickNumX=logTime/4;
             break;
         } else if (half <= (0.01 * logTime)) {
             stepsX = kk;
+            tickNumX=logTime/2
             break;
-        } else if (full <= (0.01 * logTime)) {
+        } else  {
             stepsX = kk;
-            break;
+            tickNumX=logTime
+
         }
+
     }
 
     var stepsY = 50;
     for (var kk = minDistanceNumbersY; kk <= maxDistanceNumbersY; kk++) {
         var freq = kk * freqPerLine;
-        var quarter = freq % (1000 / 4);
-        var half = freq % (1000 / 2);
-        var full = freq % 1000;
+        var quarter = freq % (logFreq / 4);
+        var half = freq % (logFreq / 2);
+        var full = freq % logFreq;
         //console.log(freq, quarter, half, full)
         if (quarter <= (freqPerLine)) {
             stepsY = kk;
+            tickNumY=logFreq/4;
             break;
         } else if (half <= freqPerLine) {
             stepsY = kk;
+            tickNumY=logFreq/2;
             break;
         } else if (full <= freqPerLine) {
             stepsY = kk;
+            tickNumY=logFreq;
             break;
         }
     }
@@ -607,15 +624,15 @@ function drawScale() {
         ctxScale.lineTo(scaleOfsetLeft - 5, kk)
         ctxScale.stroke();
 
-        ctxScale.fillText(Math.floor((((canvasScale.height - scaleOfsetBottom) - kk) * freqPerLine) / 10) * 10, 1, kk, scaleOfsetLeft - 2);
+        ctxScale.fillText(tickNumY*((canvasScale.height - scaleOfsetBottom-kk)/stepsY), 1, kk, scaleOfsetLeft - 2);
     }
 
     for (var kk = 0; kk <= canvasScale.width; kk += stepsX) {
         ctxScale.moveTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom);
         ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
         ctxScale.stroke();
-
-        ctxScale.fillText((Math.floor((kk) * timePerColumn * (100 / logTime))) / (100 / logTime), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
+        console.log(tickNumX*(kk/stepsX))
+        ctxScale.fillText((tickNumX*(kk/stepsX)).toFixed(3), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
     }
 
 }
@@ -660,7 +677,7 @@ function onKeyUp(evt) {
     }
 }
 
-function zoomToSelection(timeStart , timeEnd){
+/*function zoomToSelection(timeStart , timeEnd){
   var canvas = document.getElementById("canvasSpec")
 
   var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
@@ -668,7 +685,7 @@ function zoomToSelection(timeStart , timeEnd){
   var lengthSelect=(lineEnd-lineStart);
 
 
-}
+}*/
 
 function zoomToSelection(timeStart , timeEnd){
     var canvas = document.getElementById("canvasSpec")

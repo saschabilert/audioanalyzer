@@ -18,14 +18,12 @@
      spectrogram: undefined,
      phase: undefined,
      groupDelay: undefined,
-     instantFreq: undefined,
+     instantFreqDev: undefined,
      windowFunction: "hann",
      cepstrum: undefined,
      modSpec: undefined,
      display: "Spectrum"
  };
-
-
 
  // define global audioContext
  var reader = new FileReader();
@@ -40,7 +38,7 @@
      document.getElementById("loading").style.display = "block";
      document.getElementById("container").style.display = "block"
 
-         // get the first file data with the id "myAudio"
+     // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
      // read the data from myAudio as ArrayBuffer
@@ -70,19 +68,24 @@
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
+             //  Maximale anzahl der Bloecke 32700;
+             checkNumbOfBlocks();
+
+             console.log(Audiodata.nPart);
+
              Audiodata.spectrogram = new Array(Audiodata.nPart);
              Audiodata.phase = new Array(Audiodata.nPart);
              Audiodata.cepstrum = new Array(Audiodata.nPart);
              Audiodata.groupDelay = new Array(Audiodata.nPart);
              Audiodata.modSpec = new Array(Audiodata.nPart);
-             Audiodata.instantFreq = new Array(Audiodata.nPart);
+             Audiodata.instantFreqDev = new Array(Audiodata.nPart);
 
              calculateDisplay(window, Audiodata.display);
 
              drawSpec();
 
              if (Audiodata.drawCheck) {
-               drawWave();
+                 drawWave();
              }
 
              document.getElementById("loading").style.display = "none";
@@ -125,14 +128,15 @@
              case "MFCC":
                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
                  break;
+                 // Not working so far try to implement in upcomming verion
              case "Modulation Spectrum":
                  Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
                  break;
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
-             case "Instantaneous Frequency":
-                 Audiodata.instantFreq[i] = calculateInstantFreq(sampleBlock,
+             case "Instantaneous Frequency Deviation":
+                 Audiodata.instantFreqDev[i] = calculateInstantFreqDev(sampleBlock,
                      Audiodata.windowFunction);
                  break;
              default:
@@ -141,6 +145,7 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
+     console.log(Audiodata.instantFreqDev);
  }
 
  function calculateFFT(sampleBlock) {
@@ -214,7 +219,7 @@
      return groupDelay;
  }
 
- function calculateInstantFreq(sampleBlock, windowType) {
+ function calculateInstantFreqDev(sampleBlock, windowType) {
 
      var overlap = 1 / 1.024;
 
@@ -224,7 +229,7 @@
 
      var window = calculateWindow(windowLen, windowType);
 
-     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen - 1);
+     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
 
      var secondSampleBlock = sampleBlock.slice(sampleBlock.length -
          newSampleBlockLen - 1, sampleBlock.length - 1);
@@ -241,28 +246,24 @@
 
      var secondPhase = calculatePhase(secondReal, secondImag);
 
-     var dPhase = new Array(newSampleBlockLen);
-
      var dTime = (sampleBlock.length - newSampleBlockLen) / Audiodata.sampleRate;
 
-     var instantFreq = new Array(dPhase.length).fill(0);
+     var instantFreqDev = new Array(newSampleBlockLen / 2 + 1).fill(0);
 
-     for (var k = 0; k < dPhase.length; k++) {
-         dPhase[k] = secondPhase[k] - firstPhase[k];
+     for (var k = 0; k < instantFreqDev.length; k++) {
+         var dPhase = secondPhase[k] - firstPhase[k];
 
-         console.log(dPhase);
+         instantFreqDev[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
 
-         instantFreq[k] = 1 / (2 * Math.PI) * (dPhase[k] / dTime);
-         var freq = k / dPhase.length * Audiodata.sampleRate / 2;
-         //  unwrap freq achtung modulo
-         while (instantFreq[k] > freq + (dTime / 2)) {
-             instantFreq[k] = instantFreq[k] - (1 / dTime);
-         }
-         while (instantFreq[k] < freq - (dTime / 2)) {
-             instantFreq[k] = instantFreq[k] + (1 / dTime);
-         }
+         var freq = k / instantFreqDev.length * Audiodata.sampleRate / 2;
+
+         var step = instantFreqDev[k] - freq;
+
+         var multi = Math.round(step / (1 / dTime));
+
+        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) - freq;
      }
-     return instantFreq;
+     return instantFreqDev
  }
 
  // is not correct so far
@@ -308,7 +309,7 @@
 
  function calculatePhase(real, imag) {
 
-     var phaseValue = new Array(Audiodata.blockLen / 2 + 1);
+     var phaseValue = new Array(real.length / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
          phaseValue[i] = Math.atan2(real[i], imag[i]);
@@ -350,6 +351,8 @@
              numer = besselfkt(numer);
              denom = besselfkt(denom);
 
+             console.log(numer);
+
              for (k = 0; k < denom.length; k++) {
                  window[k] = denom[k] / numer;
              }
@@ -388,12 +391,12 @@
      var bessel = new Array(array.length);
 
      for (var i = 0; i < bessel.length; i++) {
-         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / fakultaet(i), 2);
+         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / factorial(i), 2);
      }
      return bessel;
  }
 
- function fakultaet(n) {
+ function factorial(n) {
 
      var fak = 1;
 
@@ -401,4 +404,12 @@
          fak = fak * i;
      }
      return fak;
+ }
+
+ function checkNumbOfBlocks() {
+     var maxBlockNumb = 32767;
+     if (Audiodata.nPart > maxBlockNumb) {
+         alert("Reached the maximum number of blocks. Data not fully displayed!");
+         Audiodata.nPart = maxBlockNumb;
+     }
  }
