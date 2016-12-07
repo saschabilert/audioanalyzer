@@ -351,6 +351,8 @@
              numer = besselfkt(numer);
              denom = besselfkt(denom);
 
+             console.log(numer);
+
              for (k = 0; k < denom.length; k++) {
                  window[k] = denom[k] / numer;
              }
@@ -389,12 +391,12 @@
      var bessel = new Array(array.length);
 
      for (var i = 0; i < bessel.length; i++) {
-         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / fakultaet(i), 2);
+         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / factorial(i), 2);
      }
      return bessel;
  }
 
- function fakulty(n) {
+ function factorial(n) {
 
      var fak = 1;
 
