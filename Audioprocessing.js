@@ -25,8 +25,6 @@
      display: "Spectrum"
  };
 
-
-
  // define global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
@@ -40,7 +38,7 @@
      document.getElementById("loading").style.display = "block";
      document.getElementById("container").style.display = "block"
 
-         // get the first file data with the id "myAudio"
+     // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
 
      // read the data from myAudio as ArrayBuffer
@@ -70,6 +68,11 @@
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
+             //  Maximale anzahl der Bloecke 32700;
+             checkNumbOfBlocks();
+
+             console.log(Audiodata.nPart);
+
              Audiodata.spectrogram = new Array(Audiodata.nPart);
              Audiodata.phase = new Array(Audiodata.nPart);
              Audiodata.cepstrum = new Array(Audiodata.nPart);
@@ -82,7 +85,7 @@
              drawSpec();
 
              if (Audiodata.drawCheck) {
-               drawWave();
+                 drawWave();
              }
 
              document.getElementById("loading").style.display = "none";
@@ -141,6 +144,7 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
+     console.log(Audiodata.instantFreq);
  }
 
  function calculateFFT(sampleBlock) {
@@ -224,7 +228,7 @@
 
      var window = calculateWindow(windowLen, windowType);
 
-     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen - 1);
+     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
 
      var secondSampleBlock = sampleBlock.slice(sampleBlock.length -
          newSampleBlockLen - 1, sampleBlock.length - 1);
@@ -241,28 +245,24 @@
 
      var secondPhase = calculatePhase(secondReal, secondImag);
 
-     var dPhase = new Array(newSampleBlockLen);
-
      var dTime = (sampleBlock.length - newSampleBlockLen) / Audiodata.sampleRate;
 
-     var instantFreq = new Array(dPhase.length).fill(0);
+     var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
 
-     for (var k = 0; k < dPhase.length; k++) {
-         dPhase[k] = secondPhase[k] - firstPhase[k];
+     for (var k = 0; k < instantFreq.length; k++) {
+         var dPhase = secondPhase[k] - firstPhase[k];
 
-         console.log(dPhase);
+         instantFreq[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
 
-         instantFreq[k] = 1 / (2 * Math.PI) * (dPhase[k] / dTime);
-         var freq = k / dPhase.length * Audiodata.sampleRate / 2;
-         //  unwrap freq achtung modulo
-         while (instantFreq[k] > freq + (dTime / 2)) {
-             instantFreq[k] = instantFreq[k] - (1 / dTime);
-         }
-         while (instantFreq[k] < freq - (dTime / 2)) {
-             instantFreq[k] = instantFreq[k] + (1 / dTime);
-         }
+         var freq = k / instantFreq.length * Audiodata.sampleRate / 2;
+
+         var step = instantFreq[k] - freq;
+
+         var multi = Math.round(step / (1 / dTime));
+
+        instantFreq[k] = instantFreq[k] - (multi * (1 / dTime)) - freq;
      }
-     return instantFreq;
+     return instantFreq
  }
 
  // is not correct so far
@@ -308,7 +308,7 @@
 
  function calculatePhase(real, imag) {
 
-     var phaseValue = new Array(Audiodata.blockLen / 2 + 1);
+     var phaseValue = new Array(real.length / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
          phaseValue[i] = Math.atan2(real[i], imag[i]);
@@ -393,7 +393,7 @@
      return bessel;
  }
 
- function fakultaet(n) {
+ function fakulty(n) {
 
      var fak = 1;
 
@@ -401,4 +401,12 @@
          fak = fak * i;
      }
      return fak;
+ }
+
+ function checkNumbOfBlocks() {
+     var maxBlockNumb = 32767;
+     if (Audiodata.nPart > maxBlockNumb) {
+         alert("Reached the maximum number of blocks. Data not fully displayed!");
+         Audiodata.nPart = maxBlockNumb;
+     }
  }
