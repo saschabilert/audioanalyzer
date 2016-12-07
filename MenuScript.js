@@ -203,6 +203,27 @@ function minMaxValue(e) {
 
 }
 
+function timeToString(time){
+
+  var currentMin = Math.floor((time)/60);
+  var currentSec = Math.floor((time)-currentMin*60);
+  var milisec = time % 1
+
+  currentSec = currentSec+milisec
+  if((Audiodata.signalLen / Audiodata.sampleRate)<=60){
+  currentSec=currentSec.toPrecision(3)
+}
+  if(currentMin == 0 && (Audiodata.signalLen / Audiodata.sampleRate)<=60 ) {
+        return currentSec
+
+  }
+  else if ((Audiodata.signalLen / Audiodata.sampleRate)>60  && currentSec<10){
+      return [currentMin + ":" +0+ currentSec]
+  }
+  else {
+    return [currentMin + ":" +  currentSec]
+  }
+}
 
 function timeUpdate(){
     window.requestAnimationFrame(timeUpdate);
@@ -225,7 +246,7 @@ function timeUpdate(){
         audioCtx.currentTime = 0;
         startTime = 0;
         startOffset = 0;
-        isPlaying = false;
+         isPlaying = false;
         info.innerHTML = "00:00"  + "/"  + durationMin + ":" + durationSec;
         drawLineKlick(0)
         drawLineKlickWave(0)

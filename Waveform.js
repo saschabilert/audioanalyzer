@@ -190,21 +190,22 @@ function drawWaveTimeAxes() {
         var half = time % (logTime / 2);
         var full = time % logTime;
 
-        if (quarter <= (logTime) && (logTime / 4)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        if (quarter <= (timePoint) && (logTime / 4)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=(logTime / 4)
             break;
-        } else if (half <= (logTime) && (logTime / 2)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        } else if (half <= (timePoint) && (logTime / 2)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=(logTime / 2)
             break;
-        } else if (full <= (logTime) && (logTime )*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        } else if (full <= (timePoint) && (logTime )*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             stepsX = i;
             tickNum=logTime
             break;
         }
     }
 console.log(tickNum)
+console.log(stepsX)
     ctxWaveScale.clearRect(0, 0, canvasWaveScale.width, canvasWaveScale.height);
 
     ctxWaveScale.beginPath();
@@ -225,7 +226,7 @@ console.log(tickNum)
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(i/stepsX*tickNum, i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i/stepsX)*tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 

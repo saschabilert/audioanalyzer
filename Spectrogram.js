@@ -159,12 +159,12 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth ) {
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.width = canvas.width * factor;
             cWidth = canvas.width;
             canvasLine.width = canvasLine.width * factor}
-        else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth) {
+        else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth ) {
           canvasScale.width = divWidth
           canvas.width = divWidth-scaleOfsetLeft
           cWidth = canvas.width;
@@ -197,7 +197,7 @@ function drawSpec() {
             canvas.height = canvas.height * factor;
             cHigh = canvas.height;
             canvasLine.height = canvasLine.height * factor;}
-            else if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor < divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            else if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor < divHeight && canvas.height * factor <= (tempCanvas.height * 2.5) ) {
               canvasScale.height = divHeight
               canvas.height = divHeight- scaleOfsetBottom
               cHigh = canvas.height;
@@ -226,7 +226,7 @@ function drawSpec() {
             factor = 1;
 
         }
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 2.5) ) {
             canvasScale.height = canvas.height * factor + scaleOfsetBottom
             canvasScale.width = canvas.width * factor + scaleOfsetLeft
             canvas.height = canvas.height * factor;
@@ -235,7 +235,7 @@ function drawSpec() {
             cWidth = canvas.width;
             canvasLine.height = canvasLine.height * factor;
             canvasLine.width = canvasLine.width * factor;}
-          else if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && (canvas.height * factor > divHeight || canvas.width * factor > divWidth) && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+          else if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && (canvas.height * factor > divHeight || canvas.width * factor > divWidth) && canvas.height * factor <= (tempCanvas.height * 2.5) ) {
             canvasScale.height = divHeight
             canvas.height = divHeight- scaleOfsetBottom
             cHigh = canvas.height;
@@ -605,10 +605,9 @@ function drawScale() {
     logTime = Math.pow(10, Math.floor(logTime))
     var logFreq = Math.log10(freqPerSide);
     logFreq = Math.pow(10, Math.floor(logFreq))
-    console.log(logFreq, freqPerSide)
-    console.log(logTime, timePerSide)
+
     var minDistanceNumbersX = 50;
-    var maxDistanceNumbersX = 320;
+    var maxDistanceNumbersX = 300;
     var minDistanceNumbersY = 25;
     var maxDistanceNumbersY = 300;
     var tickNumX;
@@ -623,16 +622,16 @@ function drawScale() {
         var quarter = time % (logTime / 4);
         var half = time % (logTime / 2);
         var full = time % logTime;
-
-        if (quarter <= (timePerColumn) && (logTime / 4)*Math.ceil(canvas.width/kk)>=trackLenSec) {
+  //console.log(time,kk,timePerColumn,quarter,half,full,logTime,(logTime / 4)*Math.ceil(canvas.width/kk),(logTime / 2)*Math.ceil(canvas.width/kk),logTime*Math.ceil(canvas.width/kk),trackLenSec)
+        if (quarter <= (timePerColumn) && (logTime / 4)*Math.ceil(canvas.width/kk)>=Math.floor(trackLenSec)) {
             stepsX = kk;
             tickNumX = logTime / 4;
             break
-        } else if (half <= (timePerColumn) && (logTime / 2)*Math.ceil(canvas.width/kk)>=trackLenSec) {
+        } else if (half <= (timePerColumn) && (logTime / 2)*Math.ceil(canvas.width/kk)>=Math.floor(trackLenSec)) {
             stepsX = kk;
             tickNumX = logTime / 2
             break
-        } else if (full <= (timePerColumn) && logTime*Math.ceil(canvas.width/kk)>=trackLenSec){
+        } else if (full <= (timePerColumn) && logTime*Math.ceil(canvas.width/kk)>=Math.floor(trackLenSec)){
             stepsX = kk;
             tickNumX = logTime
             break
@@ -646,7 +645,7 @@ function drawScale() {
         var quarter = freq % (logFreq / 4);
         var half = freq % (logFreq / 2);
         var full = freq % logFreq;
-    console.log(freq,kk,freqPerLine,quarter,half,full,logFreq,(logFreq / 4)*Math.ceil(canvas.width/kk),(logFreq / 2)*Math.ceil(canvas.width/kk),logFreq*Math.ceil(canvas.width/kk),Audiodata.sampleRate/2)
+
         if (quarter <= (freqPerLine*1.5) && (logFreq / 4)*Math.ceil(canvas.width/kk)>=20000) {
             stepsY = kk;
             tickNumY = logFreq / 4;
@@ -695,7 +694,7 @@ function drawScale() {
         ctxScale.moveTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom);
         ctxScale.lineTo(kk + scaleOfsetLeft, canvasScale.height - scaleOfsetBottom + 5)
         ctxScale.stroke();
-        ctxScale.fillText((tickNumX * (kk / stepsX)).toFixed(3), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
+        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX)), kk + scaleOfsetLeft - 5, canvasScale.height - scaleOfsetBottom + 15, scaleOfsetLeft - 2);
     }
 
 }
