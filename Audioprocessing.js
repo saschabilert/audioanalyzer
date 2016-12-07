@@ -103,6 +103,8 @@
 
      var window = calculateWindow(windowLen, Audiodata.windowFunction);
 
+     console.log(window);
+
      var endIdx = 0;
 
      for (var i = 0; i < Audiodata.nPart; i++) {
