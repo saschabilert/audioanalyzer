@@ -80,8 +80,6 @@ document.onkeydown = function(e) {
 function toggleSound() {
 
     if (!isPlaying) {
-        var currentTime;
-        var trackDuration;
         startTime = audioCtx.currentTime;
         audPlay = audioCtx.createBufferSource();
         audPlay.buffer = myArrayBuffer;
@@ -90,15 +88,15 @@ function toggleSound() {
         isPlaying = true;
         window.requestAnimationFrame(drawLinePlay);
         window.requestAnimationFrame(drawLinePlayWave);
-        [trackDuration, currentTime] = timeUpdate();
+        var playback = timeUpdate();
         stopbtn.onclick = function() {
             startTime = 0;
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00:00" + " " + "/" + " " + trackDuration;
-            drawLineKlick(0)
-            drawLineKlickWave(0)
+            info.innerHTML = "00:00.0"  + "/" +  playback.trackDuration;
+            drawLineKlick(0);
+            drawLineKlickWave(0);
         }
 
         audPlay.onended = function() {
@@ -107,7 +105,7 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00:00"  + "/"  + trackDuration;
+                info.innerHTML = "00:00.0"  + "/" + playback.trackDuration;
 
             }
         };
@@ -118,7 +116,6 @@ function toggleSound() {
         isPlaying = false;
         playButton.innerHTML = "&#9654;";
         startOffset += audioCtx.currentTime - startTime;
-
 
     }
     gainNode = audioCtx.createGain();
@@ -232,6 +229,7 @@ function timeUpdate(){
     }
 
     var currentMin = Math.floor((audioCtx.currentTime - startTime + startOffset)/60);
+    var currentMiliSec = Math.floor((audioCtx.currentTime - startTime + startOffset)*10);
     var currentSec = Math.floor((audioCtx.currentTime - startTime + startOffset)-currentMin*60);
     var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)/60);
     var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)-durationMin*60);
@@ -239,15 +237,27 @@ function timeUpdate(){
     if (currentMin < 10) {currentMin = "0" + currentMin;}
     if (durationMin < 10) {durationMin = "0" + durationMin;}
     if (durationSec < 10) {durationSec = "0" + durationSec;}
+    if (currentMiliSec >= 10) {currentMiliSec = currentMiliSec%10;}
+    if(currentMin == 0) {
+        currentTime = currentSec + "." + currentMiliSec;
+        trackDuration = durationMin + ":" + durationSec;
+    }
+    else {
+        currentTime = currentMin + ":" + currentSec + "." + currentMiliSec;
+        trackDuration = durationMin + ":" + durationSec;
+    }
 
-    info.innerHTML = currentMin + ":" + currentSec + "/" + durationMin + ":" + durationSec;
+
+    info.innerHTML = currentMin + ":" + currentSec + "." + currentMiliSec + "/" + trackDuration;
 
     if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
         audioCtx.currentTime = 0;
         startTime = 0;
         startOffset = 0;
+
          isPlaying = false;
         info.innerHTML = "00:00"  + "/"  + durationMin + ":" + durationSec;
+
         drawLineKlick(0)
         drawLineKlickWave(0)
     }
@@ -256,14 +266,13 @@ function timeUpdate(){
         //startTime = startTime;
         //startOffset = startOffset;
         isPlaying = false;
-        info.innerHTML = currentMin + ":" + currentSec +  "/"  + durationMin + ":" + durationSec;
+        info.innerHTML = currentTime +  "/"  + trackDuration;
         audPlay.stop();
     }
+return {
+    currentTime: currentTime,
+    trackDuration: trackDuration
+};
 
-    if(currentMin == 0) {
-        return currentTime = currentSec, trackDuration = [durationMin + ":" + durationSec];
-    }
-    else {
-        return currentTime = [currentMin + ":" + currentSec], trackDuration = [durationMin + ":" + durationSec]
-    }
+
 }
