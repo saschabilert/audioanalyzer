@@ -182,8 +182,9 @@ function drawWaveTimeAxes() {
     var timePoint = trackLenSec / canvasWave.width;
 
     var stepsX = 100;
+    var tickNum;
 
-    for (var i = minDistanceNumbersX; i <= minDistanceNumbersX; i++) {
+    for (var i = minDistanceNumbersX; i <= maxDistanceNumbersX; i++) {
         var time = timePoint * i;
         var quarter = time % (logTime / 4);
         var half = time % (logTime / 2);
@@ -191,16 +192,19 @@ function drawWaveTimeAxes() {
 
         if (quarter <= (0.01 * logTime)) {
             stepsX = i;
+            tickNum=(logTime / 4)
             break;
         } else if (half <= (0.01 * logTime)) {
             stepsX = i;
+            tickNum=(logTime / 2)
             break;
         } else if (full <= (0.01 * logTime)) {
             stepsX = i;
+            tickNum=logTime
             break;
         }
     }
-
+console.log(tickNum)
     ctxWaveScale.clearRect(0, 0, canvasWaveScale.width, canvasWaveScale.height);
 
     ctxWaveScale.beginPath();
@@ -221,7 +225,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText((Math.floor((i) * timePoint * (100 / logTime))) / (100 / logTime), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(i/stepsX*tickNum, i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 

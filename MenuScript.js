@@ -222,7 +222,7 @@ function minMaxValue(e) {
             alert("Es duerfen nur Werte zwischen 0 und -120 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ")
         }
 
-        changeColorScale();
+        draw();
     }
 
 }
