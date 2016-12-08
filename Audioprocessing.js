@@ -22,7 +22,9 @@
      windowFunction: "hann",
      cepstrum: undefined,
      modSpec: undefined,
-     display: "Spectrum"
+     display: "Spectrum",
+     windowValue: undefined,
+     windowLen: undefined
  };
 
  // define global audioContext
@@ -60,18 +62,20 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-         var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)/60);
-         var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)-durationMin*60);
-         if (durationMin < 10) {durationMin = "0" + durationMin;}
-         if (durationSec < 10) {durationSec = "0" + durationSec;}
-             info.innerHTML = "00:00" + "/"  + durationMin + ":" + durationSec;
+             var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate) / 60);
+             var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate) - durationMin * 60);
+             if (durationMin < 10) {
+                 durationMin = "0" + durationMin;
+             }
+             if (durationSec < 10) {
+                 durationSec = "0" + durationSec;
+             }
+             info.innerHTML = "00:00" + "/" + durationMin + ":" + durationSec;
 
              Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
-             //  Maximale anzahl der Bloecke 32700;
+             //  maximum number of blocks 32700;
              checkNumbOfBlocks();
-
-             console.log(Audiodata.nPart);
 
              Audiodata.spectrogram = new Array(Audiodata.nPart);
              Audiodata.phase = new Array(Audiodata.nPart);
@@ -80,7 +84,7 @@
              Audiodata.modSpec = new Array(Audiodata.nPart);
              Audiodata.instantFreqDev = new Array(Audiodata.nPart);
 
-             calculateDisplay(window, Audiodata.display);
+             calculateDisplay(Audiodata.display);
 
              drawSpec();
 
@@ -94,16 +98,14 @@
      };
  }
 
- function calculateDisplay(window, type) {
+ function calculateDisplay(type) {
 
      // create array with zeros for imaginär part to use the fft
      var zeros = new Array(Audiodata.blockLen);
 
-     var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+     Audiodata.windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
 
-     var window = calculateWindow(windowLen, Audiodata.windowFunction);
-
-     console.log(window);
+     Audiodata.windowValue = calculateWindow(Audiodata.windowLen, Audiodata.windowFunction);
 
      var endIdx = 0;
 
@@ -114,7 +116,7 @@
 
          if (type != "Instantaneous Frequency") {
              for (var k = 0; k < Audiodata.blockLen; k++) {
-                 sampleBlock[k] = sampleBlock[k] * window[k];
+                 sampleBlock[k] = sampleBlock[k] * Audiodata.windowValue[k];
              }
              var [realPart, imagPart] = calculateFFT(sampleBlock);
          }
@@ -147,7 +149,6 @@
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
-     console.log(Audiodata.instantFreqDev);
  }
 
  function calculateFFT(sampleBlock) {
@@ -263,7 +264,7 @@
 
          var multi = Math.round(step / (1 / dTime));
 
-        instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime)) ;
+         instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime));
      }
      return instantFreqDev
  }
@@ -320,6 +321,7 @@
  }
 
  function calculateWindow(windowLen, type) {
+
      var window = new Array(windowLen.length);
      switch (type) {
          case "hann":
@@ -342,21 +344,31 @@
              }
              break;
          case "kaiser-bessel":
-             var alpha = 2.5;
+             var alpha = 2;
              var denom = new Array(windowLen.length);
              var numer = Math.PI * alpha;
 
              for (i = 0; i < windowLen.length; i++) {
-                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (windowLen[i] / (windowLen.length / 2)) * (windowLen[i] / (windowLen.length / 2)));
+                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 * windowLen[i]) /
+                     (windowLen.length - 1) - 1) * ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
              }
 
              numer = besselfkt(numer);
              denom = besselfkt(denom);
 
-             console.log(numer);
+             for (i = 0; i < denom.length; i++) {
+                 window[i] = denom[i] / numer;
+             }
+             break;
+         case "flat-top":
+             var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
-             for (k = 0; k < denom.length; k++) {
-                 window[k] = denom[k] / numer;
+             for (i = 0; i < windowLen.length; i++) {
+                 window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1)) + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1)) - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1)) + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1));
              }
              break;
          case "rect":
@@ -390,10 +402,11 @@
 
  function besselfkt(array) {
 
-     var bessel = new Array(array.length);
+     var bessel = new Array(array.length).fill(0);
 
-     for (var i = 0; i < bessel.length; i++) {
-         bessel[i] = Math.pow(Math.pow((array[i]) / 2, i) / factorial(i), 2);
+     for (i = 0; i < bessel.length; i++) {
+         var n = i + 1;
+         bessel[i] = Math.pow((array[i] / 2), n) / Math.pow(factorial(i), 2);
      }
      return bessel;
  }
@@ -409,6 +422,7 @@
  }
 
  function checkNumbOfBlocks() {
+
      var maxBlockNumb = 32767;
      if (Audiodata.nPart > maxBlockNumb) {
          alert("Reached the maximum number of blocks. Data not fully displayed!");

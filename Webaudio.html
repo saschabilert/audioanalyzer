@@ -17,7 +17,6 @@
 
 <body>
 
-
     <header>
         <h1>Web Audio Analyzer</h1>
         <a href="Webaudio.html" class="class1">Home</a>
@@ -25,135 +24,136 @@
         <a href="About us.html" class="class1" target="_blank">About</a>
     </header>
 
-        <div id="container" class="container" style="display:none;">
-        </div>
-        <div id="loading" class="loading" style="display:none;"></div>
+    <div id="container" class="container" style="display:none;">
+    </div>
+    <div id="loading" class="loading" style="display:none;"></div>
 
 
-        <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a>
-            <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts" target="_blank"><img src="facebook.png" width="30" height="30" border=0></a>
-        </div>
+    <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a>
+        <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts" target="_blank"><img src="facebook.png" width="30" height="30" border=0></a>
+    </div>
 
-        <!-- make a new Formular for the website -->
-        <form method="post" enctype="multipart/form-data" action="">
-            <!-- set input audiofile and trigger the loadSound function -->
-            <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
-            <label for="myAudio">Choose a file</label>
-        </form>
-        <div class="buttons">
-            <button id="player" type="button" class="playPause">&#9654;</button>
-            <button id="stop" type="button" class="stop">&#9724;</button>
-            <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
-        </div>
-        <div data-js="info" class="info">00:00/00:00</div>
-       <div id = "loop">Loop Selection:<input type = "checkbox" id = "LoopCheck" onchange="setLoop(this)"></div>
-        <table id = "table1">
+    <!-- make a new Formular for the website -->
+    <form method="post" enctype="multipart/form-data" action="">
+        <!-- set input audiofile and trigger the loadSound function -->
+        <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+        <label for="myAudio">Choose a file</label>
+    </form>
+    <div class="buttons">
+        <button id="player" type="button" class="playPause">&#9654;</button>
+        <button id="stop" type="button" class="stop">&#9724;</button>
+        <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
+    </div>
+    <div data-js="info" class="info">00:00/00:00</div>
+    <div id="loop">Loop Selection:<input type="checkbox" id="LoopCheck" onchange="setLoop(this)"></div>
+    <table id="table1">
         <tr>
-            <th style = "margin-top:50px;">Choose a grid size:</th>
+            <th style="margin-top:50px;">Choose a grid size:</th>
         </tr>
         <tr>
-            <td><select id="grid" onchange="gridSize()" style = "margin-left:0px; margin-top:0px;" >
+            <td><select id="grid" onchange="gridSize()" style="margin-left:0px; margin-top:0px;">
             <option value="10">small</option>
-            <<option value="20">medium</option>
+            <option value="20">medium</option>
             <option value="50">large</option>
         </select></td>
         </tr>
-        </table>
+    </table>
 
-        <div class="canvas" id="canvasDivWave">
-            <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
-            <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
-            <canvas id="canvasWave" width="1176" height="260"></canvas>
-            <canvas id="canvasRMS" width="1176" height="260"></canvas>
-            <canvas id="canvasSelect" width="1176" height="260"></canvas>
-            <canvas id="canvasWaveLine" width="1176" height="260"></canvas>
-        </div>
+    <div class="canvas" id="canvasDivWave">
+        <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
+        <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
+        <canvas id="canvasWave" width="1176" height="260"></canvas>
+        <canvas id="canvasRMS" width="1176" height="260"></canvas>
+        <canvas id="canvasSelect" width="1176" height="260"></canvas>
+        <canvas id="canvasWaveLine" width="1176" height="260"></canvas>
+    </div>
 
-        <div id="divWavePosition">
-            <p id="wavePosition"></p>
-            <p id="crestValue"></p>
-        </div>
+    <div id="divWavePosition">
+        <p id="wavePosition"></p>
+        <p id="crestValue"></p>
+    </div>
 
-        <!--Space between waveform and table-->
-
-        <!-- generate dropwdown lists-->
-        <table>
-            <tr>
-                <th>Choose a block length:</th>
-                <th>Choose a window type:</th>
-                <th>Choose an overlap:</th>
-                <th>Choose a Display type:</th>
-                <th>Choose a Colormap:</th>
-                <th>Choose min and max for spectogram:</th>
-            </tr>
-            <tr>
-                <td><select id="blockLength" onchange="blockLength()">
+    <!-- generate dropwdown lists-->
+    <table>
+        <tr>
+            <th>Choose a block length:</th>
+            <th>Choose a window type:</th>
+            <th>Choose an overlap:</th>
+            <th>Choose a Display type:</th>
+            <th>Choose a Colormap:</th>
+            <th>Choose min and max for spectogram:</th>
+        </tr>
+        <tr>
+            <td><select id="blockLength" onchange="blockLength()">
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
                     <option value="4096">4096</option>
                   </select></td>
-                <td><select id="windowType" onchange="windowType()">
-                  <option value="hann">hann</option>
-                  <option value="rect">rectangle</option>
-                  <option value="hannpoisson">hannpoisson</option>
-                  <option value="cosine">cosine</option>
-                  <option value="kaiser-bessel">kaiser-bessel</option>
-                </select></td>
-                <td><select id="overlap" onchange="overlap()">
-                  <option value="0.5">50%</option>
-                  <option value="0.0">0%</option>
-                  <option value="0.25">25%</option>
-                  <option value="0.75">75%</option>
-                </select></td>
-                <td><select id="display" onchange="chooseDisplay()">
-                  <option value="Spectrum">spectrum</option>
-                  <option value="Phase">phase</option>
-                  <!-- <option value="MFCC">MFCC</option> -->
-                  <!-- <option value="Modulation Spectrum">modulation spectrum</option> -->
-                  <option value="Group Delay">group delay</option>
-                  <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
-                </select></td>
-                <td><select id="colormap" onchange="colormap()">
+            <td><select id="windowType" onchange="windowType()">
+                    <option value="hann">hann</option>
+                    <option value="rect">rectangle</option>
+                    <option value="hannpoisson">hannpoisson</option>
+                    <option value="cosine">cosine</option>
+                    <option value="flat-top">flat-top</option>
+                    <option value="kaiser-bessel">kaiser-bessel</option>
+                  </select></td>
+            <td><select id="overlap" onchange="overlap()">
+                    <option value="0.5">50%</option>
+                    <option value="0.0">0%</option>
+                    <option value="0.25">25%</option>
+                    <option value="0.75">75%</option>
+                  </select></td>
+            <td><select id="display" onchange="chooseDisplay()">
+                    <option value="Spectrum">spectrum</option>
+                    <option value="Phase">phase</option>
+                    <!-- <option value="MFCC">MFCC</option> -->
+                    <!-- <option value="Modulation Spectrum">modulation spectrum</option> -->
+                    <option value="Group Delay">group delay</option>
+                    <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
+                  </select></td>
+            <td><select id="colormap" onchange="colormap()">
                     <option value="1">Parula</option>
                     <option value="2">Gray</option>
                     <option value="3">Jet</option>
                     <option value="4">Hsv</option>
-                </select></td>
-                <td>
-                    <p style="margin-top:0px; margin-bottom:0px;">min value:</p>
-                    <input type="text" id="min" onkeypress="minMaxValue(event)" style="margin-top:0px">
-                    <p style="margin-top:0px; margin-bottom:0px;">max value:</p>
-                    <input type="text" id="max" onkeypress="minMaxValue(event)" style="margin-top:0px">
-                </td>
-            </tr>
-        </table>
+                  </select></td>
+            <td>
+                <p style="margin-top:0px; margin-bottom:0px;">min value:</p>
+                <input type="text" id="min" onkeypress="minMaxValue(event)" style="margin-top:0px">
+                <p style="margin-top:0px; margin-bottom:0px;">max value:</p>
+                <input type="text" id="max" onkeypress="minMaxValue(event)" style="margin-top:0px">
+            </td>
+        </tr>
+    </table>
 
-        <!-- start javascript -->
-        <script type="text/javascript" src="MenuScript.js"></script>
-        <script type="text/javascript" src="fft.js"></script>
-        <script type="text/javascript" src="Audioprocessing.js"></script>
-        <script type="text/javascript" src="Spectrogram.js"></script>
-        <script type="text/javascript" src="Waveform.js"></script>
-        <script type="text/javascript" src="parula.js"></script>
-        <script type="text/javascript" src="gray.js"></script>
-        <script type="text/javascript" src="jet.js"></script>
-        <script type="text/javascript" src="hsv.js"></script>
-        <script type="text/javascript" src="twilight.js"></script>
+    <!-- start javascript -->
+    <script type="text/javascript" src="MenuScript.js"></script>
+    <script type="text/javascript" src="fft.js"></script>
+    <script type="text/javascript" src="Audioprocessing.js"></script>
+    <script type="text/javascript" src="Spectrogram.js"></script>
+    <script type="text/javascript" src="Waveform.js"></script>
+    <script type="text/javascript" src="parula.js"></script>
+    <script type="text/javascript" src="gray.js"></script>
+    <script type="text/javascript" src="jet.js"></script>
+    <script type="text/javascript" src="hsv.js"></script>
+    <script type="text/javascript" src="twilight.js"></script>
 
-        <div class="canvas" id="canvasDivSpec">
-            <canvas id="canvasSpec" width="1176" height="512"></canvas>
-            <canvas id="canvasScale" width="1200" height="540"></canvas>
-            <canvas id="canvasLine" width="1176" height="512"></canvas>
-        </div>
+    <div class="canvas" id="canvasDivSpec">
+        <canvas id="canvasSpec" width="1176" height="512"></canvas>
+        <canvas id="canvasScale" width="1200" height="540"></canvas>
+        <canvas id="canvasLine" width="1176" height="512"></canvas>
+    </div>
 
-        <div id="divPosition">
-            <p id="Position"></p>
-            <p id="wert"></p>
-        </div>
+    <div id="divPosition">
+        <p id="Position"></p>
+        <p id="wert"></p>
+    </div>
 
-        <div class="canvas" id="divCanvasLegend">
-            <canvas id="canvasLegend" width="300" height="75"></canvas>
-        </div>
+    <div class="canvas" id="divCanvasLegend">
+        <canvas id="canvasLegend" width="300" height="75"></canvas>
+    </div>
+
+    <button type="button" onclick="downloadSpectrum()">Save Spectrum</button>
 
 </body>
 
