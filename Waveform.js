@@ -204,8 +204,7 @@ function drawWaveTimeAxes() {
             break;
         }
     }
-console.log(tickNum)
-console.log(stepsX)
+
     ctxWaveScale.clearRect(0, 0, canvasWaveScale.width, canvasWaveScale.height);
 
     ctxWaveScale.beginPath();
