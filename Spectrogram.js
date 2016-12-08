@@ -806,3 +806,17 @@ function getSectionDisplayed() {
         max: (scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
     };
 }
+
+function downloadSpectrum() {
+  var specCanvas = document.getElementById('canvasSpec');
+  var scaleCanvas = document.getElementById('canvasScale');
+
+  var scaleContext = scaleCanvas.getContext('2d');
+  scaleContext.drawImage(specCanvas,25,0);
+
+  var dataURL = scaleCanvas.toDataURL("image/png");
+  var link = document.createElement('a');
+  link.download = "spectrum.png";
+  link.href = scaleCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+  link.click();
+}
