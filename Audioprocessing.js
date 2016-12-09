@@ -38,7 +38,7 @@
      enableButton();
 
      document.getElementById("loading").style.display = "block";
-     document.getElementById("container").style.display = "block"
+     document.getElementById("container").style.display = "block";
 
      // get the first file data with the id "myAudio"
      var data = document.getElementById("myAudio").files[0];
@@ -263,7 +263,7 @@
 
          instantFreqDev[k] = instantFreq[k] - freq[k];
      }
-     return instantFreqDev
+     return instantFreqDev;
  }
 
  // is not correct so far

@@ -137,16 +137,16 @@ function drawWave() {
         }
         startOffset = mouseTime;
         drawLineKlickWave(mouseTime);
-        drawLineKlick(mouseTime)
+        drawLineKlick(mouseTime);
     }
 }
 
 function drawLineKlickWave(mouseTime) {
     var canvasWaveLine = document.getElementById("canvasWaveLine");
-    var canvas = document.getElementById("canvasWave")
+    var canvas = document.getElementById("canvasWave");
     var ctxLine = canvasWaveLine.getContext("2d");
-    mousePos = (mouseTime * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
-    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
+    mousePos = (mouseTime * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height);
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasWaveLine.height);
@@ -193,15 +193,15 @@ function drawWaveTimeAxes() {
 
         if (quarter <= (timePoint) && (logTime / 4)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=(logTime / 4)
+            tickNum=(logTime / 4);
             break;
         } else if (half <= (timePoint) && (logTime / 2)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=(logTime / 2)
+            tickNum=(logTime / 2);
             break;
         } else if (full <= (timePoint) && (logTime )*Math.ceil(canvasWave.width/i)>=trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=logTime
+            tickNum=logTime;
             break;
         }
     }
@@ -284,39 +284,39 @@ function displayWavePosition(evt) {
 }
 
 function waveOnMouseDown(evt) {
-    var canvas = document.getElementById("canvasWave")
-    var canvasLine = document.getElementById("canvasWaveLine")
-    canvasLine.addEventListener("mousemove", onMouseMove)
+    var canvas = document.getElementById("canvasWave");
+    var canvasLine = document.getElementById("canvasWaveLine");
+    canvasLine.addEventListener("mousemove", onMouseMove);
 
     mouseUsed = 1;
-    var mousePos = getMousePos(canvas, evt)
+    var mousePos = getMousePos(canvas, evt);
     startSelection = mousePos.x;
     intervalDrawSelect = setInterval(function() {
         drawSelection(startSelection, 1, evt);
-    }, 30)
+    }, 30);
 
 }
 
 function drawSelection(startPos, caller, endPos) {
 
 
-    var canvas = document.getElementById("canvasWave")
-    var canvasSelect = document.getElementById("canvasSelect")
-    var ctxSelect = canvasSelect.getContext("2d")
+    var canvas = document.getElementById("canvasWave");
+    var canvasSelect = document.getElementById("canvasSelect");
+    var ctxSelect = canvasSelect.getContext("2d");
 
     if (caller == 1 && mouseUsed) {
         var start = startPos;
         var actualPosition = selectionX;
         var widthSelection = (actualPosition - startPos);
-        ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height)
+        ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
         ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' +
             0 + ',' + 0.2 + ')';
         ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
     } else if (caller == 2) {
-        var start = (startPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
-        var actualPosition = (endPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate)
+        var start = (startPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
+        var actualPosition = (endPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         var widthSelection = (actualPosition - start);
-        ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height)
+        ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
         ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' +
             0 + ',' + 0.2 + ')';
         ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
@@ -325,36 +325,36 @@ function drawSelection(startPos, caller, endPos) {
 }
 
 function waveOnMouseUp(evt) {
-    canvasLine = document.getElementById("canvasWaveLine")
-    var canvas = document.getElementById("canvasWave")
-    mousePos = getMousePos(canvasLine, evt)
-    mousePos=mousePos.x
+    canvasLine = document.getElementById("canvasWaveLine");
+    var canvas = document.getElementById("canvasWave");
+    mousePos = getMousePos(canvasLine, evt);
+    mousePos=mousePos.x;
     mouseUsed = 0;
-    endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos
+    endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
 
     if (selectionX<startSelection) {
-      drawLineKlickWave(endTimeSelection)
+      drawLineKlickWave(endTimeSelection);
       startOffset=endTimeSelection;
-      endTimeSelection=mousePos
+      endTimeSelection=mousePos;
     }
-    canvasLine.removeEventListener("mousemove", onMouseMove)
-    clearInterval(intervalDrawSelect)
+    canvasLine.removeEventListener("mousemove", onMouseMove);
+    clearInterval(intervalDrawSelect);
     zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
-        startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos)
+        startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos);
                 startSelection=NaN;
           selectionX=NaN;
 }
 
 function onMouseMove(evt) {
-    canvasLine = document.getElementById("canvasWaveLine")
+    canvasLine = document.getElementById("canvasWaveLine");
     mousePos = getMousePos(canvasLine, evt);
     selectionX = mousePos.x;
 }
 function resetSelection(){
 
-var canvasSelect = document.getElementById("canvasSelect")
-var ctxSelect = canvasSelect.getContext("2d")
+var canvasSelect = document.getElementById("canvasSelect");
+var ctxSelect = canvasSelect.getContext("2d");
 endTimeSelection=0;
-ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height)
+ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
 
 }

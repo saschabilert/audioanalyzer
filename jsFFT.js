@@ -3,14 +3,11 @@
 
 function fft(real, imag, nfft) {
 
-    if (Math.log2(nfft) == 0) {
+    if (Math.log2(nfft) === 0) {
         throw "number of FFT bins must be a power of two";
     }
 
     if (real.length != imag.length) {
         throw "Mismatched lengths";
     }
-
-
-
 }
