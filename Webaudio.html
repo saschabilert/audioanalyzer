@@ -24,8 +24,7 @@
         <a href="About us.html" class="class1" target="_blank">About</a>
     </header>
 
-    <div id="container" class="container" style="display:none;">
-    </div>
+    <div id="container" class="container" style="display:none;"></div>
     <div id="loading" class="loading" style="display:none;"></div>
 
 
@@ -52,9 +51,9 @@
         </tr>
         <tr>
             <td><select id="grid" onchange="gridSize()" style="margin-left:0px; margin-top:0px;">
-            <option value="10">small</option>
-            <option value="20">medium</option>
-            <option value="50">large</option>
+            <option value="0.25">small</option>
+            <option value="0.5">medium</option>
+            <option value="1">large</option>
         </select></td>
         </tr>
     </table>
@@ -88,6 +87,7 @@
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
                     <option value="4096">4096</option>
+                    <option value="8192">8192</option>
                   </select></td>
             <td><select id="windowType" onchange="windowType()">
                     <option value="hann">hann</option>
@@ -153,7 +153,7 @@
         <canvas id="canvasLegend" width="300" height="75"></canvas>
     </div>
 
-    <button type="button" onclick="downloadSpectrum()">Save Spectrum</button>
+    <button type="button" onclick="downloadSpectrum()">save spectrogram</button>
 
 </body>
 

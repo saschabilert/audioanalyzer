@@ -9,7 +9,7 @@ document.getElementById("max").disabled = true;
 document.getElementById("grid").disabled = true;
 
 function gridSize() {
-  WaveData.gridSize = document.getElementById("grid").value;
+  WaveData.gridScale = +(document.getElementById("grid").value);
   drawWaveGrid();
 }
 

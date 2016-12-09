@@ -249,22 +249,19 @@
 
      var secondPhase = calculatePhase(secondReal, secondImag);
 
-     var dTime = (sampleBlock.length - newSampleBlockLen) / Audiodata.sampleRate;
+     var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
+     var instantFreqDev = new Array(instantFreq.length).fill(0);
 
-     var instantFreqDev = new Array(newSampleBlockLen / 2 + 1).fill(0);
+     var freq_wrap = Audiodata.sampleRate / (sampleBlock.length - newSampleBlockLen);
 
-     for (var k = 0; k < instantFreqDev.length; k++) {
+     var freq = linspace(0, Audiodata.sampleRate / 2, instantFreq.length);
+
+     for (var k = 0; k < instantFreq.length; k++) {
          var dPhase = secondPhase[k] - firstPhase[k];
 
-         instantFreqDev[k] = 1 / (2 * Math.PI) * (dPhase / dTime);
+         instantFreq[k] = dPhase + Math.round((freq[k] - dPhase) / freq_wrap) * freq_wrap;
 
-         var freq = k / instantFreqDev.length * Audiodata.sampleRate / 2;
-
-         var step = instantFreqDev[k] - freq;
-
-         var multi = Math.round(step / (1 / dTime));
-
-         instantFreqDev[k] = instantFreqDev[k] - (multi * (1 / dTime));
+         instantFreqDev[k] = instantFreq[k] - freq[k];
      }
      return instantFreqDev
  }

@@ -107,7 +107,7 @@
     <div id="divKaiserBessel" style="width: 480px; height: 400px; margin: auto;"></div>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "hann");
         var data = [{
             x: windowLen,
@@ -136,8 +136,10 @@
     </script>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "rect");
+        windowValue.fill(0,0,81)
+        windowValue.fill(0,942,1024)
         var data = [{
             x: windowLen,
             y: windowValue,
@@ -165,7 +167,7 @@
     </script>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "hannpoisson");
         var data = [{
             x: windowLen,
@@ -194,7 +196,7 @@
     </script>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "cosine");
         var data = [{
             x: windowLen,
@@ -223,7 +225,7 @@
     </script>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "flat-top");
         var data = [{
             x: windowLen,
@@ -252,7 +254,7 @@
     </script>
 
     <script type="text/javascript">
-        var windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+        var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "kaiser-bessel");
         var data = [{
             x: windowLen,

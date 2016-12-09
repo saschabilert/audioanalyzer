@@ -816,7 +816,7 @@ function downloadSpectrum() {
 
   var dataURL = scaleCanvas.toDataURL("image/png");
   var link = document.createElement('a');
-  link.download = "spectrum.png";
+  link.download = "spectrogram.png";
   link.href = scaleCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
   link.click();
 }
