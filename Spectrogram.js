@@ -286,20 +286,23 @@ function draw() {
 
     // Create counter variable for the numbers in the ImageData variable
     var nPictureData = 0;
+    console.log(specLevelWidth)
     switch (Audiodata.display) {
         case "Spectrum":
             for (var j = specHight - 1; j > 0; j--) {
 
                 for (var i = 0; i < specWidth; i++) {
                     //Scaling the input Data onto the colorscale
-                    point = 20 * Math.log10(specData[i][j] / 2048);
+                    point = 20 * Math.log10(specData[i][j] / Audiodata.blockLen);
 
                     point += Math.abs(specLevelLow);
                     point = Math.max(point, 0);
                     point = Math.min(point, specLevelWidth);
-
+                    //console.log(point)
                     point /= Math.abs(specLevelWidth);
-                    point *= noOfColorSteps - 1;
+                    //console.log(point)
+                    point *= (noOfColorSteps - 1);
+
                     point = Math.floor(point);
                     if (point > 99) {
                         point = 99;
@@ -452,7 +455,7 @@ function displayMousePosition(evt) {
     switch (Audiodata.display) {
         case "Spectrum":
             if (!isNaN(point)) {
-                point = 20 * Math.log10(point / 2048);
+                point = 20 * Math.log10(point / Audiodata.blockLen);
                 point = Math.max(specLevelLow, point);
                 point = Math.min(point, specLevelHigh)
                 wert.innerHTML = Math.round(point) + ' dB'
@@ -607,16 +610,18 @@ function drawScale() {
     logFreq = Math.pow(10, Math.floor(logFreq))
 
     var minDistanceNumbersX = 50;
-    var maxDistanceNumbersX = 300;
+    var maxDistanceNumbersX = 400;
     var minDistanceNumbersY = 25;
-    var maxDistanceNumbersY = 300;
-    var tickNumX;
-    var tickNumY;
+    var maxDistanceNumbersY = 400;
+    var tickNumX=NaN;
+    var tickNumY=NaN;
     var freqPerLine = freqMax / canvas.height;
     var timePerColumn = trackLenSec / canvas.width
 
     var stepsX = 100;
 
+
+    while (isNaN(tickNumX)) {
     for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
         var time = kk * timePerColumn;
         var quarter = time % (logTime / 4);
@@ -638,26 +643,38 @@ function drawScale() {
         }
 
     }
+    if (isNaN(tickNumX)) {
+      logTime*=10
+    }
+    }
 
-    var stepsY = 50;
+    var stepsY = 25;
+
+      while (isNaN(tickNumY)) {
+        console.log(logFreq)
     for (var kk = minDistanceNumbersY; kk <= maxDistanceNumbersY; kk++) {
         var freq = kk * freqPerLine;
         var quarter = freq % (logFreq / 4);
         var half = freq % (logFreq / 2);
         var full = freq % logFreq;
 
-        if (quarter <= (freqPerLine*1.5) && (logFreq / 4)*Math.ceil(canvas.width/kk)>=20000) {
+        if (quarter <= (freqPerLine*2) && (logFreq / 4)*Math.ceil(canvas.height/kk)>=20000) {
             stepsY = kk;
             tickNumY = logFreq / 4;
             break;
-        } else if (half <= freqPerLine*1.5 && (logFreq / 2)*Math.ceil(canvas.width/kk)>=20000) {
+        } else if (half <= freqPerLine*2 && (logFreq / 2)*Math.ceil(canvas.height/kk)>=20000) {
             stepsY = kk;
             tickNumY = logFreq / 2;
             break;
-        } else if (full <= freqPerLine*1.5 && (logFreq )*Math.ceil(canvas.width/kk)>=20000) {
+        } else if (full <= freqPerLine*2 && (logFreq )*Math.ceil(canvas.height/kk)>=20000) {
             stepsY = kk;
             tickNumY = logFreq;
             break;
+        }
+
+        }
+        if (isNaN(tickNumY)) {
+          logFreq*=5
         }
     }
 
@@ -739,15 +756,6 @@ function onKeyUp(evt) {
     }
 }
 
-/*function zoomToSelection(timeStart , timeEnd){
-  var canvas = document.getElementById("canvasSpec")
-
-  var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
-  var lineEnd = (timeEnd * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
-  var lengthSelect=(lineEnd-lineStart);
-
-
-}*/
 
 function zoomToSelection(timeStart, timeEnd) {
     var canvas = document.getElementById("canvasSpec")
@@ -805,18 +813,4 @@ function getSectionDisplayed() {
         min: scrollPositionX * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
         max: (scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
     };
-}
-
-function downloadSpectrum() {
-  var specCanvas = document.getElementById('canvasSpec');
-  var scaleCanvas = document.getElementById('canvasScale');
-
-  var scaleContext = scaleCanvas.getContext('2d');
-  scaleContext.drawImage(specCanvas,25,0);
-
-  var dataURL = scaleCanvas.toDataURL("image/png");
-  var link = document.createElement('a');
-  link.download = "spectrogram.png";
-  link.href = scaleCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-  link.click();
 }

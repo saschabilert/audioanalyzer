@@ -163,36 +163,42 @@ function enableButton() {
 
 
 
-var min;
-var max;
+
 
 function minMaxValue(e) {
-
+  var min=0;
+  var max=0;
     if (e.keyCode == 13 || e.which == 13) {
 
         min = document.getElementById("min").value;
         max = document.getElementById("max").value;
-        if (min !== 0) {
+        if (min != 0) {
             min = parseInt(min);
         }
-        if (max !== 0) {
+        else {
+          min=1;
+        }
+        if (max != 0) {
             max = parseInt(max);
         }
-
-
+        else {
+          max=1;
+        }
 
         if (min < 0 && max < 0 && max > min) {
-
             specLevelHigh = max;
             specLevelLow = min;
-        } else if (min < 0 && max === 0 && specLevelHigh > min) {
+            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
+        } else if (min < 0 && max == 0 && specLevelHigh > min) {
 
             specLevelLow = min;
-        } else if (min === 0 && max < 0 && specLevelLow < max) {
+            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
+        } else if (min == 0 && max < 0 && specLevelLow < max) {
 
             specLevelHigh = max;
+            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
         } else if (min >= 0 || max >= 0 || max < min) {
-            alert("Es duerfen nur Werte zwischen 0 und -120 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
+            alert("Es duerfen nur Werte <= -1 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
         }
 
         draw();
