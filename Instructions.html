@@ -30,38 +30,59 @@
         <a href="Instructions.html" class="class1" target="_blank">Instructions</a>
         <a href="About us.html" class="class1" target="_blank">About</a>
     </header>
+    <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a>
+        <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts"><img src="facebook.png" width="30" height="30"></a>
+    </div>
 
+    <ul>
+        <li><a href = "#ChoosingAFile">Choosing a file</a></li>
+        <li><a href = "#PlayPause">Listen to the song</a></li>
+        <li><a href = "#Editing">Editing the spectrum</a></li>
+        <li><a href = "#blockLength">Choosing a block length</a></li>
+        <li><a href = "#WindowType">Choosing a window type</a></li>
+        <li><a href = "#overlap">Choosing an overlap</a></li>
+        <li><a href = "#DisplayType">Choosing a display type</a></li>
+        <li><a href = "#Colormap">Choosing a Colormap</a></li>
+    </ul>
     <h1>Instruction</h1>
 
-    <content>
-        <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a>
-            <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts"><img src="facebook.png" width="30" height="30"></a>
-        </div>
+
         <!--Instruction text-->
-        <h1 style="float: left;">Step 1:</h1>
+    <div id = "wrap">
+        <h1 style="float: left;"><a id = "ChoosingAFile">Choosing a file:</a></h1>
         <br><br><br>
-        <p>Click on "Choose a file" button and import an audio file from your computer. You can only import .wav, .mp3, etc file extensions. After you have chosen a file, you should see the waveform and the spectrum of the signal.</p>
-        <h1 style="float: left;">Step 2:</h1>
+        <img src = "ChooseFile.PNG" height = "300" width = "300" style = "margin-left:-210px; margin-top:10px;">
+        <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and
+           all other audio formats that are recognized by your browser (<a href = "https://developer.mozilla.org/en-US
+           /docs/Web/HTML/Supported_media_formats" target = "_blank">Click here for more audio formats</a>). After you
+           have chosen a file, you should see the waveform and the spectrum of the signal.</p>
+        <h1 style="float: left;"><a id = "PlayPause">Listen to the song:</a></h1>
         <br><br><br>
-        <p>You can play, pause and stop the track by using the buttons. You can also adjust the volume by using the volume button. The third container shows you during playing the current time and the total length of the track. During playing you can see
-            the progress bar of the signal in the waveform and in the spectrum. You can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this, the spectrum will show you just that part. You can zoom in and
-            out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
-        <h1 style="float: left;">Step 3:</h1>
+        <img src = "PlayPause.PNG" height = "70" width = "300" style = "margin-left:-250px; margin-top:10px;">
+        <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the
+            volume button. The second container shows you during playing the current time and the total length of the
+            track.</p>
+        <img src = "waveformSelection.PNG" height = "200" width = "500" style = "margin-left:0px; margin-top:10px;">
+        <img src = "spectrumZoom.PNG" height = "200" width = "500" style = "margin-left:10px; margin-top:10px;">
+        <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You
+            can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this,
+            the spectrum will show you just that part. You can zoom in and out in the spectrum by using "Ctrl + mouse
+            wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
+        <h1 style="float: left;"><a id = "Editing">Editing the spectrum:</a></h1>
         <br><br><br>
+        <img src = "EditingSpectrum.PNG" height = "100" width = "550" style = "margin-left:-310px; margin-top:10px;">
         <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a colormap. The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of
             the colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise
             the spectrum, the phase, the modulation spectrum, the group delay and the instantaneous frequency of the signal.</p>
-    </content>
 
+        <h1 style="float: left;"><a id = "blockLength">Choosing a block length:</a></h1>
+        <br><br><br>
+        <p>HERE COMES SOME INFO ABOUT THE BLOCK LENGTH AND WHY IT IS IMPORTANT FOR THE ANALYSIS</p>
+        <h1 style="float: left;"><a id = "WindowType">Choosing a window type:</a></h1>
+        <br><br><br>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
     </script>
-
-    <h1>Display Types</h1>
-
-
-
-    <h1>Window - Functions</h1>
 
     <div class="boxed" id="rect-window">
         <h2>1. Rect Window</h2>
@@ -283,7 +304,7 @@
     </script>
 
 
-
+    </div>
 </body>
 
 </html>

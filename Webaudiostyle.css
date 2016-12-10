@@ -1,9 +1,46 @@
 html, body {
-    min-width: 1200px;
-    max-width: 100%;
-    position: relative;
+    min-width:1200px;
+    position:relative;
+
+}
+#wrap {
+
+    margin-left:110px;
+    margin-right:100px;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width:100px;
+    cursor:pointer;
+    position:fixed;
+
+}
+
+li a {
+    display: block;
+    background-color: #ededed;
+    color:black;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    font-size: 15px;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color:#555;
+    color:white;
+}
+
+li a.active {
+    color:white;
+    background-color:#555;
+}
 #loop {
     margin-left: 10px;
     margin-top: -40px;
@@ -527,5 +564,5 @@ a:link {
     margin: auto;
     width: 60%;
     border: 1px solid black;
-    padding: 10;
+    padding: 10px;
 }
