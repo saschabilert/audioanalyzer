@@ -29,7 +29,7 @@ var tempCanvas = document.createElement("canvas"),
 // colorscales
 function drawSpec() {
 
-    SpectroData.specLevelWidth=Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow)
+    SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow)
     var canvas = document.getElementById("canvasSpec")
     var ctx = canvas.getContext("2d")
     var canvasLine = document.getElementById("canvasLine")
@@ -43,8 +43,6 @@ function drawSpec() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     SpectroData.cWidth = canvas.width;
     SpectroData.cHigh = canvas.height;
-
-
 
     //Importing spectrogram data to local variable
     switch (Audiodata.display) {
@@ -68,13 +66,12 @@ function drawSpec() {
             SpectroData.specData = Audiodata.instantFreqDev
             break;
         case "Group Delay":
-          SpectroData.specData = Audiodata.groupDelay;
+            SpectroData.specData = Audiodata.groupDelay;
 
             break;
 
 
     }
-    // Storing time-freq data of the chosen displaytpype
 
 
     // Defining varables with no of spectrograms
@@ -97,7 +94,6 @@ function drawSpec() {
 
     // Start draw spectrogram
     draw();
-
 
     // Functions for chasing mouse actions
     canvasLine.addEventListener("mousewheel", mouseWheelFunction);
@@ -154,12 +150,17 @@ function drawSpec() {
         } else {
             factor = 1;
         }
+        // Checking if the new canvas size is smaler than the maximum possible
+        // size, but also bigger then the size of the surrounding div. If this is
+        // the case, the canvases are scaled to the new size
         if (canvas.width * factor < 32767 && (canvas.width * factor) *
             canvas.height < 268435456 && canvas.width * factor > divWidth) {
             canvasScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
             canvas.width = canvas.width * factor;
             SpectroData.cWidth = canvas.width;
             canvasLine.width = canvasLine.width * factor
+                // If the new size will be smaler then the surrounding div, the size
+                // of the canvases is set to the size of the div
         } else if (canvas.width * factor < 32767 && (canvas.width * factor) *
             canvas.height < 268435456 && canvas.width * factor < divWidth) {
             canvasScale.width = divWidth
@@ -189,16 +190,21 @@ function drawSpec() {
         } else {
             factor = 1;
         }
+        // Checking if the new canvas size is smaler than the maximum possible
+        // size, but also bigger then the size of the surrounding div. If this is
+        // the case, the canvases are scaled to the new size
         if (canvas.height * factor < 32767 && (canvas.height * factor) *
-        canvas.width < 268435456 && canvas.height * factor > divHeight &&
-        canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            canvas.width < 268435456 && canvas.height * factor > divHeight &&
+            canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvas.height = canvas.height * factor;
             SpectroData.cHigh = canvas.height;
             canvasLine.height = canvasLine.height * factor;
+            // If the new size will be smaler then the surrounding div, the size
+            // of the canvases is set to the size of the div
         } else if (canvas.height * factor < 32767 && (canvas.height * factor) *
-         canvas.width < 268435456 && canvas.height * factor < divHeight &&
-         canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            canvas.width < 268435456 && canvas.height * factor < divHeight &&
+            canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
             cHigh = canvas.height;
@@ -227,10 +233,13 @@ function drawSpec() {
             factor = 1;
 
         }
+        // Checking if the new canvas size is smaler than the maximum possible
+        // size, but also bigger then the size of the surrounding div. If this is
+        // the case, the canvases are scaled to the new size
         if (canvas.width * factor < 32767 && (canvas.width * factor) *
-        (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 &&
-        canvas.height * factor > divHeight && canvas.width * factor > divWidth &&
-        canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 &&
+            canvas.height * factor > divHeight && canvas.width * factor > divWidth &&
+            canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvasScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
             canvas.height = canvas.height * factor;
@@ -239,10 +248,12 @@ function drawSpec() {
             SpectroData.cWidth = canvas.width;
             canvasLine.height = canvasLine.height * factor;
             canvasLine.width = canvasLine.width * factor;
+            // If the new size will be smaler then the surrounding div, the size
+            // of the canvases is set to the size of the div
         } else if (canvas.width * factor < 32767 && (canvas.width * factor) *
-        (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 &&
-        (canvas.height * factor > divHeight || canvas.width * factor > divWidth) &&
-        canvas.height * factor <= (tempCanvas.height * 2.5)) {
+            (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 &&
+            (canvas.height * factor > divHeight || canvas.width * factor > divWidth) &&
+            canvas.height * factor <= (tempCanvas.height * 2.5)) {
             canvasScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
             SpectroData.cHigh = canvas.height;
@@ -275,11 +286,11 @@ function draw() {
     if (SpectroData.TypeColorScale == 1) {
         var colorScale = parulaScale;
     } else if (SpectroData.TypeColorScale == 2) {
-      var  colorScale = grayScale;
+        var colorScale = grayScale;
     } else if (SpectroData.TypeColorScale == 3) {
-      var  colorScale = jetScale;
+        var colorScale = jetScale;
     } else if (SpectroData.TypeColorScale == 4) {
-    var    colorScale = hsvScale;
+        var colorScale = hsvScale;
     }
     SpectroData.colorScale = colorScale;
 
@@ -360,7 +371,7 @@ function draw() {
 
                 for (var i = 0; i < SpectroData.specWidth; i++) {
                     point = SpectroData.specData[i][j];
-                    //  point += 900
+                    point += 900
                     point *= noOfColorSteps - 1;
                     point /= 22100
 
@@ -443,11 +454,14 @@ function drawLineKlick(mouseTime) {
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
     info.innerHTML = (mouseTime).toFixed(1) + " " + ":" + " " +
-    (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+        (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
 
     drawLinePlay()
 }
 
+// In this function the spectrogram values for the actual mouse position are
+// extracted  from the raw spectrogram data and then displayed in the upper left
+// cornder of the spectrogram
 function displayMousePosition(evt) {
     var canvas = document.getElementById("canvasSpec");
     var position = document.getElementById("Position");
@@ -456,10 +470,10 @@ function displayMousePosition(evt) {
     sigLenSec = Audiodata.signalLen / Audiodata.sampleRate;
     mouseX = Math.round((sigLenSec / canvas.width * mousePos.x) * 100) / 100;
     mouseY = Math.round(((Audiodata.sampleRate / 2) / canvas.height) *
-            (canvas.height - mousePos.y))
+        (canvas.height - mousePos.y))
     position.innerHTML = mouseX + ' sec' + ' : ' + mouseY + ' Hz';
     point = SpectroData.specData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)]
-    [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
+        [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
 
     switch (Audiodata.display) {
         case "Spectrum":
@@ -485,7 +499,7 @@ function displayMousePosition(evt) {
         case "Instantaneous Frequency Deviation":
 
 
-            //point += 900
+            point += 900
 
 
             wert.innerHTML = Math.round(point) + " Hz"
@@ -502,22 +516,26 @@ function displayMousePosition(evt) {
 
 };
 
-
+// Function that draws the red play position line on the canvas
 function drawLinePlay() {
+    // Getting all elements needed for the function
     var canvasLine = document.getElementById("canvasLine")
     var ctxLine = canvasLine.getContext("2d")
     var div = document.getElementById("canvasDivSpec")
 
+    // If the function is called when nothing is played, nothing happens
     if (isPlaying) {
+        // Calculation of actual line Position from actual playback time
         var linePosition = Math.floor(canvasLine.width /
-          (Audiodata.signalLen / Audiodata.sampleRate) *
-          (audioCtx.currentTime - startTime + startOffset))
+            (Audiodata.signalLen / Audiodata.sampleRate) *
+            (audioCtx.currentTime - startTime + startOffset))
 
-
+        // If the position is outside the div, the canvas is scrolled
         if (linePosition <= SpectroData.scrollPositionX - SpectroData.scaleOfsetLeft) {
             div.scrollLeft = linePosition + SpectroData.scaleOfsetLeft - 50
         }
 
+        // Drawing the line
         ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height)
 
         ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
@@ -526,19 +544,21 @@ function drawLinePlay() {
         if (linePosition >= SpectroData.scrollPositionX + div.offsetWidth - SpectroData.scaleOfsetLeft) {
             div.scrollLeft = div.scrollLeft + div.offsetWidth - 50
         }
-
+        // Calling the function again depended on the actual load of the computer
         window.requestAnimationFrame(drawLinePlay)
 
     }
 
 }
 
+// Functions that draws the legend for the spectrogram
 function drawLegend(colorScale) {
     SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
     legCanvas = document.getElementById("canvasLegend");
     ctxLegend = legCanvas.getContext("2d");
     ctxLegend.setTransform(1, 0, 0, 1, 0, 0);
     ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
+
 
     var tempCanvasLEgend = document.createElement("canvas"),
         tempCtxLegend = tempCanvasLEgend.getContext("2d");
@@ -550,7 +570,7 @@ function drawLegend(colorScale) {
     for (var i = 0; i < 100; i++) {
         for (var j = 0; j < legCanvas.height; j++) {
             tempCtxLegend.fillStyle = 'rgb(' + Math.floor(colorScale[0][i]) +
-             ',' + Math.floor(colorScale[1][i]) + ',' +
+                ',' + Math.floor(colorScale[1][i]) + ',' +
                 Math.floor(colorScale[2][i]) + ')';
             tempCtxLegend.fillRect(i * 3, j, 3, 1);
         }
@@ -558,17 +578,17 @@ function drawLegend(colorScale) {
     // Draw the image from the temp canvas to the scaled canvas
     ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height);
     ctxLegend.drawImage(tempCanvasLEgend, 0, 0);
-    //ctxLegend.clearRect(0, 0, canvasLegend.width, canvasLegend.height)
+
     ctxLegend.clearRect(0, canvasLegend.height - 15, canvasLegend.width * 2,
-      canvasLegend.height)
+        canvasLegend.height)
     ctxLegend.font = "700 15px Arial";
     switch (Audiodata.display) {
         case "Spectrum":
             ctxLegend.fillText(SpectroData.specLevelLow + ' dB', 2, canvasLegend.height - 1);
             ctxLegend.fillText(SpectroData.specLevelLow + (SpectroData.specLevelWidth / 2) + ' dB',
-            (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+                (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
             ctxLegend.fillText(SpectroData.specLevelHigh + ' dB', (canvasLegend.width - 2) -
-            45, canvasLegend.height - 1);
+                45, canvasLegend.height - 1);
             break;
         case "Phase":
             ctxLegend.fillText('-\u03C0', 2, canvasLegend.height - 1);
@@ -586,9 +606,9 @@ function drawLegend(colorScale) {
         case "Group Delay":
             ctxLegend.fillText(0 + 'ms', 2, canvasLegend.height - 1);
             ctxLegend.fillText((((Audiodata.blockLen / Audiodata.sampleRate) *
-            1000) / 2).toFixed(1) + 'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+                1000) / 2).toFixed(1) + 'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
             ctxLegend.fillText(((Audiodata.blockLen / Audiodata.sampleRate) *
-            1000).toFixed(1) + 'ms', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+                1000).toFixed(1) + 'ms', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
 
             break;
 
@@ -613,6 +633,11 @@ function drawLegend(colorScale) {
 function drawScale() {
     var canvas = document.getElementById('canvasSpec');
     div = document.getElementById('canvasDivSpec')
+    var canvasScale = document.getElementById('canvasScale');
+    var ctxScale = canvasScale.getContext('2d');
+    var divWidth = div.offsetWidth;
+    var divHeight = div.offsetHeight;
+
     var freqMax = Audiodata.sampleRate / 2;
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
     var freqPerLine = (Audiodata.sampleRate / 2) / canvas.height;
@@ -644,17 +669,17 @@ function drawScale() {
             var half = time % (logTime / 2);
             var full = time % logTime;
             if (quarter <= (timePerColumn) && (logTime / 4) *
-            Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
+                Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
                 stepsX = kk;
                 tickNumX = logTime / 4;
                 break
             } else if (half <= (timePerColumn) && (logTime / 2) *
-            Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
+                Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
                 stepsX = kk;
                 tickNumX = logTime / 2
                 break
             } else if (full <= (timePerColumn) && logTime *
-            Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
+                Math.ceil(canvas.width / kk) >= Math.floor(trackLenSec)) {
                 stepsX = kk;
                 tickNumX = logTime
                 break
@@ -677,17 +702,17 @@ function drawScale() {
             var full = freq % logFreq;
 
             if (quarter <= (freqPerLine * 2) && (logFreq / 4) *
-            Math.ceil(canvas.height / kk) >= 20000) {
+                Math.ceil(canvas.height / kk) >= 20000) {
                 stepsY = kk;
                 tickNumY = logFreq / 4;
                 break;
             } else if (half <= freqPerLine * 2 && (logFreq / 2) *
-            Math.ceil(canvas.height / kk) >= 20000) {
+                Math.ceil(canvas.height / kk) >= 20000) {
                 stepsY = kk;
                 tickNumY = logFreq / 2;
                 break;
             } else if (full <= freqPerLine * 2 && (logFreq) *
-            Math.ceil(canvas.height / kk) >= 20000) {
+                Math.ceil(canvas.height / kk) >= 20000) {
                 stepsY = kk;
                 tickNumY = logFreq;
                 break;
@@ -698,14 +723,6 @@ function drawScale() {
             logFreq *= 5
         }
     }
-
-
-    var canvasScale = document.getElementById('canvasScale');
-    var ctxScale = canvasScale.getContext('2d');
-    var div = document.getElementById('canvasDivSpec')
-    var divWidth = div.offsetWidth;
-    var divHeight = div.offsetHeight;
-
 
 
     ctxScale.clearRect(0, 0, canvasScale.width, canvasScale.height);
@@ -726,7 +743,7 @@ function drawScale() {
         ctxScale.stroke();
 
         ctxScale.fillText(tickNumY * ((canvasScale.height - SpectroData.scaleOfsetBottom - kk) /
-        stepsY), 1, kk, SpectroData.scaleOfsetLeft - 2);
+            stepsY), 1, kk, SpectroData.scaleOfsetLeft - 2);
     }
 
     for (var kk = 0; kk <= canvasScale.width; kk += stepsX) {
@@ -734,7 +751,7 @@ function drawScale() {
         ctxScale.lineTo(kk + SpectroData.scaleOfsetLeft, canvasScale.height - SpectroData.scaleOfsetBottom + 5)
         ctxScale.stroke();
         ctxScale.fillText(timeToString(tickNumX * (kk / stepsX)), kk +
-        SpectroData.scaleOfsetLeft - 5, canvasScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
+            SpectroData.scaleOfsetLeft - 5, canvasScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
     }
 
 }
@@ -758,6 +775,8 @@ function getMousePos(canvas, evt) {
         y: Math.floor(evt.clientY - rect.top)
     };
 }
+
+
 // Function that sets indicators for pressed key to one if the key is pressed
 function onKeyDown(evt) {
     switch (evt.code) {
@@ -789,17 +808,19 @@ function zoomToSelection(timeStart, timeEnd) {
     var canvasLine = document.getElementById("canvasLine")
     var divWidth = div.offsetWidth;
 
+    // If a area is selected from the right to the left, start and endtime are switched here
     if (timeEnd < timeStart) {
         var tempTimeStart = timeStart;
         timeStart = timeEnd;
         timeEnd = tempTimeStart;
         SpectroData.endTimeSelection = timeEnd
+      // If start and endtime are the same, the user hast just clicked without
+      // marking an area. No selection area is set then, but the spectrogram
+      // canvas is scrolled that the marked line is near the left end of the div
     } else if (timeEnd == timeStart) {
         SpectroData.endTimeSelection = Audiodata.signalLen / Audiodata.sampleRate;
-        console.log((timeStart / ((Audiodata.signalLen / Audiodata.sampleRate) /
-        canvas.width)) + (divWidth / 4))
         div.scrollLeft = (timeStart / ((Audiodata.signalLen / Audiodata.sampleRate) /
-        canvas.width)) - divWidth / 8;
+            canvas.width)) - divWidth / 8;
         return;
     }
     var lengthSelect = (timeEnd - timeStart);
@@ -816,7 +837,7 @@ function zoomToSelection(timeStart, timeEnd) {
     }
 
     if (canvas.width * factor < 32767 && (canvas.width * factor) *
-    canvas.height < 268435456 && canvas.width * factor > divWidth) {
+        canvas.height < 268435456 && canvas.width * factor > divWidth) {
 
         canvasScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
         canvas.width = canvas.width * factor;
@@ -840,8 +861,8 @@ function getSectionDisplayed() {
     var div = document.getElementById("canvasDivSpec")
     return {
         min: SpectroData.scrollPositionX * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
-        max: (SpectroData.scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate)
-        / canvas.width)
+        max: (SpectroData.scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate) /
+            canvas.width)
     };
 }
 
@@ -849,13 +870,13 @@ function getSectionDisplayed() {
 // Callback for doublecklick for resizing the spectrogram to show the full
 // spectrogram in the window
 function scaleFullSpec() {
-  // getting all neded elements
+    // getting all neded elements
     var canvas = document.getElementById("canvasSpec")
     var ctx = canvas.getContext("2d")
     var canvasLine = document.getElementById("canvasLine")
     var div = document.getElementById("canvasDivSpec")
     var canvasScale = document.getElementById('canvasScale');
-// Resizing all three canvases
+    // Resizing all three canvases
     canvas.width = div.offsetWidth - SpectroData.scaleOfsetLeft
     canvas.height = div.offsetHeight - SpectroData.scaleOfsetBottom
     SpectroData.cWidth = canvas.width;
