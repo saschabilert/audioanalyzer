@@ -354,7 +354,7 @@ function resetSelection(){
 
 var canvasSelect = document.getElementById("canvasSelect");
 var ctxSelect = canvasSelect.getContext("2d");
-endTimeSelection=0;
+endTimeSelection=NaN;
 ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
-
+scaleFullSpec();
 }

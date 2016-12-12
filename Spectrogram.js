@@ -110,6 +110,7 @@ function drawSpec() {
     canvasLine.addEventListener("mousewheel", mouseWheelFunction);
     canvasLine.addEventListener("click", startPlayHere)
     canvasLine.addEventListener('mousemove', displayMousePosition);
+    canvasLine.addEventListener("dblclick", scaleFullSpec);
 
 
     function startPlayHere(evt) {
@@ -813,4 +814,31 @@ function getSectionDisplayed() {
         min: scrollPositionX * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width),
         max: (scrollPositionX + div.offsetWidth) * ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)
     };
+}
+
+
+function scaleFullSpec(){
+  var canvas = document.getElementById("canvasSpec")
+  var ctx = canvas.getContext("2d")
+  var canvasLine = document.getElementById("canvasLine")
+  var div = document.getElementById("canvasDivSpec")
+  var canvasScale = document.getElementById('canvasScale');
+
+canvas.width=div.offsetWidth-scaleOfsetLeft
+canvas.height=div.offsetHeight-scaleOfsetBottom
+cWidth=canvas.width;
+cHigh=canvas.height
+canvasLine.width=div.offsetWidth-scaleOfsetLeft
+canvasLine.height=div.offsetHeight-scaleOfsetBottom
+canvasScale.width=div.offsetWidth
+canvasScale.height=div.offsetHeight
+
+
+ctx.scale(cWidth / specWidth, cHigh / specHight);
+SpectroData.scaleFactorWidth = cWidth / specWidth;
+SpectroData.scaleFactorHeight = cHigh / specHight;
+ctx.drawImage(tempCanvas, 0, 0);
+drawScale()
+section = getSectionDisplayed()
+drawSelection(section.min, 2, section.max);
 }
