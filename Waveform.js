@@ -330,12 +330,12 @@ function waveOnMouseUp(evt) {
     mousePos = getMousePos(canvasLine, evt);
     mousePos=mousePos.x;
     mouseUsed = 0;
-    endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
+    SpectroData.endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
 
     if (selectionX<startSelection) {
-      drawLineKlickWave(endTimeSelection);
-      startOffset=endTimeSelection;
-      endTimeSelection=mousePos;
+      drawLineKlickWave(SpectroData.endTimeSelection);
+      startOffset=SpectroData.endTimeSelection;
+      SpectroData.endTimeSelection=mousePos;
     }
     canvasLine.removeEventListener("mousemove", onMouseMove);
     clearInterval(intervalDrawSelect);
@@ -354,7 +354,7 @@ function resetSelection(){
 
 var canvasSelect = document.getElementById("canvasSelect");
 var ctxSelect = canvasSelect.getContext("2d");
-endTimeSelection=NaN;
+SpectroData.endTimeSelection=NaN;
 ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
 scaleFullSpec();
 }

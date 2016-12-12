@@ -267,7 +267,7 @@ function timeUpdate(){
         drawLineKlick(0);
         drawLineKlickWave(0);
     }
-    else if (((audioCtx.currentTime - startTime + startOffset) >=endTimeSelection)) {
+    else if (((audioCtx.currentTime - startTime + startOffset) >=SpectroData.endTimeSelection)) {
         audioCtx.currentTime = 0;
         //startTime = startTime;
         //startOffset = startOffset;
