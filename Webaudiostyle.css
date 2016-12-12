@@ -511,8 +511,7 @@ h1 {
 .Findus {
     margin-top: -80px;
     padding: 10px 10px;
-    position: absolute;
-    margin-left: 1150px;
+    float:right;
 }
 
 a:link {
@@ -561,8 +560,8 @@ a:link {
 }
 
 .boxed {
-    margin: auto;
+    margin-left:0px;
     width: 60%;
-    border: 1px solid black;
     padding: 10px;
+    margin-top:10px;
 }
