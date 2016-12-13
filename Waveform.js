@@ -121,16 +121,9 @@ function drawWave() {
         return crestFactor;
     }
 
-    function getMousePosWave(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-            x: Math.floor(evt.clientX - rect.left),
-            y: Math.floor(evt.clientY - rect.top)
-        };
-    }
 
     function startPlayHereWave(evt) {
-        var mousePos = getMousePosWave(canvas, evt);
+        var mousePos = getMousePos(canvas, evt);
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x;
         if (isPlaying) {
             toggleSound();

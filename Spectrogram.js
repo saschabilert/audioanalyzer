@@ -86,10 +86,11 @@ function drawSpec() {
     tempCanvas.height = SpectroData.specHight;
 
     // Create color scales
-    creatParula();
+    creatViridis();
     creatGray();
     creatJet();
     creatHsv();
+    creatPlasma();
     creatTwilight();
 
     // Start draw spectrogram
@@ -284,13 +285,13 @@ function draw() {
     var ctx = canvas.getContext("2d");
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (SpectroData.TypeColorScale == 1) {
-        var colorScale = parulaScale;
+        var colorScale = viridisScale;
     } else if (SpectroData.TypeColorScale == 2) {
         var colorScale = grayScale;
     } else if (SpectroData.TypeColorScale == 3) {
         var colorScale = jetScale;
     } else if (SpectroData.TypeColorScale == 4) {
-        var colorScale = hsvScale;
+        var colorScale = plasmaScale;
     }
     SpectroData.colorScale = colorScale;
 

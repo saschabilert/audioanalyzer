@@ -43,7 +43,7 @@ function chooseDisplay() {
 }
 
 function colormap() {
-    TypeColorScale = +(document.getElementById("colormap").value);
+    SpectroData.TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
 
