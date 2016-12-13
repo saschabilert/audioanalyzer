@@ -1,10 +1,12 @@
- // check if AudioContext is supported be the current browser
+ // check if AudioContext is supported by the current browser
  if (!window.AudioContext) {
      if (!window.webkitAudioContex) {
-         alert("no audiocontext found");
+         alert("no audiocontext found on this browser");
      }
      window.AudioContext = window.webkitAudioContext;
  }
+
+ // define global object containing all relevant audio informations
  var Audiodata = {
      blockLen: 1024,
      signalLen: undefined,
@@ -27,12 +29,11 @@
      windowLen: undefined
  };
 
- // define global audioContext
+ // define a global audioContext
  var reader = new FileReader();
  var audioCtx = new AudioContext();
- //Loading message
 
- // function triggered by loading a Audiodata
+ // function triggered by loading a Audiofile
  function audioProcessing() {
 
      enableButton();
@@ -46,7 +47,7 @@
      // read the data from myAudio as ArrayBuffer
      reader.readAsArrayBuffer(data);
 
-     // save sampleRate as globalobject variable
+     // save sampleRate as global variable
      Audiodata.sampleRate = audioCtx.sampleRate;
 
      // trigger the onload function to decode the Audiodata
@@ -57,13 +58,17 @@
 
              Audiodata.numOfChannels = buffer.numberOfChannels;
 
-             Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
+             Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen *
+                 Audiodata.overlap);
 
+             // get the samples of the first channel
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-             var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate) / 60);
-             var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate) - durationMin * 60);
+             var durationMin = Math.floor((Audiodata.signalLen /
+                 Audiodata.sampleRate) / 60);
+             var durationSec = Math.floor((Audiodata.signalLen /
+                 Audiodata.sampleRate) - durationMin * 60);
              if (durationMin < 10) {
                  durationMin = "0" + durationMin;
              }
@@ -72,22 +77,28 @@
              }
              info.innerHTML = "00:00" + "/" + durationMin + ":" + durationSec;
 
-             Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
+             // calculate the number of sampleblocks
+             Audiodata.nPart = Math.round((Audiodata.signalLen -
+                 Audiodata.blockLen) / Audiodata.hopsize);
 
-             //  maximum number of blocks 32700;
+             // check the maximum number of blocks ( = 32700);
              checkNumbOfBlocks();
 
+             // create arrays for every display type
              Audiodata.spectrogram = new Array(Audiodata.nPart);
              Audiodata.phase = new Array(Audiodata.nPart);
-             Audiodata.cepstrum = new Array(Audiodata.nPart);
+             // Audiodata.cepstrum = new Array(Audiodata.nPart);
              Audiodata.groupDelay = new Array(Audiodata.nPart);
-             Audiodata.modSpec = new Array(Audiodata.nPart);
+             // Audiodata.modSpec = new Array(Audiodata.nPart);
              Audiodata.instantFreqDev = new Array(Audiodata.nPart);
 
+             // call calculateDisplay() with current display type
              calculateDisplay(Audiodata.display);
 
+             // draw the spectrogram (see spectrogram.js)
              drawSpec();
 
+             // draw the waveform - just once (see waveform.js)
              if (Audiodata.drawCheck) {
                  drawWave();
              }
@@ -98,23 +109,26 @@
      };
  }
 
+ // calculate data for spectrogram.js depending on type (Types: "Spectrum",
+ // "Phase", "Group Delay" and "Instantaneous Frequency Deviation")
  function calculateDisplay(type) {
 
-     // create array with zeros for imaginär part to use the fft
-     var zeros = new Array(Audiodata.blockLen);
-
+     // calculate the choosen window (see calculateWindow())
      Audiodata.windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
+     Audiodata.windowValue = calculateWindow(Audiodata.windowLen,
+         Audiodata.windowFunction);
 
-     Audiodata.windowValue = calculateWindow(Audiodata.windowLen, Audiodata.windowFunction);
-
+     // set the endIdx to slice the array
      var endIdx = 0;
 
+     // cut the audiosamples into blocks and calculate the choosen data
      for (var i = 0; i < Audiodata.nPart; i++) {
 
          var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i,
              Audiodata.blockLen + endIdx);
 
-         if (type != "Instantaneous Frequency") {
+         // check if type is Instantaneous Frequency Deviation or not
+         if (type != "Instantaneous Frequency Deviation") {
              for (var k = 0; k < Audiodata.blockLen; k++) {
                  sampleBlock[k] = sampleBlock[k] * Audiodata.windowValue[k];
              }
@@ -129,13 +143,13 @@
                  Audiodata.phase[i] = calculatePhase(realPart, imagPart);
                  break;
                  // Not working so far try to implement in upcomming version
-             case "MFCC":
-                 Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
-                 break;
+                 //  case "MFCC":
+                 //      Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
+                 //      break;
                  // Not working so far try to implement in upcomming verion
-             case "Modulation Spectrum":
-                 Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
-                 break;
+                 //  case "Modulation Spectrum":
+                 //      Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
+                 //      break;
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
@@ -151,53 +165,43 @@
      }
  }
 
+ // calculate the fft depending on the given sampleblock
  function calculateFFT(sampleBlock) {
 
      var imag = new Array(sampleBlock.length).fill(0);
      var real = sampleBlock;
 
+     // call the fft from Nayuki (see fft.js for more information)
      transform(real, imag);
 
      return [real, imag];
  }
 
- // Cosine - transform needed to calculate the MFCC's so we deferred it
- function calculateMFCC(real, imag) {
+ // calculate the absolute value of the spectrogram data (see formula in
+ // instructions.html)
+ function calculateAbs(real, imag) {
 
-     var absValue = calculateAbs(real, imag);
-     var melFreq = new Array(absValue.length);
+     var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
-     melFreq = calculateMelFreq(absValue);
-
-     var completeReal = new Array(Audiodata.blockLen);
-     var completeImag = new Array(Audiodata.blockLen).fill(0);
-
-     for (var k = 0; k < Audiodata.blockLen / 2; k++) {
-
-         var logAbsValue = Math.log10(absValue[k] * absValue[k]);
-         completeReal[k] = logAbsValue;
-         completeReal[(Audiodata.blockLen - 1) - k] = logAbsValue;
+     for (i = 0; i < absValue.length; i++) {
+         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
      }
-
-     inverseTransform(completeReal, completeImag);
-
-     for (var i = 0; i < completeReal.length; i++) {
-         completeReal[i] = Math.abs(completeReal[i]);
-         completeReal[i] = completeReal[i] * completeReal[i];
-     }
-     return completeReal;
+     return absValue;
  }
 
- function calculateMelFreq(freq) {
+ // calculate the phase of the spectrogram data (see formula in instructions.html)
+ function calculatePhase(real, imag) {
 
-     var mel = new Array(freq.length);
+     var phaseValue = new Array(real.length / 2 + 1);
 
-     for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
+     for (i = 0; i < phaseValue.length; i++) {
+         phaseValue[i] = Math.atan2(real[i], imag[i]);
      }
-     return mel;
+     return phaseValue;
  }
 
+ // calculate the group delay using calcluatePhase() and linspace() (see formula
+ // in instructions.html)
  function calculateGroupDelay(real, imag) {
 
      var phase = calculatePhase(real, imag);
@@ -222,6 +226,8 @@
      return groupDelay;
  }
 
+ // calculate the instantaneous frequency deviation for more informations see
+ // the instructions.html website
  function calculateInstantFreqDev(sampleBlock, windowType) {
 
      var overlap = 1 / 1.024;
@@ -266,8 +272,48 @@
      return instantFreqDev;
  }
 
- // is not correct so far
- function calculateModSpec(real, imag) {
+ // Cosine - transform needed to calculate the MFCC's so we deferred it
+ /* function calculateMFCC(real, imag) {
+
+     var absValue = calculateAbs(real, imag);
+     var melFreq = new Array(absValue.length);
+
+     melFreq = calculateMelFreq(absValue);
+
+     var completeReal = new Array(Audiodata.blockLen);
+     var completeImag = new Array(Audiodata.blockLen).fill(0);
+
+     for (var k = 0; k < Audiodata.blockLen / 2; k++) {
+
+         var logAbsValue = Math.log10(absValue[k] * absValue[k]);
+         completeReal[k] = logAbsValue;
+         completeReal[(Audiodata.blockLen - 1) - k] = logAbsValue;
+     }
+
+     inverseTransform(completeReal, completeImag);
+
+     for (var i = 0; i < completeReal.length; i++) {
+         completeReal[i] = Math.abs(completeReal[i]);
+         completeReal[i] = completeReal[i] * completeReal[i];
+     }
+     return completeReal;
+ }
+ */
+
+ // calculate the Mel-Frequency bands for the MFCC function (not working so far)
+ /* function calculateMelFreq(freq) {
+
+     var mel = new Array(freq.length);
+
+     for (var i = 0; i < freq.length; i++) {
+         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
+     }
+     return mel;
+ }
+ */
+
+ // is not correct so far maybe not possible to display
+ /* function calculateModSpec(real, imag) {
 
      var analyticWeight = new Array(real.length).fill(0);
      analyticWeight[0] = 1;
@@ -296,48 +342,38 @@
 
      return modSpec;
  }
+ */
 
- function calculateAbs(real, imag) {
-
-     var absValue = new Array(Audiodata.blockLen / 2 + 1);
-
-     for (i = 0; i < absValue.length; i++) {
-         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
-     }
-     return absValue;
- }
-
- function calculatePhase(real, imag) {
-
-     var phaseValue = new Array(real.length / 2 + 1);
-
-     for (i = 0; i < phaseValue.length; i++) {
-         phaseValue[i] = Math.atan2(real[i], imag[i]);
-     }
-     return phaseValue;
- }
-
+ // calculate the different windows depending on the window length and the
+ // window type (Types: "hann", "hannpoisson", "consine", "kaiser-bessel",
+ // "flat-top" and "rect") see instructions.html
  function calculateWindow(windowLen, type) {
 
      var window = new Array(windowLen.length);
+
      switch (type) {
          case "hann":
              for (i = 0; i < windowLen.length; i++) {
-                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)));
+                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1)));
              }
              break;
          case "hannpoisson":
-             // alpha is a parameter that controls the slope of the exponential (wiki)
+             // alpha is a parameter that controls the slope of the exponential
+             // (Wiki: https://en.wikipedia.org/wiki/Window_function)
              var alpha = 2;
 
              for (i = 0; i < windowLen.length; i++) {
-                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) *
-                     Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) / (windowLen.length - 1));
+                 window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] /
+                     (windowLen.length - 1))) * Math.exp((-alpha *
+                         Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) /
+                     (windowLen.length - 1));
              }
              break;
          case "cosine":
              for (i = 0; i < windowLen.length; i++) {
-                 window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
+                 window[i] = Math.cos(((Math.PI * windowLen[i]) /
+                     (windowLen.length)) - (Math.PI / 2));
              }
              break;
          case "kaiser-bessel":
@@ -346,8 +382,9 @@
              var numer = Math.PI * alpha;
 
              for (i = 0; i < windowLen.length; i++) {
-                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 * windowLen[i]) /
-                     (windowLen.length - 1) - 1) * ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
+                 denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 *
+                         windowLen[i]) / (windowLen.length - 1) - 1) *
+                     ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
              }
 
              numer = besselfkt(numer);
@@ -358,14 +395,19 @@
              }
              break;
          case "flat-top":
+             // alpha is a parameter that controls the slope of the exponential
+             // (Wiki: https://en.wikipedia.org/wiki/Window_function)
              var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
              for (i = 0; i < windowLen.length; i++) {
-                 window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] /
-                     (windowLen.length - 1)) + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] /
-                     (windowLen.length - 1)) - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] /
-                     (windowLen.length - 1)) + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] /
-                     (windowLen.length - 1));
+                 window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI *
+                         windowLen[i] / (windowLen.length - 1)) + alpha[2] *
+                     Math.cos(4 * Math.PI * windowLen[i] /
+                         (windowLen.length - 1)) - alpha[3] *
+                     Math.cos(6 * Math.PI * windowLen[i] /
+                         (windowLen.length - 1)) + alpha[4] *
+                     Math.cos(8 * Math.PI * windowLen[i] /
+                         (windowLen.length - 1));
              }
              break;
          case "rect":
@@ -375,6 +417,8 @@
      return window;
  }
 
+ // implementation of the linspace function make use of start value, end value
+ // and the number of points between the start and end index
  function linspace(startIdx, endIdx, n) {
 
      var linVector = new Array(n);
@@ -387,6 +431,7 @@
      return linVector;
  }
 
+ // caluclate the difference between each element of an array
  function diff(array) {
 
      var difference = new Array(array.length - 1);
@@ -397,6 +442,8 @@
      return difference;
  }
 
+ // implementation of the bessel function of first kind (I0), see more
+ // information in instructions.html
  function besselfkt(array) {
 
      var bessel = new Array(array.length).fill(0);
@@ -408,6 +455,7 @@
      return bessel;
  }
 
+ // implementation of the factorial of the number n (e.g 3! = 6)
  function factorial(n) {
 
      var fak = 1;
@@ -418,9 +466,11 @@
      return fak;
  }
 
+ // check if the maximum block number for canvas is given
  function checkNumbOfBlocks() {
 
      var maxBlockNumb = 32767;
+
      if (Audiodata.nPart > maxBlockNumb) {
          alert("Reached the maximum number of blocks. Data not fully displayed!");
          Audiodata.nPart = maxBlockNumb;

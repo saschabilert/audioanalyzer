@@ -343,6 +343,7 @@ function onMouseMove(evt) {
     mousePos = getMousePos(canvasLine, evt);
     selectionX = mousePos.x;
 }
+
 function resetSelection(){
 
 var canvasSelect = document.getElementById("canvasSelect");
