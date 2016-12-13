@@ -214,7 +214,7 @@ function drawWaveTimeAxes() {
     ctxWaveScale.lineWidth = 2;
     ctxWaveScale.font = "700 12px Arial";
 
-    for (var i = 0; i <= canvasWaveScale.width; i += WaveData.stepsX) {
+    for (i = 0; i <= canvasWaveScale.width; i += WaveData.stepsX) {
         ctxWaveScale.moveTo(i + offSetLeft, canvasWaveScale.height - offSetBottom);
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();

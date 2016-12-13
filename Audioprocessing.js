@@ -142,14 +142,6 @@
              case "Phase":
                  Audiodata.phase[i] = calculatePhase(realPart, imagPart);
                  break;
-                 // Not working so far try to implement in upcomming version
-                 //  case "MFCC":
-                 //      Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
-                 //      break;
-                 // Not working so far try to implement in upcomming verion
-                 //  case "Modulation Spectrum":
-                 //      Audiodata.modSpec[i] = calculateModSpec(realPart, imagPart);
-                 //      break;
              case "Group Delay":
                  Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                  break;
@@ -271,78 +263,6 @@
      }
      return instantFreqDev;
  }
-
- // Cosine - transform needed to calculate the MFCC's so we deferred it
- /* function calculateMFCC(real, imag) {
-
-     var absValue = calculateAbs(real, imag);
-     var melFreq = new Array(absValue.length);
-
-     melFreq = calculateMelFreq(absValue);
-
-     var completeReal = new Array(Audiodata.blockLen);
-     var completeImag = new Array(Audiodata.blockLen).fill(0);
-
-     for (var k = 0; k < Audiodata.blockLen / 2; k++) {
-
-         var logAbsValue = Math.log10(absValue[k] * absValue[k]);
-         completeReal[k] = logAbsValue;
-         completeReal[(Audiodata.blockLen - 1) - k] = logAbsValue;
-     }
-
-     inverseTransform(completeReal, completeImag);
-
-     for (var i = 0; i < completeReal.length; i++) {
-         completeReal[i] = Math.abs(completeReal[i]);
-         completeReal[i] = completeReal[i] * completeReal[i];
-     }
-     return completeReal;
- }
- */
-
- // calculate the Mel-Frequency bands for the MFCC function (not working so far)
- /* function calculateMelFreq(freq) {
-
-     var mel = new Array(freq.length);
-
-     for (var i = 0; i < freq.length; i++) {
-         mel[i] = 1127 * Math.log(1 + (freq[i] / (700 / (Audiodata.sampleRate / 2))));
-     }
-     return mel;
- }
- */
-
- // is not correct so far maybe not possible to display
- /* function calculateModSpec(real, imag) {
-
-     var analyticWeight = new Array(real.length).fill(0);
-     analyticWeight[0] = 1;
-     analyticWeight[Audiodata.blockLen / 2 - 1] = 1;
-
-     for (var i = 1; i < Audiodata.blockLen / 2 - 1; i++) {
-         analyticWeight[i] = 2;
-     }
-
-     analyticImag = new Array(imag.length).fill(0);
-     analyticReal = new Array(real.length).fill(0);
-
-     for (var k = 0; k < real.length; k++) {
-         analyticReal[k] = real[k] * analyticWeight[k];
-     }
-
-     inverseTransform(analyticReal, analyticImag);
-
-     var envelopeReal = calculateAbs(analyticReal, analyticImag);
-
-     var envelopeImag = new Array(envelopeReal.length).fill(0);
-
-     transform(envelopeReal, envelopeImag);
-
-     var modSpec = calculateAbs(envelopeReal, envelopeImag);
-
-     return modSpec;
- }
- */
 
  // calculate the different windows depending on the window length and the
  // window type (Types: "hann", "hannpoisson", "consine", "kaiser-bessel",
