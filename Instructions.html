@@ -18,7 +18,9 @@
     <!-- include MathJax to user LateX for Math formular -->
     <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-    <script type="text/javascript" src="Audioprocessing.js"></script>
+    <script type="text/javascript" src="audioprocessing.js"></script>
+
+    <link rel="icon" type="image/png" href="icon.png">
 
 </head>
 
@@ -51,26 +53,26 @@
     <div id = "wrap">
         <h1 style="float: left;"><a id = "ChoosingAFile">Choosing a file:</a></h1>
         <br><br><br>
-        <img src = "ChooseFile.PNG" height = "300" width = "300" style = "margin-left:-210px; margin-top:10px;">
+        <img src = "ChooseFile.PNG" height = "473" width = "626" style = "margin-left:-210px; margin-top:10px;">
         <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and
            all other audio formats that are recognized by your browser (<a href = "https://developer.mozilla.org/en-US
            /docs/Web/HTML/Supported_media_formats" target = "_blank">Click here for more audio formats</a>). After you
            have chosen a file, you should see the waveform and the spectrum of the signal.</p>
         <h1 style="float: left;"><a id = "PlayPause">Listen to the song:</a></h1>
         <br><br><br>
-        <img src = "PlayPause.PNG" height = "70" width = "300" style = "margin-left:-250px; margin-top:10px;">
+        <img src = "PlayPause.PNG" height = "66" width = "326" style = "margin-left:-250px; margin-top:10px;">
         <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the
             volume button. The second container shows you during playing the current time and the total length of the
             track.</p>
-        <img src = "waveformSelection.PNG" height = "200" width = "500" style = "margin-left:0px; margin-top:10px;">
-        <img src = "spectrumZoom.PNG" height = "200" width = "500" style = "margin-left:10px; margin-top:10px;">
+        <img src = "waveformSelection.PNG" height = "256" width = "1085" style = "margin-left:0px; margin-top:10px;">
+        <img src = "spectrumZoom.PNG" height = "492" width = "1087" style = "margin-left:10px; margin-top:10px;">
         <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You
             can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this,
             the spectrum will show you just that part. You can zoom in and out in the spectrum by using "Ctrl + mouse
             wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
         <h1 style="float: left;"><a id = "Editing">Editing the spectrum:</a></h1>
         <br><br><br>
-        <img src = "EditingSpectrum.PNG" height = "100" width = "550" style = "margin-left:-310px; margin-top:10px;">
+        <img src = "EditingSpectrum.PNG" height = "110" width = "786" style = "margin-left:-310px; margin-top:10px;">
         <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a
             colormap. The default block length is 1024, the default window type is the hann window and the default
             overlap is 50%. The default type of the colormap is Parula, but you can choose between other 3 colormaps.
@@ -163,15 +165,15 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divHann', data, layout);
     </script>
 
     <script type="text/javascript">
         var windowLen = linspace(0, 1024, 1024);
         var windowValue = calculateWindow(windowLen, "rect");
-        windowValue.fill(0,0,81)
-        windowValue.fill(0,942,1024)
+        windowValue.fill(0,0,81);
+        windowValue.fill(0,942,1024);
         var data = [{
             x: windowLen,
             y: windowValue,
@@ -194,7 +196,7 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divRect', data, layout);
     </script>
 
@@ -223,7 +225,7 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divHannPoisson', data, layout);
     </script>
 
@@ -252,7 +254,7 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divCosine', data, layout);
     </script>
 
@@ -281,7 +283,7 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divFlatTop', data, layout);
     </script>
 
@@ -310,7 +312,7 @@
                     color: 'black'
                 },
             },
-        }
+        };
         Plotly.newPlot('divKaiserBessel', data, layout);
     </script>
 

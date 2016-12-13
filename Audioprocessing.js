@@ -6,7 +6,7 @@
      window.AudioContext = window.webkitAudioContext;
  }
 
- // define global object containing all relevant audio informations
+ // define global object containing all audio informations
  var Audiodata = {
      blockLen: 1024,
      signalLen: undefined,
