@@ -38,42 +38,42 @@
     </div>
 
     <ul>
-        <li><a href = "#ChoosingAFile">Choosing a file</a></li>
-        <li><a href = "#PlayPause">Listen to the song</a></li>
-        <li><a href = "#Editing">Editing the spectrum</a></li>
-        <li><a href = "#blockLength">Choosing a block length</a></li>
-        <li><a href = "#WindowType">Choosing a window type</a></li>
-        <li><a href = "#overlap">Choosing an overlap</a></li>
-        <li><a href = "#DisplayType">Choosing a display type</a></li>
-        <li><a href = "#Colormap">Choosing a Colormap</a></li>
+        <li><a href="#ChoosingAFile">Choosing a file</a></li>
+        <li><a href="#PlayPause">Listen to the song</a></li>
+        <li><a href="#Editing">Editing the spectrum</a></li>
+        <li><a href="#blockLength">Choosing a block length</a></li>
+        <li><a href="#WindowType">Choosing a window type</a></li>
+        <li><a href="#overlap">Choosing an overlap</a></li>
+        <li><a href="#DisplayType">Choosing a display type</a></li>
+        <li><a href="#Colormap">Choosing a Colormap</a></li>
     </ul>
 
     <h1>Instruction</h1>
 
         <!--Instruction text-->
-    <div id = "wrap">
-        <h1 style="float: left;"><a id = "ChoosingAFile">Choosing a file:</a></h1>
+    <div id="wrap">
+        <h1 style="float: left;"><a id="ChoosingAFile">Choosing a file:</a></h1>
         <br><br><br>
-        <img src = "ChooseFile.PNG" height = "473" width = "626" style = "margin-left:-210px; margin-top:10px;">
+        <img src="ChooseFile.PNG" height="473" width="626" style="margin-left:-210px; margin-top:10px;">
         <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and
-           all other audio formats that are recognized by your browser (<a href = "https://developer.mozilla.org/en-US
-           /docs/Web/HTML/Supported_media_formats" target = "_blank">Click here for more audio formats</a>). After you
+           all other audio formats that are recognized by your browser (<a href="https://developer.mozilla.org/en-US
+           /docs/Web/HTML/Supported_media_formats" target="_blank">Click here for more audio formats</a>). After you
            have chosen a file, you should see the waveform and the spectrum of the signal.</p>
-        <h1 style="float: left;"><a id = "PlayPause">Listen to the song:</a></h1>
+        <h1 style="float: left;"><a id="PlayPause">Listen to the song:</a></h1>
         <br><br><br>
-        <img src = "PlayPause.PNG" height = "66" width = "326" style = "margin-left:-250px; margin-top:10px;">
+        <img src="PlayPause.PNG" height="66" width="326" style="margin-left:-250px; margin-top:10px;">
         <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the
             volume button. The second container shows you during playing the current time and the total length of the
             track.</p>
-        <img src = "waveformSelection.PNG" height = "256" width = "1085" style = "margin-left:0px; margin-top:10px;">
-        <img src = "spectrumZoom.PNG" height = "492" width = "1087" style = "margin-left:10px; margin-top:10px;">
+        <img src="waveformSelection.PNG" height="256" width="1085" style="margin-left:0px; margin-top:10px;">
+        <img src="spectrumZoom.PNG" height="492" width="1087" style="margin-left:10px; margin-top:10px;">
         <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You
             can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this,
             the spectrum will show you just that part. You can zoom in and out in the spectrum by using "Ctrl + mouse
             wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
-        <h1 style="float: left;"><a id = "Editing">Editing the spectrum:</a></h1>
+        <h1 style="float: left;"><a id="Editing">Editing the spectrum:</a></h1>
         <br><br><br>
-        <img src = "EditingSpectrum.PNG" height = "110" width = "786" style = "margin-left:-310px; margin-top:10px;">
+        <img src="EditingSpectrum.PNG" height="110" width="786" style="margin-left:-310px; margin-top:10px;">
         <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a
             colormap. The default block length is 1024, the default window type is the hann window and the default
             overlap is 50%. The default type of the colormap is Parula, but you can choose between other 3 colormaps.
@@ -81,7 +81,7 @@
             want to analyse you can choose the display type. You can visualise the spectrum, the phase, the modulation
             spectrum, the group delay and the instantaneous frequency of the signal.</p>
 
-        <h1 style="float: left;"><a id = "blockLength">Choosing a block length:</a></h1>
+        <h1 style="float: left;"><a id="blockLength">Choosing a block length:</a></h1>
         <br><br><br><br>
         <p>The block length is the number of bins used to divide the window into equal strips. One bit represents one
             spectrum sample and defines the frequency resolution of the window. For a 44100 Hz sample rate and a block
@@ -91,14 +91,14 @@
             slows the calculating time proportionally. The default value implemented here is 1024. You can increase it
             by choosing 2048 or 4096 bins per block. </p>
 
-        <h1 style="float: left;"><a id = "WindowType">Choosing a window type:</a></h1>
+        <h1 style="float: left;"><a id="WindowType">Choosing a window type:</a></h1>
         <br><br><br><br>
         <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
     </script>
 
-    <div class="boxed" id="rect-window" style = "position:relative;">
+    <div class="boxed" id="rect-window" style="position:relative;">
         <h2>1. Rect Window</h2>
         <p>The Rect Window is defined by: $w(n) = 1$</p>
     </div>
