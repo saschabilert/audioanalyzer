@@ -161,10 +161,6 @@ function enableButton() {
     document.getElementById("grid").disabled = false;
 }
 
-
-
-
-
 function minMaxValue(e) {
   var min=0;
   var max=0;
@@ -172,13 +168,13 @@ function minMaxValue(e) {
 
         min = document.getElementById("min").value;
         max = document.getElementById("max").value;
-        if (min != 0) {
+        if (min !== 0) {
             min = parseInt(min);
         }
         else {
           min=1;
         }
-        if (max != 0) {
+        if (max !== 0) {
             max = parseInt(max);
         }
         else {
@@ -189,11 +185,11 @@ function minMaxValue(e) {
             specLevelHigh = max;
             specLevelLow = min;
             specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
-        } else if (min < 0 && max == 0 && specLevelHigh > min) {
+        } else if (min < 0 && max === 0 && specLevelHigh > min) {
 
             specLevelLow = min;
             specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
-        } else if (min == 0 && max < 0 && specLevelLow < max) {
+        } else if (min === 0 && max < 0 && specLevelLow < max) {
 
             specLevelHigh = max;
             specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
