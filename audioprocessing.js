@@ -26,7 +26,8 @@
      modSpec: undefined,
      display: "Spectrum",
      windowValue: undefined,
-     windowLen: undefined
+     windowLen: undefined,
+     wrapFreq: 500
  };
 
  // define a global audioContext
@@ -144,8 +145,7 @@
                      Audiodata.windowFunction);
                  break;
              default:
-                 Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
-                 break;
+                 alert("404 spectrogram not found!");
          }
          endIdx = endIdx + Audiodata.hopsize;
      }
@@ -181,7 +181,7 @@
      var phaseValue = new Array(real.length / 2 + 1);
 
      for (i = 0; i < phaseValue.length; i++) {
-         phaseValue[i] = Math.atan2(real[i], imag[i]);
+         phaseValue[i] = Math.atan2(imag[i], real[i]);
      }
      return phaseValue;
  }
@@ -216,9 +216,9 @@
  // the instructions.html website
  function calculateInstantFreqDev(sampleBlock, windowType) {
 
-     var overlap = 1 / 1.024;
+     var InstHopsize = Audiodata.sampleRate / Audiodata.wrapFreq;
 
-     var newSampleBlockLen = sampleBlock.length * overlap;
+     var newSampleBlockLen = Math.round(sampleBlock.length - InstHopsize);
 
      var windowLen = linspace(0, newSampleBlockLen, newSampleBlockLen);
 
@@ -244,14 +244,15 @@
      var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
      var instantFreqDev = new Array(instantFreq.length).fill(0);
 
-     var freq_wrap = Audiodata.sampleRate / (sampleBlock.length - newSampleBlockLen);
-
      var freq = linspace(0, Audiodata.sampleRate / 2, instantFreq.length);
 
      for (var k = 0; k < instantFreq.length; k++) {
          var dPhase = secondPhase[k] - firstPhase[k];
 
-         instantFreq[k] = dPhase + Math.round((freq[k] - dPhase) / freq_wrap) * freq_wrap;
+         instantFreq[k] = dPhase * Audiodata.wrapFreq / (2 * Math.PI);
+
+         instantFreq[k] = instantFreq[k] + Math.round((freq[k] - instantFreq[k]) /
+             Audiodata.wrapFreq) * Audiodata.wrapFreq;
 
          instantFreqDev[k] = instantFreq[k] - freq[k];
      }
@@ -327,6 +328,8 @@
          case "rect":
              window.fill(1);
              break;
+         default:
+             alert("no window type is choosen!");
      }
      return window;
  }

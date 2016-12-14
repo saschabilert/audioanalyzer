@@ -61,16 +61,18 @@
 
 
     <!-- generate dropwdown lists-->
-   <!-- <div class = "dropdownContainer">
-            <div id = "dropdownBlock">Choose a block length:
-                <select id="blockLength" onchange="blockLength()" class = "dropdownBlock">
+   <div class = "dropdownContainer">
+            <div class = "dropdownBlock">
+                <p>Choose a block length:</p>
+                <select id="blockLength" onchange="blockLength()" >
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
                     <option value="4096">4096</option>
                     <option value="8192">8192</option>
                 </select></div>
-            <div id = "dropbdownWindow">Choose a window type:
-                <select id="windowType" onchange="windowType()" class = "dropdownWindow">
+            <div class = "dropdownBlock">
+                <p>Choose a window type:</p>
+                <select id="windowType" onchange="windowType()">
                     <option value="hann">hann</option>
                     <option value="rect">rectangle</option>
                     <option value="hannpoisson">hannpoisson</option>
@@ -78,98 +80,43 @@
                     <option value="flat-top">flat-top</option>
                     <option value="kaiser-bessel">kaiser-bessel</option>
                 </select></div>
-            <div class = "editSpectrum">Choose an overlap:</div>
-            <div class = "editSpectrum">Choose a Display type:</div>
-            <div class = "editSpectrum">Choose a Colormap:</div>
-            <div class = "editSpectrum">Choose min and max for spectogram:</div>
-    </div>
-
-    <div class = "dropdownContainer">
-        <select id="blockLength" onchange="blockLength()" class = "dropdownBlock">
-            <option value="1024">1024</option>
-            <option value="2048">2048</option>
-            <option value="4096">4096</option>
-            <option value="8192">8192</option>
-        </select>
-        <select id="windowType" onchange="windowType()" class = "dropdownWindow">
-            <option value="hann">hann</option>
-            <option value="rect">rectangle</option>
-            <option value="hannpoisson">hannpoisson</option>
-            <option value="cosine">cosine</option>
-            <option value="flat-top">flat-top</option>
-            <option value="kaiser-bessel">kaiser-bessel</option>
-        </select>
-        <select id="overlap" onchange="overlap()" class = "dropdownOverlap">
-            <option value="0.5">50%</option>
-            <option value="0.0">0%</option>
-            <option value="0.25">25%</option>
-            <option value="0.75">75%</option>
-        </select>
-        <select id="display" onchange="chooseDisplay()" class = "dropdownDisplay">
-            <option value="Spectrum">spectrum</option>
-            <option value="Phase">phase</option>
-            &lt;!&ndash; <option value="MFCC">MFCC</option> &ndash;&gt;
-            &lt;!&ndash; <option value="Modulation Spectrum">modulation spectrum</option> &ndash;&gt;
-            <option value="Group Delay">group delay</option>
-            <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
-        </select>
-        <select id="colormap" onchange="colormap()" class = dropdownColormap>
-            <option value="1">Parula</option>
-            <option value="2">Gray</option>
-            <option value="3">Jet</option>
-            <option value="4">Twilight</option>
-        </select>
-        <div id = "test">
-        <div>min value:</div>
-        <input type="text" id="min" onkeypress="minMaxValue(event)">
-        <p>max value:</p>
-        <input type="text" id="max" onkeypress="minMaxValue(event)">
-        </div>
-    </div>-->
-     <table>
-         <tr>
-            <td><select id="blockLength" onchange="blockLength()">
-                    <option value="1024">1024</option>
-                    <option value="2048">2048</option>
-                    <option value="4096">4096</option>
-                    <option value="8192">8192</option>
-                  </select></td>
-            <td><select id="windowType" onchange="windowType()">
-                    <option value="hann">hann</option>
-                    <option value="rect">rectangle</option>
-                    <option value="hannpoisson">hannpoisson</option>
-                    <option value="cosine">cosine</option>
-                    <option value="flat-top">flat-top</option>
-                    <option value="kaiser-bessel">kaiser-bessel</option>
-                  </select></td>
-            <td><select id="overlap" onchange="overlap()">
+            <div class = "dropdownBlock">
+                <p>Choose an overlap:</p>
+                <select id="overlap" onchange="overlap()">
                     <option value="0.5">50%</option>
                     <option value="0.0">0%</option>
                     <option value="0.25">25%</option>
                     <option value="0.75">75%</option>
-                  </select></td>
-            <td><select id="display" onchange="chooseDisplay()">
+                </select></div>
+            <div class = "dropdownBlock">
+                <p>Choose a Display type:</p>
+                <select id="display" onchange="chooseDisplay()">
                     <option value="Spectrum">spectrum</option>
                     <option value="Phase">phase</option>
                     &lt;!&ndash; <option value="MFCC">MFCC</option> &ndash;&gt;
                     &lt;!&ndash; <option value="Modulation Spectrum">modulation spectrum</option> &ndash;&gt;
                     <option value="Group Delay">group delay</option>
                     <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
-                  </select></td>
-            <td><select id="colormap" onchange="colormap()">
+                </select></div>
+            <div class = "dropdownBlock">
+                <p>Choose a Colormap:</p>
+                <select id="colormap" onchange="colormap()">
                     <option value="1">Parula</option>
                     <option value="2">Gray</option>
                     <option value="3">Jet</option>
                     <option value="4">Twilight</option>
-                  </select></td>
-            <td>
-                <p style="margin-top:0px; margin-bottom:0px;">min value:</p>
-                <input type="text" id="min" onkeypress="minMaxValue(event)" style="margin-top:0px">
-                <p style="margin-top:0px; margin-bottom:0px;">max value:</p>
-                <input type="text" id="max" onkeypress="minMaxValue(event)" style="margin-top:0px">
-            </td>
-        </tr>
-    </table>
+                </select></div>
+            <div class = "dropdownBlock">
+                <p style = "width:150px;">Choose min and max for spectogram:</p>
+                <p style = "margin-top:-7px; margin-bottom:2px;">min value:</p>
+                <input type="text" id="min" onkeypress="minMaxValue(event)">
+                <p style="margin-top:-2px; margin-bottom:2px;">max value:</p>
+                <input type="text" id="max" onkeypress="minMaxValue(event)">
+            </div>
+
+                <button id ="saveSpec" type="button" onclick="downloadSpectrum()">save spectrogram</button>
+
+    </div>
 
     <!-- import javascript files -->
     <script type="text/javascript" src="menu.js"></script>
@@ -201,7 +148,7 @@
         <canvas id="canvasLegend" width="300" height="75"></canvas>
     </div>
 
-    <button type="button" onclick="downloadSpectrum()">save spectrogram</button>
+
 </body>
 
 </html>
