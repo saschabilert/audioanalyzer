@@ -18,6 +18,7 @@ var SpectroData = {
     specWidth: undefined,
     specHight: undefined,
     endTimeSelection: Audiodata.signalLen / Audiodata.sampleRate,
+    securityOffset: 10,
 };
 
 // Creating a temp canvas that will hold the unscaled spectrogram data
@@ -512,7 +513,9 @@ function displayMousePosition(evt) {
             point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
             if (!isNaN(point)) {
                 point *= 1000
-                wert.innerHTML ="Group Delay: " +Math.round(point * 100) / 100 + " ms"
+                wert.innerHTML ="Group Delay: " +
+
+                Math.round(point * 100) / 100 + " ms"
             }
             break;
 
@@ -837,7 +840,7 @@ function zoomToSelection(timeStart, timeEnd) {
 
     }
     if (timePerSide != lengthSelect) {
-        factor = timePerSide / lengthSelect;
+        factor = timePerSide / (lengthSelect*1.1);
     }
 
     if (canvas.width * factor < 32767 && (canvas.width * factor) *
