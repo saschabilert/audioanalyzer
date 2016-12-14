@@ -220,7 +220,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(timeToString((i/WaveData.stepsX)*tickNum,1), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i/WaveData.stepsX)*tickNum,0), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
@@ -269,7 +269,7 @@ function displayWavePosition(evt) {
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
-    wavePosition.innerHTML = 'Time: ' + mouseX + ' sec';
+    wavePosition.innerHTML = 'Time: '+ timeToString(mouseX,0,1);
 
     var point = WaveData.crestFactor[Math.round(mouseX)];
 

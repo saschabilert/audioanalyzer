@@ -454,8 +454,8 @@ function drawLineKlick(mouseTime) {
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
-    info.innerHTML = timeToString((mouseTime),2)   + "/" +
-    timeToString((Audiodata.signalLen / Audiodata.sampleRate),3);
+    info.innerHTML = timeToString((mouseTime),1,0)   + "/" +
+    timeToString((Audiodata.signalLen / Audiodata.sampleRate),1,0);
 
     drawLinePlay()
 }
@@ -465,14 +465,17 @@ function drawLineKlick(mouseTime) {
 // cornder of the spectrogram
 function displayMousePosition(evt) {
     var canvas = document.getElementById("canvasSpec");
-    var position = document.getElementById("Position");
+    var timeSpec = document.getElementById("timeSpec");
+    var freqSpec = document.getElementById("freqSpec");
     var wert = document.getElementById("wert");
     var mousePos = getMousePos(canvas, evt);
     sigLenSec = Audiodata.signalLen / Audiodata.sampleRate;
     mouseX = Math.round((sigLenSec / canvas.width * mousePos.x) * 100) / 100;
     mouseY = Math.round(((Audiodata.sampleRate / 2) / canvas.height) *
         (canvas.height - mousePos.y))
-    position.innerHTML = mouseX + ' sec' + ' : ' + mouseY + ' Hz';
+
+    timeSpec.innerHTML = 'Time:' + timeToString(mouseX,0,1)
+    freqSpec.innerHTML= 'Freq: '+  mouseY + ' Hz';
     point = SpectroData.specData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)]
         [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
 
@@ -482,12 +485,12 @@ function displayMousePosition(evt) {
                 point = 20 * Math.log10(point / Audiodata.blockLen);
                 point = Math.max(SpectroData.specLevelLow, point);
                 point = Math.min(point, SpectroData.specLevelHigh)
-                wert.innerHTML = Math.round(point) + ' dB'
+                wert.innerHTML ='Level: '+ Math.round(point) + ' dB'
             }
             break;
         case "Phase":
             if (!isNaN(point)) {
-                wert.innerHTML = Math.round(point * 100) / 100
+                wert.innerHTML ='Phase: '+ Math.round(point * 100) / 100
             }
             break;
             /*  case "MFCC":
@@ -503,13 +506,13 @@ function displayMousePosition(evt) {
             point += 900
 
 
-            wert.innerHTML = Math.round(point) + " Hz"
+            wert.innerHTML ="IFD: "+ Math.round(point) + " Hz"
             break
         case "Group Delay":
             point += 0.5 * ((1 / Audiodata.sampleRate) * Audiodata.blockLen)
             if (!isNaN(point)) {
                 point *= 1000
-                wert.innerHTML = Math.round(point * 100) / 100 + " ms"
+                wert.innerHTML ="Group Delay: " +Math.round(point * 100) / 100 + " ms"
             }
             break;
 
@@ -751,7 +754,7 @@ function drawScale() {
         ctxScale.moveTo(kk + SpectroData.scaleOfsetLeft, canvasScale.height - SpectroData.scaleOfsetBottom);
         ctxScale.lineTo(kk + SpectroData.scaleOfsetLeft, canvasScale.height - SpectroData.scaleOfsetBottom + 5)
         ctxScale.stroke();
-        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX),1), kk +
+        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX),0,0), kk +
             SpectroData.scaleOfsetLeft - 5, canvasScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
     }
 

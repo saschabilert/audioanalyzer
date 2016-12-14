@@ -9,8 +9,8 @@ document.getElementById("max").disabled = true;
 document.getElementById("grid").disabled = true;
 
 function gridSize() {
-  WaveData.gridScale = +(document.getElementById("grid").value);
-  drawWaveGrid();
+    WaveData.gridScale = +(document.getElementById("grid").value);
+    drawWaveGrid();
 }
 
 function blockLength() {
@@ -66,7 +66,7 @@ var seekslider;
 var seeking = false;
 var seekto;
 var info = document.getElementById("playbackTime");
-var loopSelection= false;
+var loopSelection = false;
 
 document.onkeydown = function(e) {
     var keyCode = e.keyCode;
@@ -89,12 +89,13 @@ function toggleSound() {
         window.requestAnimationFrame(drawLinePlay);
         window.requestAnimationFrame(drawLinePlayWave);
         var playback = timeUpdate();
+
         stopbtn.onclick = function() {
             startTime = 0;
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00:00.0"  + "/" +  playback.trackDuration;
+            info.innerHTML = "00:00.0" + "/" + playback.trackDuration;
             drawLineKlick(0);
             drawLineKlickWave(0);
         };
@@ -105,7 +106,7 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00:00.0"  + "/" + playback.trackDuration;
+                info.innerHTML = "00:00.0" + "/" + playback.trackDuration;
 
             }
         };
@@ -162,37 +163,35 @@ function enableButton() {
 }
 
 function minMaxValue(e) {
-  var min=0;
-  var max=0;
+    var min = 0;
+    var max = 0;
     if (e.keyCode == 13 || e.which == 13) {
 
         min = document.getElementById("min").value;
         max = document.getElementById("max").value;
         if (min !== 0) {
             min = parseInt(min);
-        }
-        else {
-          min=1;
+        } else {
+            min = 1;
         }
         if (max !== 0) {
             max = parseInt(max);
-        }
-        else {
-          max=1;
+        } else {
+            max = 1;
         }
 
         if (min < 0 && max < 0 && max > min) {
             specLevelHigh = max;
             specLevelLow = min;
-            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
+            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
         } else if (min < 0 && max === 0 && specLevelHigh > min) {
 
             specLevelLow = min;
-            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
+            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
         } else if (min === 0 && max < 0 && specLevelLow < max) {
 
             specLevelHigh = max;
-            specLevelWidth=Math.abs(specLevelHigh - specLevelLow);
+            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
         } else if (min >= 0 || max >= 0 || max < min) {
             alert("Es duerfen nur Werte <= -1 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
         }
@@ -202,63 +201,50 @@ function minMaxValue(e) {
 
 }
 
-function timeToString(time,caller){
+function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
 
-  var currentMin = Math.floor((time)/60);
-  var currentSec = Math.floor((time)-currentMin*60);
-  var milisec = time % 1;
-
-
-if (caller==1) {
+    var minutes = Math.floor((time) / 60);
+    var seconds = Math.floor((time) - minutes * 60);
+    var miliseconds = Math.floor((time % 1) * 10);
 
 
-  currentSec = currentSec+milisec;
-  if((Audiodata.signalLen / Audiodata.sampleRate)<=60){
-  currentSec=currentSec.toPrecision(3);
-}
-  if(currentMin === 0 && (Audiodata.signalLen / Audiodata.sampleRate)<=60 ) {
-        return currentSec;
-
-  }
-  else if ((Audiodata.signalLen / Audiodata.sampleRate)>60  && currentSec<10){
-      return [currentMin + ":" +0+ currentSec];
-  }
-  else {
-    return [currentMin + ":" +  currentSec];
-  }
-  }
-  else if (caller==2) {
-    currentSec +=milisec
-
-    if (currentSec<10){
-      currentSec=currentSec.toFixed(1)
-      console.log(currentSec)
-      currentSec = ["0"+(currentSec)]
+    if (seconds < 10) {
+        seconds = "0" + seconds;
     }
-    else {
-      currentSec=currentSec.toFixed(1)
-    }
-    if (currentMin<10){
-      currentMin = ["0"+currentMin]
+    if (minutes < 10) {
+        minutes = "0" + minutes;
     }
 
-    return [currentMin + ":" +currentSec]
+    if (alwaysShowFull == 1) {
+        return [minutes + ":" + seconds + "." + miliseconds]
+    } else if (alwaysShowFull == 0) {
+        if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {
+            if (miliseconds != 0) {
+                return [seconds + "." + miliseconds]
+            } else {
+                return [seconds]
+            }
+        } else {
+            if (alwaysShowMilisec) {
+                return [minutes + ":" + seconds + "." + miliseconds]
+            } else {
 
-  }
-  else if (caller==3) {
-    if (currentSec<10) {
-      currentSec=["0"+currentSec]
+
+                if (miliseconds != 0) {
+                    return [minutes + ":" + seconds + "." + miliseconds]
+                } else {
+                    return [minutes + ":" + seconds]
+                }
+            }
+        }
+
+
+
     }
-    if (currentMin<10){
-      currentMin = ["0"+currentMin]
-    }
-        return [currentMin + ":" +currentSec]
 
-
-  }
 }
 
-function timeUpdate(){
+function timeUpdate() {
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
         return {
@@ -268,61 +254,43 @@ function timeUpdate(){
 
     }
 
-    var currentMin = Math.floor((audioCtx.currentTime - startTime + startOffset)/60);
-    var currentMiliSec = Math.floor((audioCtx.currentTime - startTime + startOffset)*10);
-    var currentSec = Math.floor((audioCtx.currentTime - startTime + startOffset)-currentMin*60);
-    var durationMin = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)/60);
-    var durationSec = Math.floor((Audiodata.signalLen / Audiodata.sampleRate)-durationMin*60);
-    if (currentSec < 10) {currentSec = "0" + currentSec;}
-    if (currentMin < 10) {currentMin = "0" + currentMin;}
-    if (durationMin < 10) {durationMin = "0" + durationMin;}
-    if (durationSec < 10) {durationSec = "0" + durationSec;}
-    if (currentMiliSec >= 10) {currentMiliSec = currentMiliSec%10;}
-    if(currentMin === 0) {
-        currentTime = currentSec + "." + currentMiliSec;
-        trackDuration = durationMin + ":" + durationSec;
-    }
-    else {
-        currentTime = currentMin + ":" + currentSec + "." + currentMiliSec;
-        trackDuration = durationMin + ":" + durationSec;
-    }
+    var currentTime = (audioCtx.currentTime - startTime + startOffset);
+
+    var durationTrack = (Audiodata.signalLen / Audiodata.sampleRate);
 
 
-    info.innerHTML = currentMin + ":" + currentSec + "." + currentMiliSec + "/" + trackDuration;
+
+    info.innerHTML = timeToString(currentTime, 1,0) + "/" + timeToString(durationTrack, 1,0);
 
     if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
         audioCtx.currentTime = 0;
         startTime = 0;
         startOffset = 0;
 
-         isPlaying = false;
-        info.innerHTML = "00:00"  + "/"  + durationMin + ":" + durationSec;
+        isPlaying = false;
+        info.innerHTML = "00:00.0" + "/" + timeToString(durationTrack, 1,0);
 
         drawLineKlick(0);
         drawLineKlickWave(0);
-    }
-    else if (((audioCtx.currentTime - startTime + startOffset) >=SpectroData.endTimeSelection)) {
+    } else if (((audioCtx.currentTime - startTime + startOffset) >= SpectroData.endTimeSelection)) {
         audioCtx.currentTime = 0;
-        //startTime = startTime;
-        //startOffset = startOffset;
+
         isPlaying = false;
-        info.innerHTML = currentTime +  "/"  + trackDuration;
+        info.innerHTML = timeToString(currentTime, 1,0) + "/" + timeToString(durationTrack, 1,0);
         audPlay.stop();
-        if (loopSelection){
-          toggleSound();
+        if (loopSelection) {
+            toggleSound();
         }
     }
 
-return {
-    currentTime: currentTime,
-    trackDuration: trackDuration,
 
-};
+
 
 
 }
-function setLoop(){
 
-  loopSelection=document.getElementById("LoopCheck").checked;
+function setLoop() {
+
+    loopSelection = document.getElementById("LoopCheck").checked;
 
 }

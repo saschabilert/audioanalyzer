@@ -65,17 +65,11 @@
              Audiodata.samples = buffer.getChannelData(0);
 
              Audiodata.signalLen = Audiodata.samples.length;
-             var durationMin = Math.floor((Audiodata.signalLen /
-                 Audiodata.sampleRate) / 60);
-             var durationSec = Math.floor((Audiodata.signalLen /
-                 Audiodata.sampleRate) - durationMin * 60);
-             if (durationMin < 10) {
-                 durationMin = "0" + durationMin;
-             }
-             if (durationSec < 10) {
-                 durationSec = "0" + durationSec;
-             }
-             info.innerHTML = "00:00" + "/" + durationMin + ":" + durationSec;
+             var duration = (Audiodata.signalLen /
+                 Audiodata.sampleRate);
+
+
+             info.innerHTML = "00:00.0" + "/" +timeToString(duration,1,0);
 
              // calculate the number of sampleblocks
              Audiodata.nPart = Math.round((Audiodata.signalLen -
