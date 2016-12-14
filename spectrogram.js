@@ -454,8 +454,8 @@ function drawLineKlick(mouseTime) {
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasLine.height);
-    info.innerHTML = (mouseTime).toFixed(1) + " " + ":" + " " +
-        (Audiodata.signalLen / Audiodata.sampleRate).toFixed(1);
+    info.innerHTML = timeToString((mouseTime),2)   + "/" +
+    timeToString((Audiodata.signalLen / Audiodata.sampleRate),3);
 
     drawLinePlay()
 }
@@ -751,7 +751,7 @@ function drawScale() {
         ctxScale.moveTo(kk + SpectroData.scaleOfsetLeft, canvasScale.height - SpectroData.scaleOfsetBottom);
         ctxScale.lineTo(kk + SpectroData.scaleOfsetLeft, canvasScale.height - SpectroData.scaleOfsetBottom + 5)
         ctxScale.stroke();
-        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX)), kk +
+        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX),1), kk +
             SpectroData.scaleOfsetLeft - 5, canvasScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
     }
 
@@ -850,6 +850,7 @@ function zoomToSelection(timeStart, timeEnd) {
         SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
         ctx.drawImage(tempCanvas, 0, 0);
         drawScale()
+        drawLineKlick(timeStart)
 
         var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         div.scrollLeft = lineStart;

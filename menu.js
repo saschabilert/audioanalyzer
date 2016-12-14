@@ -202,11 +202,15 @@ function minMaxValue(e) {
 
 }
 
-function timeToString(time){
+function timeToString(time,caller){
 
   var currentMin = Math.floor((time)/60);
   var currentSec = Math.floor((time)-currentMin*60);
   var milisec = time % 1;
+
+
+if (caller==1) {
+
 
   currentSec = currentSec+milisec;
   if((Audiodata.signalLen / Audiodata.sampleRate)<=60){
@@ -222,12 +226,46 @@ function timeToString(time){
   else {
     return [currentMin + ":" +  currentSec];
   }
+  }
+  else if (caller==2) {
+    currentSec +=milisec
+
+    if (currentSec<10){
+      currentSec=currentSec.toFixed(1)
+      console.log(currentSec)
+      currentSec = ["0"+(currentSec)]
+    }
+    else {
+      currentSec=currentSec.toFixed(1)
+    }
+    if (currentMin<10){
+      currentMin = ["0"+currentMin]
+    }
+
+    return [currentMin + ":" +currentSec]
+
+  }
+  else if (caller==3) {
+    if (currentSec<10) {
+      currentSec=["0"+currentSec]
+    }
+    if (currentMin<10){
+      currentMin = ["0"+currentMin]
+    }
+        return [currentMin + ":" +currentSec]
+
+
+  }
 }
 
 function timeUpdate(){
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
-        return;
+        return {
+            trackDuration: trackDuration,
+
+        };
+
     }
 
     var currentMin = Math.floor((audioCtx.currentTime - startTime + startOffset)/60);
@@ -274,9 +312,11 @@ function timeUpdate(){
           toggleSound();
         }
     }
+
 return {
     currentTime: currentTime,
-    trackDuration: trackDuration
+    trackDuration: trackDuration,
+
 };
 
 
