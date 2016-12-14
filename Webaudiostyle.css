@@ -259,69 +259,26 @@ li a:hover { /*Change when user points on it */
     color:white;
 }
 
-.editContainer {
-    display: inline-block;
-    margin-left:-500px;
-    padding:-20px;
-    margin-bottom:50px;
-}
-.editSpectrum {
-    display: inline-block;
-    width: 130px;
-    height: 75px;
-    margin-top:300px;
-    padding:4px;
-    float:left;
+.dropdownContainer p {
+    margin-left:6px;
+    margin-right:6px;
 }
 
 .dropdownContainer {
     display:inline-block;
-    margin-left:-850px;
-    width:900px;
-    margin-top:50px;
-
+    margin-left:5px;
+    width:1000px;
+    margin-top:270px;
 }
+
 .dropdownBlock {
-    display:inline-block;
     float:left;
+    margin-left:5px;
     width:100px;
-    margin-top:20px;
     padding:10px;
-    margin-left:15px;
+    margin-top:5px;
+    position:relative;
 }
-.dropdownWindow {
-    display:inline-block;
-    float:left;
-    width:100px;
-    margin-top:20px;
-    padding:10px;
-    margin-left:45px;
-}
-.dropdownOverlap {
-    display:inline-block;
-    float:left;
-    width:100px;
-    margin-top:20px;
-    padding:10px;
-    margin-left:40px;
-}
-.dropdownDisplay {
-    display:inline-block;
-    float:left;
-    width:100px;
-    margin-top:20px;
-    padding:10px;
-    margin-left:40px;
-}
-.dropdownColormap {
-    display:inline-block;
-    float:left;
-    width:100px;
-    margin-top:20px;
-    padding:10px;
-    margin-left:30px;
-}
-
 
 select {
     background-color: #ededed;
@@ -361,22 +318,12 @@ option {
     border: 1px solid gray;
 }
 
-table {
-    font-family: arial;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin-top: 310px;
-    margin-left: 20px;
-    padding: 5px;
-}
+#saveSpec {
+    display:inline-block;
+    margin-top:170px;
+    margin-left:-750px;
 
-td, th {
-    border: none;
-    text-align: center;
-    margin-top: 20px;
-    padding: 5px;
 }
-
 
 
 
