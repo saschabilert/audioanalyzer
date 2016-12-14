@@ -65,7 +65,7 @@ var durtime;
 var seekslider;
 var seeking = false;
 var seekto;
-var info = document.querySelector('[data-js="info"]');
+var info = document.getElementById("playbackTime");
 var loopSelection= false;
 
 document.onkeydown = function(e) {

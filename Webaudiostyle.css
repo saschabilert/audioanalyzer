@@ -3,23 +3,246 @@ html, body {
     position:relative;
 
 }
-#wrap {
 
-    margin-left:110px;
-    margin-right:100px;
+/*CSS code for the header in all webpages*/
+header {
+    height: 100px;
+    background: #CCC;
+    width: 500px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    margin-top: -22px;
+    margin-left: auto;
+    margin-right:auto;
+    position:relative;
 }
 
-ul {
+/* Links to the other webpages*/
+a.link:link {
+    background-color: lightgray;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 10px;
+    color: black;
+    text-decoration: none;
+    margin-left: 50px;
+}
+a.link:hover {
+    background-color: darkgray;
+}
+
+/*Choose a file button */
+.audioInput { /*Hide the original button*/
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    margin-top: 10px;
+}
+.audioInput+label { /*Make a new button*/
+    font-size: 1em;
+    font-weight: 700;
+    color: black;
+    background-color: #ededed;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 14px 40px;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    border: 1px solid gray;
+    margin-top: 10px;
+    float: left;
+}
+.audioInput+label:hover { /*Change when user points on it */
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    background-color: #dfdfdf;
+}
+
+/*Play,Pause,Stop and Gain buttons*/
+.buttons { /*field around the buttons*/
+    margin-left: 10px;
+    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    background-color: #ededed;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    display: inline-block;
+    color: #777777;
+    font-size: 19px;
+    font-weight: bold;
+    font-style: normal;
+    height: 48px;
+    line-height: 48px;
+    width: 150px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0px #ffffff;
+    margin-top: -9px;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid gray;
+    float:left;
+}
+.playPause { /*Play and Pause button*/
+    font-size: 0.85em;
+    font-weight: 700;
+    background-color: #ededed;
+    color: black;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 10px;
+    border: 1px solid gray;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    border-radius: 50%;
+    width: 20%;
+    height: 60%;
+    position: center;
+}
+.playPause:hover { /*Change when user points on it */
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    background-color: #dfdfdf;
+}
+.stop { /*Stop button */
+    font-size: 0.85em;
+    font-weight: 700;
+    background-color: #ededed;
+    color: black;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid gray;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    border-radius: 50%;
+    width: 20%;
+    height: 60%;
+}
+.stop:hover { /*Change when user points on it */
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+    background-color: #dfdfdf;
+}
+.Gain {/*Gain button*/
+    margin-left: 5px;
+    margin-top: 10px;
+}
+input[type=range] {/*Set width and margins of the bar*/
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 50%;
+}
+input[type=range]:focus {/* Removes the blue border*/
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {/*Range button style*/
+    margin-left: 10px;
+    margin-top: -13px;
+    width: 5%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #ededed;
+    border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {/*Range button style*/
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 8px;
+    border-radius: 3px;
+    background: darkgray;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -14px;
+}
+/*Playback time field */
+#playbackTime {
+    margin-left: 5px;
+    margin-top: -9px;
+    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    background-color: #ededed;
+    -webkit-border-top-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -webkit-border-top-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    display: inline-block;
+    color: black;
+    font-size: 19px;
+    font-weight: bold;
+    font-style: normal;
+    height: 48px;
+    line-height: 48px;
+    width: 150px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0px #ffffff;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid gray;
+    float:left;
+}
+/*Check box for looping sound*/
+#loopText {
+    margin-left: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    float:left;
+}
+
+/*Choose a grid size*/
+#gridSize {
+    display:inline-block;
+    margin-left:300px;
+}
+
+
+/* Margins Instructions webpage*/
+#wrap {
+    margin-left:110px;
+}
+
+
+/*CSS for the left navigation menu in the instruction page*/
+ul { /*Display of the box */
     list-style-type: none;
     margin: 0;
     padding: 0;
     width:100px;
     cursor:pointer;
     position:fixed;
-
 }
-
-li a {
+li a { /*Display of the buttons */
     display: block;
     background-color: #ededed;
     color:black;
@@ -31,21 +254,74 @@ li a {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     text-decoration: none;
 }
-
-li a:hover:not(.active) {
+li a:hover { /*Change when user points on it */
     background-color:#555;
     color:white;
 }
 
-li a.active {
-    color:white;
-    background-color:#555;
-}
-#loop {
-    margin-left: 10px;
-    margin-top: -40px;
+.editContainer {
     display: inline-block;
+    margin-left:-500px;
+    padding:-20px;
+    margin-bottom:50px;
 }
+.editSpectrum {
+    display: inline-block;
+    width: 130px;
+    height: 75px;
+    margin-top:300px;
+    padding:4px;
+    float:left;
+}
+
+.dropdownContainer {
+    display:inline-block;
+    margin-left:-850px;
+    width:900px;
+    margin-top:50px;
+
+}
+.dropdownBlock {
+    display:inline-block;
+    float:left;
+    width:100px;
+    margin-top:20px;
+    padding:10px;
+    margin-left:15px;
+}
+.dropdownWindow {
+    display:inline-block;
+    float:left;
+    width:100px;
+    margin-top:20px;
+    padding:10px;
+    margin-left:45px;
+}
+.dropdownOverlap {
+    display:inline-block;
+    float:left;
+    width:100px;
+    margin-top:20px;
+    padding:10px;
+    margin-left:40px;
+}
+.dropdownDisplay {
+    display:inline-block;
+    float:left;
+    width:100px;
+    margin-top:20px;
+    padding:10px;
+    margin-left:40px;
+}
+.dropdownColormap {
+    display:inline-block;
+    float:left;
+    width:100px;
+    margin-top:20px;
+    padding:10px;
+    margin-left:30px;
+}
+
 
 select {
     background-color: #ededed;
@@ -57,7 +333,7 @@ select {
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     border: 1px solid gray;
-    width: 120px;
+    width: 100px;
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
     background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
@@ -76,7 +352,6 @@ select:active {
 
 option {
     display: block;
-    position: absolute;
     background-color: #ededed;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -89,19 +364,10 @@ option {
 table {
     font-family: arial;
     border-collapse: collapse;
-    width: 40%;
     font-size: 12px;
     margin-top: 310px;
     margin-left: 20px;
     padding: 5px;
-    max-width: 100%;
-}
-
-#table1 {
-    margin-left: 1050px;
-    margin-top: -70px;
-    padding: 10px;
-    display: inline-block;
 }
 
 td, th {
@@ -111,197 +377,12 @@ td, th {
     padding: 5px;
 }
 
-.audioInput {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    margin-top: 10px;
-}
-
-.audioInput+label {
-    font-size: 1em;
-    font-weight: 700;
-    color: black;
-    background-color: #ededed;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 12px;
-    padding: 14px 40px;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    border: 1px solid gray;
-    margin-top: 10px;
-    float: left;
-}
-
-.audioInput+label:hover {
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
-}
-
-.playPause {
-    margin-left: 0px;
-    font-size: 0.85em;
-    font-weight: 700;
-    background-color: #ededed;
-    color: black;
-    display: inline-block;
-    cursor: pointer;
-    margin-top: 10px;
-    border: 1px solid gray;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    border-radius: 50%;
-    width: 20%;
-    height: 60%;
-    position: center;
-}
-
-.playPause:hover {
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
-}
-
-.stop {
-    margin-left: 0px;
-    font-size: 0.85em;
-    font-weight: 700;
-    background-color: #ededed;
-    color: black;
-    display: inline-block;
-    cursor: pointer;
-    margin-top: 0px;
-    border: 1px solid gray;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    border-radius: 50%;
-    width: 20%;
-    height: 60%;
-}
-
-.stop:hover {
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
-}
-
-.Gain {
-    margin-left: 5px;
-    margin-top: 10px;
-}
 
 
-/*!*Gain button*!*/
 
-input[type=range] {
-    -webkit-appearance: none;
-    /* Hides the slider so that custom slider can be made */
-    width: 50%;
-    /* Specific width is required for Firefox. */
-    background: transparent;
-    /* Otherwise white in Chrome */
-}
 
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-}
 
-input[type=range]:focus {
-    outline: none;
-    /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. *!*/
-}
 
-input[type=range]::-ms-track {
-    margin-top: -35px;
-    width: 50%;
-    cursor: pointer;
-    /*!* Hides the slider so custom styles can be added *!*/
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-}
-
-input[type=range] {
-    -webkit-appearance: none;
-    margin: 18px 0;
-    width: 50%;
-}
-
-input[type=range]:focus {
-    outline: none;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-    margin-left: 10px;
-    margin-top: -13px;
-    width: 5%;
-    height: 8.4px;
-    cursor: pointer;
-    animate: 0.2s;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #ededed;
-    ;
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 8px;
-    border-radius: 3px;
-    background: darkgray;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -14px;
-}
-
-.buttons {
-    margin-left: 10px;
-    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-    background-color: #ededed;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius-topleft: 20px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius-topright: 20px;
-    -webkit-border-bottom-right-radius: 20px;
-    -moz-border-radius-bottomright: 20px;
-    -webkit-border-bottom-left-radius: 20px;
-    -moz-border-radius-bottomleft: 20px;
-    text-indent: 0px;
-    display: inline-block;
-    color: #777777;
-    font-size: 19px;
-    font-weight: bold;
-    font-style: normal;
-    height: 48px;
-    line-height: 48px;
-    width: 150px;
-    text-decoration: none;
-    text-align: center;
-    text-shadow: 1px 1px 0px #ffffff;
-    margin-top: 10px;
-    border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid gray;
-}
 
 #canvasDivSpec {
     margin-top: 20px;
@@ -442,67 +523,11 @@ input[type=range]::-webkit-slider-thumb {
     padding: 3px;
 }
 
-.info {
-    margin-left: 5px;
-    margin-top: -35px;
-    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-    background-color: #ededed;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius-topleft: 20px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius-topright: 20px;
-    -webkit-border-bottom-right-radius: 20px;
-    -moz-border-radius-bottomright: 20px;
-    -webkit-border-bottom-left-radius: 20px;
-    -moz-border-radius-bottomleft: 20px;
-    text-indent: 0px;
-    display: inline-block;
-    color: black;
-    font-size: 19px;
-    font-weight: bold;
-    font-style: normal;
-    height: 48px;
-    line-height: 48px;
-    width: 150px;
-    text-decoration: none;
-    text-align: center;
-    text-shadow: 1px 1px 0px #ffffff;
-    border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid gray;
-}
 
-header {
-    height: 100px;
-    background: #CCC;
-    width: 500px;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    margin-top: -22px;
-    display: block;
-    margin-left: 450px;
-}
 
-a.class1:link {
-    background-color: lightgray;
-    padding: 10px 20px;
-    text-align: center;
-    display: inline-block;
-    border-radius: 10px;
-    color: black;
-    text-decoration: none;
-    margin-left: 50px;
-}
 
-a.class1:hover {
-    background-color: darkgray;
-}
+
+
 
 h1 {
     text-align: center;
@@ -518,7 +543,7 @@ a:link {
     padding: 5px 5px;
 }
 
-.loading {
+#loading {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -551,7 +576,7 @@ a:link {
     }
 }
 
-.container {
+#container {
     position: absolute;
     width: 100%;
     height: 100%;
