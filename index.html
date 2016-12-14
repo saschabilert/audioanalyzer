@@ -1,42 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-    <!-- define metadata -->
     <meta http-equiv="content-type" content="text/html">
-
-    <!-- set title of the website -->
-    <title>Web-Audio-Analyzer</title>
-
+    <title>Web Audio Analyzer</title>
     <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
 
     <!-- import image for tab icon -->
     <link rel="icon" type="image/png" href="icon.png">
-
 </head>
-<!-- start body with html-code -->
-
 <body>
-<div id = "wrap">
     <header>
         <h1>Web Audio Analyzer</h1>
-        <a href="index.html" class="class1">Home</a>
-        <a href="instructions.html" class="class1" target="_blank">Instructions</a>
-        <a href="about.html" class="class1" target="_blank">About</a>
+        <a href="index.html" class="link">Home</a>
+        <a href="instructions.html" class="link" target="_blank">Instructions</a>
+        <a href="about.html" class="link" target="_blank">About</a>
     </header>
-
-    <div id="container" class="container" style="display:none;"></div>
-    <div id="loading" class="loading" style="display:none;"></div>
+    <!--Create the loading animation-->
+    <div id="container"  style="display:none;"></div>
+    <div id="loading"  style="display:none;"></div>
 
 
     <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a>
         <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts" target="_blank"><img src="facebook.png" width="30" height="30"></a>
     </div>
 
-    <!-- make a new Formular for the website -->
     <form method="post" enctype="multipart/form-data" action="">
-        <!-- set input audiofile and trigger the loadSound function -->
+        <!-- set input audiofile and trigger the audioProcessing function -->
         <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
         <label for="myAudio">Choose a file</label>
     </form>
@@ -45,20 +34,15 @@
         <button id="stop" type="button" class="stop">&#9724;</button>
         <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain">
     </div>
-    <div data-js="info" class="info">00:00/00:00</div>
-    <div id="loop">Loop Selection:<input type="checkbox" id="LoopCheck" onchange="setLoop(this)"></div>
-    <table id="table1">
-        <tr>
-            <th style="margin-top:50px;">Choose a grid size:</th>
-        </tr>
-        <tr>
-            <td><select id="grid" onchange="gridSize()" style="margin-left:0px; margin-top:0px;">
-            <option value="0.25">small</option>
-            <option value="0.5">medium</option>
-            <option value="1">large</option>
-        </select></td>
-        </tr>
-    </table>
+    <div id="playbackTime">00:00/00:00</div>
+    <div id="loopText">Loop Selection:<input type="checkbox" id="LoopCheck" onchange="setLoop(this)"></div>
+
+    <div id="gridSize">Choose a grid size:
+        <select id = "grid" onchange="gridSize()">
+        <option value="0.25">small</option>
+        <option value="0.5">medium</option>
+        <option value="1">large</option>
+    </select></div>
 
     <div class="canvas" id="canvasDivWave">
         <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
@@ -74,17 +58,76 @@
         <p id="crestValue"></p>
     </div>
 
+
+
     <!-- generate dropwdown lists-->
-    <table>
-        <tr>
-            <th>Choose a block length:</th>
-            <th>Choose a window type:</th>
-            <th>Choose an overlap:</th>
-            <th>Choose a Display type:</th>
-            <th>Choose a Colormap:</th>
-            <th>Choose min and max for spectogram:</th>
-        </tr>
-        <tr>
+    <div class = "dropdownContainer">
+            <div id = "dropdownBlock">Choose a block length:
+                <select id="blockLength" onchange="blockLength()" class = "dropdownBlock">
+                    <option value="1024">1024</option>
+                    <option value="2048">2048</option>
+                    <option value="4096">4096</option>
+                    <option value="8192">8192</option>
+                </select></div>
+            <div id = "dropbdownWindow">Choose a window type:
+                <select id="windowType" onchange="windowType()" class = "dropdownWindow">
+                    <option value="hann">hann</option>
+                    <option value="rect">rectangle</option>
+                    <option value="hannpoisson">hannpoisson</option>
+                    <option value="cosine">cosine</option>
+                    <option value="flat-top">flat-top</option>
+                    <option value="kaiser-bessel">kaiser-bessel</option>
+                </select></div>
+            <div class = "editSpectrum">Choose an overlap:</div>
+            <div class = "editSpectrum">Choose a Display type:</div>
+            <div class = "editSpectrum">Choose a Colormap:</div>
+            <div class = "editSpectrum">Choose min and max for spectogram:</div>
+    </div>
+
+    <div class = "dropdownContainer">
+        <select id="blockLength" onchange="blockLength()" class = "dropdownBlock">
+            <option value="1024">1024</option>
+            <option value="2048">2048</option>
+            <option value="4096">4096</option>
+            <option value="8192">8192</option>
+        </select>
+        <select id="windowType" onchange="windowType()" class = "dropdownWindow">
+            <option value="hann">hann</option>
+            <option value="rect">rectangle</option>
+            <option value="hannpoisson">hannpoisson</option>
+            <option value="cosine">cosine</option>
+            <option value="flat-top">flat-top</option>
+            <option value="kaiser-bessel">kaiser-bessel</option>
+        </select>
+        <select id="overlap" onchange="overlap()" class = "dropdownOverlap">
+            <option value="0.5">50%</option>
+            <option value="0.0">0%</option>
+            <option value="0.25">25%</option>
+            <option value="0.75">75%</option>
+        </select>
+        <select id="display" onchange="chooseDisplay()" class = "dropdownDisplay">
+            <option value="Spectrum">spectrum</option>
+            <option value="Phase">phase</option>
+            &lt;!&ndash; <option value="MFCC">MFCC</option> &ndash;&gt;
+            &lt;!&ndash; <option value="Modulation Spectrum">modulation spectrum</option> &ndash;&gt;
+            <option value="Group Delay">group delay</option>
+            <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
+        </select>
+        <select id="colormap" onchange="colormap()" class = dropdownColormap>
+            <option value="1">Parula</option>
+            <option value="2">Gray</option>
+            <option value="3">Jet</option>
+            <option value="4">Twilight</option>
+        </select>
+        <div id = "test">
+        <div>min value:</div>
+        <input type="text" id="min" onkeypress="minMaxValue(event)">
+        <p>max value:</p>
+        <input type="text" id="max" onkeypress="minMaxValue(event)">
+        </div>
+    </div>
+     <!--<table>
+         <tr>
             <td><select id="blockLength" onchange="blockLength()">
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
@@ -108,16 +151,16 @@
             <td><select id="display" onchange="chooseDisplay()">
                     <option value="Spectrum">spectrum</option>
                     <option value="Phase">phase</option>
-                    <!-- <option value="MFCC">MFCC</option> -->
-                    <!-- <option value="Modulation Spectrum">modulation spectrum</option> -->
+                    &lt;!&ndash; <option value="MFCC">MFCC</option> &ndash;&gt;
+                    &lt;!&ndash; <option value="Modulation Spectrum">modulation spectrum</option> &ndash;&gt;
                     <option value="Group Delay">group delay</option>
                     <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
                   </select></td>
             <td><select id="colormap" onchange="colormap()">
-                    <option value="1">Viridis</option>
+                    <option value="1">Parula</option>
                     <option value="2">Gray</option>
                     <option value="3">Jet</option>
-                    <option value="4">Plasma</option>
+                    <option value="4">Twilight</option>
                   </select></td>
             <td>
                 <p style="margin-top:0px; margin-bottom:0px;">min value:</p>
@@ -126,20 +169,21 @@
                 <input type="text" id="max" onkeypress="minMaxValue(event)" style="margin-top:0px">
             </td>
         </tr>
-    </table>
+    </table>-->
 
-    <!-- start javascript -->
+    <!-- import javascript files -->
     <script type="text/javascript" src="menu.js"></script>
     <script type="text/javascript" src="fft.js"></script>
     <script type="text/javascript" src="audioprocessing.js"></script>
     <script type="text/javascript" src="spectrogram.js"></script>
     <script type="text/javascript" src="waveform.js"></script>
-    <script type="text/javascript" src="viridis.js"></script>
+    <script type="text/javascript" src="parula.js"></script>
     <script type="text/javascript" src="gray.js"></script>
-    <script type="text/javascript" src="plasma.js"></script>
     <script type="text/javascript" src="jet.js"></script>
     <script type="text/javascript" src="hsv.js"></script>
     <script type="text/javascript" src="twilight.js"></script>
+    <script type="text/javascript" src="viridis.js"></script>
+    <script type="text/javascript" src="plasma.js"></script>
 
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1176" height="512"></canvas>
@@ -157,7 +201,6 @@
     </div>
 
     <button type="button" onclick="downloadSpectrum()">save spectrogram</button>
-</div>
 </body>
 
 </html>
