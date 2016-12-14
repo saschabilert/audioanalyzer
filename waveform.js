@@ -143,6 +143,7 @@ function drawLineKlickWave(mouseTime) {
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasWaveLine.height);
+    drawLineKlick(mouseTime);
 }
 
 function drawLinePlayWave() {
@@ -219,7 +220,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(timeToString((i/WaveData.stepsX)*tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i/WaveData.stepsX)*tickNum,1), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
