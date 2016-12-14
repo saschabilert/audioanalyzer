@@ -7,6 +7,7 @@ document.getElementById("colormap").disabled = true;
 document.getElementById("min").disabled = true;
 document.getElementById("max").disabled = true;
 document.getElementById("grid").disabled = true;
+document.getElementById("saveSpec").disabled = true;
 
 function gridSize() {
   WaveData.gridScale = +(document.getElementById("grid").value);
@@ -159,6 +160,7 @@ function enableButton() {
     document.getElementById("min").disabled = false;
     document.getElementById("max").disabled = false;
     document.getElementById("grid").disabled = false;
+    document.getElementById("saveSpec").disabled = false;
 }
 
 function minMaxValue(e) {
