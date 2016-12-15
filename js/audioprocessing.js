@@ -70,7 +70,7 @@
                  Audiodata.sampleRate);
 
 
-             info.innerHTML = "00:00.0" + "/" +timeToString(duration,1,0);
+             info.innerHTML = "00:00.0" + "/" + timeToString(duration, 1, 0);
 
              // calculate the number of sampleblocks
              Audiodata.nPart = Math.round((Audiodata.signalLen -
@@ -96,7 +96,10 @@
              // draw the waveform - just once (see waveform.js)
              if (Audiodata.drawCheck) {
                  drawWave();
+                 Audiodata.drawCheck = false;
              }
+
+
 
              document.getElementById("loading").style.display = "none";
              document.getElementById("container").style.display = "none";
@@ -104,8 +107,10 @@
      };
  }
 
- // calculate data for spectrogram.js depending on type (Types: "Spectrum",
- // "Phase", "Group Delay" and "Instantaneous Frequency Deviation")
+ /*
+  * calculate data for spectrogram.js depending on type (Types: "Spectrum",
+  * "Phase", "Group Delay" and "Instantaneous Frequency Deviation")
+  */
  function calculateDisplay(type) {
 
      // calculate the choosen window (see calculateWindow())
@@ -163,8 +168,7 @@
      return [real, imag];
  }
 
- // calculate the absolute value of the spectrogram data (see formula in
- // instructions.html)
+ // calculate the absolute value of the spectrogram data (see formula in instructions.html)
  function calculateAbs(real, imag) {
 
      var absValue = new Array(Audiodata.blockLen / 2 + 1);
@@ -186,8 +190,10 @@
      return phaseValue;
  }
 
- // calculate the group delay using calcluatePhase() and linspace() (see formula
- // in instructions.html)
+ /*
+  * calculate the group delay using calcluatePhase() and linspace() (see formula
+  * in instructions.html)
+  */
  function calculateGroupDelay(real, imag) {
 
      var phase = calculatePhase(real, imag);
@@ -212,8 +218,10 @@
      return groupDelay;
  }
 
- // calculate the instantaneous frequency deviation for more informations see
- // the instructions.html website
+ /*
+  * calculate the instantaneous frequency deviation for more informations see
+  * the instructions.html website
+  */
  function calculateInstantFreqDev(sampleBlock, windowType) {
 
      var InstHopsize = Audiodata.sampleRate / Audiodata.wrapFreq;
@@ -259,9 +267,11 @@
      return instantFreqDev;
  }
 
- // calculate the different windows depending on the window length and the
- // window type (Types: "hann", "hannpoisson", "consine", "kaiser-bessel",
- // "flat-top" and "rect") see instructions.html
+ /*
+  * calculate the different windows depending on the window length and the
+  * window type (Types: "hann", "hannpoisson", "consine", "kaiser-bessel",
+  *"flat-top" and "rect") see instructions.html
+  */
  function calculateWindow(windowLen, type) {
 
      var window = new Array(windowLen.length);
@@ -334,8 +344,10 @@
      return window;
  }
 
- // implementation of the linspace function make use of start value, end value
- // and the number of points between the start and end index
+ /*
+  * implementation of the linspace function make use of start value, end value
+  * and the number of points between the start and end index
+  */
  function linspace(startIdx, endIdx, n) {
 
      var linVector = new Array(n);
@@ -359,8 +371,10 @@
      return difference;
  }
 
- // implementation of the bessel function of first kind (I0), see more
- // information in instructions.html
+ /*
+  * implementation of the bessel function of first kind (I0), see more
+  * information in instructions.html
+  */
  function besselfkt(array) {
 
      var bessel = new Array(array.length).fill(0);
