@@ -3,10 +3,11 @@
 <head>
     <meta http-equiv="content-type" content="text/html">
     <title>Web Audio Analyzer</title>
-    <link rel="stylesheet" type="text/css" href="Webaudiostyle.css">
+
+    <link rel="stylesheet" type="text/css" href="style/style.css">
 
     <!-- import image for tab icon -->
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="image/icon.png">
 </head>
 <body>
     <header>
@@ -20,9 +21,7 @@
     <div id="loading"  style="display:none;"></div>
 
 
-    <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a>
-        <a href="http://www.facebook.com/hoertechnikaudiologie/?fref=ts" target="_blank"><img src="facebook.png" width="30" height="30"></a>
-    </div>
+    <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a></div>
 
     <form method="post" enctype="multipart/form-data" action="">
         <!-- set input audiofile and trigger the audioProcessing function -->
@@ -58,8 +57,6 @@
         <p id="crestValue"></p>
     </div>
 
-
-
     <!-- generate dropwdown lists-->
    <div class = "dropdownContainer">
             <div class = "dropdownBlock">
@@ -93,8 +90,6 @@
                 <select id="display" onchange="chooseDisplay()">
                     <option value="Spectrum">spectrum</option>
                     <option value="Phase">phase</option>
-                    &lt;!&ndash; <option value="MFCC">MFCC</option> &ndash;&gt;
-                    &lt;!&ndash; <option value="Modulation Spectrum">modulation spectrum</option> &ndash;&gt;
                     <option value="Group Delay">group delay</option>
                     <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
                 </select></div>
@@ -113,24 +108,22 @@
                 <p style="margin-top:-2px; margin-bottom:2px;">max value:</p>
                 <input type="text" id="max" onkeypress="minMaxValue(event)">
             </div>
-
                 <button id ="saveSpec" type="button" onclick="downloadSpectrum()">save spectrogram</button>
-
     </div>
 
     <!-- import javascript files -->
-    <script type="text/javascript" src="menu.js"></script>
-    <script type="text/javascript" src="fft.js"></script>
-    <script type="text/javascript" src="audioprocessing.js"></script>
-    <script type="text/javascript" src="spectrogram.js"></script>
-    <script type="text/javascript" src="waveform.js"></script>
-    <script type="text/javascript" src="parula.js"></script>
-    <script type="text/javascript" src="gray.js"></script>
-    <script type="text/javascript" src="jet.js"></script>
-    <script type="text/javascript" src="hsv.js"></script>
-    <script type="text/javascript" src="twilight.js"></script>
-    <script type="text/javascript" src="viridis.js"></script>
-    <script type="text/javascript" src="plasma.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="js/fft.js"></script>
+    <script type="text/javascript" src="js/audioprocessing.js"></script>
+    <script type="text/javascript" src="js/spectrogram.js"></script>
+    <script type="text/javascript" src="js/waveform.js"></script>
+    <script type="text/javascript" src="js/colormaps/parula.js"></script>
+    <script type="text/javascript" src="js/colormaps/gray.js"></script>
+    <script type="text/javascript" src="js/colormaps/jet.js"></script>
+    <script type="text/javascript" src="js/colormaps/hsv.js"></script>
+    <script type="text/javascript" src="js/colormaps/twilight.js"></script>
+    <script type="text/javascript" src="js/colormaps/viridis.js"></script>
+    <script type="text/javascript" src="js/colormaps/plasma.js"></script>
 
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1176" height="512"></canvas>
@@ -147,8 +140,6 @@
     <div class="canvas" id="divCanvasLegend">
         <canvas id="canvasLegend" width="300" height="75"></canvas>
     </div>
-
-
 </body>
 
 </html>
