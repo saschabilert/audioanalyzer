@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html">
     <title>Web Audio Analyzer</title>
@@ -9,6 +10,7 @@
     <!-- import image for tab icon -->
     <link rel="icon" type="image/png" href="image/icon.png">
 </head>
+
 <body>
     <header>
         <h1>Web Audio Analyzer</h1>
@@ -17,8 +19,8 @@
         <a href="about.html" class="link" target="_blank">About</a>
     </header>
     <!--Create the loading animation-->
-    <div id="container"  style="display:none;"></div>
-    <div id="loading"  style="display:none;"></div>
+    <div id="container" style="display:none;"></div>
+    <div id="loading" style="display:none;"></div>
 
     <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a></div>
 
@@ -36,10 +38,10 @@
     <div id="loopText">Loop Selection:<input type="checkbox" id="LoopCheck" onchange="setLoop(this)"></div>
 
     <div id="gridSize">Choose a grid size:
-        <select id = "grid" onchange="gridSize()">
-        <option value="0.25">small</option>
-        <option value="0.5">medium</option>
-        <option value="1">large</option>
+        <select id="grid" onchange="gridSize()">
+        <option value="0.0625">small</option>
+        <option value="0.125">medium</option>
+        <option value="0.25">large</option>
     </select></div>
 
     <div class="canvas" id="canvasDivWave">
@@ -57,18 +59,18 @@
     </div>
 
     <!-- generate dropwdown lists-->
-   <div class = "dropdownContainer">
-            <div class = "dropdownBlock">
-                <p>Choose a block length:</p>
-                <select id="blockLength" onchange="blockLength()" >
+    <div class="dropdownContainer">
+        <div class="dropdownBlock">
+            <p>Choose a block length:</p>
+            <select id="blockLength" onchange="blockLength()">
                     <option value="1024">1024</option>
                     <option value="2048">2048</option>
                     <option value="4096">4096</option>
                     <option value="8192">8192</option>
                 </select></div>
-            <div class = "dropdownBlock">
-                <p>Choose a window type:</p>
-                <select id="windowType" onchange="windowType()">
+        <div class="dropdownBlock">
+            <p>Choose a window type:</p>
+            <select id="windowType" onchange="windowType()">
                     <option value="hann">hann</option>
                     <option value="rect">rectangle</option>
                     <option value="hannpoisson">hannpoisson</option>
@@ -76,38 +78,38 @@
                     <option value="flat-top">flat-top</option>
                     <option value="kaiser-bessel">kaiser-bessel</option>
                 </select></div>
-            <div class = "dropdownBlock">
-                <p>Choose an overlap:</p>
-                <select id="overlap" onchange="overlap()">
+        <div class="dropdownBlock">
+            <p>Choose an overlap:</p>
+            <select id="overlap" onchange="overlap()">
                     <option value="0.5">50%</option>
                     <option value="0.0">0%</option>
                     <option value="0.25">25%</option>
                     <option value="0.75">75%</option>
                 </select></div>
-            <div class = "dropdownBlock">
-                <p>Choose a Display type:</p>
-                <select id="display" onchange="chooseDisplay()">
+        <div class="dropdownBlock">
+            <p>Choose a Display type:</p>
+            <select id="display" onchange="chooseDisplay()">
                     <option value="Spectrum">spectrum</option>
                     <option value="Phase">phase</option>
                     <option value="Group Delay">group delay</option>
                     <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
                 </select></div>
-            <div class = "dropdownBlock">
-                <p>Choose a Colormap:</p>
-                <select id="colormap" onchange="colormap()">
+        <div class="dropdownBlock">
+            <p>Choose a Colormap:</p>
+            <select id="colormap" onchange="colormap()">
                     <option value="1">Viridis</option>
                     <option value="2">Gray</option>
                     <option value="3">Jet</option>
                     <option value="4">Plasma</option>
                 </select></div>
-            <div class = "dropdownBlock">
-                <p style = "width:150px;">Choose min and max for spectogram:</p>
-                <p style = "margin-top:-7px; margin-bottom:2px;">min value:</p>
-                <input type="text" id="min" onkeypress="minMaxValue(event)">
-                <p style="margin-top:-2px; margin-bottom:2px;">max value:</p>
-                <input type="text" id="max" onkeypress="minMaxValue(event)">
-            </div>
-                <button id ="saveSpec" type="button" onclick="downloadSpectrum()">save spectrogram</button>
+        <div class="dropdownBlock">
+            <p style="width:150px;">Choose min and max for spectogram:</p>
+            <p style="margin-top:-7px; margin-bottom:2px;">min value:</p>
+            <input type="text" id="min" onkeypress="minMaxValue(event)">
+            <p style="margin-top:-2px; margin-bottom:2px;">max value:</p>
+            <input type="text" id="max" onkeypress="minMaxValue(event)">
+        </div>
+        <button id="saveSpec" type="button" onclick="downloadSpectrum()">save spectrogram</button>
     </div>
 
     <!-- import javascript files -->

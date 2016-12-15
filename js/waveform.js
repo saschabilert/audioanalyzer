@@ -1,5 +1,5 @@
 var WaveData = {
-    gridScale: 0.25,
+    gridScale: 1 / 16,
     stepsX: undefined,
     crestFactor: undefined
 };
@@ -31,10 +31,7 @@ function drawWave() {
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
         canvasCtxRMS.clearRect(0, 0, canvasCtx.width, canvasCtx.height);
 
-        var halfHeight = canvas.height / 2;
-
-        var waveScale = 80;
-        var offSetTop = 30;
+        var waveScale = 100;
 
         var canvasBlockLen = Audiodata.signalLen / canvas.width;
 
@@ -57,9 +54,9 @@ function drawWave() {
             rms[i] = calculateRMS(currentBlock) * waveScale;
 
             if (Math.max(...currentBlock) >= Math.abs(Math.min(...currentBlock))) {
-                peak[i] = Math.max(...currentBlock);
+                peak[i] = Math.max(...currentBlock) * waveScale;
             } else if (Math.max(...currentBlock) < Math.abs(Math.min(...currentBlock))) {
-                peak[i] = Math.abs(Math.min(...currentBlock));
+                peak[i] = Math.abs(Math.min(...currentBlock)) * waveScale;
             }
 
         }
@@ -68,24 +65,24 @@ function drawWave() {
         drawWaveGrid();
 
         canvasCtx.beginPath();
-        canvasCtx.strokeStyle = "#003d99";
-        canvasCtx.lineWidth = 0.02;
+        canvasCtx.strokeStyle = "#100C87";
+        canvasCtx.lineWidth = 0.05;
 
-        canvasCtx.moveTo(0, halfHeight);
+        canvasCtx.moveTo(0, canvas.height / 2);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtx.lineTo(i, halfHeight - maxValue[i]);
-            canvasCtx.lineTo(i, halfHeight - minValue[i]);
+            canvasCtx.lineTo(i, canvas.height / 2 - maxValue[i]);
+            canvasCtx.lineTo(i, canvas.height / 2 - minValue[i]);
             canvasCtx.stroke();
         }
 
         canvasCtxRMS.beginPath();
         canvasCtxRMS.strokeStyle = "#66a3ff";
-        canvasCtxRMS.lineWidth = 0.1;
+        canvasCtxRMS.lineWidth = 0.05;
 
-        canvasCtxRMS.moveTo(0, halfHeight);
+        canvasCtxRMS.moveTo(0, canvas.height / 2);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtxRMS.lineTo(i, halfHeight - rms[i]);
-            canvasCtxRMS.lineTo(i, halfHeight + rms[i]);
+            canvasCtxRMS.lineTo(i, canvas.height / 2 - rms[i]);
+            canvasCtxRMS.lineTo(i, canvas.height / 2 + rms[i]);
             canvasCtxRMS.stroke();
         }
 
@@ -103,7 +100,7 @@ function drawWave() {
             sum = sum + (samples[i] * samples[i]);
         }
 
-        var rms = Math.sqrt(sum / (samples.length - 1));
+        var rms = Math.sqrt(sum / samples.length);
 
         return rms;
     }
@@ -114,15 +111,15 @@ function drawWave() {
 
         for (var i = 0; i < crestFactor.length; i++) {
             crestFactor[i] = peak[i] / rms[i];
-            if (isNaN(crestFactor[i])) {
+            if (isFinite(crestFactor[i]) == false) {
                 crestFactor[i] = 0;
             }
         }
         return crestFactor;
     }
 
-
     function startPlayHereWave(evt) {
+
         var mousePos = getMousePos(canvas, evt);
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x;
         if (isPlaying) {
@@ -135,6 +132,7 @@ function drawWave() {
 }
 
 function drawLineKlickWave(mouseTime) {
+
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvas = document.getElementById("canvasWave");
     var ctxLine = canvasWaveLine.getContext("2d");
@@ -147,6 +145,7 @@ function drawLineKlickWave(mouseTime) {
 }
 
 function drawLinePlayWave() {
+
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var ctxLine = canvasWaveLine.getContext("2d");
 
@@ -185,17 +184,17 @@ function drawWaveTimeAxes() {
         var half = time % (logTime / 2);
         var full = time % logTime;
 
-        if (quarter <= (timePoint) && (logTime / 4)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        if (quarter <= (timePoint) && (logTime / 4) * Math.ceil(canvasWave.width / i) >= trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=(logTime / 4);
+            tickNum = (logTime / 4);
             break;
-        } else if (half <= (timePoint) && (logTime / 2)*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        } else if (half <= (timePoint) && (logTime / 2) * Math.ceil(canvasWave.width / i) >= trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=(logTime / 2);
+            tickNum = (logTime / 2);
             break;
-        } else if (full <= (timePoint) && (logTime )*Math.ceil(canvasWave.width/i)>=trackLenSec) {
+        } else if (full <= (timePoint) && (logTime) * Math.ceil(canvasWave.width / i) >= trackLenSec) {
             WaveData.stepsX = i;
-            tickNum=logTime;
+            tickNum = logTime;
             break;
         }
     }
@@ -220,7 +219,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(timeToString((i/WaveData.stepsX)*tickNum,0), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i / WaveData.stepsX) * tickNum, 0), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
@@ -261,6 +260,7 @@ function drawWaveGrid() {
 }
 
 function displayWavePosition(evt) {
+
     var canvasWave = document.getElementById("canvasWave");
     var wavePosition = document.getElementById("wavePosition");
     var rmsWert = document.getElementById("rmsWert");
@@ -269,12 +269,13 @@ function displayWavePosition(evt) {
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
-    wavePosition.innerHTML = 'Time: '+ timeToString(mouseX,0,1);
+    wavePosition.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1);
 
     var point = WaveData.crestFactor[Math.round(mouseX)];
 
     point = 20 * Math.log10(point);
     crestValue.innerHTML = 'Crest: ' + Math.round(point) + ' dB';
+
 }
 
 function waveOnMouseDown(evt) {
@@ -292,7 +293,6 @@ function waveOnMouseDown(evt) {
 }
 
 function drawSelection(startPos, caller, endPos) {
-
 
     var canvas = document.getElementById("canvasWave");
     var canvasSelect = document.getElementById("canvasSelect");
@@ -322,21 +322,21 @@ function waveOnMouseUp(evt) {
     canvasLine = document.getElementById("canvasWaveLine");
     var canvas = document.getElementById("canvasWave");
     mousePos = getMousePos(canvasLine, evt);
-    mousePos=mousePos.x;
+    mousePos = mousePos.x;
     mouseUsed = 0;
-    SpectroData.endTimeSelection=(Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
+    SpectroData.endTimeSelection = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
 
-    if (selectionX<startSelection) {
-      drawLineKlickWave(SpectroData.endTimeSelection);
-      startOffset=SpectroData.endTimeSelection;
-      SpectroData.endTimeSelection=mousePos;
+    if (selectionX < startSelection) {
+        drawLineKlickWave(SpectroData.endTimeSelection);
+        startOffset = SpectroData.endTimeSelection;
+        SpectroData.endTimeSelection = mousePos;
     }
     canvasLine.removeEventListener("mousemove", onMouseMove);
     clearInterval(intervalDrawSelect);
     zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
         startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos);
-                startSelection=NaN;
-          selectionX=NaN;
+    startSelection = NaN;
+    selectionX = NaN;
 }
 
 function onMouseMove(evt) {
@@ -345,11 +345,11 @@ function onMouseMove(evt) {
     selectionX = mousePos.x;
 }
 
-function resetSelection(){
+function resetSelection() {
 
-var canvasSelect = document.getElementById("canvasSelect");
-var ctxSelect = canvasSelect.getContext("2d");
-SpectroData.endTimeSelection=NaN;
-ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
-scaleFullSpec();
+    var canvasSelect = document.getElementById("canvasSelect");
+    var ctxSelect = canvasSelect.getContext("2d");
+    SpectroData.endTimeSelection = NaN;
+    ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
+    scaleFullSpec();
 }

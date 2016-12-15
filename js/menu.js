@@ -214,32 +214,26 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
     }
 
     if (alwaysShowFull == 1) {
-        return [minutes + ":" + seconds + "." + miliseconds]
+        return [minutes + ":" + seconds + "." + miliseconds];
     } else if (alwaysShowFull == 0) {
         if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {
             if (miliseconds != 0) {
-                return [seconds + "." + miliseconds]
+                return [seconds + "." + miliseconds];
             } else {
-                return [seconds]
+                return [seconds];
             }
         } else {
             if (alwaysShowMilisec) {
-                return [minutes + ":" + seconds + "." + miliseconds]
+                return [minutes + ":" + seconds + "." + miliseconds];
             } else {
-
-
                 if (miliseconds != 0) {
-                    return [minutes + ":" + seconds + "." + miliseconds]
+                    return [minutes + ":" + seconds + "." + miliseconds];
                 } else {
-                    return [minutes + ":" + seconds]
+                    return [minutes + ":" + seconds];
                 }
             }
         }
-
-
-
     }
-
 }
 
 function timeUpdate() {
@@ -258,7 +252,7 @@ function timeUpdate() {
 
 
 
-    info.innerHTML = timeToString(currentTime, 1,0) + "/" + timeToString(durationTrack, 1,0);
+    info.innerHTML = timeToString(currentTime, 1, 0) + "/" + timeToString(durationTrack, 1, 0);
 
     if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
         audioCtx.currentTime = 0;
@@ -266,7 +260,7 @@ function timeUpdate() {
         startOffset = 0;
 
         isPlaying = false;
-        info.innerHTML = "00:00.0" + "/" + timeToString(durationTrack, 1,0);
+        info.innerHTML = "00:00.0" + "/" + timeToString(durationTrack, 1, 0);
 
         drawLineKlick(0);
         drawLineKlickWave(0);
@@ -274,7 +268,7 @@ function timeUpdate() {
         audioCtx.currentTime = 0;
 
         isPlaying = false;
-        info.innerHTML = timeToString(currentTime, 1,0) + "/" + timeToString(durationTrack, 1,0);
+        info.innerHTML = timeToString(currentTime, 1, 0) + "/" + timeToString(durationTrack, 1, 0);
         audPlay.stop();
         if (loopSelection) {
             toggleSound();
