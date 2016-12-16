@@ -274,7 +274,7 @@ function displayWavePosition(evt) {
     var point = WaveData.crestFactor[Math.round(mouseX)];
 
     point = 20 * Math.log10(point);
-    crestValue.innerHTML = 'Crest: ' + Math.round(point) + ' dB';
+    crestValue.innerHTML = 'Crest: ' + point.toFixed(2) + ' dB';
 
 }
 
