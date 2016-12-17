@@ -30,16 +30,18 @@ html, body {
 /*CSS code for the header in all webpages*/
 
 header {
-    height: 100px;
+    height: 140px;
     background: #CCC;
-    width: 500px;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    margin-top: -22px;
+    width: 800px;
+    top: inherit;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-top: -20px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    font-size: 12pt;
+    font-size: 14px;
+    text-align: center;
 }
 
 
@@ -47,21 +49,26 @@ header {
 
 a.link:link {
     background-color: lightgray;
-    padding: 10px 20px;
-    text-align: center;
+    font-family: Verdana;
+    font-size: 16px;
+    padding: 8px 30px;
     display: inline-block;
     border-radius: 10px;
-    color: black;
     text-decoration: none;
     margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 20px;
 }
 
 a.link:hover {
-    background-color: darkgray;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
+    background-color: #dfdfdf;
 }
 
 form {
     display: inline-block;
+    font-size: 12px;
     width: 250px;
 }
 
@@ -70,32 +77,24 @@ form {
 
 .audioInput {
     /*Hide the original button*/
-    width: 0.1px;
-    height: 0.1px;
     opacity: 0;
     overflow: hidden;
-    z-index: -1;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    margin-top: 10px;
 }
 
 .audioInput+label {
     /*Make a new button*/
-    font-size: 1em;
-    font-weight: 600;
+    font-weight: bolder;
     color: black;
     position: relative;
-    display: inline-block;
     background-color: #ededed;
     cursor: pointer;
-    border-radius: 12px;
-    padding: 14px 40px;
+    border-radius: 10px;
+    padding: 16px 40px;
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     border: 1px solid gray;
-    margin-top: 10px;
-    margin-left: -50px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .audioInput+label:hover {
@@ -107,11 +106,10 @@ form {
 }
 
 
-/*Play,Pause,Stop and Gain buttons*/
+/*Play, Pause, Stop and Gain buttons*/
 
 .buttons {
     /*field around the buttons*/
-    margin-left: 10px;
     -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
@@ -119,36 +117,22 @@ form {
     background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     background-color: #ededed;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius-topleft: 20px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius-topright: 20px;
-    -webkit-border-bottom-right-radius: 20px;
-    -moz-border-radius-bottomright: 20px;
-    -webkit-border-bottom-left-radius: 20px;
-    -moz-border-radius-bottomleft: 20px;
     display: inline-block;
     color: #777777;
-    font-size: 19px;
-    font-weight: bold;
-    font-style: normal;
-    height: 48px;
-    line-height: 48px;
-    width: 150px;
-    text-decoration: none;
-    text-align: center;
+    font-size: 18px;
+    height: 46px;
+    width: 160px;
     text-shadow: 1px 1px 0px #ffffff;
-    margin-top: -9px;
-    border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+    border-radius: 10px;
+    padding: 1px 5px;
     border: 1px solid gray;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .playPause {
     /*Play and Pause button*/
-    font-size: 0.85em;
-    font-weight: 700;
+    font-size: 15px;
     background-color: #ededed;
     color: black;
     display: inline-block;
@@ -160,7 +144,6 @@ form {
     border-radius: 50%;
     width: 20%;
     height: 60%;
-    position: center;
 }
 
 .playPause:hover {
@@ -173,12 +156,12 @@ form {
 
 .stop {
     /*Stop button */
-    font-size: 0.85em;
-    font-weight: 700;
+    font-size: 15px;
     background-color: #ededed;
     color: black;
     display: inline-block;
     cursor: pointer;
+    margin-top: 10px;
     border: 1px solid gray;
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
@@ -195,12 +178,6 @@ form {
     background-color: #dfdfdf;
 }
 
-.Gain {
-    /*Gain button*/
-    margin-left: 5px;
-    margin-top: 10px;
-}
-
 input[type=range] {
     /*Set width and margins of the bar*/
     -webkit-appearance: none;
@@ -215,7 +192,6 @@ input[type=range]:focus {
 
 input[type=range]::-webkit-slider-runnable-track {
     /*Range button style*/
-    margin-left: 10px;
     margin-top: -13px;
     width: 5%;
     height: 8.4px;
@@ -231,7 +207,7 @@ input[type=range]::-webkit-slider-thumb {
     border: 1px solid #000000;
     height: 36px;
     width: 8px;
-    border-radius: 3px;
+    border-radius: 10px;
     background: darkgray;
     cursor: pointer;
     -webkit-appearance: none;
@@ -242,8 +218,8 @@ input[type=range]::-webkit-slider-thumb {
 /*Playback time field */
 
 #playbackTime {
-    margin-left: 5px;
-    margin-top: -9px;
+    margin-left: auto;
+    margin-right: auto;
     -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
@@ -251,26 +227,17 @@ input[type=range]::-webkit-slider-thumb {
     background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     background-color: #ededed;
-    -webkit-border-top-left-radius: 20px;
-    -moz-border-radius-topleft: 20px;
-    -webkit-border-top-right-radius: 20px;
-    -moz-border-radius-topright: 20px;
-    -webkit-border-bottom-right-radius: 20px;
-    -moz-border-radius-bottomright: 20px;
-    -webkit-border-bottom-left-radius: 20px;
-    -moz-border-radius-bottomleft: 20px;
     display: inline-block;
     color: black;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
-    font-style: normal;
     height: 48px;
     line-height: 48px;
-    width: 150px;
+    width: 160px;
     text-decoration: none;
     text-align: center;
     text-shadow: 1px 1px 0px #ffffff;
-    border-radius: 15px;
+    border-radius: 10px;
     border: 1px solid gray;
 }
 
@@ -278,9 +245,11 @@ input[type=range]::-webkit-slider-thumb {
 /*Check box for looping sound*/
 
 #loopText {
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 
@@ -288,7 +257,10 @@ input[type=range]::-webkit-slider-thumb {
 
 #gridSize {
     display: inline-block;
-    margin-left: 170px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 
@@ -296,12 +268,11 @@ input[type=range]::-webkit-slider-thumb {
 
 #buttonsMenu {
     position: relative;
-    width: 1300px;
     margin-left: auto;
     margin-right: auto;
     display: block;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 
@@ -345,18 +316,15 @@ li a:hover {
 }
 
 .dropdownContainer p {
-    margin-left: 6px;
-    margin-right: 6px;
-    font-family: Verdana;
-    font-size: 10pt;
+    font-size: 12px;
 }
 
 .dropdownContainer {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 1230px;
-    margin-top: -20px;
+    width: 1220px;
+    margin-top: -10px;
 }
 
 .dropdownBlock {
@@ -407,20 +375,22 @@ option {
 }
 
 #saveSpec {
-    display: inline-block;
-    margin-left: 1520px;
+    display: block;;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
     margin-top: 10px;
+    position: relativ;
 }
 
 #canvasDivSpec {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    height: 545px;
+    height: 530px;
     position: relative;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
-    padding: 0;
     display: block;
     width: 1200px;
 }
@@ -428,76 +398,67 @@ option {
 #canvasSpec {
     margin-left: 25px;
     position: absolute;
-    z-index: 0;
 }
 
-#canvasLine {
+#canvasSpecLine {
     position: absolute;
     margin-left: 25px;
-    z-index: 0;
     opacity: 0.65;
 }
 
-#canvasScale {
+#canvasSpecScale {
     position: absolute;
-    z-index: 0;
 }
 
 #divCanvasLegend {
-    margin-top: -75px;
+    position: absolute;
+    margin-top: -80px;
     margin-left: 905px;
     width: 300px;
     height: 75px;
-    position: absolute;
 }
 
-#divPosition {
-    margin-top: 30px;
-    margin-left: 30px;
-    width: 150px;
-    height: 70px;
+#divSpecPosition {
+    margin-top: 10px;
+    margin-left: 40px;
+    width: 200px;
+    height: 60px;
     position: absolute;
-    font-family: Verdana;
     line-height: 0.5;
     background-color: rgba(250, 250, 255, 0.7);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    z-index: 0;
     border: 1px solid gray;
     text-align: center;
 }
 
 #canvasLegend {
     position: absolute;
-    z-index: 0;
     border: 1px solid #bfbfbf;
 }
 
 #canvasDivWave {
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     height: 280px;
     position: relative;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
-    padding: 0;
     display: block;
     width: 1200px;
 }
 
 #divWavePosition {
-    margin-top: 30px;
-    margin-left: 30px;
+    margin-top: 10px;
+    margin-left: 40px;
     width: 150px;
-    height: 50px;
+    height: 40px;
     position: relative;
-    font-family: Verdana;
     line-height: 0.5;
     background-color: rgba(250, 250, 255, 0.7);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    z-index: 0;
     border: 1px solid gray;
     text-align: center;
 }
@@ -505,20 +466,17 @@ option {
 #canvasWave {
     margin-left: 25px;
     position: absolute;
-    z-index: 0;
     opacity: 0.85;
 }
 
 #canvasSelect {
     margin-left: 25px;
     position: absolute;
-    z-index: 0;
 }
 
 #canvasRMS {
     margin-left: 25px;
     position: absolute;
-    z-index: 0;
 }
 
 #canvasWaveLine {
@@ -530,12 +488,10 @@ option {
 
 #canvasWaveGrid {
     position: absolute;
-    z-index: 0;
 }
 
 #canvasWaveScale {
     position: absolute;
-    z-index: 0;
 }
 
 #progressBar {
@@ -610,11 +566,4 @@ a:link {
     height: 100%;
     background: white;
     opacity: 0.8;
-}
-
-.boxed {
-    margin-left: 0px;
-    width: 60%;
-    padding: 10px;
-    margin-top: 10px;
 }
