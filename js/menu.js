@@ -98,7 +98,7 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00:00.0" + "/" + playback.trackDuration;
+            info.innerHTML = "00:00.0" + " - " + playback.trackDuration;
             drawLineKlick(0);
             drawLineKlickWave(0);
         };
@@ -109,8 +109,7 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00:00.0" + "/" + playback.trackDuration;
-
+                info.innerHTML = "00:00.0" + " - " + playback.trackDuration;
             }
         };
 
@@ -151,7 +150,6 @@ Array.prototype.forEach.call(inputs, function(input) {
     });
 });
 
-
 function enableButton() {
     playButton.disabled = false;
     stopbtn.disabled = false;
@@ -166,7 +164,6 @@ function enableButton() {
     document.getElementById("saveSpec").disabled = false;
     document.getElementById("LoopCheck").disabled = false;
     document.getElementById("volume").disabled = false;
-
 }
 
 function minMaxValue(e) {
@@ -214,7 +211,6 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
     var seconds = Math.floor((time) - minutes * 60);
     var miliseconds = Math.floor((time % 1) * 10);
 
-
     if (seconds < 10) {
         seconds = "0" + seconds;
     }
@@ -249,16 +245,13 @@ function timeUpdate() {
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
         return
-
     }
 
     var currentTime = (audioCtx.currentTime - startTime + startOffset);
 
     var durationTrack = (Audiodata.signalLen / Audiodata.sampleRate);
 
-
-
-    info.innerHTML = timeToString(currentTime, 1, 0) + "/" + timeToString(durationTrack, 1, 0);
+    info.innerHTML = timeToString(currentTime, 1, 0) + " - " + timeToString(durationTrack, 1, 0);
 
     if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
         audioCtx.currentTime = 0;
@@ -266,7 +259,7 @@ function timeUpdate() {
         startOffset = 0;
 
         isPlaying = false;
-        info.innerHTML = "00:00.0" + "/" + timeToString(durationTrack, 1, 0);
+        info.innerHTML = "00:00.0" + " - " + timeToString(durationTrack, 1, 0);
 
         drawLineKlick(0);
         drawLineKlickWave(0);
@@ -274,17 +267,12 @@ function timeUpdate() {
         audioCtx.currentTime = 0;
 
         isPlaying = false;
-        info.innerHTML = timeToString(currentTime, 1, 0) + "/" + timeToString(durationTrack, 1, 0);
+        info.innerHTML = timeToString(currentTime, 1, 0) + " - " + timeToString(durationTrack, 1, 0);
         audPlay.stop();
         if (loopSelection) {
             toggleSound();
         }
     }
-
-
-
-
-
 }
 
 function setLoop() {
