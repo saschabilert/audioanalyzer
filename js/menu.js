@@ -226,7 +226,7 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
 function timeUpdate() {
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
-        return 
+        return
 
     }
 
