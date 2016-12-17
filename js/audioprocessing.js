@@ -403,7 +403,7 @@
      var maxBlockNumb = 32767;
 
      if (Audiodata.nPart > maxBlockNumb) {
-         alert("Reached the maximum number of blocks. Data not fully displayed!");
-         Audiodata.nPart = maxBlockNumb;
-     }
- }
+         alert("Reached the maximum number of blocks.\n Data not fully displayed!");
+             Audiodata.nPart = maxBlockNumb;
+      }
+  }
