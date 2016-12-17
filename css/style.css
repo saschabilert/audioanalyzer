@@ -86,6 +86,7 @@ form {
     font-weight: bolder;
     color: black;
     position: relative;
+    display: inline-block;
     background-color: #ededed;
     cursor: pointer;
     border-radius: 10px;
@@ -93,8 +94,7 @@ form {
     -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     border: 1px solid gray;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: -80px;
 }
 
 .audioInput+label:hover {
@@ -375,7 +375,8 @@ option {
 }
 
 #saveSpec {
-    display: block;;
+    display: block;
+    ;
     margin-left: auto;
     margin-right: auto;
     width: 200px;
