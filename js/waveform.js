@@ -36,14 +36,14 @@ var offSetBottom = 20;
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
-    var canvasLine = document.getElementById("canvasWaveLine");
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
 
-    canvasLine.addEventListener("mousedown", startPlayHereWave);
-    canvasLine.addEventListener("mousedown", waveOnMouseDown);
-    canvasLine.addEventListener("mouseup", waveOnMouseUp);
-    canvasLine.addEventListener("mousemove", displayWavePosition);
-    canvasLine.addEventListener("dblclick", resetSelection);
+    canvasWaveLine.addEventListener("mousedown", startPlayHereWave);
+    canvasWaveLine.addEventListener("mousedown", waveOnMouseDown);
+    canvasWaveLine.addEventListener("mouseup", waveOnMouseUp);
+    canvasWaveLine.addEventListener("mousemove", displayWavePosition);
+    canvasWaveLine.addEventListener("dblclick", resetSelection);
 
     if (canvas.getContext) {
 
@@ -80,7 +80,6 @@ function drawWave() {
             } else if (Math.max(...currentBlock) < Math.abs(Math.min(...currentBlock))) {
                 peak[i] = Math.abs(Math.min(...currentBlock)) * waveScale;
             }
-
         }
 
         drawWaveTimeAxes();
@@ -159,7 +158,7 @@ function drawLineKlickWave(mouseTime) {
     var canvas = document.getElementById("canvasWave");
     var ctxLine = canvasWaveLine.getContext("2d");
     mousePos = (mouseTime * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
-    ctxLine.clearRect(0, 0, canvasLine.width, canvasLine.height);
+    ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height);
     ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
         0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasWaveLine.height);
@@ -234,7 +233,7 @@ function drawWaveTimeAxes() {
 
     ctxWaveScale.beginPath();
     ctxWaveScale.lineWidth = 2;
-    ctxWaveScale.font = "700 12px Arial";
+    ctxWaveScale.font = "bold 12px Verdana";
 
     for (i = 0; i <= canvasWaveScale.width; i += WaveData.stepsX) {
         ctxWaveScale.moveTo(i + offSetLeft, canvasWaveScale.height - offSetBottom);
@@ -284,26 +283,24 @@ function drawWaveGrid() {
 function displayWavePosition(evt) {
 
     var canvasWave = document.getElementById("canvasWave");
-    var wavePosition = document.getElementById("wavePosition");
-    var rmsWert = document.getElementById("rmsWert");
+    var waveTime = document.getElementById("waveTime");
 
     var mousePos = getMousePos(canvasWave, evt);
     var trackLenSec = Audiodata.signalLen / Audiodata.sampleRate;
 
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
-    wavePosition.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1);
+    waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1);
 
     var point = WaveData.crestFactor[Math.round(mouseX)];
 
     point = 20 * Math.log10(point);
-    crestValue.innerHTML = 'Crest: ' + point.toFixed(2) + ' dB';
-
+    crestfactor.innerHTML = 'Crest: ' + point.toFixed(2) + ' dB';
 }
 
 function waveOnMouseDown(evt) {
     var canvas = document.getElementById("canvasWave");
-    var canvasLine = document.getElementById("canvasWaveLine");
-    canvasLine.addEventListener("mousemove", onMouseMove);
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
+    canvasWaveLine.addEventListener("mousemove", onMouseMove);
 
     mouseUsed = 1;
     var mousePos = getMousePos(canvas, evt);
@@ -311,7 +308,6 @@ function waveOnMouseDown(evt) {
     intervalDrawSelect = setInterval(function() {
         drawSelection(startSelection, 1, evt);
     }, 30);
-
 }
 
 function drawSelection(startPos, caller, endPos) {
@@ -337,13 +333,12 @@ function drawSelection(startPos, caller, endPos) {
             0 + ',' + 0.2 + ')';
         ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
     }
-
 }
 
 function waveOnMouseUp(evt) {
-    canvasLine = document.getElementById("canvasWaveLine");
+    canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvas = document.getElementById("canvasWave");
-    mousePos = getMousePos(canvasLine, evt);
+    mousePos = getMousePos(canvasWaveLine, evt);
     mousePos = mousePos.x;
     mouseUsed = 0;
     SpectroData.endTimeSelection = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos;
@@ -353,7 +348,7 @@ function waveOnMouseUp(evt) {
         startOffset = SpectroData.endTimeSelection;
         SpectroData.endTimeSelection = mousePos;
     }
-    canvasLine.removeEventListener("mousemove", onMouseMove);
+    canvasWaveLine.removeEventListener("mousemove", onMouseMove);
     clearInterval(intervalDrawSelect);
     zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
         startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos);
@@ -362,8 +357,8 @@ function waveOnMouseUp(evt) {
 }
 
 function onMouseMove(evt) {
-    canvasLine = document.getElementById("canvasWaveLine");
-    mousePos = getMousePos(canvasLine, evt);
+    canvasWaveLine = document.getElementById("canvasWaveLine");
+    mousePos = getMousePos(canvasWaveLine, evt);
     selectionX = mousePos.x;
 }
 
