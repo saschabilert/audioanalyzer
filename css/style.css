@@ -1,7 +1,7 @@
 html, body {
     min-width:1200px;
     position:relative;
-
+    font-family: Verdana;
 }
 
 /*CSS code for the header in all webpages*/
@@ -15,6 +15,7 @@ header {
     margin-left: auto;
     margin-right:auto;
     position:relative;
+    font-size:12pt;
 }
 
 /* Links to the other webpages*/
@@ -31,7 +32,10 @@ a.link:link {
 a.link:hover {
     background-color: darkgray;
 }
-
+form {
+    display:inline-block;
+    width:250px;
+}
 /*Choose a file button */
 .audioInput { /*Hide the original button*/
     width: 0.1px;
@@ -45,10 +49,11 @@ a.link:hover {
 }
 .audioInput+label { /*Make a new button*/
     font-size: 1em;
-    font-weight: 700;
+    font-weight: 600;
     color: black;
+    position:relative;
+    display:inline-block;
     background-color: #ededed;
-    display: inline-block;
     cursor: pointer;
     border-radius: 12px;
     padding: 14px 40px;
@@ -56,7 +61,7 @@ a.link:hover {
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     border: 1px solid gray;
     margin-top: 10px;
-    float: left;
+    margin-left:-50px;
 }
 .audioInput+label:hover { /*Change when user points on it */
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
@@ -99,7 +104,6 @@ a.link:hover {
     padding-left: 10px;
     padding-right: 10px;
     border: 1px solid gray;
-    float:left;
 }
 .playPause { /*Play and Pause button*/
     font-size: 0.85em;
@@ -197,7 +201,7 @@ input[type=range]::-webkit-slider-thumb {/*Range button style*/
     -moz-border-radius-bottomleft: 20px;
     display: inline-block;
     color: black;
-    font-size: 19px;
+    font-size: 15px;
     font-weight: bold;
     font-style: normal;
     height: 48px;
@@ -207,26 +211,31 @@ input[type=range]::-webkit-slider-thumb {/*Range button style*/
     text-align: center;
     text-shadow: 1px 1px 0px #ffffff;
     border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
     border: 1px solid gray;
-    float:left;
+
 }
 /*Check box for looping sound*/
 #loopText {
     margin-left: 10px;
     margin-top: 10px;
     display: inline-block;
-    float:left;
 }
 
 /*Choose a grid size*/
 #gridSize {
     display:inline-block;
-    margin-left:300px;
+    margin-left:170px;
 }
-
-
+/* Center the buttons*/
+#buttonsMenu {
+    position:relative;
+    width:1300px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    text-align:center;
+    margin-top:10px;
+}
 /* Margins Instructions webpage*/
 #wrap {
     margin-left:110px;
@@ -267,14 +276,16 @@ li a:hover { /*Change when user points on it */
 }
 
 .dropdownContainer {
-    display:inline-block;
-    margin-left:5px;
-    width:1000px;
-    margin-top:270px;
+    display:block;
+    margin-left:auto;
+    margin-right: auto;
+    width:1230px;
+    margin-top:-20px;
+
 }
 
 .dropdownBlock {
-    float:left;
+    display:inline-block;
     margin-left:5px;
     width:110px;
     padding:10px;
@@ -322,25 +333,21 @@ option {
 
 #saveSpec {
     display:inline-block;
-    margin-top:170px;
-    margin-left:-800px;
+   margin-left:1520px;
+    margin-top:10px;
 
 }
-
-
-
-
-
-
-
 #canvasDivSpec {
     margin-top: 20px;
-    margin-left: 5px;
-    min-width: 1200px;
+    margin-left:auto;
+    margin-right:auto;
     height: 545px;
-    position: absolute;
+    position: relative;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
+    padding: 0;
+    display: block;
+    width: 1200px;
 }
 
 #canvasSpec {
@@ -370,12 +377,12 @@ option {
 }
 
 #divPosition {
-    margin-top: 40px;
-    margin-left: 40px;
+    margin-top: 30px;
+    margin-left: 30px;
     width: 150px;
     height: 70px;
     position: absolute;
-    font-family: arial;
+    font-family: Verdana;
     line-height: 0.5;
     background-color: rgba(250, 250, 255, 0.7);
     font-size: 14px;
@@ -393,21 +400,25 @@ option {
 
 #canvasDivWave {
     margin-top: 10px;
-    margin-left: 5px;
-    min-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
     height: 280px;
-    position: absolute;
+    position: relative;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
+    padding: 0;
+    display: block;
+    width: 1200px;
+
 }
 
 #divWavePosition {
-    margin-top: 40px;
-    margin-left: 40px;
+    margin-top: 30px;
+    margin-left:30px;
     width: 150px;
     height: 50px;
-    position: absolute;
-    font-family: arial;
+    position: relative;
+    font-family: Verdana;
     line-height: 0.5;
     background-color: rgba(250, 250, 255, 0.7);
     font-size: 14px;

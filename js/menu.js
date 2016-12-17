@@ -1,50 +1,41 @@
-// process audio signal with a new block length
-document.getElementById("blockLength").disabled = true;
-document.getElementById("windowType").disabled = true;
-document.getElementById("overlap").disabled = true;
-document.getElementById("display").disabled = true;
-document.getElementById("colormap").disabled = true;
-document.getElementById("min").disabled = true;
-document.getElementById("max").disabled = true;
-document.getElementById("grid").disabled = true;
-document.getElementById("saveSpec").disabled = true;
-
+//Get the user choice of grid size
 function gridSize() {
     WaveData.gridScale = +(document.getElementById("grid").value);
     drawWaveGrid();
 }
-
+//Get the user choice of block length
 function blockLength() {
     Audiodata.blockLen = +(document.getElementById("blockLength").value);
     audioProcessing();
 }
-// process audio signal with a new window type
+//Get the user choice of window type
 function windowType() {
     Audiodata.windowFunction = document.getElementById("windowType").value;
     audioProcessing();
 }
-
+//Get the user choice of overlap
 function overlap() {
     Audiodata.overlap = +(document.getElementById("overlap").value);
     audioProcessing();
 }
-
+//Get the user choice of display type
 function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     audioProcessing();
-    if (Audiodata.display == "Phase" || Audiodata.display == "MFCC" || Audiodata.display == "Modulation Spectrum" || Audiodata.display == "Group Delay" || Audiodata.display == "Instantaneous Frequency") {
+    // If this three display types are chosen, disable the colormap and the min max values
+    if (Audiodata.display == "Phase" || Audiodata.display == "Instantaneous Frequency Deviation" ||
+         Audiodata.display == "Group Delay") {
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
         document.getElementById("max").disabled = true;
     }
 }
-
+//Get the user choice of colormap
 function colormap() {
     SpectroData.TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
 
-var audio = document.getElementById("myAudio");
 var startOffset = 0;
 var startTime = 0;
 var audPlay;
@@ -52,16 +43,9 @@ var isPlaying = false;
 var gainNode;
 var playButton = document.getElementById("player");
 playButton.addEventListener("click", toggleSound);
-playButton.disabled = true;
 
 var stopbtn = document.getElementById("stop");
-stopbtn.disabled = true;
 
-var curtime;
-var durtime;
-var seekslider;
-var seeking = false;
-var seekto;
 var info = document.getElementById("playbackTime");
 var loopSelection = false;
 
@@ -158,6 +142,9 @@ function enableButton() {
     document.getElementById("max").disabled = false;
     document.getElementById("grid").disabled = false;
     document.getElementById("saveSpec").disabled = false;
+    document.getElementById("LoopCheck").disabled = false;
+    document.getElementById("volume").disabled = false;
+
 }
 
 function minMaxValue(e) {
