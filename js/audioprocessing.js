@@ -91,8 +91,7 @@ function audioProcessing() {
             var duration = (Audiodata.signalLen /
                 Audiodata.sampleRate);
 
-
-            info.innerHTML = "00:00.0" + "/" + timeToString(duration, 1, 0);
+            info.innerHTML = "00:00.0" + " - " + timeToString(duration, 1, 0);
 
             // calculate the number of sampleblocks
             Audiodata.nPart = Math.round((Audiodata.signalLen -
@@ -120,8 +119,6 @@ function audioProcessing() {
                 drawWave();
                 Audiodata.drawCheck = false;
             }
-
-
 
             document.getElementById("loading").style.display = "none";
             document.getElementById("container").style.display = "none";
