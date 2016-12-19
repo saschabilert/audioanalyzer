@@ -24,6 +24,8 @@ html, body {/* Default parameters for all pages*/
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
+    margin-left:20px;
+    margin-right:20px;
 }
 /*All h1 titles should be centered*/
 h1 {
