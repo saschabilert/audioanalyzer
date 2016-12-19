@@ -20,15 +20,17 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-html, body {
+html, body {/* Default parameters for all pages*/
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
 }
-
+/*All h1 titles should be centered*/
+h1 {
+    text-align: center;
+}
 
 /*CSS code for the header in all webpages*/
-
 header {
     height: 140px;
     background: #CCC;
@@ -44,166 +46,137 @@ header {
     text-align: center;
 }
 
-
 /* Links to the other webpages*/
-
 a.link:link {
     background-color: lightgray;
-    font-family: Verdana;
     font-size: 16px;
-    padding: 8px 30px;
+    padding: 10px 30px;
     display: inline-block;
     border-radius: 10px;
     text-decoration: none;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 20px;
+    margin-top: 46px;
 }
 
-a.link:hover {
+/*"Find us" field position*/
+.Findus {
+    margin-top: -80px;
+    padding: 10px 10px;
+    float: right;
+}
+a:link {/*link style*/
+    padding: 5px 5px;
+    text-decoration:none;
+}
+
+/*Change style when user points on buttons*/
+a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
     background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
     background-color: #dfdfdf;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+}
+/*Style for all buttons*/
+.audioInput+label, .buttons, .playPause, .stop, #playbackTime, select, #saveSpec {
+    -moz-box-shadow: inset 0 1px 0 0 #ffffff;
+    -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
+    box-shadow: inset 0 1px 0 0 #ffffff;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    border: 1px solid gray;
+    border-radius: 12px;
 }
 
+/* Center the menu buttons*/
+#buttonsMenu {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/*"Choose a file" field*/
 form {
     display: inline-block;
     font-size: 12px;
     width: 250px;
 }
 
-
 /*Choose a file button */
-
-.audioInput {
-    /*Hide the original button*/
+.audioInput {/*Hide the original button*/
     opacity: 0;
     overflow: hidden;
 }
-
-.audioInput+label {
-    /*Make a new button*/
+.audioInput+label {/*Make a new button*/
     font-weight: bolder;
     color: black;
     position: relative;
     display: inline-block;
     background-color: #ededed;
     cursor: pointer;
-    border-radius: 10px;
     padding: 16px 40px;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    border: 1px solid gray;
     margin-left: -80px;
-}
 
-.audioInput+label:hover {
-    /*Change when user points on it */
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
 }
-
 
 /*Play, Pause, Stop and Gain buttons*/
-
-.buttons {
-    /*field around the buttons*/
-    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+.buttons {/*field around the buttons*/
     background-color: #ededed;
     display: inline-block;
     color: #777777;
     font-size: 18px;
     height: 46px;
     width: 160px;
-    text-shadow: 1px 1px 0px #ffffff;
-    border-radius: 10px;
+    text-shadow: 1px 1px 0 #ffffff;
     padding: 1px 5px;
-    border: 1px solid gray;
     margin-left: auto;
     margin-right: auto;
 }
-
-.playPause {
-    /*Play and Pause button*/
+.playPause {/*Play and Pause button*/
     font-size: 15px;
     background-color: #ededed;
     color: black;
     display: inline-block;
     cursor: pointer;
     margin-top: 10px;
-    border: 1px solid gray;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
     border-radius: 50%;
     width: 20%;
     height: 60%;
 }
-
-.playPause:hover {
-    /*Change when user points on it */
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
-}
-
-.stop {
-    /*Stop button */
+.stop {/*Stop button */
     font-size: 15px;
     background-color: #ededed;
     color: black;
     display: inline-block;
     cursor: pointer;
     margin-top: 10px;
-    border: 1px solid gray;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
     border-radius: 50%;
     width: 20%;
     height: 60%;
 }
-
-.stop:hover {
-    /*Change when user points on it */
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
-}
-
-input[type=range] {
-    /*Set width and margins of the bar*/
+input[type=range] {/*Set width and margins of the Gain button*/
     -webkit-appearance: none;
     margin: 18px 0;
     width: 50%;
 }
-
-input[type=range]:focus {
-    /* Removes the blue border*/
+input[type=range]:focus {/* Removes the blue border*/
     outline: none;
 }
-
-input[type=range]::-webkit-slider-runnable-track {
-    /*Range button style*/
+input[type=range]::-webkit-slider-runnable-track {/*Range button style*/
     margin-top: -13px;
     width: 5%;
     height: 8.4px;
     cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     background: #ededed;
     border: 0.2px solid #010101;
 }
-
-input[type=range]::-webkit-slider-thumb {
-    /*Range button style*/
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+input[type=range]::-webkit-slider-thumb { /*Range button style*/
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     border: 1px solid #000000;
     height: 36px;
     width: 8px;
@@ -214,18 +187,10 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: -14px;
 }
 
-
 /*Playback time field */
-
 #playbackTime {
     margin-left: auto;
     margin-right: auto;
-    -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     background-color: #ededed;
     display: inline-block;
     color: black;
@@ -237,13 +202,9 @@ input[type=range]::-webkit-slider-thumb {
     text-decoration: none;
     text-align: center;
     text-shadow: 1px 1px 0px #ffffff;
-    border-radius: 10px;
-    border: 1px solid gray;
 }
 
-
 /*Check box for looping sound*/
-
 #loopText {
     margin-left: auto;
     margin-right: auto;
@@ -252,9 +213,7 @@ input[type=range]::-webkit-slider-thumb {
     font-weight: bold;
 }
 
-
 /*Choose a grid size*/
-
 #gridSize {
     display: inline-block;
     margin-left: auto;
@@ -263,71 +222,18 @@ input[type=range]::-webkit-slider-thumb {
     font-weight: bold;
 }
 
-
-/* Center the buttons*/
-
-#buttonsMenu {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    margin-top: 50px;
-}
-
-
-/* Margins Instructions webpage*/
-
-#wrap {
-    margin-left: 110px;
-}
-
-
-/*CSS for the left navigation menu in the instruction page*/
-
-ul {
-    /*Display of the box */
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100px;
-    cursor: pointer;
-    position: fixed;
-}
-
-li a {
-    /*Display of the buttons */
-    display: block;
-    background-color: #ededed;
-    color: black;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    font-size: 15px;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-    text-decoration: none;
-}
-
-li a:hover {
-    /*Change when user points on it */
-    background-color: #555;
-    color: white;
-}
-
-.dropdownContainer p {
+/*Dropdown menu*/
+.dropdownContainer p {/* All paragraphs from dropdown menu should have this font-size*/
     font-size: 12px;
 }
-
-.dropdownContainer {
+.dropdownContainer {/* Center the field which contains all dropdown menus*/
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 1220px;
     margin-top: -10px;
 }
-
-.dropdownBlock {
+.dropdownBlock {/* Position and size of all dropdown blocks*/
     display: inline-block;
     margin-left: 5px;
     width: 110px;
@@ -335,35 +241,16 @@ li a:hover {
     margin-top: 5px;
     position: relative;
 }
-
-select {
+select {/*Position and size of all dropdown buttons*/
     background-color: #ededed;
     color: black;
     padding: 11px;
     font-size: 11px;
-    border-radius: 12px;
     cursor: pointer;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
-    border: 1px solid gray;
     width: 100px;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-}
 
-select:hover {
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-    background-color: #dfdfdf;
 }
-
-select:active {
-    top: 1px;
-}
-
-option {
+option {/*Style and size of all option button*/
     display: block;
     background-color: #ededed;
     min-width: 160px;
@@ -371,19 +258,21 @@ option {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    border: 1px solid gray;
 }
 
+/*Position of the save spectrogram button */
 #saveSpec {
     display: block;
-    ;
     margin-left: auto;
     margin-right: auto;
     width: 200px;
     margin-top: 10px;
-    position: relativ;
+    font-size: 11px;
+    color: black;
+    padding: 11px;
 }
 
+/*Position and size of the spectrum canvas*/
 #canvasDivSpec {
     margin-top: 30px;
     margin-left: auto;
@@ -395,8 +284,7 @@ option {
     display: block;
     width: 1200px;
 }
-
-#canvasSpec {
+#canvasSpec {/*Spectrum*/
     margin-left: 25px;
     position: absolute;
 }
@@ -464,6 +352,7 @@ option {
     text-align: center;
 }
 
+/*Style and position of the waveform canvas*/
 #canvasWave {
     margin-left: 25px;
     position: absolute;
@@ -514,21 +403,8 @@ option {
     padding: 3px;
 }
 
-h1 {
-    text-align: center;
-}
-
-.Findus {
-    margin-top: -80px;
-    padding: 10px 10px;
-    float: right;
-}
-
-a:link {
-    padding: 5px 5px;
-}
-
-#loading {
+/*Animation while the page is loading*/
+#loading {/*Loading circle*/
     position: absolute;
     left: 50%;
     top: 50%;
@@ -541,6 +417,13 @@ a:link {
     border-top: 16px solid #3498db;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
+}
+#container {/*White container on the webpage*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.8;
 }
 
 @-webkit-keyframes spin {
@@ -561,10 +444,33 @@ a:link {
     }
 }
 
-#container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: white;
-    opacity: 0.8;
+/* Margins Instructions webpage*/
+#wrap {
+    margin-left: 110px;
+}
+
+/*CSS for the left navigation menu in the instruction page*/
+ul {/*Display of the box */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    cursor: pointer;
+    position: fixed;
+}
+li a {/*Display of the buttons */
+    display: block;
+    background-color: #ededed;
+    color: black;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    font-size: 15px;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    text-decoration: none;
+}
+li a:hover {/*Change when user points on it */
+    background-color: #555;
+    color: white;
 }
