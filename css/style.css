@@ -41,7 +41,6 @@ header {
     margin-top: -20px;
     margin-left: auto;
     margin-right: auto;
-    position: relative;
     font-size: 14px;
     text-align: center;
 }
@@ -91,7 +90,6 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
 
 /* Center the menu buttons*/
 #buttonsMenu {
-    position: relative;
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -114,7 +112,6 @@ form {
 .audioInput+label {/*Make a new button*/
     font-weight: bolder;
     color: black;
-    position: relative;
     display: inline-block;
     background-color: #ededed;
     cursor: pointer;
@@ -239,7 +236,6 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     width: 110px;
     padding: 10px;
     margin-top: 5px;
-    position: relative;
 }
 select {/*Position and size of all dropdown buttons*/
     background-color: #ededed;
@@ -462,8 +458,8 @@ li a {/*Display of the buttons */
     display: block;
     background-color: #ededed;
     color: black;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
-    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
+    box-shadow: inset 0 1px 0 0 #ffffff;
     font-size: 15px;
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
     background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
