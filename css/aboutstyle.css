@@ -1,0 +1,12 @@
+p {
+    hyphens: auto;
+    text-align: justify;
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+h2 {
+  margin-top: 50px;
+  text-align: center;
+}

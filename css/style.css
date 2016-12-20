@@ -106,7 +106,7 @@ form {
     width: 250px;
 }
 
-/*Choose a file button */
+/*Choose a file button*/
 .audioInput {/*Hide the original button*/
     opacity: 0;
     overflow: hidden;
@@ -146,7 +146,7 @@ form {
     width: 20%;
     height: 60%;
 }
-.stop {/*Stop button */
+.stop {/*Stop button*/
     font-size: 15px;
     background-color: #ededed;
     color: black;
@@ -186,7 +186,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     margin-top: -14px;
 }
 
-/*Playback time field */
+/*Playback time field*/
 #playbackTime {
     margin-left: auto;
     margin-right: auto;
@@ -440,35 +440,4 @@ option {/*Style and size of all option button*/
     100% {
         transform: rotate(360deg);
     }
-}
-
-/* Margins Instructions webpage*/
-#wrap {
-    margin-left: 110px;
-}
-
-/*CSS for the left navigation menu in the instruction page*/
-ul {/*Display of the box */
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100px;
-    cursor: pointer;
-    position: fixed;
-}
-li a {/*Display of the buttons */
-    display: block;
-    background-color: #ededed;
-    color: black;
-    -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
-    box-shadow: inset 0 1px 0 0 #ffffff;
-    font-size: 15px;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-    text-decoration: none;
-}
-li a:hover {/*Change when user points on it */
-    background-color: #555;
-    color: white;
 }
