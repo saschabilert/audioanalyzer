@@ -32,313 +32,292 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- set title of the website -->
     <title>Instructions</title>
 
-    <!-- link to webpage style -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <!-- include plotly latest version to visulize Data -->
-    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-    <!-- include MathJax to user LateX for Math formular -->
-    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-    <script type="text/javascript" src="js/audioprocessing.js"></script>
+    <!-- link to css style -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/instructionsstyle.css" type="text/css">
 
     <!-- import image for tab icon -->
     <link rel="icon" type="image/png" href="image/icon.png">
+
+    <!-- include plotly latest version to visulize Data -->
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- include MathJax to user LateX for Math formular -->
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/javascript" src="js/audioprocessing.js"></script>
 
 </head>
 
 <body>
 
     <header>
-        <h1>Web Audio Analyzer</h1>
+
+        <h1>Audioanalyzer</h1>
         <a href="index.html" class="link" target="_blank">Home</a>
         <a href="instructions.html" class="link" target="_blank">Instructions</a>
         <a href="about.html" class="link" target="_blank">About</a>
 
     </header>
+
     <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a></div>
 
     <ul>
         <li><a href="#ChoosingAFile">Choosing a file</a></li>
         <li><a href="#PlayPause">Listen to the song</a></li>
         <li><a href="#Editing">Editing the spectrum</a></li>
-        <li><a href="#blockLength">Choosing a block length</a></li>
-        <li><a href="#WindowType">Choosing a window type</a></li>
-        <li><a href="#overlap">Choosing an overlap</a></li>
-        <li><a href="#DisplayType">Choosing a display type</a></li>
-        <li><a href="#Colormap">Choosing a Colormap</a></li>
+        <li><a href="#blockLength">Blocklength</a></li>
+        <li><a href="#WindowType">Window-Type</a></li>
+        <li><a href="#overlap">Overlap</a></li>
+        <li><a href="#DisplayType">Display-Type</a></li>
+        <li><a href="#Colormap">Colormap</a></li>
     </ul>
 
-    <h1>Instruction</h1>
-
-    <!--Instruction text-->
-    <div id="wrap">
-        <h1 style="float: left;"><a id="ChoosingAFile">Choosing a file:</a></h1>
-        <br><br><br>
-        <img src="image/choose.png" height="473" width="626" style="margin-left:-210px; margin-top:10px;">
-        <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and all other audio formats that are recognized by your browser (<a href="https://developer.mozilla.org/en-US
+    <h2>Instruction</h2>
+    <p>If you need help to use the Audioanalyzer you can navigate to the preferd section in the left menu.</p>
+    <h3><a id="ChoosingAFile">Choosing a file:</a></h3>
+    <img src="image/choose.png" height="473" width="626">
+    <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and all other audio formats that are recognized by your browser (<a href="https://developer.mozilla.org/en-US
            /docs/Web/HTML/Supported_media_formats" target="_blank">Click here for more audio formats</a>). After you have chosen a file, you should see the waveform and the spectrum of the signal.</p>
-        <h1 style="float: left;"><a id="PlayPause">Listen to the song:</a></h1>
-        <br><br><br>
-        <img src="image/play.png" height="66" width="326" style="margin-left:-250px; margin-top:10px;">
-        <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the volume button. The second container shows you during playing the current time and the total length of the track.
-        </p>
-        <img src="image/waveform.png" height="256" width="1085" style="margin-left:0px; margin-top:10px;">
-        <img src="image/spectrum.png" height="492" width="1087" style="margin-left:10px; margin-top:10px;">
-        <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this, the spectrum will show you just that
-            part. You can zoom in and out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
-        <h1 style="float: left;"><a id="Editing">Editing the spectrum:</a></h1>
-        <br><br><br>
-        <img src="image/select.png" height="110" width="786" style="margin-left:-310px; margin-top:10px;">
-        <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a colormap. The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of
-            the colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise
-            the spectrum, the phase, the modulation spectrum, the group delay and the instantaneous frequency of the signal.</p>
+    <h3><a id="PlayPause">Listen to the song:</a></h3>
+    <img src="image/play.png" height="66" width="326">
+    <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the volume button. The second container shows you during playing the current time and the total length of the track.
+    </p>
+    <img src="image/waveform.png" height="256" width="1085">
+    <img src="image/spectrum.png" height="492" width="1087">
+    <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this, the spectrum will show you just that part.
+        You can zoom in and out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
+    <h3><a id="Editing">Editing the spectrum:</a></h3>
+    <img src="image/select.png" height="110" width="786">
+    <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a colormap. The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of the
+        colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise the
+        spectrum, the phase, the modulation spectrum, the group delay and the instantaneous frequency of the signal.</p>
 
-        <h1 style="float: left;"><a id="blockLength">Choosing a block length:</a></h1>
-        <br><br><br><br>
-        <p>The block length is the number of bins used to divide the window into equal strips. One bit represents one spectrum sample and defines the frequency resolution of the window. For a 44100 Hz sample rate and a block size of 1024, the signal is being
-            divided into 512 bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the block size, you will have an improved frequency resolution, because you will have more bins in
-            one window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
+    <h3><a id="blockLength">Blocklength:</a></h3>
+    <p>The block length is the number of bins used to divide the window into equal strips. One bit represents one spectrum sample and defines the frequency resolution of the window. For a 44100 Hz sample rate and a block size of 1024, the signal is being
+        divided into 512 bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the block size, you will have an improved frequency resolution, because you will have more bins in one
+        window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
 
-        <h1 style="float: left;"><a id="WindowType">Choosing a window type:</a></h1>
-        <br><br><br><br>
-        <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
-        <script type="text/x-mathjax-config">
-            MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
-        </script>
+    <h3><a id="WindowType">Window-Type:</a></h3>
+    <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
 
-        <div class="boxed" id="rect-window" style="position:relative;">
-            <h2>1. Rect Window</h2>
-            <p>The Rect Window is defined by: $w(n) = 1$</p>
-        </div>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+    </script>
 
-        <div id="divRect" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>1. Rect Window</h3>
+    <p>The Rect Window is defined by: $w(n) = 1$</p>
 
-        <div class="boxed" id="hann-window">
-            <h2>2. Hann Window</h2>
-            <p>The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
-        </div>
+    <div class="plot" id="divRect"></div>
 
-        <div id="divHann" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>2. Hann Window</h3>
+    <p>The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
 
-        <div class="boxed" id="hann-poisson-window">
-            <h2>3. Hann-Poisson Window</h2>
-            <p>The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)e^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
-        </div>
+    <div class="plot" id="divHann"></div>
 
-        <div id="divHannPoisson" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>3. Hann-Poisson Window</h3>
+    <p>The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)e^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
 
-        <div class="boxed" id="cosine-window">
-            <h2>4. Cosine Window</h2>
-            <p>The Cosine Window is defined by: $w(n) = cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
-        </div>
+    <div class="plot" id="divHannPoisson"></div>
 
-        <div id="divCosine" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>4. Cosine Window</h3>
+    <p>The Cosine Window is defined by: $w(n) = cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
 
-        <div class="boxed" id="flat-top-window">
-            <h2>5. Flat-Top Window</h2>
-            <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
-            <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
-        </div>
+    <div class="plot" id="divCosine"></div>
 
-        <div id="divFlatTop" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>5. Flat-Top Window</h3>
+    <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
+    <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
 
-        <div class="boxed" id="kaiser-bessel-window">
-            <h2>6. Kaiser-Bessel Window</h2>
-            <p>The Rect-Window is defined by: $w(n) = \dfrac{I_{0}\left(\pi\alpha\sqrt{1-\left(\dfrac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
-        </div>
+    <div class="plot" id="divFlatTop"></div>
 
-        <div id="divKaiserBessel" style="width: 480px; height: 400px; margin-left:10px;"></div>
+    <h3>6. Kaiser-Bessel Window</h3>
+    <p>The Rect-Window is defined by: $w(n) = \dfrac{I_{0}\left(\pi\alpha\sqrt{1-\left(\dfrac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "hann");
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <div class="plot" id="divKaiserBessel"></div>
+
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "hann");
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divHann', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divHann', data, layout);
+    </script>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "rect");
-            windowValue.fill(0, 0, 81);
-            windowValue.fill(0, 942, 1024);
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "rect");
+        windowValue.fill(0, 0, 81);
+        windowValue.fill(0, 942, 1024);
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divRect', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divRect', data, layout);
+    </script>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "hannpoisson");
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "hannpoisson");
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divHannPoisson', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divHannPoisson', data, layout);
+    </script>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "cosine");
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "cosine");
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divCosine', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divCosine', data, layout);
+    </script>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "flat-top");
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "flat-top");
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divFlatTop', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divFlatTop', data, layout);
+    </script>
 
-        <script type="text/javascript">
-            var windowLen = linspace(0, 1024, 1024);
-            var windowValue = calculateWindow(windowLen, "kaiser-bessel");
-            var data = [{
-                x: windowLen,
-                y: windowValue,
-                type: 'bar'
-            }];
-            var layout = {
-                xaxis: {
-                    title: 'samples',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+    <script type="text/javascript">
+        var windowLen = linspace(0, 1024, 1024);
+        var windowValue = calculateWindow(windowLen, "kaiser-bessel");
+        var data = [{
+            x: windowLen,
+            y: windowValue,
+            type: 'bar'
+        }];
+        var layout = {
+            xaxis: {
+                title: 'samples',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-                yaxis: {
-                    title: 'value',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 14,
-                        color: 'black'
-                    },
+            },
+            yaxis: {
+                title: 'value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'black'
                 },
-            };
-            Plotly.newPlot('divKaiserBessel', data, layout);
-        </script>
+            },
+        };
+        Plotly.newPlot('divKaiserBessel', data, layout);
+    </script>
 
-        <h1 style="float: left;"><a id="overlap">Choosing an overlap:</a></h1>
-        <br><br><br>
-        <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
+    <h3><a id="overlap">Overlap:</a></h3>
+    <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
 
-        <h1 style="float: left;"><a id="DisplayType">Choosing a display type:</a></h1>
-        <br><br><br>
-        <p>HERE COMES SOMETHING ABOUT THE display type</p>
+    <h3><a id="DisplayType">Display-Type:</a></h3>
+    <p>HERE COMES SOMETHING ABOUT THE display type</p>
 
-        <h1 style="float: left;"><a id="Colormap">Choosing a colormap:</a></h1>
-        <br><br><br>
-        <p>HERE COMES SOMETHING ABOUT THE colormap</p>
-    </div>
+    <h3><a id="Colormap">Colormap:</a></h3>
+    <p>HERE COMES SOMETHING ABOUT THE colormap</p>
 </body>
 
 </html>
