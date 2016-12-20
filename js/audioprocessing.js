@@ -103,22 +103,20 @@ function audioProcessing() {
             // create arrays for every display type
             Audiodata.spectrogram = new Array(Audiodata.nPart);
             Audiodata.phase = new Array(Audiodata.nPart);
-            // Audiodata.cepstrum = new Array(Audiodata.nPart);
             Audiodata.groupDelay = new Array(Audiodata.nPart);
-            // Audiodata.modSpec = new Array(Audiodata.nPart);
             Audiodata.instantFreqDev = new Array(Audiodata.nPart);
 
             // call calculateDisplay() with current display type
             calculateDisplay(Audiodata.display);
 
-            // draw the spectrogram (see spectrogram.js)
-            drawSpec();
-
             // draw the waveform - just once (see waveform.js)
             if (Audiodata.drawCheck) {
                 drawWave();
-                Audiodata.drawCheck = false;
+                // Audiodata.drawCheck = false;
             }
+
+            // draw the spectrogram (see spectrogram.js)
+            drawSpec();
 
             document.getElementById("loading").style.display = "none";
             document.getElementById("container").style.display = "none";

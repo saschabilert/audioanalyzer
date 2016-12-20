@@ -74,28 +74,17 @@ function drawSpec() {
             break;
         case "Phase":
             SpectroData.specData = Audiodata.phase;
-
             break;
-            /*  case "MFCC":
-                  Audiodata.cepstrum[i] = calculateMFCC(realPart, imagPart);
-                  break;*/
         case "Modulation Spectrum":
             SpectroData.specData = Audiodata.modSpec;
-
             break;
-
         case "Instantaneous Frequency Deviation":
-
             SpectroData.specData = Audiodata.instantFreqDev
             break;
         case "Group Delay":
             SpectroData.specData = Audiodata.groupDelay;
-
             break;
-
-
     }
-
 
     // Defining varables with no of spectrograms
     SpectroData.specWidth = SpectroData.specData.length;

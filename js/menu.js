@@ -28,21 +28,25 @@ function gridSize() {
 //Get the user choice of block length
 function blockLength() {
     Audiodata.blockLen = +(document.getElementById("blockLength").value);
+    Audiodata.drawCheck = false;
     audioProcessing();
 }
 //Get the user choice of window type
 function windowType() {
     Audiodata.windowFunction = document.getElementById("windowType").value;
+    Audiodata.drawCheck = false;
     audioProcessing();
 }
 //Get the user choice of overlap
 function overlap() {
     Audiodata.overlap = +(document.getElementById("overlap").value);
+    Audiodata.drawCheck = false;
     audioProcessing();
 }
 //Get the user choice of display type
 function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
+    Audiodata.drawCheck = false;
     audioProcessing();
     // If this three display types are chosen, disable the colormap and the min max values
     if (Audiodata.display == "Phase" || Audiodata.display == "Instantaneous Frequency Deviation" ||
@@ -78,7 +82,6 @@ document.onkeydown = function(e) {
         e.preventDefault();
     }
 };
-
 
 function toggleSound() {
 
