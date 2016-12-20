@@ -27,20 +27,22 @@ html, body {/* Default parameters for all pages*/
     margin-left:20px;
     margin-right:20px;
 }
-/*All h1 titles should be centered*/
+
 h1 {
     text-align: center;
+    margin-top: 40px;
+    font-size: 40px;
 }
 
 /*CSS code for the header in all webpages*/
 header {
-    height: 140px;
+    height: 180px;
     background: #CCC;
     width: 800px;
     top: inherit;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    margin-top: -20px;
+    margin-top: -120px;
     margin-left: auto;
     margin-right: auto;
     font-size: 14px;
@@ -57,18 +59,19 @@ a.link:link {
     text-decoration: none;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 46px;
+    margin-top: 120px;
 }
 
 /*"Find us" field position*/
 .Findus {
     margin-top: -80px;
     padding: 10px 10px;
-    float: right;
+    float: left;
 }
 a:link {/*link style*/
     padding: 5px 5px;
     text-decoration:none;
+
 }
 
 /*Change style when user points on buttons*/

@@ -35,7 +35,7 @@ h4 {
     display: none;
     position: fixed;
     z-index: 1;
-    padding: 100px;
+    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
@@ -46,8 +46,8 @@ h4 {
 }
 
 .model-content {
-    display: block;
     margin: auto;
+    display: block;
     width: 80%;
     max-width: 700px;
 }
@@ -60,7 +60,7 @@ h4 {
     text-align: center;
     color: #ccc;
     padding: 10px 0;
-    height: 150;
+    height: 150px;
 }
 
 .modal-content, #caption {
@@ -70,7 +70,7 @@ h4 {
     animation-duration: 0.6s;
 }
 
-@-webkit-keyfram zoom {
+@-webkit-keyframes zoom {
     from {
         -webkit-transform: scale(0)
     }
@@ -138,6 +138,7 @@ ul {
 #navi {
   text-align: center;
   margin-bottom: 10px;
+  text-decoration: underline;
 }
 
 #technics {
