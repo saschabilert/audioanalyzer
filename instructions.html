@@ -52,7 +52,7 @@ contact: sascha.bilert@student.jade-hs.de
     <header>
 
         <h1>Audioanalyzer</h1>
-        <a href="index.html" class="link" target="_blank">Home</a>
+        <a href="index.html" class="link" target="_blank">Analyzer</a>
         <a href="instructions.html" class="link" target="_blank">Instructions</a>
         <a href="about.html" class="link" target="_blank">About</a>
 
@@ -61,32 +61,40 @@ contact: sascha.bilert@student.jade-hs.de
     <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a></div>
 
     <ul>
-        <li><a href="#ChoosingAFile">Choosing a file</a></li>
-        <li><a href="#PlayPause">Listen to the song</a></li>
-        <li><a href="#Editing">Editing the spectrum</a></li>
-        <li><a href="#blockLength">Blocklength</a></li>
-        <li><a href="#WindowType">Window-Type</a></li>
-        <li><a href="#overlap">Overlap</a></li>
-        <li><a href="#DisplayType">Display-Type</a></li>
-        <li><a href="#Colormap">Colormap</a></li>
+        <li id="navi">Navigator:</li>
+        <li class="naviItems"><a href="#ChoosingAFile">Choosing a file</a></li>
+        <li class="naviItems"><a href="#PlayPause">Listen to the song</a></li>
+        <li class="naviItems"><a href="#Editing">Editing the spectrum</a></li>
+        <li class="naviItems"><a href="#blockLength">Blocklength</a></li>
+        <li class="naviItems"><a href="#WindowType">Window-Type</a></li>
+        <li class="naviItems"><a href="#overlap">Overlap</a></li>
+        <li class="naviItems"><a href="#DisplayType">Display-Type</a></li>
+        <li class="naviItems"><a href="#Colormap">Colormap</a></li>
     </ul>
 
-    <h2>Instruction</h2>
-    <p>If you need help to use the Audioanalyzer you can navigate to the preferd section in the left menu.</p>
+    <h2>Instructions</h2>
+    <p>If you need help to use the Website you can navigate to the preferred section in the menu on the left side. In general this website is an easy tool to analyse audio files. The developer used different technologies:</p>
+    <ul id="technics">
+        <li>JavaScript</li>
+        <li>HTML</li>
+        <li>CSS</li>
+    </ul>
+    <p style="margin-top:85px;">The functional part is based on a free FFT programmed in JavaScript by Copyright (c) 2014 Project Nayuki for more Information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">Link</a></p>
     <h3><a id="ChoosingAFile">Choosing a file:</a></h3>
-    <img src="image/choose.png" height="473" width="626">
-    <p>Click on "Choose a file" button and import an audio file from your computer. You can import .wav, .mp3 and all other audio formats that are recognized by your browser (<a href="https://developer.mozilla.org/en-US
-           /docs/Web/HTML/Supported_media_formats" target="_blank">Click here for more audio formats</a>). After you have chosen a file, you should see the waveform and the spectrum of the signal.</p>
+    <img id="choose" src="image/choose.png" class="zoomImg" alt="Choosing a File">
+    <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. .wav or .mp3 if the are recognised by your browser (<a href="https://developer.mozilla.org/en-US
+       /docs/Web/HTML/Supported_media_formats" target="_blank">Click here for more audio formats</a>). After you chose a file the waveform and the spectrum will be calculated and displayed below the buttons. The upload button now shows the name of your
+        chosen file. By clicking the button again, you can analyse a new file. Your audio data won’t be saved just analysed.</p>
     <h3><a id="PlayPause">Listen to the song:</a></h3>
-    <img src="image/play.png" height="66" width="326">
+    <img src="image/play.png" class="zoomImg" alt="Play and Pause Button and the Time">
     <p>You can play, pause and stop the track by using the buttons above. You can also adjust the volume by using the volume button. The second container shows you during playing the current time and the total length of the track.
     </p>
-    <img src="image/waveform.png" height="256" width="1085">
-    <img src="image/spectrum.png" height="492" width="1087">
+    <img src="image/waveform.png" class="zoomImg" alt="Waveform">
+    <img src="image/spectrum.png" class="zoomImg" alt="Spectrum">
     <p>During playing you can see the progress bar of the signal in the waveform and in the spectrum. You can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this, the spectrum will show you just that part.
         You can zoom in and out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
     <h3><a id="Editing">Editing the spectrum:</a></h3>
-    <img src="image/select.png" height="110" width="786">
+    <img src="image/select.png" class="zoomImg" alt="Buttons to edit the spectrum">
     <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a colormap. The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of the
         colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise the
         spectrum, the phase, the modulation spectrum, the group delay and the instantaneous frequency of the signal.</p>
@@ -103,33 +111,33 @@ contact: sascha.bilert@student.jade-hs.de
         MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
     </script>
 
-    <h3>1. Rect Window</h3>
+    <h4>1. Rect Window</h4>
     <p>The Rect Window is defined by: $w(n) = 1$</p>
 
     <div class="plot" id="divRect"></div>
 
-    <h3>2. Hann Window</h3>
+    <h4>2. Hann Window</h4>
     <p>The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
 
     <div class="plot" id="divHann"></div>
 
-    <h3>3. Hann-Poisson Window</h3>
+    <h4>3. Hann-Poisson Window</h4>
     <p>The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)e^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
 
     <div class="plot" id="divHannPoisson"></div>
 
-    <h3>4. Cosine Window</h3>
+    <h4>4. Cosine Window</h4>
     <p>The Cosine Window is defined by: $w(n) = cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
 
     <div class="plot" id="divCosine"></div>
 
-    <h3>5. Flat-Top Window</h3>
+    <h4>5. Flat-Top Window</h4>
     <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
     <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
 
     <div class="plot" id="divFlatTop"></div>
 
-    <h3>6. Kaiser-Bessel Window</h3>
+    <h4>6. Kaiser-Bessel Window</h4>
     <p>The Rect-Window is defined by: $w(n) = \dfrac{I_{0}\left(\pi\alpha\sqrt{1-\left(\dfrac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
 
     <div class="plot" id="divKaiserBessel"></div>
@@ -318,6 +326,32 @@ contact: sascha.bilert@student.jade-hs.de
 
     <h3><a id="Colormap">Colormap:</a></h3>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
+
+    <div id="popupimg" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        var modal = document.getElementById('popupimg');
+        var img = document.getElementById('choose');
+        var modalImg = document.getElementById("img01");
+
+        var captionText = document.getElementById("caption");
+        img.onclick = function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        };
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+    </script>
+
 </body>
 
 </html>
