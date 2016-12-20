@@ -132,13 +132,13 @@ function drawSpec() {
     // This function calls a zoom function in dependency on the keys that are
     // pressed while using the mousewheel
     function mouseWheelFunction(evt) {
-        // console.log(evt)
-        // console.log(keyEvent)
+        console.log(evt)
+
         var delta = evt.deltaY;
-        // console.log(delta)
+
         if (SpectroData.strgPressed) {
             if (SpectroData.shiftPressed) {
-                delta = evt.deltaX;
+                //delta = evt.deltaX;
                 // console.log(delta)
                 event.preventDefault();
                 zoomFreq(delta);
@@ -147,7 +147,7 @@ function drawSpec() {
                 zoomTime(delta);
             }
         } else if (SpectroData.shiftPressed) {
-            delta = evt.deltaX;
+            //delta = evt.deltaX;
             zoomAll(delta);
             event.preventDefault();
         }
@@ -155,6 +155,7 @@ function drawSpec() {
 
     // Function for zooming the time axes only
     function zoomTime(delta) {
+      console.log(delta)
         var factor;
         if (delta < 0) {
             factor = 1.2;
@@ -186,6 +187,7 @@ function drawSpec() {
         ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
         SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
         SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(tempCanvas, 0, 0);
         drawScale()
         section = getSectionDisplayed()
@@ -195,6 +197,7 @@ function drawSpec() {
     }
     // Function for zooming freq axes only
     function zoomFreq(delta) {
+
         var factor;
         if (delta < 0) {
             factor = 1.1;
@@ -206,9 +209,9 @@ function drawSpec() {
         // Checking if the new canvas size is smaler than the maximum possible
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
-        if (canvas.height * factor < 32767 && (canvas.height * factor) *
-            canvas.width < 268435456 && canvas.height * factor > divHeight &&
-            canvas.height * factor <= (tempCanvas.height * 2.5)) {
+        console.log(delta,canvas.height,factor,divHeight)
+        if (canvas.height * factor < 32767 && (canvas.height * factor) *canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+
             canvasSpecScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvas.height = canvas.height * factor;
             SpectroData.cHigh = canvas.height;
@@ -218,6 +221,7 @@ function drawSpec() {
         } else if (canvas.height * factor < 32767 && (canvas.height * factor) *
             canvas.width < 268435456 && canvas.height * factor < divHeight &&
             canvas.height * factor <= (tempCanvas.height * 2.5)) {
+                console.log('oder das?')
             canvasSpecScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
             cHigh = canvas.height;
@@ -228,6 +232,7 @@ function drawSpec() {
         ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
         SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
         SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(tempCanvas, 0, 0);
         drawScale()
         section = getSectionDisplayed()
@@ -282,6 +287,7 @@ function drawSpec() {
         ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
         SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
         SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(tempCanvas, 0, 0);
         drawScale()
         section = getSectionDisplayed()

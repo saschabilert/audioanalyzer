@@ -275,12 +275,13 @@ option {/*Style and size of all option button*/
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    height: 530px;
+    height: 565px;
     position: relative;
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
     display: block;
-    width: 1200px;
+    /*width: 1200px;*/
+    min-width: 1200px
 }
 #canvasSpec {/*Spectrum*/
     margin-left: 25px;
@@ -306,7 +307,7 @@ option {/*Style and size of all option button*/
 }
 
 #divSpecPosition {
-    margin-top: 10px;
+    margin-top: 50px;
     margin-left: 40px;
     width: 200px;
     height: 60px;
@@ -317,6 +318,7 @@ option {/*Style and size of all option button*/
     font-weight: bold;
     border: 1px solid gray;
     text-align: center;
+    z-index: 3;
 }
 
 #canvasLegend {
@@ -333,7 +335,7 @@ option {/*Style and size of all option button*/
     overflow-x: scroll;
     border: 1px solid #bfbfbf;
     display: block;
-    width: 1200px;
+    min-width: 1200px;
 }
 
 #divWavePosition {
