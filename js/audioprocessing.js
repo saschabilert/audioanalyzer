@@ -35,7 +35,6 @@ var Audiodata = {
     sampleRate: undefined,
     samples: undefined,
     numOfChannels: undefined,
-    drawCheck: true,
     nPart: undefined,
     hopsize: undefined,
     overlap: 1 / 2,
@@ -56,8 +55,7 @@ var Audiodata = {
 var reader = new FileReader();
 var audioCtx = new AudioContext();
 
-// function triggered by loading a Audiofile
-function audioProcessing() {
+function loadAudio() {
 
     enableButton();
 
@@ -81,47 +79,50 @@ function audioProcessing() {
 
             Audiodata.numOfChannels = buffer.numberOfChannels;
 
-            Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen *
-                Audiodata.overlap);
-
             // get the samples of the first channel
             Audiodata.samples = buffer.getChannelData(0);
 
             Audiodata.signalLen = Audiodata.samples.length;
-            var duration = (Audiodata.signalLen /
-                Audiodata.sampleRate);
 
-            info.innerHTML = "00:00.0" + " - " + timeToString(duration, 1, 0);
+            drawWave();
 
-            // calculate the number of sampleblocks
-            Audiodata.nPart = Math.round((Audiodata.signalLen -
-                Audiodata.blockLen) / Audiodata.hopsize);
+            processAudio();
 
-            // check the maximum number of blocks ( = 32700);
-            checkNumbOfBlocks();
-
-            // create arrays for every display type
-            Audiodata.spectrogram = new Array(Audiodata.nPart);
-            Audiodata.phase = new Array(Audiodata.nPart);
-            Audiodata.groupDelay = new Array(Audiodata.nPart);
-            Audiodata.instantFreqDev = new Array(Audiodata.nPart);
-
-            // call calculateDisplay() with current display type
-            calculateDisplay(Audiodata.display);
-
-            // draw the waveform - just once (see waveform.js)
-            if (Audiodata.drawCheck) {
-                drawWave();
-                // Audiodata.drawCheck = false;
-            }
-
-            // draw the spectrogram (see spectrogram.js)
-            drawSpec();
-
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("container").style.display = "none";
         });
-    };
+    }
+}
+
+function processAudio() {
+
+    Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen *
+        Audiodata.overlap);
+
+    var duration = (Audiodata.signalLen /
+        Audiodata.sampleRate);
+
+    info.innerHTML = "00:00.0" + " - " + timeToString(duration, 1, 0);
+
+    // calculate the number of sampleblocks
+    Audiodata.nPart = Math.round((Audiodata.signalLen -
+        Audiodata.blockLen) / Audiodata.hopsize);
+
+    // check the maximum number of blocks ( = 32700);
+    checkNumbOfBlocks();
+
+    // create arrays for every display type
+    Audiodata.spectrogram = new Array(Audiodata.nPart);
+    Audiodata.phase = new Array(Audiodata.nPart);
+    Audiodata.groupDelay = new Array(Audiodata.nPart);
+    Audiodata.instantFreqDev = new Array(Audiodata.nPart);
+
+    // call calculateDisplay() with current display type
+    calculateDisplay(Audiodata.display);
+
+    // draw the spectrogram (see spectrogram.js)
+    drawSpec();
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("container").style.display = "none";
 }
 
 /*
