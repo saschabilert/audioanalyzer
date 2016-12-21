@@ -37,9 +37,8 @@ contact: sascha.bilert@student.jade-hs.de
 
 <body onload="fitCanvas()">
 
-    <h1>Audioanalyzer</h1>
-
     <header>
+        <h1>Audioanalyzer</h1>
         <a href="index.html" class="link">Analyzer</a>
         <a href="instructions.html" class="link" target="_blank">Instructions</a>
         <a href="about.html" class="link" target="_blank">About</a>
@@ -54,7 +53,7 @@ contact: sascha.bilert@student.jade-hs.de
     <div id="buttonsMenu">
         <form method="post" enctype="multipart/form-data" action="">
             <!-- set input audiofile and trigger the audioProcessing function -->
-            <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="audioProcessing()">
+            <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
             <label for="myAudio">Choose a file</label>
         </form>
         <div class="buttons">
@@ -115,6 +114,7 @@ contact: sascha.bilert@student.jade-hs.de
         <option value="0.0">0%</option>
         <option value="0.25">25%</option>
         <option value="0.75">75%</option>
+        <option value="0.9">90%</option>
       </select>
         </div>
         <div class="dropdownBlock">

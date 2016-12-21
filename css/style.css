@@ -20,58 +20,44 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-html, body {/* Default parameters for all pages*/
+body {/* Default parameters for all pages*/
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
-    margin-left:20px;
-    margin-right:20px;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -20px;
 }
 
 /*CSS code for the header in all webpages*/
 header {
-    height: 180px;
     background: #CCC;
     width: 800px;
-    top: inherit;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    margin-top: -120px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 14px;
     text-align: center;
 }
 
+h1 {
+    text-align: center;
+    font-size: 20px;
+    padding-top: 20px;
+}
+
 /* Links to the other webpages*/
-a.link:link {
+a.link:link, a.link:visited{
     background-color: lightgray;
-    font-size: 16px;
     padding: 10px 30px;
     display: inline-block;
     border-radius: 10px;
     text-decoration: none;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 120px;
-}
-
-/*"Find us" field position*/
-.Findus {
-    margin-top: -80px;
-    padding: 10px 10px;
-    float: left;
-}
-a:link {/*link style*/
-    padding: 5px 5px;
-    text-decoration:none;
-
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: black;
 }
 
 /*Change style when user points on buttons*/
@@ -82,7 +68,7 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
 }
 /*Style for all buttons*/
-.audioInput+label, .buttons, .playPause, .stop, #playbackTime, select, #saveSpec {
+.audioInput+label, .playPause, .stop, select, #saveSpec {
     -moz-box-shadow: inset 0 1px 0 0 #ffffff;
     -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
     box-shadow: inset 0 1px 0 0 #ffffff;
@@ -95,11 +81,16 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
 
 /* Center the menu buttons*/
 #buttonsMenu {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
+    font-style: normal;
     margin-top: 50px;
+    -moz-box-shadow: inset 0 1px 0 0 #ffffff;
+    -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
+    box-shadow: inset 0 1px 0 0 #ffffff;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+    border: 1px solid gray;
+    border-radius: 12px;
 }
 
 /*"Choose a file" field*/
@@ -107,6 +98,7 @@ form {
     display: inline-block;
     font-size: 12px;
     width: 250px;
+    text-align: left;
 }
 
 /*Choose a file button*/
@@ -114,29 +106,32 @@ form {
     opacity: 0;
     overflow: hidden;
 }
+
+#myAudio {
+    width: 0px;
+    height: 0px;
+}
+
 .audioInput+label {/*Make a new button*/
-    font-weight: bolder;
     color: black;
     display: inline-block;
     background-color: #ededed;
     cursor: pointer;
-    padding: 16px 40px;
-    margin-left: -80px;
-
+    padding: 5px 10px;
 }
 
 /*Play, Pause, Stop and Gain buttons*/
 .buttons {/*field around the buttons*/
-    background-color: #ededed;
     display: inline-block;
     color: #777777;
     font-size: 18px;
     height: 46px;
     width: 160px;
     text-shadow: 1px 1px 0 #ffffff;
-    padding: 1px 5px;
+    padding: 5px 10px;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 .playPause {/*Play and Pause button*/
     font-size: 15px;
@@ -193,11 +188,9 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
 #playbackTime {
     margin-left: auto;
     margin-right: auto;
-    background-color: #ededed;
     display: inline-block;
     color: black;
     font-size: 14px;
-    font-weight: bold;
     height: 48px;
     line-height: 48px;
     width: 160px;
@@ -212,7 +205,6 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     margin-right: auto;
     display: inline-block;
     font-size: 14px;
-    font-weight: bold;
 }
 
 /*Choose a grid size*/
@@ -221,7 +213,6 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     margin-left: auto;
     margin-right: auto;
     font-size: 14px;
-    font-weight: bold;
 }
 
 /*Dropdown menu*/
