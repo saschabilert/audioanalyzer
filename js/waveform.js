@@ -23,7 +23,8 @@
 var WaveData = {
     gridScale: 1 / 16,
     stepsX: undefined,
-    crestFactor: undefined
+    amplitude: undefined,
+    rms: undefined
 };
 
 var mouseUsed = 0;
@@ -107,6 +108,8 @@ function drawWave() {
             canvasCtxRMS.stroke();
         }
 
+        WaveData.amplitude = peak;
+        WaveData.rms = rms;
         WaveData.crestFactor = calculateCrestFactor(peak, rms);
 
     } else {
@@ -291,10 +294,14 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1);
 
-    var point = WaveData.crestFactor[Math.round(mouseX)];
+    var amplitude = WaveData.amplitude[Math.round(mouseX)];
+    var rms = WaveData.rms[Math.round(mouseX)];
 
-    point = 20 * Math.log10(point);
-    crestfactor.innerHTML = 'Crest: ' + point.toFixed(2) + ' dB';
+    amplitude = 20 * Math.log10(amplitude);
+    rms = 20 * Math.log10(rms);
+
+    amplitudeValue.innerHTML = 'Amplitude: ' + amplitude.toFixed(1) + ' dB';
+    rmsValue.innerHTML = 'RMS: ' + rms.toFixed(1) + ' dB';
 }
 
 function waveOnMouseDown(evt) {

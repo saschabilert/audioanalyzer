@@ -97,7 +97,7 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00:00.0" + " - " + playback.trackDuration;
+            info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + playback.trackDuration;
             drawLineKlick(0);
             drawLineKlickWave(0);
         };
@@ -108,7 +108,7 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00:00.0" + " - " + playback.trackDuration;
+                info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + playback.trackDuration;
             }
         };
 
@@ -250,7 +250,7 @@ function timeUpdate() {
 
     var durationTrack = (Audiodata.signalLen / Audiodata.sampleRate);
 
-    info.innerHTML = timeToString(currentTime, 1, 0) + " - " + timeToString(durationTrack, 1, 0);
+    info.innerHTML = timeToString(currentTime, 1, 0) + "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
 
     if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
         audioCtx.currentTime = 0;
@@ -258,7 +258,7 @@ function timeUpdate() {
         startOffset = 0;
 
         isPlaying = false;
-        info.innerHTML = "00:00.0" + " - " + timeToString(durationTrack, 1, 0);
+        info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
 
         drawLineKlick(0);
         drawLineKlickWave(0);
@@ -266,7 +266,7 @@ function timeUpdate() {
         audioCtx.currentTime = 0;
 
         isPlaying = false;
-        info.innerHTML = timeToString(currentTime, 1, 0) + " - " + timeToString(durationTrack, 1, 0);
+        info.innerHTML = timeToString(currentTime, 1, 0) + "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
         audPlay.stop();
         if (loopSelection) {
             toggleSound();

@@ -61,8 +61,8 @@ contact: sascha.bilert@student.jade-hs.de
             <button id="stop" type="button" class="stop" disabled>&#9724;</button>
             <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled>
         </div>
-        <div id="playbackTime">00:00 - 00:00</div>
-        <div id="loopText">Loop Selection:<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div>
+        <div id="playbackTime">00:00.0&thinsp;/&thinsp;00:00.0</div>
+        <div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div>
         <div id="gridSize">Grid Size:
             <select id="grid" onchange="gridSize()" disabled>
         <option value="0.0625">small</option>
@@ -81,7 +81,8 @@ contact: sascha.bilert@student.jade-hs.de
         <canvas id="canvasWaveLine" width="1176" height="260"></canvas>
         <div id="divWavePosition">
             <p id="waveTime"></p>
-            <p id="crestfactor"></p>
+            <p id="amplitudeValue"></p>
+            <p id="rmsValue"></p>
         </div>
     </div>
 
