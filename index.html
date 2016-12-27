@@ -49,7 +49,7 @@ contact: sascha.bilert@student.jade-hs.de
     <div id="loading" style="display:none;"></div>
 
     <!-- <div id="Findus" class="Findus">Find us on: <a href="http://tgm.jade-hs.de/" target="_blank">Homepage</a></div> -->
-
+    <!-- Create a div with all the buttons above the waveform -->
     <div id="buttonsMenu">
         <form method="post" enctype="multipart/form-data" action="">
             <!-- set input audiofile and trigger the audioProcessing function -->
@@ -59,7 +59,9 @@ contact: sascha.bilert@student.jade-hs.de
         <div class="buttons">
             <button id="player" type="button" class="playPause" disabled>&#9654;</button>
             <button id="stop" type="button" class="stop" disabled>&#9724;</button>
-            <input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled>
+           <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5"
+                                         class="Gain" disabled><span class="tooltiptext">When enabled, adjust the volume
+                                         by dragging the bar</span></div>
         </div>
         <div id="playbackTime">00:00.0&thinsp;/&thinsp;00:00.0</div>
         <div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div>
@@ -72,6 +74,7 @@ contact: sascha.bilert@student.jade-hs.de
         </div>
     </div>
 
+    <!-- Create a canvas with the waveform -->
     <div class="canvas" id="canvasDivWave">
         <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
         <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
@@ -86,7 +89,7 @@ contact: sascha.bilert@student.jade-hs.de
         </div>
     </div>
 
-    <!-- generate dropwdown lists-->
+    <!-- Create the dropdown menu with all settings-->
     <div class="dropdownContainer">
         <div class="dropdownBlock">
             <p>Blocklength:</p>
@@ -137,10 +140,10 @@ contact: sascha.bilert@student.jade-hs.de
       </select>
         </div>
         <div class="dropdownBlock">
-            <p>Min:</p>
-            <input type="text" id="min" onkeypress="minMaxValue(event)">
-            <p>Max:</p>
-            <input type="text" id="max" onkeypress="minMaxValue(event)">
+            <p>Value Range</p>
+            <input type="text" id="min" onkeypress="minMaxValue(event)" placeholder="min:">
+
+            <input type="text" id="max" onkeypress="minMaxValue(event)" placeholder="max">
         </div>
         <div class="canvas" id="divCanvasLegend">
             <canvas id="canvasLegend" width="300" height="75"></canvas>
@@ -161,21 +164,21 @@ contact: sascha.bilert@student.jade-hs.de
     <script type="text/javascript" src="js/colormaps/viridis.js"></script>
     <script type="text/javascript" src="js/colormaps/plasma.js"></script>
 
-    <div id="divSpecPosition">
-        <p id="specTime"></p>
-        <p id="specFreq"></p>
-        <p id="magnitute"></p>
-    </div>
 
+    <!-- Create a canvas for the spectrum or for the other display types -->
     <div class="canvas" id="canvasDivSpec">
         <canvas id="canvasSpec" width="1176" height="512"></canvas>
         <canvas id="canvasSpecScale" width="1200" height="540"></canvas>
         <canvas id="canvasSpecLine" width="1176" height="512"></canvas>
-
+        <div id="divSpecPosition">
+            <p id="specTime"></p>
+            <p id="specFreq"></p>
+            <p id="magnitute"></p>
+        </div>
     </div>
 
-    <button id="saveSpec" type="button" onclick="downloadSpectrum()">Save Spectrogram</button>
+    <!-- Create a button for saving the spectrum in .png format -->
+    <button id="saveSpec" type="button" onclick="downloadSpectrum()" disabled>Save Spectrogram</button>
 
 </body>
-
 </html>

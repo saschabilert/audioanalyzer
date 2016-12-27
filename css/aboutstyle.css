@@ -1,3 +1,25 @@
+body {/* Default parameters for the page*/
+    min-width: 1200px;
+    position: relative;
+    font-family: Verdana;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -20px;
+}
+
+/*CSS code for the header*/
+header {
+    background: lightgray;
+    width: 800px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 1.5px solid gray;
+    height: 145px;
+}
+
 p {
     hyphens: auto;
     text-align: justify;

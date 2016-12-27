@@ -1,0 +1,57 @@
+- Header
+  - Webseiten-Header weniger hoch machen
+  - Visited-Color der Webseiten-Header Links schwarz lassen
+  - Abstand zwischen Webseiten-Header und Buttons leicht verkleinern
+- Waveform-Buttons
+  - Abstand lassen zwischen "Zeitanzeige" und "Loop Selection"
+  - Abstand lassen zwischen "Loop Selection" und "Grid Size"
+  - Querstrich zwischen Zeiten, mit Thin Spaces abgesetzt
+  - Alle Bedienelemente über der Wellenform in ein breites gemeinsames graues Band legen und die einzelnen unter-Gruppierungs-Kästen entfernen und Gruppierungen durch Abstände ersetzen.
+  - Lade-Anzeiger weiter nach oben verschieben
+  - Lade-Anzeiger ersetzen
+    - Webseiten-Symbol mit verschiedenen Waveforms, die "animieren"
+  - Tooltip für Lautstärkeregler
+  - File-Button
+    - Onclick: File laden und Samples speichern
+    - File nicht in Audioprocessing laden
+  - Ausprobieren, ob nicht-fette Schriftart hübscher wäre
+- Waveform
+  - Daten-Anzeige mit Angaben für Amplitude und RMS in dunkelblau und hellblau
+  - Default-Text in Daten-Anzeige, wenn Cursor noch nicht bewegt wurde
+  - Bug: Grid bricht am Ende ab
+  - Fade-Out am rechten Ende untersuchen
+  - Ticks und Tick-Labels untersuchen
+  - Spectrogram-angepasste Selektion statt keiner Selektion
+  - Darstellung an Browsergröße anpassen
+    - Wellenform in doppelter Auflösung rendern, damit Reserve für größere Bildschirme vorhanden ist
+  - RMS nicht darstellen wenn zu wenige Samples pro Pixel (sehr kurze Datei)
+  - Horizontale Grid Lines durch relevante Skala ersetzen (z.B. Mitte, -6 dB, -3 dB, 0 dB)
+  - Ausprobieren: Selektions-Pointer auf der Wellenform; Resize-Pointer während Selektion
+- Spectrogram-Buttons
+  - Sollten nicht rechnen, wenn keine Audiodaten geladen
+  - Kaiser-Bessel-Funktion implementieren
+  - Sehr hohe Overlap (90%) hinzufügen
+  - Instantanfrequenz fixen
+  - Colorbar für Viridis und Plasma über den gesamten Wertebereich darstellen
+  - Bei Phasendarstellung: Colormap-Auswahl nur mit Twilight
+  - Min/Max: Labels weglassen und durch ein gemeinsames "Value Range" ersetzen
+  - "Min:"/"Max:" in die Textfelder schreiben
+  - Bug: Min/Max funktioniert nicht
+- Spektrogramm
+  - Default-Text in Daten-Anzeige, wenn Cursor noch nicht bewegt wurde
+  - Daten-Anzeige mit mehr Daten-Auflösung (Zeit mit Millisekunden, Level mit Nachkommastelle)
+  - Bug: Zeit in Daten-Anzeige mit Einheit
+  - Achsen immer sichtbar machen, so dass sie nicht wegscrollen, und evtl. Rahmen weglassen
+  - Achsen-Labels anbringen ("Time", "Frequency in Hz")
+  - Download umstrukturieren: Data-Uri beim initialen Zeichnen des Spektrogramms setzen, so dass der User jederzeit eine voll herausgezoomte Sicht herunterladen kann.
+- Instructions
+  - Header siehe Hauptseite
+  - Image-Popup sollte zentriert sein
+  - Überschriften sollten nicht unterstrichen sein
+  - "Navigator:"-Label nicht nötig
+  - Code-Beispiele neben Fensterdarstellungen (Javascript)
+  - Viel Text fehlt noch...
+- About
+  - Auch hier die GPL angeben
+  - Link auf Github einfügen
+  - Lizenztext korrekt formatieren (Absätze und Linebreaks)

@@ -20,7 +20,7 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-body {/* Default parameters for all pages*/
+body {/* Default parameters for the page*/
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
@@ -29,7 +29,7 @@ body {/* Default parameters for all pages*/
     margin-top: -20px;
 }
 
-/*CSS code for the header in all webpages*/
+/*CSS code for the header*/
 header {
     background: lightgray;
     width: 800px;
@@ -39,6 +39,7 @@ header {
     margin-right: auto;
     text-align: center;
     border: 1.5px solid gray;
+    height: 145px;
 }
 
 h1 {
@@ -48,7 +49,7 @@ h1 {
 }
 
 /* Links to the other webpages*/
-a.link:link, a.link:visited{
+a.link:link, a:visited {
     background-color: lightgray;
     padding: 10px 20px;
     display: inline-block;
@@ -70,7 +71,7 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
 }
 /*Style for all buttons*/
-.audioInput+label, .playPause, .stop, select, #saveSpec {
+.audioInput+label, .playPause, .stop, select, #saveSpec, #buttonsMenu {
     -moz-box-shadow: inset 0 1px 0 0 #ffffff;
     -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
     box-shadow: inset 0 1px 0 0 #ffffff;
@@ -92,12 +93,6 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
     width: 1200px;
     position: relative;
     text-align: center;
-    -moz-box-shadow: inset 0 1px 0 0 #ffffff;
-    -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
-    box-shadow: inset 0 1px 0 0 #ffffff;
-    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-    background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
     border: 1.5px solid gray;
     border-radius: 12px;
 }
@@ -176,6 +171,41 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -15px;
+}
+/*Volume button tooltip*/
+.range-container{
+    position:relative;
+    display: inline-block;
+}
+.range-container .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.range-container .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+.range-container:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
 
 /*Playback time field*/
@@ -392,12 +422,10 @@ option {/*Style and size of all option button*/
 /*Animation while the page is loading*/
 #loading {/*Loading circle*/
     position: absolute;
-    left: 50%;
-    top: 50%;
     z-index: 1;
     width: 150px;
     height: 150px;
-    margin: -75px 0 0 -75px;
+    margin-left:50%;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
@@ -405,9 +433,9 @@ option {/*Style and size of all option button*/
     animation: spin 2s linear infinite;
 }
 #container {/*White container on the webpage*/
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position:absolute;
+    width:100%;
+    height:100%;
     background: white;
     opacity: 0.8;
 }

@@ -57,20 +57,27 @@ function colormap() {
     SpectroData.TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
-
+// Define the needed global variables for audio
 var startOffset = 0;
 var startTime = 0;
 var audPlay;
 var isPlaying = false;
 var gainNode;
+
+//Get the user input for playing or pausing the signal
 var playButton = document.getElementById("player");
 playButton.addEventListener("click", toggleSound);
 
+//Get the user input for stopping the signal
 var stopbtn = document.getElementById("stop");
-
 var info = document.getElementById("playbackTime");
-var loopSelection = false;
 
+// Save the current gain
+document.getElementById('volume').addEventListener('input', function() {
+    gainNode.gain.value = this.value;
+});
+
+// If user presses "Space", play/pause the file
 document.onkeydown = function(e) {
     var keyCode = e.keyCode;
     if (keyCode == 32) {
@@ -79,8 +86,8 @@ document.onkeydown = function(e) {
     }
 };
 
+//Play, pause and stop the signal
 function toggleSound() {
-
     if (!isPlaying) {
         startTime = audioCtx.currentTime;
         audPlay = audioCtx.createBufferSource();
@@ -91,7 +98,6 @@ function toggleSound() {
         window.requestAnimationFrame(drawLinePlay);
         window.requestAnimationFrame(drawLinePlayWave);
         var playback = timeUpdate();
-
         stopbtn.onclick = function() {
             startTime = 0;
             startOffset = 0;
@@ -101,7 +107,6 @@ function toggleSound() {
             drawLineKlick(0);
             drawLineKlickWave(0);
         };
-
         audPlay.onended = function() {
             playButton.innerHTML = "&#9654;";
             if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
@@ -111,27 +116,19 @@ function toggleSound() {
                 info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + playback.trackDuration;
             }
         };
-
     } else {
-
         audPlay.stop();
         isPlaying = false;
         playButton.innerHTML = "&#9654;";
         startOffset += audioCtx.currentTime - startTime;
-
     }
     gainNode = audioCtx.createGain();
     audPlay.connect(gainNode);
     gainNode.connect(audioCtx.destination);
     gainNode.gain.value = 0.5;
-
-
 }
 
-document.getElementById('volume').addEventListener('input', function() {
-    gainNode.gain.value = this.value;
-});
-
+//Show song name after importing it
 var inputs = document.querySelectorAll('.audioInput');
 Array.prototype.forEach.call(inputs, function(input) {
     var label = input.nextElementSibling;
@@ -149,22 +146,18 @@ Array.prototype.forEach.call(inputs, function(input) {
     });
 });
 
+// Function for enabling the buttons after loading a file
 function enableButton() {
     playButton.disabled = false;
     stopbtn.disabled = false;
-    document.getElementById("blockLength").disabled = false;
-    document.getElementById("windowType").disabled = false;
-    document.getElementById("overlap").disabled = false;
-    document.getElementById("display").disabled = false;
-    document.getElementById("colormap").disabled = false;
-    document.getElementById("min").disabled = false;
-    document.getElementById("max").disabled = false;
     document.getElementById("grid").disabled = false;
     document.getElementById("saveSpec").disabled = false;
     document.getElementById("LoopCheck").disabled = false;
     document.getElementById("volume").disabled = false;
+    document.getElementById("saveSpec").disabled = false;
 }
 
+// Values for displaying the spectrum
 function minMaxValue(e) {
     var min = 0;
     var max = 0;
@@ -273,9 +266,8 @@ function timeUpdate() {
         }
     }
 }
-
+var loopSelection = false;
 function setLoop() {
-
     loopSelection = document.getElementById("LoopCheck").checked;
 
 }
