@@ -180,14 +180,14 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     -webkit-appearance: none;
     margin-top: -15px;
 }
-/*Volume button tooltip*/
+/*Tooltips*/
 .range-container{
     position:relative;
     display: inline-block;
 }
 .range-container .tooltiptext {
     visibility: hidden;
-    width: 150px;
+    width: 200px;
     background-color: #555;
     color: #fff;
     text-align: center;
@@ -429,11 +429,12 @@ option {/*Style and size of all option button*/
 
 /*Animation while the page is loading*/
 #loading {/*Loading circle*/
-    position: absolute;
+    position: fixed;
     z-index: 1;
     width: 150px;
     height: 150px;
     margin-left:50%;
+    margin-right: 50%;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
