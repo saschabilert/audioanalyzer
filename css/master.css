@@ -19,14 +19,14 @@
  *
  * contact: sascha.bilert@student.jade-hs.de
  */
-a
+
 body {/* Default parameters for the page*/
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: -20px;
+    margin-top: -8px;
 }
 
 /*CSS code for the header*/
@@ -133,7 +133,7 @@ form {
     display: inline-block;
     width: auto;
     margin-left: 30px;
-    
+
 }
 .playPause {/*Play and Pause button*/
     font-size: 14px;
