@@ -94,17 +94,15 @@ function loadAudio() {
 
 function processAudio() {
 
-    Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen *
-        Audiodata.overlap);
+    Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
 
-    var duration = (Audiodata.signalLen /
-        Audiodata.sampleRate);
+    var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
-    info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + timeToString(duration, 1, 0);
+    info.innerHTML = "00:00.0" +
+        "&thinsp;/&thinsp;" + timeToString(duration, 1, 0);
 
     // calculate the number of sampleblocks
-    Audiodata.nPart = Math.round((Audiodata.signalLen -
-        Audiodata.blockLen) / Audiodata.hopsize);
+    Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);
 
     // check the maximum number of blocks ( = 32700);
     checkNumbOfBlocks();
@@ -133,8 +131,7 @@ function calculateDisplay(type) {
 
     // calculate the choosen window (see calculateWindow())
     Audiodata.windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
-    Audiodata.windowValue = calculateWindow(Audiodata.windowLen,
-        Audiodata.windowFunction);
+    Audiodata.windowValue = calculateWindow(Audiodata.windowLen, Audiodata.windowFunction);
 
     // set the endIdx to slice the array
     var endIdx = 0;
@@ -142,15 +139,15 @@ function calculateDisplay(type) {
     // cut the audiosamples into blocks and calculate the choosen data
     for (var i = 0; i < Audiodata.nPart; i++) {
 
-        var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i,
-            Audiodata.blockLen + endIdx);
+        var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + endIdx);
 
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
             for (var k = 0; k < Audiodata.blockLen; k++) {
                 sampleBlock[k] = sampleBlock[k] * Audiodata.windowValue[k];
             }
-            var [realPart, imagPart] = calculateFFT(sampleBlock);
+            var [realPart,
+                imagPart] = calculateFFT(sampleBlock);
         }
 
         switch (type) {
@@ -164,8 +161,7 @@ function calculateDisplay(type) {
                 Audiodata.groupDelay[i] = calculateGroupDelay(realPart, imagPart);
                 break;
             case "Instantaneous Frequency Deviation":
-                Audiodata.instantFreqDev[i] = calculateInstantFreqDev(sampleBlock,
-                    Audiodata.windowFunction);
+                Audiodata.instantFreqDev[i] = calculateInstantFreqDev(sampleBlock, Audiodata.windowFunction);
                 break;
             default:
                 alert("404 spectrogram not found!");
@@ -252,16 +248,17 @@ function calculateInstantFreqDev(sampleBlock, windowType) {
 
     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
 
-    var secondSampleBlock = sampleBlock.slice(sampleBlock.length -
-        newSampleBlockLen - 1, sampleBlock.length - 1);
+    var secondSampleBlock = sampleBlock.slice(sampleBlock.length - newSampleBlockLen - 1, sampleBlock.length - 1);
 
     for (var i = 0; i < newSampleBlockLen; i++) {
         firstSampleBlock[i] = firstSampleBlock[i] * window[i];
         secondSampleBlock[i] = secondSampleBlock[i] * window[i];
     }
 
-    var [firstReal, firstImag] = calculateFFT(firstSampleBlock);
-    var [secondReal, secondImag] = calculateFFT(secondSampleBlock);
+    var [firstReal,
+        firstImag] = calculateFFT(firstSampleBlock);
+    var [secondReal,
+        secondImag] = calculateFFT(secondSampleBlock);
 
     var firstPhase = calculatePhase(firstReal, firstImag);
 
@@ -277,8 +274,7 @@ function calculateInstantFreqDev(sampleBlock, windowType) {
 
         instantFreq[k] = dPhase * Audiodata.wrapFreq / (2 * Math.PI);
 
-        instantFreq[k] = instantFreq[k] + Math.round((freq[k] - instantFreq[k]) /
-            Audiodata.wrapFreq) * Audiodata.wrapFreq;
+        instantFreq[k] = instantFreq[k] + Math.round((freq[k] - instantFreq[k]) / Audiodata.wrapFreq) * Audiodata.wrapFreq;
 
         instantFreqDev[k] = instantFreq[k] - freq[k];
     }
@@ -297,8 +293,7 @@ function calculateWindow(windowLen, type) {
     switch (type) {
         case "hann":
             for (i = 0; i < windowLen.length; i++) {
-                window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] /
-                    (windowLen.length - 1)));
+                window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)));
             }
             break;
         case "hannpoisson":
@@ -307,16 +302,12 @@ function calculateWindow(windowLen, type) {
             var alpha = 2;
 
             for (i = 0; i < windowLen.length; i++) {
-                window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] /
-                    (windowLen.length - 1))) * Math.exp((-alpha *
-                        Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) /
-                    (windowLen.length - 1));
+                window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) * Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) / (windowLen.length - 1));
             }
             break;
         case "cosine":
             for (i = 0; i < windowLen.length; i++) {
-                window[i] = Math.cos(((Math.PI * windowLen[i]) /
-                    (windowLen.length)) - (Math.PI / 2));
+                window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
             }
             break;
         case "kaiser-bessel":
@@ -325,9 +316,7 @@ function calculateWindow(windowLen, type) {
             var numer = Math.PI * alpha;
 
             for (i = 0; i < windowLen.length; i++) {
-                denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 *
-                        windowLen[i]) / (windowLen.length - 1) - 1) *
-                    ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
+                denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 * windowLen[i]) / (windowLen.length - 1) - 1) * ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
             }
 
             numer = besselfkt(numer);
@@ -343,14 +332,7 @@ function calculateWindow(windowLen, type) {
             var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
             for (i = 0; i < windowLen.length; i++) {
-                window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI *
-                        windowLen[i] / (windowLen.length - 1)) + alpha[2] *
-                    Math.cos(4 * Math.PI * windowLen[i] /
-                        (windowLen.length - 1)) - alpha[3] *
-                    Math.cos(6 * Math.PI * windowLen[i] /
-                        (windowLen.length - 1)) + alpha[4] *
-                    Math.cos(8 * Math.PI * windowLen[i] /
-                        (windowLen.length - 1));
+                window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)) + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] / (windowLen.length - 1)) - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] / (windowLen.length - 1)) + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] / (windowLen.length - 1));
             }
             break;
         case "rect":
@@ -399,7 +381,7 @@ function besselfkt(array) {
 
     for (i = 0; i < bessel.length; i++) {
         var n = i + 1;
-        bessel[i] = Math.pow((array[i] / 2), n) / Math.pow(factorial(i), 2);
+        bessel[i] = Math.pow(-1, i) * Math.pow((array[i] / 2), i) / Math.pow(factorial(i), 2);
     }
     return bessel;
 }
