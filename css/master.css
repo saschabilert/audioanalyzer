@@ -19,7 +19,7 @@
  *
  * contact: sascha.bilert@student.jade-hs.de
  */
-
+a
 body {/* Default parameters for the page*/
     min-width: 1200px;
     position: relative;
@@ -100,9 +100,15 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
 /*"Choose a file" field*/
 form {
     display: inline-block;
-    margin-top: 16px;
+    margin-top: 0px;
     text-align: left;
-    width: 250px;
+    text-overflow: ellipsis;;
+    width:200px;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 8px;
+
+
 }
 
 /*Choose a file button*/
@@ -119,6 +125,7 @@ form {
 .audioInput+label {/*Make a new button*/
     cursor: pointer;
     padding: 5px 10px;
+
 }
 
 /*Play, Pause, Stop and Gain buttons*/
@@ -126,6 +133,7 @@ form {
     display: inline-block;
     width: auto;
     margin-left: 30px;
+    
 }
 .playPause {/*Play and Pause button*/
     font-size: 14px;
