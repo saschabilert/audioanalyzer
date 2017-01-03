@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /*
  * style.css
  *
@@ -44,14 +45,16 @@ header {
 }
 
 /*Style all the paragraphs*/
+=======
+>>>>>>> Stashed changes
 p {
-    hyphens: auto;
     text-align: justify;
     margin-top: 50px;
     margin-left: 200px;
     margin-right: 200px;
 }
 
+<<<<<<< Updated upstream
 /*Style all the titles h1*/
 h1 {
     text-align: center;
@@ -60,6 +63,8 @@ h1 {
 }
 
 /*Style all the titles h2*/
+=======
+>>>>>>> Stashed changes
 h2 {
     margin-top: 50px;
     text-align: center;
@@ -84,11 +89,11 @@ ul {
     hyphens: auto;
 }
 
-#licenseVersion {
+p.licenseVersion {
     text-align: center;
 }
 
-#licenseEnd {
+p.licenseEnd {
     text-align: center;
 }
 
