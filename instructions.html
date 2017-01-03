@@ -65,16 +65,16 @@ contact: sascha.bilert@student.jade-hs.de
     </header>
 
     <ul class="navigation">
-        <li><a class="naviItems" href="#ChoosingAFile">Choosing a file</a></li>
-        <li><a class="naviItems" href="#ControlBar">Control Bar</a></li>
+        <li><a class="naviItems" href="#choosingAFile">Choosing a file</a></li>
+        <li><a class="naviItems" href="#controlBar">Control Bar</a></li>
         <li><a class="naviItems" href="#waveform">Waveform</a></li>
         <li><a class="naviItems" href="#spectrogram">Spectrogram</a></li>
-        <li><a class="naviItems" href="#Editing">Editing the spectrum</a></li>
+        <li><a class="naviItems" href="#parameters">Parameters</a></li>
         <li><a class="naviItems" href="#blockLength">Blocklength</a></li>
-        <li><a class="naviItems" href="#WindowType">Window-Type</a></li>
+        <li><a class="naviItems" href="#windowType">Window-Types</a></li>
         <li><a class="naviItems" href="#overlap">Overlap</a></li>
-        <li><a class="naviItems" href="#DisplayType">Display-Type</a></li>
-        <li><a class="naviItems" href="#Colormap">Colormap</a></li>
+        <li><a class="naviItems" href="#displayType">Display-Types</a></li>
+        <li><a class="naviItems" href="#colormap">Colormaps</a></li>
     </ul>
 
     <h2>Instructions</h2>
@@ -87,12 +87,12 @@ contact: sascha.bilert@student.jade-hs.de
     <p style="margin-top: 16px;">The audioprocssing is based on a free FFT programmed in JavaScript (JS) by Nayuki for more Information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed, was
         to create a easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as an spectrogram. The user is able to apply diffrent settings for various examinations. We tried to
         describe all the parameters in a easy way in the instructions.</p>
-    <h3><a id="ChoosingAFile">Choose a file:</a></h3>
+    <h3><a id="choosingAFile">Choose a file:</a></h3>
     <img class="zoomImg" id="choose" src="image/choose2.png">
     <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser
         <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats)</a>. After you choose a file the waveform and the magintude-spectrum will be calculated and displayed below
         the buttons after the loading screen disappeared. The upload button now shows the name of your uploaded file. By clicking the button again, you can upload a new audio file. Your audio data won’t be saved at any point just analysed.</p>
-    <h3><a id="ControlBar">Control Bar:</a></h3>
+    <h3><a id="controlBar">Control Bar:</a></h3>
     <img class="zoomImg" src="image/controlbar.png">
     <p>You can play, pause and stop your uploaded track by using the different buttons in the control bar. Here you also find the button "Choose a file" which was discribed in the section before. You can also adjust the volume by using the volume slider
         next to the stop button. The numbers display the current playback time and the total length of the track in MM:SS:m seperated by a slash. You can use the pause and play button to control the playback signal while you analyse it. It is also possible
@@ -109,7 +109,7 @@ contact: sascha.bilert@student.jade-hs.de
     <h3><a id="spectrogram">Spectrogram:</a></h3>
     <img class="zoomImg" src="image/spectrum.png">
     <p>The Spectrogram You can zoom in and out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
-    <h3><a id="Editing">Editing the spectrum:</a></h3>
+    <h3><a id="parameters">Parameters:</a></h3>
     <img class="zoomImg" src="image/select.png">
     <p>You can change the settings of the spectrum by choosing a block length, an overlap, a window type and a colormap. The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of the
         colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise the
@@ -118,73 +118,67 @@ contact: sascha.bilert@student.jade-hs.de
     <p>The block length is the number of bins used to divide the window into equal strips. One bit represents one spectrum sample and defines the frequency resolution of the window. For a 44100 Hz sample rate and a block size of 1024, the signal is being
         divided into 512 bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the block size, you will have an improved frequency resolution, because you will have more bins in one
         window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
-    <h3><a id="WindowType">Window-Type:</a></h3>
+    <h3><a id="windowType">Window-Types:</a></h3>
     <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
     <h4>1. Rect Window</h4>
-    <p>The Rect Window is defined by: $w(n) = 1$</p>
-    <div class="plot" id="divRect"></div>
+    <p class="windowDef">The Rect Window is defined by: $w(n) = 1$</p>
+    <div class="windows">
+        <div class="plot" id="divRect"></div>
+        <div class="code"><pre><code class="language-js">/*
+ * This code illustrates how to calculate a rect window
+ */
+
+ var windowLen = linspace(0, 1024, 1024);
+ var windowValueHann = calculateWindow(windowLen);
+
+ function calculateWindow(windowLen) {
+       var window = new Array(windowLen.length);
+       window.fill(1);
+       return window;
+ };</code></pre>
+        </div>
+    </div>
     <h4>2. Hann Window</h4>
-    <p>The Hann Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)$</p>
-    <div class="plot" id="divHann"></div>
+    <p class="windowDef">The Hann Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)$</p>
+    <div class="windows">
+        <div class="plot" id="divHann"></div>
+        <div class="code"><pre><code class="language-js">/*
+ * This code illustrates how to calculate a hann window
+ */
+
+ var windowLen = linspace(0, 1024, 1024);
+ var windowValueHann = calculateWindow(windowLen);
+
+ function calculateWindow(windowLen) {
+       var window = new Array(windowLen.length);
+       for (i = 0; i < windowLen.length; i++) {
+           window[i] = 0.5 * (1 - Math.cos(2 * Math.PI *
+           windowLen[i] / (windowLen.length - 1)));
+       }
+       return window;
+ };</code></pre>
+        </div>
+    </div>
     <h4>3. Hann-Poisson Window</h4>
-    <p>The Hann-Poisson Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)e^{{\frac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
+    <p class="windowDef">The Hann-Poisson Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)e^{{\frac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
     <div class="plot" id="divHannPoisson"></div>
     <h4>4. Cosine Window</h4>
-    <p>The Cosine Window is defined by: $w(n) = cos\left(\frac{\pi n}{N-1}-\frac{\pi}{2}\right)$</p>
+    <p class="windowDef">The Cosine Window is defined by: $w(n) = cos\left(\frac{\pi n}{N-1}-\frac{\pi}{2}\right)$</p>
     <div class="plot" id="divCosine"></div>
     <h4>5. Flat-Top Window</h4>
-    <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\frac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\frac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\frac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\frac{8\pi n}{N-1}\right)$</p>
-    <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
+    <p class="windowDef">The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\frac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\frac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\frac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\frac{8\pi n}{N-1}\right)$</p>
+    <p class="windowDef">$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
     <div class="plot" id="divFlatTop"></div>
     <h4>6. Kaiser-Bessel Window</h4>
-    <p>The Rect-Window is defined by: $w(n) = \frac{I_{0}\left(\pi\alpha\sqrt{1-\left(\frac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
+    <p class="windowDef">The Rect-Window is defined by: $w(n) = \frac{I_{0}\left(\pi\alpha\sqrt{1-\left(\frac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
     <div class="plot" id="divKaiserBessel"></div>
-
-    <pre><code class="language-js">/*
- * This is some sample code to illustrate how things look!
- */
-import * as templates from './somewhere';
-import Musician from './musician';
-
-const something = true;
-export let blah = 123;
-var somethingElse = false;
-
-function test() {
-    return new Promise((resolve, reject) => {
-        resolve();
-    });
-}
-
-class SomeClass {
-    render() {
-        return templates.helloWorld();
-    }
-}
-
-class TaylorSwift extends Musician {
-    constructor(position) {
-        super(position);
-    }
-
-    get yearOfBirth() {
-        return 1989;
-    }
-
-    perform(song) {
-        this.sing(song)
-    }
-}
-
-export default Paul;</code></pre>
-
     <h3><a id="overlap">Overlap:</a></h3>
     <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
 
-    <h3><a id="DisplayType">Display-Type:</a></h3>
+    <h3><a id="displayType">Display-Types:</a></h3>
     <p>HERE COMES SOMETHING ABOUT THE display type</p>
 
-    <h3><a id="Colormap">Colormap:</a></h3>
+    <h3><a id="colormap">Colormaps:</a></h3>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
 
 </body>

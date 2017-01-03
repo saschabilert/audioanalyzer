@@ -20,19 +20,16 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-/* Default parameters for the page*/
 h2 {
     text-align: center;
     margin-top: 50px;
 }
 
-/*Style all the titles h3*/
 h3 {
     text-align: center;
     margin-top: 50px;
 }
 
-/*Style all the titles h4*/
 h4 {
     text-align: left;
     margin-top: 50px;
@@ -53,7 +50,6 @@ img.zoomImg#choose {
     height: 40%;
 }
 
-/*Style all the paragraphs*/
 p {
     position: static;
     text-align: justify;
@@ -63,20 +59,41 @@ p {
     line-height: 160%;
 }
 
-.plot {
-    width: 40%;
-    height: auto;
-    margin-top: 50px;
-    margin-left: 200px;
+p.windowDef {
+    margin-bottom: 0px;
 }
-/*Style the navigation menu*/
-ul.navigation {/*Style the field around the menu*/
+
+div.windows {
+    object-position: left;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 1200px;
+}
+
+div.plot {
+    display: inline-block;
+    float: left;
+    width: 50%;
+    height: 50%;
+}
+
+div.code {
+    display: inline-block;
+    margin-left: 630px;
+    width: auto;
+}
+
+ul.navigation {
+    /*Style the field around the menu*/
     position: absolute;
     list-style-type: none;
     padding: 0px;
     width: 165px;
 }
-a.naviItems {/*Display of the buttons */
+
+a.naviItems {
+    /*Display of the buttons */
     cursor: pointer;
     display: inline-block;
     background-color: lightgray;
@@ -91,6 +108,12 @@ a.naviItems {/*Display of the buttons */
     margin-top: 2px;
     text-align: center;
     border: 1px solid gray;
+}
+
+a.naviItems:hover {
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+    background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
+    background-color: #dfdfdf;
 }
 
 ul.technics {
