@@ -2,7 +2,6 @@ body {
     /* Default parameters for the page*/
     min-width: 1200px;
     position: relative;
-    font-family: Verdana;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: -8px;
@@ -140,11 +139,12 @@ h4 {
 }
 
 p {
-    hyphens: auto;
+    position: static;
     text-align: justify;
     margin-left: 200px;
     margin-right: 200px;
     margin-top: 50px;
+    line-height: 160%;
 }
 
 .plot {
@@ -154,15 +154,12 @@ p {
     margin-left: 200px;
 }
 
-
-/*CSS for the left navigation menu in the instruction page*/
-
-ul {
+ul.navigation {
     /*Display of the box */
+    position: absolute;
     list-style-type: none;
     padding: 0px;
     width: 165px;
-    position: fixed;
 }
 
 a.naviItems {
@@ -188,17 +185,17 @@ li:hover {
     background-color: white;
 }
 
-#technics {
-    position: absolute;
-    margin-left: 220px;
+ul.technics {
+    position: static;
+    margin-left: 200px;
+    margin-right: 200px;
     list-style-type: circle;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 #githubribbon {
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
     border: 0px;
+    margin-right: -20px;
 }

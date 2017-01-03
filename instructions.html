@@ -44,6 +44,7 @@ contact: sascha.bilert@student.jade-hs.de
     <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- include MathJax to user LateX for Math formular -->
     <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
     <script type="text/javascript" src="js/audioprocessing.js"></script>
 
 </head>
@@ -51,8 +52,8 @@ contact: sascha.bilert@student.jade-hs.de
 <body>
 
     <a href="https://github.com/saschabilert/audioanalyzer" target="_blank">
-        <img id="githubribbon" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
-            alt="Fork us on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
+        <img id="githubribbon" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork us on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
     </a>
 
     <header>
@@ -62,11 +63,11 @@ contact: sascha.bilert@student.jade-hs.de
         <a href="about.html" class="link" target="_blank">About</a>
     </header>
 
-    <!-- <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a></div> -->
-
-    <ul>
+    <ul class="navigation">
         <li><a class="naviItems" href="#ChoosingAFile">Choosing a file</a></li>
-        <li><a class="naviItems" href="#PlayPause">Listen to the song</a></li>
+        <li><a class="naviItems" href="#ControlBar">Control Bar</a></li>
+        <li><a class="naviItems" href="#waveform">Waveform</a></li>
+        <li><a class="naviItems" href="#spectrogram">Spectrogram</a></li>
         <li><a class="naviItems" href="#Editing">Editing the spectrum</a></li>
         <li><a class="naviItems" href="#blockLength">Blocklength</a></li>
         <li><a class="naviItems" href="#WindowType">Window-Type</a></li>
@@ -76,32 +77,37 @@ contact: sascha.bilert@student.jade-hs.de
     </ul>
 
     <h2>Instructions</h2>
-    <p>If you need help to use the Website you can navigate to the preferred help-section in the menu on the left side. In general this website is an easy tool to analyse audio files. The developer used different technologies:</p>
-    <ul id="technics">
-        <li>JavaScript</li>
-        <li>HTML</li>
-        <li>CSS</li>
+    <p>This Website includes usefull information about how to analyse your audio file. If you need help to use the Website you can navigate to the preferred help-section in the menu on the left side. The Website is programmed by using the following technologies:</p>
+    <ul class="technics">
+        <li>JavaScript (JS)</li>
+        <li>Hypertext Markup Language (HTML5)</li>
+        <li>Cascading Style Sheet (CSS3)</li>
     </ul>
-    <p style="margin-top:90px;">The functional part is based on a free FFT programmed in JavaScript by Nayuki for more Information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io.</a> The main goal we adressed, was to
-        create a easy and useful tool to analyse audio files in terms of magnitude and phase. The user is able to apply diffrent settings for special examinations. All the parameters are discussed in a easy way below.</p>
-    <h3><a id="ChoosingAFile">Choosing a file:</a></h3>
+    <p style="margin-top: 16px;">The audioprocssing is based on a free FFT programmed in JavaScript (JS) by Nayuki for more Information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed, was
+        to create a easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as an spectrogram. The user is able to apply diffrent settings for various examinations. We tried to
+        describe all the parameters in a easy way in the instructions.</p>
+    <h3><a id="ChoosingAFile">Choose a file:</a></h3>
     <img id="choose" src="image/choose2.png" class="zoomImg" alt="Choosing a File">
     <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser
-        <a href="https://developer.mozilla.org/en-US
-       /docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats).</a> After you chose a file the waveform and the spectrum will be calculated and displayed below the buttons after the loading screen disappeared. The upload button now shows the name of your chosen file. By
-            clicking the button again, you can analyse a new file. Your audio data won’t be saved at any point just analysed.</p>
-    <h3><a id="PlayPause">Listen to the song:</a></h3>
-    <div>
-        <img src="image/play.png" class="zoomImg" alt="Play/Pause Button and Playback-Time">
-        <img src="image/loop.png" class="zoomImg" alt="Loop and Gridsize">
-    </div>
-    <p>You can play, pause and stop your track by using the buttons above. You can also adjust the volume by using the volume slider. The second container displays the current playback time and the total length of the track. You can use the buttons to control
-        and go throw the audiosignal. It is also possible to loop a selected piece of the audio file. In case of analysis you can pick a matching grid size.
+        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats)</a>. After you choose a file the waveform and the magintude-spectrum will be calculated and displayed below
+        the buttons after the loading screen disappeared. The upload button now shows the name of your uploaded file. By clicking the button again, you can upload a new audio file. Your audio data won’t be saved at any point just analysed.</p>
+    <h3><a id="ControlBar">Control Bar:</a></h3>
+    <img src="image/controlbar.png" class="zoomImg" alt="Control Bar">
+    <p>You can play, pause and stop your uploaded track by using the different buttons in the control bar. Here you also find the button "Choose a file" which was discribed in the section before. You can also adjust the volume by using the volume slider
+        next to the stop button. The numbers display the current playback time and the total length of the track in MM:SS:m seperated by a slash. You can use the pause and play button to control the playback signal while you analyse it. It is also possible
+        to loop a selected part of the audio file by ticking the box next to "Loop". How to select a part of your audio file is explained in the Waveform section. In case of analysis you can pick a matching grid size for the waveform including small,
+        medium and large.
     </p>
-    <div>
-        <img src="image/waveform.png" class="zoomImg" alt="Waveform">
-        <img src="image/spectrum.png" class="zoomImg" alt="Spectrum">
-    </div>
+    <h3><a id="waveform">Waveform:</a></h3>
+    <img src="image/waveform.png" class="zoomImg" alt="Waveform">
+    <p>The Waveform is compound by the linear amplitude (blue) and the RMS (lightblue). The RMS is calculated by $rms = \sqrt{\frac{1}{N}\sum \limits_{i=0}^{N} n_{i}^{2}}$. On the x-axis you have the time scale and on the y-axis you have .... In the upper
+        left corner you can see a legend showing your current mouse position when you move over the waveform. The legend includes the time, amplitude and the RMS. When you hit play after uploading a audio file, a red line shows the current time point in the waveform.
+        If you click into the waveform and drag your mouse backward or forward you can select a single part of the waveform. When you release the mouse button your selection is shaded in transparent red. If you now hit the play button you just play the selected part.
+        It is also possible to use the Loop to repeat the selected audio part.
+    </p>
+    <h3><a id="spectrogram">Spectrogram:</a></h3>
+    <img src="image/spectrum.png" class="zoomImg" alt="Spectrum">
+    <p>The Spectrogram</p>
     <p>During playing you can see the progress bar in the signal in the waveform and in the spectrum. You can select with the mouse on the waveform just a part of the track, which you want to hear. By doing this, the spectrum will show you just that part.
         You can zoom in and out in the spectrum by using "Ctrl + mouse wheel" for the time axis and "Shift + mouse wheel" for the frequency axis.</p>
     <h3><a id="Editing">Editing the spectrum:</a></h3>
@@ -115,9 +121,6 @@ contact: sascha.bilert@student.jade-hs.de
         window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
     <h3><a id="WindowType">Window-Type:</a></h3>
     <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
-    </script>
 
     <h4>1. Rect Window</h4>
     <p>The Rect Window is defined by: $w(n) = 1$</p>
@@ -125,28 +128,28 @@ contact: sascha.bilert@student.jade-hs.de
     <div class="plot" id="divRect"></div>
 
     <h4>2. Hann Window</h4>
-    <p>The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
+    <p>The Hann Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)$</p>
 
     <div class="plot" id="divHann"></div>
 
     <h4>3. Hann-Poisson Window</h4>
-    <p>The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-cos\left(\dfrac{2\pi n}{N-1}\right)\right)e^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
+    <p>The Hann-Poisson Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)e^{{\frac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
 
     <div class="plot" id="divHannPoisson"></div>
 
     <h4>4. Cosine Window</h4>
-    <p>The Cosine Window is defined by: $w(n) = cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
+    <p>The Cosine Window is defined by: $w(n) = cos\left(\frac{\pi n}{N-1}-\frac{\pi}{2}\right)$</p>
 
     <div class="plot" id="divCosine"></div>
 
     <h4>5. Flat-Top Window</h4>
-    <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
+    <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\frac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\frac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\frac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\frac{8\pi n}{N-1}\right)$</p>
     <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
 
     <div class="plot" id="divFlatTop"></div>
 
     <h4>6. Kaiser-Bessel Window</h4>
-    <p>The Rect-Window is defined by: $w(n) = \dfrac{I_{0}\left(\pi\alpha\sqrt{1-\left(\dfrac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
+    <p>The Rect-Window is defined by: $w(n) = \frac{I_{0}\left(\pi\alpha\sqrt{1-\left(\frac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
 
     <div class="plot" id="divKaiserBessel"></div>
 
