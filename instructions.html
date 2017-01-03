@@ -40,16 +40,17 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- import image for tab icon -->
     <link rel="icon" type="image/png" href="image/icon.png">
 
+    <script type="text/javascript" src="js/audioprocessing.js"></script>
     <!-- include plotly latest version to visulize Data -->
     <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" src="js/plot.js"></script>
     <!-- include MathJax to user LateX for Math formular -->
     <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
-    <script type="text/javascript" src="js/audioprocessing.js"></script>
 
 </head>
 
-<body>
+<body onload="plotWindow()">
 
     <a href="https://github.com/saschabilert/audioanalyzer" target="_blank">
         <img id="githubribbon" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork us on GitHub"
@@ -119,213 +120,25 @@ contact: sascha.bilert@student.jade-hs.de
         window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
     <h3><a id="WindowType">Window-Type:</a></h3>
     <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
-
     <h4>1. Rect Window</h4>
     <p>The Rect Window is defined by: $w(n) = 1$</p>
-
     <div class="plot" id="divRect"></div>
-
     <h4>2. Hann Window</h4>
     <p>The Hann Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)$</p>
-
     <div class="plot" id="divHann"></div>
-
     <h4>3. Hann-Poisson Window</h4>
     <p>The Hann-Poisson Window is defined by: $w(n) = \frac{1}{2}\left(1-cos\left(\frac{2\pi n}{N-1}\right)\right)e^{{\frac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
-
     <div class="plot" id="divHannPoisson"></div>
-
     <h4>4. Cosine Window</h4>
     <p>The Cosine Window is defined by: $w(n) = cos\left(\frac{\pi n}{N-1}-\frac{\pi}{2}\right)$</p>
-
     <div class="plot" id="divCosine"></div>
-
     <h4>5. Flat-Top Window</h4>
     <p>The Flat-Top Window is defined by: $w(n) = \alpha_{0}-\alpha_{1}cos\left(\frac{2\pi n}{N-1}\right)+ \alpha_{2}cos\left(\frac{4\pi n}{N-1}\right)- \alpha_{3}cos\left(\frac{6\pi n}{N-1}\right)+ \alpha_{4}cos\left(\frac{8\pi n}{N-1}\right)$</p>
     <p>$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
-
     <div class="plot" id="divFlatTop"></div>
-
     <h4>6. Kaiser-Bessel Window</h4>
     <p>The Rect-Window is defined by: $w(n) = \frac{I_{0}\left(\pi\alpha\sqrt{1-\left(\frac{2n}{N-1}-1\right)^{2}}\right)}{I_{0}\left(\pi\alpha\right)}$</p>
-
     <div class="plot" id="divKaiserBessel"></div>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "hann");
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divHann', data, layout);
-    </script>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "rect");
-        windowValue.fill(0, 0, 81);
-        windowValue.fill(0, 942, 1024);
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divRect', data, layout);
-    </script>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "hannpoisson");
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divHannPoisson', data, layout);
-    </script>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "cosine");
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divCosine', data, layout);
-    </script>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "flat-top");
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divFlatTop', data, layout);
-    </script>
-
-    <script type="text/javascript">
-        var windowLen = linspace(0, 1024, 1024);
-        var windowValue = calculateWindow(windowLen, "kaiser-bessel");
-        var data = [{
-            x: windowLen,
-            y: windowValue,
-            type: 'bar'
-        }];
-        var layout = {
-            xaxis: {
-                title: 'samples',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-            yaxis: {
-                title: 'value',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 14,
-                    color: 'black'
-                },
-            },
-        };
-        Plotly.newPlot('divKaiserBessel', data, layout);
-    </script>
 
     <pre><code class="language-js">/*
  * This is some sample code to illustrate how things look!
