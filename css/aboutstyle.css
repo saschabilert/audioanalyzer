@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 /*
  * style.css
  *
@@ -22,31 +21,6 @@
  */
 
 /* Default parameters for the page*/
-body {
-    min-width: 1200px;
-    position: relative;
-    font-family: Verdana;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: -8px;
-}
-
-/*Style the header*/
-header {
-    background: lightgray;
-    width: 800px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border: 1.5px solid gray;
-    height: 145px;
-}
-
-/*Style all the paragraphs*/
-=======
->>>>>>> Stashed changes
 p {
     text-align: justify;
     margin-top: 50px;
@@ -54,17 +28,6 @@ p {
     margin-right: 200px;
 }
 
-<<<<<<< Updated upstream
-/*Style all the titles h1*/
-h1 {
-    text-align: center;
-    font-size: 25px;
-    padding-top: 20px;
-}
-
-/*Style all the titles h2*/
-=======
->>>>>>> Stashed changes
 h2 {
     margin-top: 50px;
     text-align: center;
@@ -86,7 +49,6 @@ ul {
     margin-left: 200px;
     margin-right: 200px;
     text-align: justify;
-    hyphens: auto;
 }
 
 p.licenseVersion {
