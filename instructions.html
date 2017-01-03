@@ -35,6 +35,7 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- link to css style -->
     <link rel="stylesheet" href="css/master.css" type="text/css">
     <link rel="stylesheet" href="css/instructionsstyle.css" type="text/css">
+    <link rel="stylesheet" href="assets/rainbow/themes/github.css" type="text/css">
 
     <!-- import image for tab icon -->
     <link rel="icon" type="image/png" href="image/icon.png">
@@ -59,14 +60,14 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- <div id="Findus" class="Findus">Find us on: <a href="http://www.jade-hs.de" target="_blank">Homepage</a></div> -->
 
     <ul>
-        <li><a class = "naviItems" href="#ChoosingAFile">Choosing a file</a></li>
-        <li><a class = "naviItems" href="#PlayPause">Listen to the song</a></li>
-        <li><a class = "naviItems" href="#Editing">Editing the spectrum</a></li>
-        <li><a class = "naviItems" href="#blockLength">Blocklength</a></li>
-        <li><a class = "naviItems" href="#WindowType">Window-Type</a></li>
-        <li><a class = "naviItems" href="#overlap">Overlap</a></li>
-        <li><a class = "naviItems" href="#DisplayType">Display-Type</a></li>
-        <li><a class = "naviItems" href="#Colormap">Colormap</a></li>
+        <li><a class="naviItems" href="#ChoosingAFile">Choosing a file</a></li>
+        <li><a class="naviItems" href="#PlayPause">Listen to the song</a></li>
+        <li><a class="naviItems" href="#Editing">Editing the spectrum</a></li>
+        <li><a class="naviItems" href="#blockLength">Blocklength</a></li>
+        <li><a class="naviItems" href="#WindowType">Window-Type</a></li>
+        <li><a class="naviItems" href="#overlap">Overlap</a></li>
+        <li><a class="naviItems" href="#DisplayType">Display-Type</a></li>
+        <li><a class="naviItems" href="#Colormap">Colormap</a></li>
     </ul>
 
     <h2>Instructions</h2>
@@ -80,9 +81,10 @@ contact: sascha.bilert@student.jade-hs.de
         create a easy and useful tool to analyse audio files in terms of magnitude and phase. The user is able to apply diffrent settings for special examinations. All the parameters are discussed in a easy way below.</p>
     <h3><a id="ChoosingAFile">Choosing a file:</a></h3>
     <img id="choose" src="image/choose2.png" class="zoomImg" alt="Choosing a File">
-    <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser <a href="https://developer.mozilla.org/en-US
-       /docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats).</a> After you chose a file the waveform and the spectrum will be calculated and displayed below the buttons after the loading screen disappeared. The
-        upload button now shows the name of your chosen file. By clicking the button again, you can analyse a new file. Your audio data won’t be saved at any point just analysed.</p>
+    <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser
+        <a href="https://developer.mozilla.org/en-US
+       /docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats).</a> After you chose a file the waveform and the spectrum will be calculated and displayed below the buttons after the loading screen disappeared. The upload button now shows the name of your chosen file. By
+            clicking the button again, you can analyse a new file. Your audio data won’t be saved at any point just analysed.</p>
     <h3><a id="PlayPause">Listen to the song:</a></h3>
     <div>
         <img src="image/play.png" class="zoomImg" alt="Play/Pause Button and Playback-Time">
@@ -318,6 +320,44 @@ contact: sascha.bilert@student.jade-hs.de
         };
         Plotly.newPlot('divKaiserBessel', data, layout);
     </script>
+
+    <pre><code class="language-js">/*
+ * This is some sample code to illustrate how things look!
+ */
+import * as templates from './somewhere';
+import Musician from './musician';
+
+const something = true;
+export let blah = 123;
+var somethingElse = false;
+
+function test() {
+    return new Promise((resolve, reject) => {
+        resolve();
+    });
+}
+
+class SomeClass {
+    render() {
+        return templates.helloWorld();
+    }
+}
+
+class TaylorSwift extends Musician {
+    constructor(position) {
+        super(position);
+    }
+
+    get yearOfBirth() {
+        return 1989;
+    }
+
+    perform(song) {
+        this.sing(song)
+    }
+}
+
+export default Paul;</code></pre>
 
     <h3><a id="overlap">Overlap:</a></h3>
     <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
