@@ -8,9 +8,6 @@ body {
     margin-top: -8px;
 }
 
-
-/*CSS code for the header*/
-
 header {
     background: lightgray;
     width: 800px;
@@ -168,14 +165,6 @@ ul {
     position: fixed;
 }
 
-#technics {
-    position: absolute;
-    margin-left: 220px;
-    list-style-type: circle;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 a.naviItems {
     /*Display of the buttons */
     cursor: pointer;
@@ -197,4 +186,19 @@ a.naviItems {
 li:hover {
     /*Change when user points on it */
     background-color: white;
+}
+
+#technics {
+    position: absolute;
+    margin-left: 220px;
+    list-style-type: circle;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#githubribbon {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    border: 0px;
 }
