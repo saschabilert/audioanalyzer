@@ -8,9 +8,6 @@ body {
     margin-top: -8px;
 }
 
-
-/*CSS code for the header*/
-
 header {
     background: lightgray;
     width: 800px;
@@ -29,6 +26,12 @@ p {
     margin-top: 50px;
     margin-left: 200px;
     margin-right: 200px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 25px;
+    padding-top: 20px;
 }
 
 h2 {
