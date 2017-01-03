@@ -1,5 +1,27 @@
+/*
+ * style.css
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
+
+/* Default parameters for the page*/
 body {
-    /* Default parameters for the page*/
     min-width: 1200px;
     position: relative;
     margin-left: 20px;
@@ -7,6 +29,7 @@ body {
     margin-top: -8px;
 }
 
+/*Style the header*/
 header {
     background: lightgray;
     width: 800px;
@@ -19,30 +42,35 @@ header {
     height: 145px;
 }
 
+/*Style all the titles h1*/
 h1 {
     text-align: center;
     font-size: 25px;
     padding-top: 20px;
 }
 
+/*Style all the titles h2*/
 h2 {
     text-align: center;
     text-decoration: none;
     margin-top: 50px;
 }
 
+/*Style all the titles h3*/
 h3 {
     text-align: center;
     text-decoration: none;
     margin-top: 50px;
 }
 
+/*Style all the titles h4*/
 h4 {
     text-align: center;
     text-decoration: underline;
     margin-top: 50px;
 }
 
+/*Style the zoomed images*/
 .zoomImg {
     display: block;
     margin: auto;
@@ -53,7 +81,6 @@ h4 {
     width: 20%;
     height: 20%;
 }
-
 .zoomImg:hover {
     opacity: 0.7;
 }
@@ -138,6 +165,7 @@ h4 {
     }
 }
 
+/*Style all the paragraphs*/
 p {
     position: static;
     text-align: justify;
@@ -153,17 +181,14 @@ p {
     margin-top: 50px;
     margin-left: 200px;
 }
-
-ul.navigation {
-    /*Display of the box */
+/*Style the navigation menu*/
+ul.navigation {/*Style the field around the menu*/
     position: absolute;
     list-style-type: none;
     padding: 0px;
     width: 165px;
 }
-
-a.naviItems {
-    /*Display of the buttons */
+a.naviItems {/*Display of the buttons */
     cursor: pointer;
     display: inline-block;
     background-color: lightgray;
@@ -178,11 +203,6 @@ a.naviItems {
     margin-top: 2px;
     text-align: center;
     border: 1px solid gray;
-}
-
-li:hover {
-    /*Change when user points on it */
-    background-color: white;
 }
 
 ul.technics {

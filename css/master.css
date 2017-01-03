@@ -20,7 +20,8 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-body {/* Default parameters for the page*/
+/* Default parameters for the page*/
+body {
     min-width: 1200px;
     position: relative;
     font-family: Verdana;
@@ -41,7 +42,7 @@ header {
     border: 1.5px solid gray;
     height: 145px;
 }
-
+/*Style for all titles h1*/
 h1 {
     text-align: center;
     font-size: 25px;
@@ -97,8 +98,8 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
     border-radius: 12px;
 }
 
-/*"Choose a file" field*/
-form {
+/*"Choose a file" buttone*/
+form { /*style the div*/
     display: inline-block;
     margin-top: 0px;
     text-align: left;
@@ -107,25 +108,18 @@ form {
     white-space: nowrap;
     overflow: hidden;
     padding: 8px;
-
-
 }
-
-/*Choose a file button*/
 .audioInput {/*Hide the original button*/
     opacity: 0;
     overflow: hidden;
 }
-
-#myAudio {
+#myAudio { /*Hide the original button*/
     width: 0px;
     height: 0px;
 }
-
 .audioInput+label {/*Make a new button*/
     cursor: pointer;
     padding: 5px 10px;
-
 }
 
 /*Play, Pause, Stop and Gain buttons*/
@@ -133,7 +127,6 @@ form {
     display: inline-block;
     width: auto;
     margin-left: 30px;
-
 }
 .playPause {/*Play and Pause button*/
     font-size: 14px;
@@ -180,12 +173,13 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     -webkit-appearance: none;
     margin-top: -15px;
 }
+
 /*Tooltips*/
-.range-container{
+.range-container{/*style the div*/
     position:relative;
     display: inline-block;
 }
-.range-container .tooltiptext {
+.range-container .tooltiptext {/*Style the container and the text*/
     visibility: hidden;
     width: 200px;
     background-color: #555;
@@ -201,17 +195,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     opacity: 0;
     transition: opacity 1s;
 }
-.range-container .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-.range-container:hover .tooltiptext {
+.range-container:hover .tooltiptext {/*Make it visible when user points on it*/
     visibility: visible;
     opacity: 1;
 }
@@ -262,7 +246,6 @@ select {/*Position and size of all dropdown buttons*/
     font-size: 11px;
     cursor: pointer;
     width: 100px;
-
 }
 option {/*Style and size of all option button*/
     display: block;
@@ -286,7 +269,7 @@ option {/*Style and size of all option button*/
     padding: 11px;
 }
 
-/*Position and size of the spectrum canvas*/
+/*Position and size of the elements of the spectrum canvas*/
 #canvasDivSpec {
     margin-top: 30px;
     margin-left: auto;
@@ -303,17 +286,14 @@ option {/*Style and size of all option button*/
     margin-left: 25px;
     position: absolute;
 }
-
 #canvasSpecLine {
     position: absolute;
     margin-left: 25px;
     opacity: 0.65;
 }
-
 #canvasSpecScale {
     position: absolute;
 }
-
 #divCanvasLegend {
     position: absolute;
     margin-top: -80px;
@@ -321,7 +301,6 @@ option {/*Style and size of all option button*/
     width: 300px;
     height: 75px;
 }
-
 #divSpecPosition {
     margin-top: 50px;
     margin-left: 40px;
@@ -336,7 +315,6 @@ option {/*Style and size of all option button*/
     text-align: center;
     z-index: 3;
 }
-
 #canvasLegend {
     position: absolute;
     border: 1px solid #bfbfbf;
@@ -353,7 +331,6 @@ option {/*Style and size of all option button*/
     display: block;
     min-width: 1200px;
 }
-
 #divWavePosition {
     margin-top: 10px;
     margin-left: 40px;
@@ -367,60 +344,50 @@ option {/*Style and size of all option button*/
     border: 1px solid gray;
     text-align: center;
 }
-
 #amplitudeValue {
   color: #100C87;
 }
-
 #rmsValue {
   color: #66a3ff;
 }
 
-/*Style and position of the waveform canvas*/
+/*Style and position of elements of the waveform canvas*/
 #canvasWave {
     margin-left: 25px;
     position: absolute;
     opacity: 0.85;
 }
-
 #canvasSelect {
     margin-left: 25px;
     position: absolute;
 }
-
 #canvasRMS {
     margin-left: 25px;
     position: absolute;
 }
-
 #canvasWaveLine {
     position: absolute;
     margin-left: 25px;
     z-index: 0;
     opacity: 0.65;
 }
-
 #canvasWaveGrid {
     position: absolute;
 }
-
 #canvasWaveScale {
     position: absolute;
 }
-
 #progressBar {
     border: 1px solid #aaa;
     color: #fff;
     width: 295px;
     height: 20px;
 }
-
 #progress {
     background-color: red;
     height: 20px;
     display: inline-block;
 }
-
 #canvas {
     border-style: solid;
     border-width: 1px;

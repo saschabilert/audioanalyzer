@@ -57,7 +57,7 @@ function colormap() {
     SpectroData.TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
-// Define the needed global variables for audio
+// Define the needed global variables for audio signal
 var startOffset = 0;
 var startTime = 0;
 var audPlay;
@@ -189,14 +189,14 @@ function minMaxValue(e) {
             specLevelHigh = max;
             specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
         } else if (min >= 0 || max >= 0 || max < min) {
-            alert("Es duerfen nur Werte <= -1 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
+            alert("You can use just values <= -1. In addition, the min value has to be smaller than the max value");
         }
 
         draw();
     }
 
 }
-
+// Function to calculate the time in minutes, seconds and miliseconds
 function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
 
     var minutes = Math.floor((time) / 60);
@@ -232,7 +232,7 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
         }
     }
 }
-
+// Function to update the playback time
 function timeUpdate() {
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
@@ -266,6 +266,7 @@ function timeUpdate() {
         }
     }
 }
+//Check the loop selection
 var loopSelection = false;
 function setLoop() {
     loopSelection = document.getElementById("LoopCheck").checked;
