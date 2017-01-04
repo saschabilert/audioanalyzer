@@ -57,10 +57,9 @@ var audioCtx = new AudioContext();
 
 function loadAudio() {
 
-    enableButton();
-
     document.getElementById("loading").style.display = "block";
     document.getElementById("container").style.display = "block";
+    enableButton();
 
     // get the first file data with the id "myAudio"
     var data = document.getElementById("myAudio").files[0];
@@ -94,7 +93,10 @@ function loadAudio() {
 
 function processAudio() {
 
-    Audiodata.hopsize = Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap);
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("container").style.display = "block";
+
+    Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
@@ -133,14 +135,12 @@ function calculateDisplay(type) {
     Audiodata.windowLen = linspace(0, Audiodata.blockLen, Audiodata.blockLen);
     Audiodata.windowValue = calculateWindow(Audiodata.windowLen, Audiodata.windowFunction);
 
-    // set the endIdx to slice the array
-    var endIdx = 0;
-
     // cut the audiosamples into blocks and calculate the choosen data
     for (var i = 0; i < Audiodata.nPart; i++) {
 
-        var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + endIdx);
-
+        var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
+        console.log(sampleBlock.length);
+        console.log(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
             for (var k = 0; k < Audiodata.blockLen; k++) {
@@ -166,7 +166,6 @@ function calculateDisplay(type) {
             default:
                 alert("404 spectrogram not found!");
         }
-        endIdx = endIdx + Audiodata.hopsize;
     }
 }
 
@@ -248,7 +247,7 @@ function calculateInstantFreqDev(sampleBlock, windowType) {
 
     var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
 
-    var secondSampleBlock = sampleBlock.slice(sampleBlock.length - newSampleBlockLen - 1, sampleBlock.length - 1);
+    var secondSampleBlock = sampleBlock.slice(sampleBlock.length - newSampleBlockLen, sampleBlock.length);
 
     for (var i = 0; i < newSampleBlockLen; i++) {
         firstSampleBlock[i] = firstSampleBlock[i] * window[i];
