@@ -170,16 +170,16 @@ function plotWindow() {
     };
     Plotly.newPlot('divFlatTop', data, layout);
 
-    var windowValueKaiserBessel = calculateWindow(windowLen, "kaiser-bessel");
+    var windowValueHamming = calculateWindow(windowLen, "hamming");
     var data = [
         {
             x: windowLen,
-            y: windowValueKaiserBessel,
+            y: windowValueHamming,
             type: 'bar'
         }
     ];
     var layout = {
-        title: 'Kaiser-Bessel Window',
+        title: 'Hamming Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -197,5 +197,34 @@ function plotWindow() {
             }
         }
     };
-    Plotly.newPlot('divKaiserBessel', data, layout);
+    Plotly.newPlot('divHamming', data, layout);
+
+    var windowValueBlackman = calculateWindow(windowLen, "blackman");
+    var data = [
+        {
+            x: windowLen,
+            y: windowValueBlackman,
+            type: 'bar'
+        }
+    ];
+    var layout = {
+        title: 'Blackman Window',
+        xaxis: {
+            title: 'samples',
+            titlefont: {
+                family: 'Arial, sans-serif',
+                size: 14,
+                color: 'black'
+            }
+        },
+        yaxis: {
+            title: 'value',
+            titlefont: {
+                family: 'Arial, sans-serif',
+                size: 14,
+                color: 'black'
+            }
+        }
+    };
+    Plotly.newPlot('divBlackman', data, layout);
 }

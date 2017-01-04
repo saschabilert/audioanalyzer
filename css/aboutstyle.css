@@ -24,33 +24,43 @@ p {
     /*style of all paragraphes*/
     text-align: justify;
     margin-top: 50px;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
 }
 
 h2 {
     /*style of the h2 header*/
     margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
     text-align: center;
 }
 
 h3 {
     /*style of the h3 header*/
     margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
     text-align: center;
 }
 
 h4 {
     /*style of the h4 header*/
     margin-top: 30px;
-    margin-left: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
 }
 
 ul {
     /*style of the ul list*/
-    margin-left: 200px;
-    margin-right: 200px;
     text-align: justify;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
 }
 
 p.licenseVersion {

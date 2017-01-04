@@ -309,20 +309,12 @@ function calculateWindow(windowLen, type) {
                 window[i] = Math.cos(((Math.PI * windowLen[i]) / (windowLen.length)) - (Math.PI / 2));
             }
             break;
-        case "kaiser-bessel":
-            var alpha = 2;
-            var denom = new Array(windowLen.length);
-            var numer = Math.PI * alpha;
+        case "hamming":
+            var alpha = 0.54;
+            var beta = 1 - alpha;
 
             for (i = 0; i < windowLen.length; i++) {
-                denom[i] = Math.PI * alpha * Math.sqrt(1 - (((2 * windowLen[i]) / (windowLen.length - 1) - 1) * ((2 * windowLen[i]) / (windowLen.length - 1) - 1)));
-            }
-
-            numer = besselfkt(numer);
-            denom = besselfkt(denom);
-
-            for (i = 0; i < denom.length; i++) {
-                window[i] = denom[i] / numer;
+                window[i] = alpha - beta * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1));
             }
             break;
         case "flat-top":
@@ -332,6 +324,17 @@ function calculateWindow(windowLen, type) {
 
             for (i = 0; i < windowLen.length; i++) {
                 window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1)) + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] / (windowLen.length - 1)) - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] / (windowLen.length - 1)) + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] / (windowLen.length - 1));
+            }
+            break;
+        case "blackman":
+
+            var alpha = 0.16;
+            var alpha0 = (1 - alpha) / 2;
+            var alpha1 = 1 / 2;
+            var alpha2 = alpha / 2;
+
+            for (i = 0; i < windowLen.length; i++) {
+                window[i] = alpha0 - alpha1 * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1)) + alpha2 * Math.cos((4 * Math.PI * windowLen[i]) / (windowLen.length - 1));
             }
             break;
         case "rect":
@@ -368,32 +371,6 @@ function diff(array) {
         difference[i] = array[i + 1] - array[i];
     }
     return difference;
-}
-
-/*
- * implementation of the bessel function of first kind (I0), see more
- * information in instructions.html
- */
-function besselfkt(array) {
-
-    var bessel = new Array(array.length).fill(0);
-
-    for (i = 0; i < bessel.length; i++) {
-        var n = i + 1;
-        bessel[i] = Math.pow(-1, i) * Math.pow((array[i] / 2), i) / Math.pow(factorial(i), 2);
-    }
-    return bessel;
-}
-
-// implementation of the factorial of the number n (e.g 3! = 6)
-function factorial(n) {
-
-    var fak = 1;
-
-    for (var i = 1; i <= n; i++) {
-        fak = fak * i;
-    }
-    return fak;
 }
 
 // check if the maximum block number for canvas is given

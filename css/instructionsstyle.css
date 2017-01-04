@@ -20,73 +20,89 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-h2 {
-    text-align: center;
-    margin-top: 50px;
-}
-
-h3 {
-    text-align: center;
-    margin-top: 50px;
-}
-
-h4 {
-    text-align: left;
-    margin-top: 50px;
-    margin-left: 200px;
-}
-
-img.resizeImg {
-    display: block;
-    margin: auto;
-    margin-top: 50px;
-    border-radius: 5px;
-    width: 70%;
-    height: 70%;
-}
-
-img.resizeImg#upload {
-    width: 40%;
-    height: 40%;
-}
-
 p {
+    /*style of all paragraphes*/
     position: static;
     text-align: justify;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
     margin-top: 50px;
     line-height: 160%;
 }
 
-code {
-    text-align: left;
-}
-
 p.windowDef {
+    /*style of the window definition paragraphes*/
     margin-bottom: 0px;
     text-align: left;
     line-height: 100%;
 }
 
-div.plot {
+ul.technics {
+    /*style of the list technic items */
     position: static;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    list-style-type: decimal;
+}
+
+h2 {
+    /*style of the h2 header*/
+    text-align: center;
+    margin-top: 50px;
+}
+
+h3 {
+    /*style of the h3 header*/
+    text-align: center;
+    margin-top: 50px;
+}
+
+h4 {
+    /*style of the h4 header*/
+    text-align: left;
     margin: auto;
-    width: 40%;
+    margin-top: 50px;
+    width: 1000px;
+}
+
+img.resizeImg {
+    /*style of the images*/
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    width: 1000px;
+    height: 70%;
+}
+
+img.resizeImg#upload {
+    /*style of the upload image*/
+    width: 700px;
     height: 40%;
 }
 
+div.plot {
+    /*style of the plotly divs*/
+    position: static;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+}
+
 pre.code {
+    /*style the rainbow code divs*/
     position: static;
     margin: auto;
     margin-left: 200px;
     margin-right: 200px;
     width: auto;
-    height: auto;
+    height: 50%;
 }
 
 ul.navigation {
-    /*Style the field around the menu*/
+    /*style the field around the page navigation*/
     position: fixed;
     list-style-type: none;
     padding: 0px;
@@ -94,7 +110,7 @@ ul.navigation {
 }
 
 a.naviItems {
-    /*Display of the buttons */
+    /*style of the navigation buttons*/
     cursor: pointer;
     display: inline-block;
     background-color: lightgray;
@@ -102,24 +118,18 @@ a.naviItems {
     font-size: 14px;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 2px;
     width: 160px;
-    height: 25px;
+    height: 20px;
     padding-top: 5px;
-    margin-top: 2px;
+    margin-top: 1px;
     text-align: center;
-    border: 1px solid gray;
+    border: 0.5px solid gray;
 }
 
 a.naviItems:hover {
+    /*style of the hover pointing on navigation buttons*/
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
     background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
     background-color: #dfdfdf;
-}
-
-ul.technics {
-    position: static;
-    margin-left: 200px;
-    margin-right: 200px;
-    list-style-type: circle;
 }

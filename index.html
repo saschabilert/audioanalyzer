@@ -38,8 +38,8 @@ contact: sascha.bilert@student.jade-hs.de
 <body onload="fitCanvas()">
 
     <a href="https://github.com/saschabilert/audioanalyzer" target="_blank">
-        <img class="githubribbon" id="githubribbonmain" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork us on GitHub"
-            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
+        <img class="githubribbon" id="githubribbonmain" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
+            alt="Fork us on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
     </a>
 
     <!-- Create the header -->
@@ -104,66 +104,78 @@ contact: sascha.bilert@student.jade-hs.de
     <div class="dropdownContainer">
         <div class="dropdownBlock">
             <p>Blocklength:</p>
-            <div class="range-container"><select id="blockLength" onchange="blockLength()">
-        <option value="1024">1024</option>
-        <option value="2048">2048</option>
-        <option value="4096">4096</option>
-        <option value="8192">8192</option>
-      </select>
-                <span class="tooltiptextDropdown">Select the block length for the spectrum</span></div>
+            <div class="range-container">
+                <select id="blockLength" onchange="blockLength()">
+                        <option value="512">512</option>
+                        <option value="1024" selected>1024</option>
+                        <option value="2048">2048</option>
+                        <option value="4096">4096</option>
+                        <option value="8192">8192</option>
+                  </select>
+                <span class="tooltiptextDropdown">Select the block length for the spectrum</span>
+            </div>
         </div>
         <div class="dropdownBlock">
             <p>Window-Type:</p>
-            <div class="range-container"><select id="windowType" onchange="windowType()">
-        <option value="hann">hann</option>
-        <option value="rect">rectangle</option>
-        <option value="hannpoisson">hannpoisson</option>
-        <option value="cosine">cosine</option>
-        <option value="flat-top">flat-top</option>
-        <option value="kaiser-bessel">kaiser-bessel</option>
-      </select>
-                <span class="tooltiptextDropdown">Select the window type for the spectrum</span></div>
+            <div class="range-container">
+                <select id="windowType" onchange="windowType()">
+                     <option value="hann" selected>hann</option>
+                     <option value="rect">rectangle</option>
+                     <option value="hannpoisson">hannpoisson</option>
+                     <option value="cosine">cosine</option>
+                     <option value="flat-top">flat-top</option>
+                     <option value="hamming">hamming</option>
+                     <option value="blackman">blackman</option>
+               </select>
+                <span class="tooltiptextDropdown">Select the window type for the spectrum</span>
+            </div>
         </div>
         <div class="dropdownBlock">
             <p>Overlap:</p>
-            <div class="range-container"><select id="overlap" onchange="overlap()">
-        <option value="0.0">0%</option>
-        <option value="0.25">25%</option>
-        <option value="0.5" selected>50%</option>
-        <option value="0.75">75%</option>
-        <option value="0.9">90%</option>
-      </select>
+            <div class="range-container">
+                <select id="overlap" onchange="overlap()">
+                        <option value="0.0">0%</option>
+                        <option value="0.25">25%</option>
+                        <option value="0.5" selected>50%</option>
+                        <option value="0.75">75%</option>
+                        <option value="0.9">90%</option>
+                  </select>
                 <span class="tooltiptextDropdown">Select the overlap for the spectrum</span>
             </div>
         </div>
         <div class="dropdownBlock">
             <p>Display-Type:</p>
-            <div class="range-container"><select id="display" onchange="chooseDisplay()">
-        <option value="Spectrum">spectrum</option>
-        <option value="Phase">phase</option>
-        <option value="Group Delay">group delay</option>
-        <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
-      </select>
-                <span class="tooltiptextDropdown">Select what you want to display in the field below</span></div>
+            <div class="range-container">
+                <select id="display" onchange="chooseDisplay()">
+                        <option value="Spectrum" selected>spectrum</option>
+                        <option value="Phase">phase</option>
+                        <option value="Group Delay">group delay</option>
+                        <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
+                  </select>
+                <span class="tooltiptextDropdown">Select what you want to display in the field below</span>
+            </div>
         </div>
         <div class="dropdownBlock">
             <p>Colormap:</p>
-            <div class="range-container"><select id="colormap" onchange="colormap()">
-        <option value="1">viridis</option>
-        <option value="2">gray</option>
-        <option value="3">jet</option>
-        <option value="4">plasma</option>
-        <option value="5" disabled>twilight</option>
-        <option value="6" disabled>sunlight</option>
-      </select>
-                <span class="tooltiptextDropdown">Select the colors for displaying the spectrum</span></div>
+            <div class="range-container">
+                <select id="colormap" onchange="colormap()">
+                        <option value="1" selected>viridis</option>
+                        <option value="2">gray</option>
+                        <option value="3">jet</option>
+                        <option value="4">plasma</option>
+                        <option value="5" disabled>twilight</option>
+                        <option value="6" disabled>sunlight</option>
+                   </select>
+                <span class="tooltiptextDropdown">Select the colors for displaying the spectrum</span>
+            </div>
         </div>
         <div class="dropdownBlock">
             <p>Value Range</p>
             <div class="range-container">
                 <input type="text" id="min" onkeypress="minMaxValue(event)" placeholder="min:">
                 <input type="text" id="max" onkeypress="minMaxValue(event)" placeholder="max">
-                <span class="tooltiptextDropdown">Explain what user can do with min and max values</span></div>
+                <span class="tooltiptextDropdown">Explain what user can do with min and max values</span>
+            </div>
         </div>
         <div class="canvas" id="divCanvasLegend">
             <canvas id="canvasLegend" width="300" height="75"></canvas>
