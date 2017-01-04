@@ -49,12 +49,14 @@ ul.technics {
 
 h2 {
     /*style of the h2 header*/
+    position: static;
     text-align: center;
     margin-top: 50px;
 }
 
 h3 {
     /*style of the h3 header*/
+    position: static;
     text-align: center;
     margin-top: 50px;
 }
@@ -62,6 +64,7 @@ h3 {
 h4 {
     /*style of the h4 header*/
     text-align: left;
+    position: static;
     margin: auto;
     margin-top: 50px;
     width: 1000px;

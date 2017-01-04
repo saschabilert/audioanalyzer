@@ -96,13 +96,15 @@ contact: sascha.bilert@student.jade-hs.de
     <h2>Instructions</h2>
     <p>This Website includes usefull information about how to analyse your audio file. If you need help to use the Website you can navigate to the preferred help-section in the menu on the left side. The Website is programmed by using the following technologies:</p>
     <ul class="technics">
-        <li>JavaScript (JS)</li>
+        <li>JavaScript (JS ES6)</li>
+        <li>Plotly (JS-Framework)</li>
+        <li>Rainbow (JS-Framework)</li>
         <li>Hypertext Markup Language (HTML5)</li>
         <li>Cascading Style Sheet (CSS3)</li>
     </ul>
     <p style="margin-top: 16px;">The audioprocssing is based on a free FFT programmed in JavaScript (JS) by Nayuki for more Information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed, was
-        to create a easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as an spectrogram. The user is able to apply diffrent settings for various examinations. We tried to
-        describe all the parameters in a easy way in the instructions.</p>
+        to create a easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as an spectrogram. The user is able to apply diffrent settings for various examinations. For discribing the different windows we used
+        <b>plotly.js</b> for illustration and <b>rainbow.js</b> to highlight the code. We tried to describe all the parameters in a easy way in the instructions.</p>
     <h3><a id="choosingAFile">Choose a file:</a></h3>
     <img class="resizeImg" id="upload" src="image/upload.png">
     <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser

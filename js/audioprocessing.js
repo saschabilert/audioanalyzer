@@ -282,8 +282,8 @@ function calculateInstantFreqDev(sampleBlock, windowType) {
 
 /*
  * calculate the different windows depending on the window length and the
- * window type (Types: "hann", "hannpoisson", "consine", "kaiser-bessel",
- *"flat-top" and "rect") see instructions.html
+ * window type (Types: "hann", "hannpoisson", "consine", "hamming",
+ *"flat-top", "blackman" and "rect") see instructions.html
  */
 function calculateWindow(windowLen, type) {
 
