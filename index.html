@@ -50,27 +50,29 @@ contact: sascha.bilert@student.jade-hs.de
 
     <!-- Create a div with all the buttons above the waveform -->
     <div id="buttonsMenu">
-        <div class="range-container"><form method="post" enctype="multipart/form-data" action="">
-            <!-- set input audiofile and trigger the audioProcessing function -->
-            <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
-            <label for="myAudio">Choose a file</label><span class="tooltiptextMenu">Choose an audio signal </span></div>
-        </form>
+        <div class="range-container">
+            <form method="post" enctype="multipart/form-data" action="">
+                <!-- set input audiofile and trigger the audioProcessing function -->
+                <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
+                <label for="myAudio">Choose a file</label><span class="tooltiptextMenu">Choose an audio signal </span>
+            </form>
+        </div>
         <div class="buttons">
             <div class="range-container"><button id="player" type="button" class="playPause" disabled>&#9654;</button><span class="tooltiptextMenu">When enabled, play and pause the audio signal</span></div>
             <div class="range-container"><button id="stop" type="button" class="stop" disabled>&#9724;</button><span class="tooltiptextMenu">Stop the audio signal</span></div>
-           <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5"
-                                         class="Gain" disabled><span class="tooltiptextMenu">When enabled, adjust the volume
+            <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled><span class="tooltiptextMenu">When enabled, adjust the volume
                                          by dragging the bar</span></div>
         </div>
         <div id="playbackTime">00:00.0&thinsp;/&thinsp;00:00.0</div>
-        <div class="range-container"><div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div><span class="tooltiptextMenu">When enabled, click this button to loop a selected section of the song</span></div>
+        <div class="range-container">
+            <div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div><span class="tooltiptextMenu">When enabled, click this button to loop a selected section of the song</span></div>
         <div id="gridSize">Grid Size:
             <div class="range-container"><select id="grid" onchange="gridSize()" disabled>
         <option value="0.0625">small</option>
         <option value="0.125">medium</option>
         <option value="0.25">large</option>
       </select>
-            <span class="tooltiptextMenu">When enabled, select the grid size of the waveform</span></div>
+                <span class="tooltiptextMenu">When enabled, select the grid size of the waveform</span></div>
         </div>
     </div>
 
@@ -116,13 +118,14 @@ contact: sascha.bilert@student.jade-hs.de
         <div class="dropdownBlock">
             <p>Overlap:</p>
             <div class="range-container"><select id="overlap" onchange="overlap()">
-        <option value="0.5">50%</option>
         <option value="0.0">0%</option>
         <option value="0.25">25%</option>
+        <option value="0.5" selected>50%</option>
         <option value="0.75">75%</option>
         <option value="0.9">90%</option>
       </select>
-            <span class="tooltiptextDropdown">Select the overlap for the spectrum</span></div>
+                <span class="tooltiptextDropdown">Select the overlap for the spectrum</span>
+            </div>
         </div>
         <div class="dropdownBlock">
             <p>Display-Type:</p>
@@ -132,7 +135,7 @@ contact: sascha.bilert@student.jade-hs.de
         <option value="Group Delay">group delay</option>
         <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
       </select>
-            <span class="tooltiptextDropdown">Select what you want to display in the field below</span></div>
+                <span class="tooltiptextDropdown">Select what you want to display in the field below</span></div>
         </div>
         <div class="dropdownBlock">
             <p>Colormap:</p>
@@ -141,14 +144,15 @@ contact: sascha.bilert@student.jade-hs.de
         <option value="2">gray</option>
         <option value="3">jet</option>
         <option value="4">plasma</option>
+        <option value="5" disabled>twilight</option>
       </select>
-            <span class="tooltiptextDropdown">Select the colors for displaying the spectrum</span></div>
+                <span class="tooltiptextDropdown">Select the colors for displaying the spectrum</span></div>
         </div>
         <div class="dropdownBlock">
             <p>Value Range</p>
             <div class="range-container">
-            <input type="text" id="min" onkeypress="minMaxValue(event)" placeholder="min:">
-            <input type="text" id="max" onkeypress="minMaxValue(event)" placeholder="max">
+                <input type="text" id="min" onkeypress="minMaxValue(event)" placeholder="min:">
+                <input type="text" id="max" onkeypress="minMaxValue(event)" placeholder="max">
                 <span class="tooltiptextDropdown">Explain what user can do with min and max values</span></div>
         </div>
         <div class="canvas" id="divCanvasLegend">
@@ -162,7 +166,6 @@ contact: sascha.bilert@student.jade-hs.de
     <script type="text/javascript" src="js/audioprocessing.js"></script>
     <script type="text/javascript" src="js/spectrogram.js"></script>
     <script type="text/javascript" src="js/waveform.js"></script>
-    <script type="text/javascript" src="js/colormaps/parula.js"></script>
     <script type="text/javascript" src="js/colormaps/gray.js"></script>
     <script type="text/javascript" src="js/colormaps/jet.js"></script>
     <script type="text/javascript" src="js/colormaps/hsv.js"></script>
@@ -187,4 +190,5 @@ contact: sascha.bilert@student.jade-hs.de
     <div class="range-container"><button id="saveSpec" type="button" onclick="downloadSpectrum()" disabled>Save</button><span class="tooltiptextDropdown">Save a picture of the information displayed above</span></div>
 
 </body>
+
 </html>

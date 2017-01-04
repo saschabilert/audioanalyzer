@@ -64,7 +64,6 @@ p.windowDef {
 }
 
 div.windows {
-    object-position: left;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -86,7 +85,7 @@ div.code {
 
 ul.navigation {
     /*Style the field around the menu*/
-    position: absolute;
+    position: fixed;
     list-style-type: none;
     padding: 0px;
     width: 165px;
