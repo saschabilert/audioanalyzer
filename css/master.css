@@ -64,6 +64,7 @@ a.link:link, a.link:visited {
     font-weight: bold;
 }
 a.link:hover {
+    background-color: grey;
     color: white;
 
 }
@@ -73,8 +74,7 @@ a.link:active {
 }
 .currentpage {
     list-style-type: none;
-    background-color: darkgray;
-    box-shadow: #666;
+    border-bottom: solid 4px black;
 }
 
 /*Change style when user points on buttons*/
@@ -108,12 +108,12 @@ a.link:active {
     text-align: center;
     border: 1.5px solid gray;
     border-radius: 12px;
+    padding-top: 10px;
 }
 
 /*"Choose a file" buttone*/
 form { /*style the div*/
     display: inline-block;
-    margin-top: 10px;
     text-align: left;
     text-overflow: ellipsis;;
     width:200px;
@@ -233,7 +233,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
 select {/*Position and size of all dropdown buttons*/
     background-color: #ededed;
     color: black;
-    padding: 11px;
+    height: 30px;
     font-size: 11px;
     cursor: pointer;
     width: 100px;
