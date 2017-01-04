@@ -62,12 +62,3 @@ p.licenseEnd {
     /*style of the end of the licence*/
     text-align: center;
 }
-
-#githubribbon {
-    /*style of the github ribbon*/
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    border: 0px;
-    margin-right: -20px;
-}

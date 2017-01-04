@@ -123,11 +123,3 @@ ul.technics {
     margin-right: 200px;
     list-style-type: circle;
 }
-
-#githubribbon {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    border: 0px;
-    margin-right: -20px;
-}

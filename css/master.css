@@ -77,6 +77,18 @@ a.link:active {
     border-bottom: solid 4px black;
 }
 
+img.githubribbon {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    border: 0px;
+}
+
+img.githubribbon#githubribbonmain {
+      position: absolute;
+      margin-right: -20px;
+}
+
 /*Change style when user points on buttons*/
 .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
@@ -435,8 +447,9 @@ option {/*Style and size of all option button*/
     background-color: #555;
     color: #fff;
     text-align: center;
+    font-size: 12px;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 5px 10px;
     position: absolute;
     z-index: 1;
     left: 50%;
