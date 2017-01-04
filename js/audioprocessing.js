@@ -48,7 +48,7 @@ var Audiodata = {
     display: "Spectrum",
     windowValue: undefined,
     windowLen: undefined,
-    wrapFreq: 500
+    wrapFreq: 250
 };
 
 // define a global audioContext

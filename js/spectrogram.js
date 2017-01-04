@@ -480,11 +480,11 @@ function displayMousePosition(evt) {
             break;
         case "Phase":
             if (!isNaN(point)) {
-                magnitute.innerHTML = 'Phase: ' + Math.round(point * 100) / 100
+                point /= Math.PI;
+                magnitute.innerHTML = 'Phase: ' + Math.round(point * 100) / 100 + ' \u03C0'
             }
             break;
         case "Instantaneous Frequency Deviation":
-            point += 900
             magnitute.innerHTML = "IFD: " + Math.round(point) + " Hz"
             break
         case "Group Delay":
@@ -571,6 +571,11 @@ function drawLegend(colorScale) {
             ctxLegend.fillText(0 + 'ms', 2, canvasLegend.height - 1);
             ctxLegend.fillText((((Audiodata.blockLen / Audiodata.sampleRate) * 1000) / 2).toFixed(1) + 'ms', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
             ctxLegend.fillText(((Audiodata.blockLen / Audiodata.sampleRate) * 1000).toFixed(1) + 'ms', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
+            break;
+        case "Instantaneous Frequency Deviation":
+            ctxLegend.fillText((-1 * Audiodata.wrapFreq / 2).toFixed(0) + 'Hz', 2, canvasLegend.height - 1);
+            ctxLegend.fillText(0 + 'Hz', (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText((Audiodata.wrapFreq / 2).toFixed(0) + 'Hz', (canvasLegend.width - 2) - 45, canvasLegend.height - 1);
             break;
     }
 
