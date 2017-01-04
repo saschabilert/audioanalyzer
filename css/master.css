@@ -51,22 +51,27 @@ h1 {
 
 /* Links to the other webpages*/
 a.link:link {
-    background-color: gray;
-    box-shadow: 2px 2px 2px black;
     padding: 10px 20px;
     display: inline-block;
-    text-decoration: none;
+    text-decoration: blink;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
     color: black;
+    transition: all 0.2s linear;
+}
+a.link:hover, a.link:focus {
+    color: #357099;
 
 }
-a.link:active {
+a.link:visited {
     background-color: lightgray;
 }
 
+.currentpage {
+    background-color: lightgray;
+}
 
 /*Change style when user points on buttons*/
 .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
