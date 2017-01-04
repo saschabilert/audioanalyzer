@@ -32,6 +32,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Hann Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -49,7 +50,7 @@ function plotWindow() {
             }
         }
     };
-    Plotly.newPlot('divHann', data, layout);
+    Plotly.newPlot('divHann', data, layout, {showLink: false});
 
     var windowValueRect = calculateWindow(windowLen, "rect");
     windowValueRect.fill(0, 0, 81);
@@ -62,6 +63,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Rect Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -90,6 +92,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Hann-Poisson Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -118,6 +121,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Cosine Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -146,6 +150,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Flat-Top Window',
         xaxis: {
             title: 'samples',
             titlefont: {
@@ -174,6 +179,7 @@ function plotWindow() {
         }
     ];
     var layout = {
+        title: 'Kaiser-Bessel Window',
         xaxis: {
             title: 'samples',
             titlefont: {

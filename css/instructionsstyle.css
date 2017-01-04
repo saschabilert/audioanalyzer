@@ -36,7 +36,7 @@ h4 {
     margin-left: 200px;
 }
 
-img.zoomImg {
+img.resizeImg {
     display: block;
     margin: auto;
     margin-top: 50px;
@@ -45,7 +45,7 @@ img.zoomImg {
     height: 70%;
 }
 
-img.zoomImg#choose {
+img.resizeImg#upload {
     width: 40%;
     height: 40%;
 }
@@ -59,28 +59,30 @@ p {
     line-height: 160%;
 }
 
-p.windowDef {
-    margin-bottom: 0px;
+code {
+    text-align: left;
 }
 
-div.windows {
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    width: 1200px;
+p.windowDef {
+    margin-bottom: 0px;
+    text-align: left;
+    line-height: 100%;
 }
 
 div.plot {
-    display: inline-block;
-    float: left;
-    width: 50%;
-    height: 50%;
+    position: static;
+    margin: auto;
+    width: 40%;
+    height: 40%;
 }
 
-div.code {
-    display: inline-block;
-    margin-left: 630px;
+pre.code {
+    position: static;
+    margin: auto;
+    margin-left: 200px;
+    margin-right: 200px;
     width: auto;
+    height: auto;
 }
 
 ul.navigation {
