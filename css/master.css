@@ -50,23 +50,32 @@ h1 {
 }
 
 /* Links to the other webpages*/
-a.link:link {
-    background-color: gray;
-    box-shadow: 2px 2px 2px black;
+a.link:link, a.link:visited {
     padding: 10px 20px;
     display: inline-block;
-    text-decoration: none;
+    text-decoration: blink;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
     color: black;
+    text-shadow: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+a.link:hover {
+    background-color: grey;
+    color: white;
 
 }
 a.link:active {
-    background-color: lightgray;
+    box-shadow: #666;
+    transform: translateY(4px);
 }
-
+.currentpage {
+    list-style-type: none;
+    border-bottom: solid 4px black;
+}
 
 /*Change style when user points on buttons*/
 .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
@@ -99,12 +108,12 @@ a.link:active {
     text-align: center;
     border: 1.5px solid gray;
     border-radius: 12px;
+    padding-top: 10px;
 }
 
 /*"Choose a file" buttone*/
 form { /*style the div*/
     display: inline-block;
-    margin-top: 10px;
     text-align: left;
     text-overflow: ellipsis;;
     width:200px;
@@ -224,7 +233,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
 select {/*Position and size of all dropdown buttons*/
     background-color: #ededed;
     color: black;
-    padding: 11px;
+    height: 30px;
     font-size: 11px;
     cursor: pointer;
     width: 100px;
