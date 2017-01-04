@@ -45,11 +45,14 @@ function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     processAudio();
     // If this three display types are chosen, disable the colormap and the min max values
-    if (Audiodata.display == "Phase" || Audiodata.display == "Instantaneous Frequency Deviation" ||
-         Audiodata.display == "Group Delay") {
+    if (Audiodata.display == "Phase" || Audiodata.display == "Instantaneous Frequency Deviation" || Audiodata.display == "Group Delay") {
+        document.getElementById("colormap").value = "5";
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
         document.getElementById("max").disabled = true;
+        if (Audiodata.display == "Instantaneous Frequency Deviation") {
+            document.getElementById("colormap").value = "6";
+        }
     }
 }
 //Get the user choice of colormap
@@ -103,7 +106,8 @@ function toggleSound() {
             startOffset = 0;
             isPlaying = false;
             audPlay.stop();
-            info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + playback.trackDuration;
+            info.innerHTML = "00:00.0" +
+                "&thinsp;/&thinsp;" + playback.trackDuration;
             drawLineKlick(0);
             drawLineKlickWave(0);
         };
@@ -113,7 +117,8 @@ function toggleSound() {
                 startTime = 0;
                 startOffset = 0;
                 isPlaying = false;
-                info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + playback.trackDuration;
+                info.innerHTML = "00:00.0" +
+                    "&thinsp;/&thinsp;" + playback.trackDuration;
             }
         };
     } else {
@@ -251,7 +256,8 @@ function timeUpdate() {
         startOffset = 0;
 
         isPlaying = false;
-        info.innerHTML = "00:00.0" + "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
+        info.innerHTML = "00:00.0" +
+            "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
 
         drawLineKlick(0);
         drawLineKlickWave(0);
@@ -270,5 +276,4 @@ function timeUpdate() {
 var loopSelection = false;
 function setLoop() {
     loopSelection = document.getElementById("LoopCheck").checked;
-
 }
