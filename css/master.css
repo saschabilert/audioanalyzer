@@ -50,22 +50,26 @@ h1 {
 }
 
 /* Links to the other webpages*/
-a.link:link, a:visited {
-    background-color: lightgray;
+a.link:link {
+    background-color: gray;
     box-shadow: 2px 2px 2px black;
     padding: 10px 20px;
     display: inline-block;
-    border-radius: 10px;
     text-decoration: none;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
     color: black;
-    border: 1px solid gray;
+
 }
+a.link:active {
+    background-color: lightgray;
+}
+
+
 /*Change style when user points on buttons*/
-a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
+.audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
     background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
     background-color: #dfdfdf;
@@ -100,13 +104,14 @@ a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hov
 /*"Choose a file" buttone*/
 form { /*style the div*/
     display: inline-block;
-    margin-top: 0px;
+    margin-top: 10px;
     text-align: left;
     text-overflow: ellipsis;;
     width:200px;
     white-space: nowrap;
     overflow: hidden;
     padding: 8px;
+    vertical-align: bottom;
 }
 .audioInput {/*Hide the original button*/
     opacity: 0;
@@ -126,6 +131,7 @@ form { /*style the div*/
     display: inline-block;
     width: auto;
     margin-left: 30px;
+    vertical-align: super;
 }
 .playPause {/*Play and Pause button*/
     font-size: 14px;
@@ -173,58 +179,12 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     margin-top: -15px;
 }
 
-/*Tooltips*/
-.range-container{/*style the div*/
-    position:relative;
-    display: inline-block;
-}
-.range-container .tooltiptextMenu {/*Style the container and the text for the menu buttons*/
-    visibility: hidden;
-    width: 200px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    left: 50%;
-    margin-left: -60px;
-    bottom: 100%;
-    opacity: 0;
-    transition: opacity 1s;
-}
-.range-container:hover .tooltiptextMenu {/*Make it visible when user points on it*/
-    visibility: visible;
-    opacity: 1;
-}
-
-.range-container .tooltiptextDropdown {/*Style the container and the text for the dropdown menu*/
-    visibility: hidden;
-    width: 200px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
-}
-.range-container:hover .tooltiptextDropdown {/*Make it visible when user points on it*/
-    visibility: visible;
-    opacity: 1;
-}
-
 /*Playback time field*/
 #playbackTime {
     display: inline-block;
     text-shadow: 1px 1px 0px #ffffff;
     margin-left: 20px;
+    vertical-align: super;
 }
 
 /*Check box for looping sound*/
@@ -232,6 +192,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     display: inline-block;
     text-align: right;
     margin-left: 120px;
+    vertical-align: super;
 }
 
 /*Choose a grid size*/
@@ -239,6 +200,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     display: inline-block;
     text-align: right;
     margin-left: 40px;
+    vertical-align: super;
 }
 
 /*Dropdown menu*/
@@ -420,8 +382,7 @@ option {/*Style and size of all option button*/
     z-index: 1;
     width: 150px;
     height: 150px;
-    margin-left:50%;
-    margin-right: 50%;
+    margin: 0 50%;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
@@ -452,4 +413,51 @@ option {/*Style and size of all option button*/
     100% {
         transform: rotate(360deg);
     }
+}
+
+/*Tooltips*/
+.range-container{/*style the div*/
+    position:relative;
+    display: inline-block;
+}
+.range-container .tooltiptextMenu {/*Style the container and the text for the menu buttons*/
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -60px;
+    bottom: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.range-container:hover .tooltiptextMenu {/*Make it visible when user points on it*/
+    visibility: visible;
+    opacity: 1;
+}
+
+.range-container .tooltiptextDropdown {/*Style the container and the text for the dropdown menu*/
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.range-container:hover .tooltiptextDropdown {/*Make it visible when user points on it*/
+    visibility: visible;
+    opacity: 1;
 }
