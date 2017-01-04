@@ -53,6 +53,11 @@ function chooseDisplay() {
         if (Audiodata.display == "Instantaneous Frequency Deviation") {
             document.getElementById("colormap").value = "6";
         }
+    } else {
+        document.getElementById("colormap").value = "1";
+        document.getElementById("colormap").disabled = false;
+        document.getElementById("min").disabled = false;
+        document.getElementById("max").disabled = false;
     }
 }
 //Get the user choice of colormap
