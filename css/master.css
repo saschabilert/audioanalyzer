@@ -52,6 +52,7 @@ h1 {
 /* Links to the other webpages*/
 a.link:link, a:visited {
     background-color: lightgray;
+    box-shadow: 2px 2px 2px black;
     padding: 10px 20px;
     display: inline-block;
     border-radius: 10px;
@@ -63,7 +64,6 @@ a.link:link, a:visited {
     color: black;
     border: 1px solid gray;
 }
-
 /*Change style when user points on buttons*/
 a.link:hover, .audioInput+label:hover, .playPause:hover, .stop:hover, select:hover, #saveSpec:hover {
     background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
@@ -178,7 +178,28 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     position:relative;
     display: inline-block;
 }
-.range-container .tooltiptext {/*Style the container and the text*/
+.range-container .tooltiptextMenu {/*Style the container and the text for the menu buttons*/
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -60px;
+    bottom: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.range-container:hover .tooltiptextMenu {/*Make it visible when user points on it*/
+    visibility: visible;
+    opacity: 1;
+}
+
+.range-container .tooltiptextDropdown {/*Style the container and the text for the dropdown menu*/
     visibility: hidden;
     width: 200px;
     background-color: #555;
@@ -194,7 +215,7 @@ input[type=range]::-webkit-slider-thumb { /*Range button style*/
     opacity: 0;
     transition: opacity 1s;
 }
-.range-container:hover .tooltiptext {/*Make it visible when user points on it*/
+.range-container:hover .tooltiptextDropdown {/*Make it visible when user points on it*/
     visibility: visible;
     opacity: 1;
 }
