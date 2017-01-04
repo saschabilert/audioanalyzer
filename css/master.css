@@ -50,7 +50,7 @@ h1 {
 }
 
 /* Links to the other webpages*/
-a.link:link {
+a.link:link, a.link:visited {
     padding: 10px 20px;
     display: inline-block;
     text-decoration: blink;
@@ -59,18 +59,22 @@ a.link:link {
     margin-top: 10px;
     margin-bottom: 10px;
     color: black;
-    transition: all 0.2s linear;
+    text-shadow: black;
+    font-size: 20px;
+    font-weight: bold;
 }
-a.link:hover, a.link:focus {
-    color: #357099;
+a.link:hover {
+    color: white;
 
 }
-a.link:visited {
-    background-color: lightgray;
+a.link:active {
+    box-shadow: #666;
+    transform: translateY(4px);
 }
-
 .currentpage {
-    background-color: lightgray;
+    list-style-type: none;
+    background-color: darkgray;
+    box-shadow: #666;
 }
 
 /*Change style when user points on buttons*/
