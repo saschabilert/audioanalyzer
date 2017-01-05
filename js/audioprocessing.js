@@ -43,8 +43,6 @@ var Audiodata = {
     groupDelay: undefined,
     instantFreqDev: undefined,
     windowFunction: "hann",
-    cepstrum: undefined,
-    modSpec: undefined,
     display: "Spectrum",
     windowValue: undefined,
     windowLen: undefined,
@@ -55,8 +53,10 @@ var Audiodata = {
 var reader = new FileReader();
 var audioCtx = new AudioContext();
 
+// function to load the Audiodata
 function loadAudio() {
 
+    // display the loading screen
     document.getElementById("loading").style.display = "block";
     document.getElementById("container").style.display = "block";
     enableButton();
@@ -86,13 +86,15 @@ function loadAudio() {
             drawWave();
 
             processAudio();
+
+            // hide the loading display after processing the audiodata
             document.getElementById("loading").style.display = "none";
             document.getElementById("container").style.display = "none";
         });
     }
-
 }
 
+// function to process the Audiodata with the given parameters
 function processAudio() {
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
@@ -134,8 +136,7 @@ function calculateDisplay(type) {
     for (var i = 0; i < Audiodata.nPart; i++) {
 
         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
-        //  console.log(sampleBlock.length);
-        //  console.log(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
+
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
             for (var k = 0; k < Audiodata.blockLen; k++) {
@@ -305,6 +306,8 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "hamming":
+            // alpha is a parameter that controls the slope of the exponential
+            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
             var alpha = 0.54;
             var beta = 1 - alpha;
 
@@ -322,7 +325,8 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "blackman":
-
+            // alpha is a parameter that controls the slope of the exponential
+            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
             var alpha = 0.16;
             var alpha0 = (1 - alpha) / 2;
             var alpha1 = 1 / 2;

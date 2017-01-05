@@ -1,5 +1,5 @@
 /*
- * menu.js
+ * fitCanvasToDiv.js
  *
  * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
  * IHA @ Jade Hochschule applied licence see EOF
