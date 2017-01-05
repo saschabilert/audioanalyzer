@@ -1,5 +1,5 @@
 /*
- * style.css
+ * master.css
  *
  * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
  * IHA @ Jade Hochschule applied licence see EOF
@@ -116,7 +116,6 @@ img.githubribbon#githubribbonmain {
     margin-right: auto;
     height: 50px;
     width: 1200px;
-    position: relative;
     text-align: center;
     border: 1.5px solid gray;
     border-radius: 12px;
@@ -326,29 +325,22 @@ option {/*Style and size of all option button*/
 .specButtons { /*Zoom buttons for the spectrum*/
     opacity: 0.5;
     background-color: white;
-    float: right;
 }
 .specButtonsY {
+    margin-top: -100px;
+    margin-left: 96%;
     position: absolute;
-    margin-top: -95px;
-    margin-left: 2285px;
 }
 #minusY {
-    margin-top: 21px;
-    margin-right: -22px;
-    padding: 2px 7.5px;
+    display: block;
+    margin-top: 5px;
+    width: 23px;
 }
 
 .specButtonsX {
-    margin-left: 2238px;
-    margin-top: -555px;
+    margin-top: -75px;
+    margin-left: 92%;
     position: absolute;
-}
-#plusX, #minusX {
-    margin-top: 470px;
-}
-#minusX {
-    margin-right: 2px;
 }
 
 /*Position and size of the elements of the waveform canvas*/

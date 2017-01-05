@@ -23,18 +23,17 @@
 p {
     /*style of all paragraphes*/
     position: static;
-    font-size: 12px;
+    font-size: 13px;
     text-align: justify;
     margin: auto;
     width: 800px;
-    margin-top: 50px;
+    margin-top: 40px;
     line-height: 160%;
 }
 
 p.windowDef {
     /*style of the window definition paragraphes*/
     margin-bottom: 0px;
-    text-align: left;
     line-height: 100%;
 }
 
@@ -44,9 +43,9 @@ ul {
     margin-left: auto;
     margin-right: auto;
     width: 800px;
-    font-size: 12px;
+    font-size: 13px;
     list-style-type: decimal;
-    line-height: 150%;
+    line-height: 160%;
 }
 
 h2 {
@@ -83,7 +82,7 @@ img.resizeImg#upload {
 
 figcaption {
     text-align: center;
-    font-size: 12px;
+    font-size: 13px;
     margin-top: 10px;
 }
 
@@ -94,7 +93,7 @@ table {
 tr, th, td {
     margin: auto;
     text-align: left;
-    font-size: 12px;
+    font-size: 13px;
     border: 1px solid black;
 }
 
@@ -116,7 +115,7 @@ td.disabled {
 
 caption {
     margin-top: 6px;
-    font-size: 12px;
+    font-size: 13px;
     caption-side: bottom;
 }
 
@@ -132,10 +131,10 @@ pre.code {
     /*style the rainbow code divs*/
     position: static;
     margin: auto;
-    margin-left: 200px;
-    margin-right: 200px;
-    width: auto;
-    height: 50%;
+    margin-top: 20px;
+    width: 800px;
+    height: auto;
+    overflow: scroll;
 }
 
 ul.navigation {

@@ -72,7 +72,7 @@ var startTime = 0;
 var audPlay;
 var isPlaying = false;
 var gainNode;
-
+var durationTrack;
 //Get the user input for playing or pausing the signal
 var playButton = document.getElementById("player");
 playButton.addEventListener("click", toggleSound);
@@ -106,27 +106,7 @@ function toggleSound() {
         isPlaying = true;
         window.requestAnimationFrame(drawLinePlay);
         window.requestAnimationFrame(drawLinePlayWave);
-        var playback = timeUpdate();
-        stopbtn.onclick = function() {
-            startTime = 0;
-            startOffset = 0;
-            isPlaying = false;
-            audPlay.stop();
-            info.innerHTML = "00:00.0" +
-                "&thinsp;/&thinsp;" + playback.trackDuration;
-            drawLineKlick(0);
-            drawLineKlickWave(0);
-        };
-        audPlay.onended = function() {
-            playButton.innerHTML = "&#9654;";
-            if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
-                startTime = 0;
-                startOffset = 0;
-                isPlaying = false;
-                info.innerHTML = "00:00.0" +
-                    "&thinsp;/&thinsp;" + playback.trackDuration;
-            }
-        };
+        timeUpdate();
     } else {
         audPlay.stop();
         isPlaying = false;
@@ -277,6 +257,26 @@ function timeUpdate() {
             toggleSound();
         }
     }
+    stopbtn.onclick = function() {
+        startTime = 0;
+        startOffset = 0;
+        isPlaying = false;
+        audPlay.stop();
+        info.innerHTML = "00:00.0" +
+            "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
+        drawLineKlick(0);
+        drawLineKlickWave(0);
+    };
+    audPlay.onended = function() {
+        playButton.innerHTML = "&#9654;";
+        if ((audioCtx.currentTime - startTime + startOffset) > Audiodata.signalLen / Audiodata.sampleRate) {
+            startTime = 0;
+            startOffset = 0;
+            isPlaying = false;
+            info.innerHTML = "00:00.0" +
+                "&thinsp;/&thinsp;" + timeToString(durationTrack, 1, 0);
+        }
+    };
 }
 //Check the loop selection
 var loopSelection = false;

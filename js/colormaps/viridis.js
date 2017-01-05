@@ -1,4 +1,26 @@
-var Scale;
+/*
+ * viridis.js
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
+
+var viridisScale;
 
 function createViridis() {
       var rgbR = [70.1250,70.1250,70.1250,70.1250,70.1250,69.6150,69.1050,68.0850,67.0650,66.0450,65.0250,62.9850,60.9450,58.5225,56.1000,52.5300,48.9600,43.9875,39.0150,31.4925,23.9700,11.9850,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,23.4600,46.9200,60.4350,73.9500,84.9150,95.8800,105.4425,115.0050,124.0575,133.1100,141.5250,149.9400,157.9725,166.0050,174.0375,182.0700,189.5925,197.1150,204.5100,211.9050,218.9175,225.9300,232.9425,239.9550,246.4575,252.9600,];
