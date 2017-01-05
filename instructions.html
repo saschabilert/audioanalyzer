@@ -333,7 +333,8 @@ contact: sascha.bilert@student.jade-hs.de
        var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
        for (i = 0; i &lt; windowLen.length; i++) {
-           window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))
+           window[i] = alpha[0]
+                        - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] / (windowLen.length - 1));
@@ -386,8 +387,9 @@ contact: sascha.bilert@student.jade-hs.de
       var alpha2 = alpha / 2;
 
       for (i = 0; i &lt; windowLen.length; i++) {
-          window[i] = alpha0 - alpha1 * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1)) +
-                        alpha2 * Math.cos((4 * Math.PI * windowLen[i]) / (windowLen.length - 1));
+          window[i] = alpha0
+                        - alpha1 * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1))
+                        + alpha2 * Math.cos((4 * Math.PI * windowLen[i]) / (windowLen.length - 1));
       }
       return window;
  }</code></pre>
