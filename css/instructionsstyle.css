@@ -38,7 +38,7 @@ p.windowDef {
     line-height: 100%;
 }
 
-ul.technics {
+ul {
     /*style of the list technic items */
     position: static;
     margin-left: auto;
@@ -46,7 +46,7 @@ ul.technics {
     width: 800px;
     font-size: 12px;
     list-style-type: decimal;
-    line-height: 160%;
+    line-height: 150%;
 }
 
 h2 {
@@ -81,6 +81,12 @@ img.resizeImg#upload {
     height: 40%;
 }
 
+figcaption {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -104,6 +110,10 @@ td.none {
     text-align: center;
 }
 
+td.disabled {
+    background-color: gray;
+}
+
 caption {
     margin-top: 6px;
     font-size: 12px;
@@ -114,7 +124,7 @@ div.plot {
     /*style of the plotly divs*/
     position: static;
     margin: auto;
-    width: 600px;
+    width: 800px;
     height: 600px;
 }
 
