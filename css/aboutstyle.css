@@ -23,10 +23,11 @@
 p {
     /*style of all paragraphes*/
     text-align: justify;
+    font-size: 12px;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
 }
 
 h2 {
@@ -34,7 +35,7 @@ h2 {
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
     text-align: center;
 }
 
@@ -43,7 +44,7 @@ h3 {
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
     text-align: center;
 }
 
@@ -52,15 +53,16 @@ h4 {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
 }
 
 ul {
     /*style of the ul list*/
+    font-size: 12px;
     text-align: justify;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
 }
 
 p.licenseVersion {

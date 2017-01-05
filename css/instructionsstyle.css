@@ -23,10 +23,10 @@
 p {
     /*style of all paragraphes*/
     position: static;
+    font-size: 12px;
     text-align: justify;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1000px;
+    margin: auto;
+    width: 800px;
     margin-top: 50px;
     line-height: 160%;
 }
@@ -43,8 +43,10 @@ ul.technics {
     position: static;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 800px;
+    font-size: 12px;
     list-style-type: decimal;
+    line-height: 160%;
 }
 
 h2 {
@@ -56,18 +58,11 @@ h2 {
 
 h3 {
     /*style of the h3 header*/
-    position: static;
-    text-align: center;
-    margin-top: 50px;
-}
-
-h4 {
-    /*style of the h4 header*/
     text-align: left;
     position: static;
     margin: auto;
     margin-top: 50px;
-    width: 1000px;
+    width: 800px;
 }
 
 img.resizeImg {
@@ -76,7 +71,7 @@ img.resizeImg {
     margin: auto;
     margin-top: 50px;
     border-radius: 5px;
-    width: 1000px;
+    width: 800px;
     height: 70%;
 }
 
@@ -84,6 +79,35 @@ img.resizeImg#upload {
     /*style of the upload image*/
     width: 700px;
     height: 40%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr, th, td {
+    margin: auto;
+    text-align: left;
+    font-size: 12px;
+    border: 1px solid black;
+}
+
+th {
+    text-align: center;
+}
+
+td.number {
+    text-align: right;
+}
+
+td.none {
+    text-align: center;
+}
+
+caption {
+    margin-top: 6px;
+    font-size: 12px;
+    caption-side: bottom;
 }
 
 div.plot {
