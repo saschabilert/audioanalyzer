@@ -105,7 +105,17 @@ function drawSpec() {
     draw();
 
     // Functions for chasing mouse actions
-    canvasSpecLine.addEventListener("mousewheel", mouseWheelFunction);
+    var plusX=document.getElementById('plusX')
+    var minusX = document.getElementById('minusX')
+    var plusY=document.getElementById('plusY')
+    var minusY=document.getElementById('minusY')
+    plusX.addEventListener("click",function(){zoomTime(-1)},false);
+    minusX.addEventListener("click",function(){zoomTime(1)},false);
+    plusY.addEventListener("click",function(){zoomFreq(-1)},false);
+    minusY.addEventListener("click",function(){zoomFreq(1)},false);
+    playButton.addEventListener("click", toggleSound);
+    playButton.addEventListener("click", toggleSound);
+    //canvasSpecLine.addEventListener("mousewheel", mouseWheelFunction);
     canvasSpecLine.addEventListener("click", startPlayHere)
     canvasSpecLine.addEventListener('mousemove', displayMousePosition);
     canvasSpecLine.addEventListener("dblclick", scaleFullSpec);
@@ -127,8 +137,6 @@ function drawSpec() {
     // This function calls a zoom function in dependency on the keys that are
     // pressed while using the mousewheel
     function mouseWheelFunction(evt) {
-        console.log(evt)
-
         var delta = evt.deltaY;
 
         if (SpectroData.strgPressed) {
@@ -150,7 +158,7 @@ function drawSpec() {
 
     // Function for zooming the time axes only
     function zoomTime(delta) {
-        console.log(delta)
+
         var factor;
         if (delta < 0) {
             factor = 1.2;
@@ -159,6 +167,7 @@ function drawSpec() {
         } else {
             factor = 1;
         }
+        console.log(factor)
         // Checking if the new canvas size is smaler than the maximum possible
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
