@@ -59,6 +59,7 @@ function chooseDisplay() {
         document.getElementById("min").disabled = false;
         document.getElementById("max").disabled = false;
     }
+
 }
 //Get the user choice of colormap
 function colormap() {

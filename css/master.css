@@ -322,6 +322,20 @@ option {/*Style and size of all option button*/
     position: absolute;
     border: 1px solid #bfbfbf;
 }
+.specButtons {
+    opacity: 0.5;
+    background-color: white;
+    float: right;
+    margin-top: 460px;
+}
+#minusY {
+    margin-top: 480px;
+    margin-right: -22px;
+    padding: 2px 7.5px;
+}
+#plusX, #minusX {
+    margin-top: 470px;
+}
 
 #canvasDivWave {
     margin-top: 20px;
@@ -403,12 +417,13 @@ option {/*Style and size of all option button*/
     z-index: 1;
     width: 150px;
     height: 150px;
-    margin: 0 50%;
+    margin-left: 46%;
+    margin-top: 15%;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
 }
 #container {/*White container on the webpage*/
     position:absolute;

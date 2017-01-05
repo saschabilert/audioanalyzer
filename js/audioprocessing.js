@@ -86,16 +86,14 @@ function loadAudio() {
             drawWave();
 
             processAudio();
-
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("container").style.display = "none";
         });
     }
+
 }
 
 function processAudio() {
-
-    document.getElementById("loading").style.display = "block";
-    document.getElementById("container").style.display = "block";
-
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
@@ -121,8 +119,7 @@ function processAudio() {
     // draw the spectrogram (see spectrogram.js)
     drawSpec();
 
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("container").style.display = "none";
+
 }
 
 /*
