@@ -322,11 +322,12 @@ option {/*Style and size of all option button*/
     position: absolute;
     border: 1px solid #bfbfbf;
 }
-.specButtons {
+.specButtons { /*Zoom buttons for the spectrum*/
     opacity: 0.5;
     background-color: white;
     float: right;
     margin-top: 460px;
+    margin-right: 5px;
 }
 #minusY {
     margin-top: 480px;
@@ -337,6 +338,7 @@ option {/*Style and size of all option button*/
     margin-top: 470px;
 }
 
+/*Position and size of the elements of the waveform canvas*/
 #canvasDivWave {
     margin-top: 20px;
     margin-left: auto;
@@ -456,7 +458,7 @@ option {/*Style and size of all option button*/
     position:relative;
     display: inline-block;
 }
-.range-container .tooltiptextMenu {/*Style the container and the text for the menu buttons*/
+.range-container .tooltiptext {/*Style the container and the text for the menu buttons*/
     visibility: hidden;
     width: 200px;
     background-color: #555;
@@ -473,28 +475,7 @@ option {/*Style and size of all option button*/
     opacity: 0;
     transition: opacity 1s;
 }
-.range-container:hover .tooltiptextMenu {/*Make it visible when user points on it*/
-    visibility: visible;
-    opacity: 1;
-}
-
-.range-container .tooltiptextDropdown {/*Style the container and the text for the dropdown menu*/
-    visibility: hidden;
-    width: 200px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 1s;
-}
-.range-container:hover .tooltiptextDropdown {/*Make it visible when user points on it*/
+.range-container:hover .tooltiptext {/*Make it visible when user points on it*/
     visibility: visible;
     opacity: 1;
 }
