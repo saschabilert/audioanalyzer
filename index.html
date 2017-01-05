@@ -103,7 +103,7 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- Create the dropdown menu with all settings-->
     <div class="dropdownContainer">
         <div class="dropdownBlock">
-            <p>Blocklength:</p>
+            <p>Block-Length:</p>
             <div class="range-container">
                 <select id="blockLength" onchange="blockLength()">
                         <option value="512">512</option>
@@ -201,19 +201,19 @@ contact: sascha.bilert@student.jade-hs.de
         <canvas id="canvasSpec" width="1176" height="512"></canvas>
         <canvas id="canvasSpecScale" width="1200" height="540"></canvas>
         <canvas id="canvasSpecLine" width="1176" height="512"></canvas>
-        <div id="divSpecPosition">
-            <p id="specTime"></p>
-            <p id="specFreq"></p>
-            <p id="magnitute"></p>
-        </div>
-        <div class="specButtonsY">
-            <button id ="plusY" class="specButtons">+</button>
-            <button id ="minusY" class="specButtons">-</button>
-        </div>
-        <div class="specButtonsX">
+    </div>
+    <div class="specButtonsY">
+        <button id ="plusY" class="specButtons">+</button>
+        <button id ="minusY" class="specButtons">-</button>
+    </div>
+    <div class="specButtonsX">
         <button id ="plusX" class="specButtons">+</button>
         <button id ="minusX" class="specButtons">-</button>
-        </div>
+    </div>
+    <div id="divSpecPosition">
+        <p id="specTime"></p>
+        <p id="specFreq"></p>
+        <p id="magnitute"></p>
     </div>
 
     <!-- Create a button for saving the information in .png format -->

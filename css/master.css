@@ -305,18 +305,19 @@ option {/*Style and size of all option button*/
     height: 75px;
 }
 #divSpecPosition {
-    margin-top: 10px;
+    margin-top: -550px;
     margin-left: 40px;
     width: 200px;
     height: 60px;
-    position: absolute;
     line-height: 0.5;
     background-color: rgba(250, 250, 255, 0.7);
     font-size: 12px;
     font-weight: bold;
     border: 1px solid gray;
     text-align: center;
+    position: absolute;
     z-index: 3;
+
 }
 #canvasLegend {
     position: absolute;
@@ -326,16 +327,28 @@ option {/*Style and size of all option button*/
     opacity: 0.5;
     background-color: white;
     float: right;
-    margin-top: 460px;
-    margin-right: 5px;
+}
+.specButtonsY {
+    position: absolute;
+    margin-top: -95px;
+    margin-left: 2285px;
 }
 #minusY {
-    margin-top: 480px;
+    margin-top: 21px;
     margin-right: -22px;
     padding: 2px 7.5px;
 }
+
+.specButtonsX {
+    margin-left: 2238px;
+    margin-top: -555px;
+    position: absolute;
+}
 #plusX, #minusX {
     margin-top: 470px;
+}
+#minusX {
+    margin-right: 2px;
 }
 
 /*Position and size of the elements of the waveform canvas*/
