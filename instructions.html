@@ -41,9 +41,13 @@ contact: sascha.bilert@student.jade-hs.de
 
     <!-- import audioprocessing.js to plot the window functions -->
     <script type="text/javascript" src="js/audioprocessing.js"></script>
+    <script type="text/javascript" src="js/fft.js">
+
+    </script>
 
     <!-- import plotly.js latest version to visulize data -->
     <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
     <script type="text/javascript" src="js/plot.js"></script>
 
     <!-- import MathJax to user LateX for math formulars -->
@@ -93,8 +97,9 @@ contact: sascha.bilert@student.jade-hs.de
         <li><a class="naviItems" href="#saveSpectrogram">Save Spectrogram</a></li>
     </ul>
 
-    <p>This Website includes usefull information about how to analyse your audio file. If you need help to use the Website you can navigate to the preferred help-section in the menu on the left side. The Website is programmed by using the following technologies:</p>
-    <ul class="technics">
+    <p>This Website includes usefull information about how to use the Audioanalyzer to analyse your audio file. In addition we tried to help the user by writing short tooltipps. If you need help to use the Website you can navigate to the preferred help-section
+        in the menu on the left side. The Website is programmed by using the following technologies:</p>
+    <ul>
         <li>JavaScript (JS ES6)</li>
         <li>Plotly (JS-Framework)</li>
         <li>Rainbow (JS-Framework)</li>
@@ -106,108 +111,137 @@ contact: sascha.bilert@student.jade-hs.de
         the different windows we used
         <b>plotly.js</b> for illustration and <b>rainbow.js</b> to highlight the code. We tried to describe all the parameters in a easy way in the instructions.</p>
     <h2><a id="choosingAFile">Choose a file:</a></h2>
-    <img class="resizeImg" id="upload" src="image/upload.png">
+    <figure>
+        <img class="resizeImg" id="upload" src="image/upload.png">
+        <figcaption>Figure 1: Upload the audio file which you want to analyse.</figcaption>
+    </figure>
     <p>If you click on “Choose a file” you are able to import an audio file from you local computer. You can analyse different audio formats e.g. wav or mp3 if the are recognised by your browser
         <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more audio formats)</a>. After you choose a file the waveform and the magintude-spectrum will be calculated and displayed below
         the buttons after the loading screen disappeared. The upload button now shows the name of your uploaded file. By clicking the button again, you can upload a new audio file. Your audio data won’t be saved at any point just analysed.</p>
     <h2><a id="controlBar">Control Bar:</a></h2>
-    <img class="resizeImg" src="image/controlbar.png">
+    <figure>
+        <img class="resizeImg" src="image/controlbar.png">
+        <figcaption>Figure 2: Control Bar to operate your sound in terms of play / stop for example.</figcaption>
+    </figure>
     <p>You can play, pause and stop your uploaded track by using the different buttons in the control bar. Here you also find the button "Choose a file" which was discribed in the section before. You can also adjust the volume by using the volume slider
         next to the stop button. The numbers display the current playback time and the total length of the track in MM:SS:m seperated by a slash. You can use the pause and play button to control the playback signal while you analyse it. It is also possible
         to loop a selected part of the audio file by ticking the box next to "Loop". How to select a part of your audio file is explained in the Waveform section. In case of analysis you can pick a matching grid size for the waveform including small,
         medium and large.</p>
     <h2><a id="waveform">Waveform:</a></h2>
-    <img class="resizeImg" src="image/waveform.png">
-    <p>The Waveform is compound by the linear amplitude (blue) and the RMS (lightblue). The RMS is calculated by $rms = \sqrt{\dfrac{1}{N}\sum \limits_{i=0}^{N} n_{i}^{2}}$. On the x-axis you have the time scale and on the y-axis you have .... In the upper
+    <figure>
+        <img class="resizeImg" src="image/waveform.png">
+        <figcaption>Figure 3: A view of the waveform of a uploaded audio file.</figcaption>
+    </figure>
+    <p>The Waveform is compound by the linear amplitude (blue) and the RMS (lightblue). The RMS is calculated by RMS $= \sqrt{\dfrac{1}{N}\sum \limits_{i=0}^{N} n_{i}^{2}}$. On the x-axis you have the time scale and on the y-axis you have .... In the upper
         left corner you can see a legend showing your current mouse position when you move over the waveform. The legend includes the time, amplitude and the RMS. When you hit play after uploading a audio file, a red line shows the current time point
         in the waveform. If you click into the waveform and drag your mouse backward or forward you can select a single part of the waveform. When you release the mouse button your selection is shaded in transparent red. If you now hit the play button
         you just play the selected part. It is also possible to use the Loop to repeat the selected audio part.</p>
     <h2><a id="spectrogram">Spectrogram:</a></h2>
-    <img class="resizeImg" src="image/spectrum.png">
+    <figure>
+        <img class="resizeImg" src="image/spectrum.png">
+        <figcaption>Figure 4: A view of the spectrum of a uploaded audio file.</figcaption>
+    </figure>
     <p>The Spectrogram has different display types which are discussed in a section below. One thing they have in common, they are allways three dimensional. On the x-axis you have the time and on the y-axis you have the frequency. If you move your cursor
         over the spectrogram the position data is displayed in the upper left corner. To identify the 3th dimension you have a legend for the colormap over the spectrogram on the right side. If you want to have more information you can zoom into the spectrogram
         by pressing the .... and the .... As you read in the last section, it is possible to select a short piece of your audio file. When you do that in the waveform the spectrogam will automaticlly zoom in the selected part of the audio file. While
         you zoomed in the spectrogram you can scroll the spectrogram backwards and forward in time.</p>
     <h2><a id="parameters">Parameters:</a></h2>
+    <p>You can customize the spectrogram individually by choosing the following listing parameters:</p>
+    <table align="center" cellpadding="10">
+        <caption>Table 1: Possible parameters to individualize the spectrogram. The gray fields show not free selectable parameters</caption>
+        <tr>
+            <th>Blocklength [samples]</th>
+            <th>Window-Type</th>
+            <th>Overlap [%]</th>
+            <th>Display-Type</th>
+            <th>Colormap</th>
+        </tr>
+        <tr>
+            <td class="number">512</td>
+            <td>hann</td>
+            <td class="number">0</td>
+            <td>spectrum</td>
+            <td>viridis</td>
+        </tr>
+        <tr>
+            <td class="number">1024</td>
+            <td>rectangle</td>
+            <td class="number">25</td>
+            <td>phase</td>
+            <td>gray</td>
+        </tr>
+        <tr>
+            <td class="number">2048</td>
+            <td>hann-poisson</td>
+            <td class="number">50</td>
+            <td>group delay</td>
+            <td>jet</td>
+        </tr>
+        <tr>
+            <td class="number">4096</td>
+            <td>cosine</td>
+            <td class="number">75</td>
+            <td>instantaneous frequency deviation</td>
+            <td>plasma</td>
+        </tr>
+        <tr>
+            <td class="number">8192</td>
+            <td>flat-top</td>
+            <td class="number">90</td>
+            <td class="none">-</td>
+            <td class="disabled">twilight</td>
+        </tr>
+        <tr>
+            <td class="none">-</td>
+            <td>hamming</td>
+            <td class="none">-</td>
+            <td class="none">-</td>
+            <td class="disabled">sunlight</td>
+        </tr>
+        <tr>
+            <td class="none">-</td>
+            <td>blackman</td>
+            <td class="none">-</td>
+            <td class="none">-</td>
+            <td class="none">-</td>
+        </tr>
+    </table>
+    <p>The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of the colormap is viridis, but you can choose between 4 colormaps. For the spectrum you can choose a minimal and a maximal
+        value which zooms the spectrogram its value range. Depending on what you want to analyse you can choose between the four display types. The different Spectrograms (depending on the display type) are discussed in the section
+        <b>Display-Types</b>.
+    </p>
     <figure>
         <img class="resizeImg" src="image/parameters.png">
-        <figcaption>Fig1. - A view of the pulpit rock in Norway.</figcaption>
+        <figcaption>Figure 5: Displays the possible parameters to individualize the Spectrogram.</figcaption>
     </figure>
-    <p>You can customize the spectrogram individually by choosing the following listing parameters:
-        <p>
-            <table align="center" cellpadding="10">
-                <caption>Table 1: Possible parameters to individualize the spectrogram</caption>
-                <tr>
-                    <th>Blocklength [samples]</th>
-                    <th>Window-Type</th>
-                    <th>Overlap [%]</th>
-                    <th>Display-Type</th>
-                    <th>Colormap</th>
-                </tr>
-                <tr>
-                    <td class="number">512</td>
-                    <td>hann</td>
-                    <td class="number">0</td>
-                    <td>spectrum</td>
-                    <td>viridis</td>
-                </tr>
-                <tr>
-                    <td class="number">1024</td>
-                    <td>rectangle</td>
-                    <td class="number">25</td>
-                    <td>phase</td>
-                    <td>gray</td>
-                </tr>
-                <tr>
-                    <td class="number">2048</td>
-                    <td>hann-poisson</td>
-                    <td class="number">50</td>
-                    <td>group delay</td>
-                    <td>jet</td>
-                </tr>
-                <tr>
-                    <td class="number">4096</td>
-                    <td>cosine</td>
-                    <td class="number">75</td>
-                    <td>instantaneous frequency deviation</td>
-                    <td>plasma</td>
-                </tr>
-                <tr>
-                    <td class="number">8192</td>
-                    <td>flat-top</td>
-                    <td class="number">90</td>
-                    <td class="none">-</td>
-                    <td>twilight</td>
-                </tr>
-                <tr>
-                    <td class="none">-</td>
-                    <td>hamming</td>
-                    <td class="none">-</td>
-                    <td class="none">-</td>
-                    <td>sunlight</td>
-                </tr>
-                <tr>
-                    <td class="none">-</td>
-                    <td>blackman</td>
-                    <td class="none">-</td>
-                    <td class="none">-</td>
-                    <td class="none">-</td>
-                </tr>
-            </table>
-            <p>The default block length is 1024, the default window type is the hann window and the default overlap is 50%. The default type of the colormap is Parula, but you can choose between other 3 colormaps. For the spectrum you can choose a min and
-                a max value for the visualization......... Depending on what you want to analyse you can choose the display type. You can visualise the spectrum, the phase, the modulation spectrum, the group delay and the instantaneous frequency of the
-                signal.
-            </p>
-            <h2><a id="blockLength">Blocklength:</a></h2>
-            <p>The block length is the number of bins used to divide the window into equal strips. One bit represents one spectrum sample and defines the frequency resolution of the window. For a 44100 Hz sample rate and a block size of 1024, the signal
-                is being divided into 512 bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the block size, you will have an improved frequency resolution, because you will have
-                more bins in one window. An increase of the block size slows the calculating time proportionally. The default value implemented here is 1024. You can increase it by choosing 2048 or 4096 bins per block. </p>
-            <h2><a id="windowType">Window-Types:</a></h2>
-            <p>HERE COMES AN EXPLANATION WHY THE WINDOW IS IMPORTANT FOR THE ANALYSIS</p>
-            <h3>1. Rect Window</h3>
-            <p class="windowDef">The Rect Window is defined by: $w(n) = 1$</p>
-            <div class="plot" id="divRect"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <p>In the Figure 5 you can see the different parameter-dropdown-menus and the lines for min and max range value. On the right side of the image you can see the spectrogram legend depending on the choosen display type.</p>
+    <h2><a id="blockLength">Blocklength:</a></h2>
+    <p>The block length is the number of samples used to divide the audio signal into equal blocks. In our case the block length is equal to the FFT-size. This means one bit in the spectrogram represents one audio sample and defines the frequency resolution
+        of the window. For a 44100 Hz sample rate and a block size of 1024, the signal is being divided into 512 frequency bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the
+        block size, you will have an improved frequency resolution, because you have more bins in the same plot resolution. An increase of the block size slows the calculation time.</p>
+    <h2><a id="windowType">Window-Types:</a></h2>
+    <p>The following part is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JS. In general a window can be explained as a weight for thead audio signal
+        in the time domain. If you take a look on an window itself in the time domain as well as in the frequency domain, you can categorize a window with tree major classes and subclasses in the frequency domain (Quelle AMT):</p>
+    <ul>
+        <li>Spectral resolution</li>
+        <ul>
+            <li>-3 dB point</li>
+            <li>Effektiv noise width</li>
+            <li>Rippel factor</li>
+        </ul>
+        <li>Power of damping</li>
+        <ul>
+            <li>Damping of the first sidelobe</li>
+            <li>Spectral roll-off</li>
+            <li>$\Delta$f till damping &gt; 60dB</li>
+        </ul>
+        <li>Selectivity</li>
+    </ul>
+    <p>The following subsections explain each window.</p>
+    <h3>1. Rect Window</h3>
+    <p class="windowDef">The Rect Window is defined by: $w(n) = 1$</p>
+    <div class="plot" id="divRect"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an rect window in Javascript
  */
 
@@ -219,10 +253,10 @@ contact: sascha.bilert@student.jade-hs.de
        window.fill(1);
        return window;
  }</code></pre>
-            <h3>2. Hann Window</h3>
-            <p class="windowDef">The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
-            <div class="plot" id="divHann"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>2. Hann Window</h3>
+    <p class="windowDef">The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
+    <div class="plot" id="divHann"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an hann window in Javascript
  */
 
@@ -231,16 +265,16 @@ contact: sascha.bilert@student.jade-hs.de
 
  function calculateWindow(windowLen) {
        var window = new Array(windowLen.length);
-       for (i = 0; i < windowLen.length; i++) {
+       for (i = 0; i &lt; windowLen.length; i++) {
            window[i] = 0.5 * (1 - Math.cos(2 * Math.PI *
                         windowLen[i] / (windowLen.length - 1)));
        }
        return window;
  }</code></pre>
-            <h3>3. Hann-Poisson Window</h3>
-            <p class="windowDef">The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)\text{e}^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
-            <div class="plot" id="divHannPoisson"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>3. Hann-Poisson Window</h3>
+    <p class="windowDef">The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)\text{e}^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
+    <div class="plot" id="divHannPoisson"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an hann-poisson window in Javascript
  */
 
@@ -254,17 +288,17 @@ contact: sascha.bilert@student.jade-hs.de
        // (Wiki: https://en.wikipedia.org/wiki/Window_function)
        var alpha = 2;
 
-       for (i = 0; i < windowLen.length; i++) {
+       for (i = 0; i &lt; windowLen.length; i++) {
            window[i] = 0.5 * (1 - Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))) *
                         Math.exp((-alpha * Math.abs(windowLen.length - 1 - (2 * windowLen[i]))) /
                         (windowLen.length - 1));
        }
        return window;
  }</code></pre>
-            <h3>4. Cosine Window</h3>
-            <p class="windowDef">The Cosine Window is defined by: $w(n) = \cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
-            <div class="plot" id="divCosine"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>4. Cosine Window</h3>
+    <p class="windowDef">The Cosine Window is defined by: $w(n) = \cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
+    <div class="plot" id="divCosine"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an cosine window in Javascript
  */
 
@@ -273,18 +307,18 @@ contact: sascha.bilert@student.jade-hs.de
 
  function calculateWindow(windowLen) {
        var window = new Array(windowLen.length);
-       for (i = 0; i < windowLen.length; i++) {
+       for (i = 0; i &lt; windowLen.length; i++) {
            window[i] = Math.cos(((Math.PI * windowLen[i]) /
                         (windowLen.length)) - (Math.PI / 2));
        }
        return window;
  }</code></pre>
-            <h3>5. Flat-Top Window</h3>
-            <p class="windowDef">The Flat-Top Window is defined by:</p>
-            <p class="windowDef">$w(n) = \alpha_{0}-\alpha_{1}\cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}\cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}\cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}\cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
-            <p class="windowDef">$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
-            <div class="plot" id="divFlatTop"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>5. Flat-Top Window</h3>
+    <p class="windowDef">The Flat-Top Window is defined by:</p>
+    <p class="windowDef">$w(n) = \alpha_{0}-\alpha_{1}\cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}\cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}\cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}\cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
+    <p class="windowDef">$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
+    <div class="plot" id="divFlatTop"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an flat-top window in Javascript
  */
 
@@ -298,19 +332,20 @@ contact: sascha.bilert@student.jade-hs.de
        // (Wiki: https://en.wikipedia.org/wiki/Window_function)
        var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
-       for (i = 0; i < windowLen.length; i++) {
-           window[i] = alpha[0] - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))
+       for (i = 0; i &lt; windowLen.length; i++) {
+           window[i] = alpha[0]
+                        - alpha[1] * Math.cos(2 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         + alpha[2] * Math.cos(4 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         - alpha[3] * Math.cos(6 * Math.PI * windowLen[i] / (windowLen.length - 1))
                         + alpha[4] * Math.cos(8 * Math.PI * windowLen[i] / (windowLen.length - 1));
        }
        return window;
  }</code></pre>
-            <h3>6. Hamming Window</h3>
-            <p class="windowDef">The Hamming Window is defined by: $w(n) = \alpha - \beta \cos\left(\dfrac{2\pi n}{N-1}\right)$</p>
-            <p class="windowDef">$\alpha = 0.54$; $\beta = 1 - \alpha = 0.46$</p>
-            <div class="plot" id="divHamming"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>6. Hamming Window</h3>
+    <p class="windowDef">The Hamming Window is defined by: $w(n) = \alpha - \beta \cos\left(\dfrac{2\pi n}{N-1}\right)$</p>
+    <p class="windowDef">$\alpha = 0.54$; $\beta = 1 - \alpha = 0.46$</p>
+    <div class="plot" id="divHamming"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an hamming window in Javascript
  */
 
@@ -325,16 +360,16 @@ contact: sascha.bilert@student.jade-hs.de
       var alpha = 0.54;
       var beta = 1 - alpha;
 
-      for (i = 0; i < windowLen.length; i++) {
+      for (i = 0; i &lt; windowLen.length; i++) {
           window[i] = alpha - beta * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1));
       }
       return window;
  }</code></pre>
-            <h3>6. Blackman Window</h3>
-            <p class="windowDef">The Blackman Window is defined by: $w(n) = \alpha_{0} - \alpha_{1} \cos\left(\dfrac{2\pi n}{N-1}\right) + \alpha_{2} \cos\left(\dfrac{4\pi n}{N-1}\right)$</p>
-            <p class="windowDef">$\alpha_{0} = \dfrac{1 - \alpha}{2}$; $\alpha_{1} = \dfrac{1}{2}$; $\alpha_{2} = \dfrac{\alpha}{2}$; $\alpha = 0.16$</p>
-            <div class="plot" id="divBlackman"></div>
-            <pre class="code"><code data-language="javascript">/*
+    <h3>6. Blackman Window</h3>
+    <p class="windowDef">The Blackman Window is defined by: $w(n) = \alpha_{0} - \alpha_{1} \cos\left(\dfrac{2\pi n}{N-1}\right) + \alpha_{2} \cos\left(\dfrac{4\pi n}{N-1}\right)$</p>
+    <p class="windowDef">$\alpha_{0} = \dfrac{1 - \alpha}{2}$; $\alpha_{1} = \dfrac{1}{2}$; $\alpha_{2} = \dfrac{\alpha}{2}$; $\alpha = 0.16$</p>
+    <div class="plot" id="divBlackman"></div>
+    <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an blackman window in Javascript
  */
 
@@ -351,23 +386,24 @@ contact: sascha.bilert@student.jade-hs.de
       var alpha1 = 1 / 2;
       var alpha2 = alpha / 2;
 
-      for (i = 0; i < windowLen.length; i++) {
-          window[i] = alpha0 - alpha1 * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1)) +
-                        alpha2 * Math.cos((4 * Math.PI * windowLen[i]) / (windowLen.length - 1));
+      for (i = 0; i &lt; windowLen.length; i++) {
+          window[i] = alpha0
+                        - alpha1 * Math.cos((2 * Math.PI * windowLen[i]) / (windowLen.length - 1))
+                        + alpha2 * Math.cos((4 * Math.PI * windowLen[i]) / (windowLen.length - 1));
       }
       return window;
  }</code></pre>
-            <h2><a id="overlap">Overlap:</a></h2>
-            <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
-            <h2><a id="displayType">Display-Types:</a></h2>
-            <p>HERE COMES SOMETHING ABOUT THE display type</p>
-            <h3>1. Spectrum</h3>
-            <h3>2. Phase</h3>
-            <h3>3. Group Delay</h3>
-            <h3>4 Instantaneous Frequency Deiviation</h3>
-            <h2><a id="colormap">Colormaps:</a></h2>
-            <p>HERE COMES SOMETHING ABOUT THE colormap</p>
-            <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
+    <h2><a id="overlap">Overlap:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
+    <h2><a id="displayType">Display-Types:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE display type</p>
+    <h3>1. Spectrum</h3>
+    <h3>2. Phase</h3>
+    <h3>3. Group Delay</h3>
+    <h3>4 Instantaneous Frequency Deiviation</h3>
+    <h2><a id="colormap">Colormaps:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE colormap</p>
+    <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
 </body>
 
 </html>
