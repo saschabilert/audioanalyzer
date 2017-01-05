@@ -74,12 +74,12 @@ function drawWave() {
 
             minValue[i] = Math.min(...currentBlock) * waveScale;
 
-            rms[i] = calculateRMS(currentBlock) * waveScale;
+            rms[i] = calculateRMS(currentBlock);
 
             if (Math.max(...currentBlock) >= Math.abs(Math.min(...currentBlock))) {
-                peak[i] = Math.max(...currentBlock) * waveScale;
+                peak[i] = Math.max(...currentBlock);
             } else if (Math.max(...currentBlock) < Math.abs(Math.min(...currentBlock))) {
-                peak[i] = Math.abs(Math.min(...currentBlock)) * waveScale;
+                peak[i] = Math.abs(Math.min(...currentBlock));
             }
         }
 
@@ -103,8 +103,8 @@ function drawWave() {
 
         canvasCtxRMS.moveTo(0, canvas.height / 2);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtxRMS.lineTo(i, canvas.height / 2 - rms[i]);
-            canvasCtxRMS.lineTo(i, canvas.height / 2 + rms[i]);
+            canvasCtxRMS.lineTo(i, canvas.height / 2 - rms[i] * waveScale);
+            canvasCtxRMS.lineTo(i, canvas.height / 2 + rms[i] * waveScale);
             canvasCtxRMS.stroke();
         }
 
@@ -255,7 +255,7 @@ function drawWaveGrid() {
     var gridSize = WaveData.stepsX * WaveData.gridScale;
 
     var numHorizontal = canvasWaveGrid.height / gridSize;
-    var numVertical = (canvasWaveGrid.width - offSetLeft) / gridSize;
+    var numVertical = canvasWaveGrid.width  / gridSize;
 
     ctxWaveGrid.clearRect(0, 0, canvasWaveGrid.width, canvasWaveGrid.height);
 
@@ -264,14 +264,14 @@ function drawWaveGrid() {
     ctxWaveGrid.lineWidth = 1;
 
     for (var i = 1; i < numHorizontal; i++) {
-        ctxWaveGrid.moveTo(offSetLeft + 1, gridSize * i);
+        ctxWaveGrid.moveTo( 1, gridSize * i);
         ctxWaveGrid.lineTo(canvasWaveGrid.width, gridSize * i);
         ctxWaveGrid.stroke();
     }
 
     for (var k = 1; k <= numVertical; k++) {
-        ctxWaveGrid.moveTo(offSetLeft + gridSize * k, 0);
-        ctxWaveGrid.lineTo(offSetLeft + gridSize * k, canvasWaveGrid.height - 1);
+        ctxWaveGrid.moveTo(gridSize * k, 0);
+        ctxWaveGrid.lineTo(gridSize * k, canvasWaveGrid.height - 1);
         ctxWaveGrid.stroke();
     }
 
@@ -294,8 +294,9 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1);
 
-    var amplitude = WaveData.amplitude[Math.round(mouseX)];
-    var rms = WaveData.rms[Math.round(mouseX)];
+console.log(WaveData.amplitude)
+    var amplitude = WaveData.amplitude[Math.round(mousePos.x)];
+    var rms = WaveData.rms[Math.round(mousePos.x)];
 
     amplitude = 20 * Math.log10(amplitude);
     rms = 20 * Math.log10(rms);

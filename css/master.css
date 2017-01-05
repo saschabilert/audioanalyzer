@@ -404,6 +404,7 @@ option {/*Style and size of all option button*/
     opacity: 0.65;
 }
 #canvasWaveGrid {
+  margin-left: 25px;
     position: absolute;
 }
 #canvasWaveScale {
