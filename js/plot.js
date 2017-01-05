@@ -34,7 +34,7 @@ function plotWindow() {
     var layout = {
         title: 'Hann Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -78,7 +78,7 @@ function plotWindow() {
             domain: [
                 0, 0.45
             ],
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -111,7 +111,7 @@ function plotWindow() {
     var layout = {
         title: 'Hann-Poisson Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -140,7 +140,7 @@ function plotWindow() {
     var layout = {
         title: 'Cosine Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -169,7 +169,7 @@ function plotWindow() {
     var layout = {
         title: 'Flat-Top Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -198,7 +198,7 @@ function plotWindow() {
     var layout = {
         title: 'Hamming Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
@@ -227,7 +227,7 @@ function plotWindow() {
     var layout = {
         title: 'Blackman Window',
         xaxis: {
-            title: 'samples',
+            title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,

@@ -86,8 +86,8 @@ function loadAudio() {
             drawWave();
 
             processAudio();
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("container").style.display = "none";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
         });
     }
 
@@ -118,8 +118,6 @@ function processAudio() {
 
     // draw the spectrogram (see spectrogram.js)
     drawSpec();
-
-
 }
 
 /*
@@ -136,8 +134,8 @@ function calculateDisplay(type) {
     for (var i = 0; i < Audiodata.nPart; i++) {
 
         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
-      //  console.log(sampleBlock.length);
-      //  console.log(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
+        //  console.log(sampleBlock.length);
+        //  console.log(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
             for (var k = 0; k < Audiodata.blockLen; k++) {

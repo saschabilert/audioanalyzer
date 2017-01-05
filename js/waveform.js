@@ -162,8 +162,7 @@ function drawLineKlickWave(mouseTime) {
     var ctxLine = canvasWaveLine.getContext("2d");
     mousePos = (mouseTime * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
     ctxLine.clearRect(0, 0, canvasWaveLine.width, canvasWaveLine.height);
-    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' +
-        0 + ')';
+    ctxLine.fillStyle = 'rgb(' + 255 + ',' + 0 + ',' + 0 + ')';
     ctxLine.fillRect(mousePos, 0, 2, canvasWaveLine.height);
     drawLineKlick(mouseTime);
 }
@@ -297,11 +296,23 @@ function displayWavePosition(evt) {
     var amplitude = WaveData.amplitude[Math.round(mouseX)];
     var rms = WaveData.rms[Math.round(mouseX)];
 
-    amplitude = 20 * Math.log10(amplitude);
-    rms = 20 * Math.log10(rms);
+    if (amplitude == 0) {
+        amplitudeValue.innerHTML = 'Amplitude: ' +
+            'NaN' +
+            ' dB';
+    } else {
+        amplitude = 20 * Math.log10(amplitude);
+        amplitudeValue.innerHTML = 'Amplitude: ' + amplitude.toFixed(1) + ' dB';
+    }
 
-    amplitudeValue.innerHTML = 'Amplitude: ' + amplitude.toFixed(1) + ' dB';
-    rmsValue.innerHTML = 'RMS: ' + rms.toFixed(1) + ' dB';
+    if (rms == 0) {
+        rmsValue.innerHTML = 'RMS: ' +
+            'NaN' +
+            ' dB';
+    } else {
+        rms = 20 * Math.log10(rms);
+        rmsValue.innerHTML = 'RMS: ' + rms.toFixed(1) + ' dB';
+    }
 }
 
 function waveOnMouseDown(evt) {
@@ -328,16 +339,14 @@ function drawSelection(startPos, caller, endPos) {
         var actualPosition = selectionX;
         var widthSelection = (actualPosition - startPos);
         ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
-        ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' +
-            0 + ',' + 0.2 + ')';
+        ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' + 0 + ',' + 0.2 + ')';
         ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
     } else if (caller == 2) {
         var start = (startPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         var actualPosition = (endPos * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         var widthSelection = (actualPosition - start);
         ctxSelect.clearRect(0, 0, canvasSelect.width, canvasSelect.height);
-        ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' +
-            0 + ',' + 0.2 + ')';
+        ctxSelect.fillStyle = 'rgba(' + 255 + ',' + 0 + ',' + 0 + ',' + 0.2 + ')';
         ctxSelect.fillRect(start, 0, widthSelection, canvasSelect.height);
     }
 }
@@ -357,8 +366,7 @@ function waveOnMouseUp(evt) {
     }
     canvasWaveLine.removeEventListener("mousemove", onMouseMove);
     clearInterval(intervalDrawSelect);
-    zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width *
-        startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos);
+    zoomToSelection((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * startSelection, (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos);
     startSelection = NaN;
     selectionX = NaN;
 }
