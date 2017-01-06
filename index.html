@@ -62,25 +62,26 @@ contact: sascha.bilert@student.jade-hs.de
             <form method="post" enctype="multipart/form-data" action="">
                 <!-- set input audiofile and trigger the audioProcessing function -->
                 <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
-                <label for="myAudio">Choose a file</label><span class="tooltiptext">Choose an audio signal </span>
+                <label for="myAudio">Choose a file</label><span class="tooltiptext">Choose an audio signal that is supported by your browser </span>
             </form>
         </div>
         <div class="buttons">
-            <div class="range-container"><button id="player" type="button" class="playPause" disabled>&#9654;</button><span class="tooltiptext">When enabled, play and pause the audio signal</span></div>
-            <div class="range-container"><button id="stop" type="button" class="stop" disabled>&#9724;</button><span class="tooltiptext">Stop the audio signal</span></div>
-            <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled><span class="tooltiptext">When enabled, adjust the volume
+            <div class="range-container"><button id="player" type="button" class="playPause" disabled>&#9654;</button><span class="tooltiptext">Play or Pause at the
+  current playback position</span></div>
+            <div class="range-container"><button id="stop" type="button" class="stop" disabled>&#9724;</button><span class="tooltiptext">By stopping, the playback position will be at the beginning</span></div>
+            <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled><span class="tooltiptext">Adjust the volume
                                          by dragging the bar</span></div>
         </div>
         <div id="playbackTime">00:00.0&thinsp;/&thinsp;00:00.0</div>
         <div class="range-container">
-            <div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div><span class="tooltiptext">When enabled, click this button to loop a selected section of the song</span></div>
+            <div id="loopText">Loop Selection<input type="checkbox" id="LoopCheck" onchange="setLoop(this)" disabled></div><span class="tooltiptext">Click this button to loop a selected section of the song</span></div>
         <div id="gridSize">Grid Size:
             <div class="range-container"><select id="grid" onchange="gridSize()" disabled>
         <option value="0.0625">small</option>
         <option value="0.125">medium</option>
         <option value="0.25">large</option>
       </select>
-                <span class="tooltiptext">When enabled, select the grid size of the waveform</span></div>
+                <span class="tooltiptext">Select the grid size of the waveform</span></div>
         </div>
     </div>
 
