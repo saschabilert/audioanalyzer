@@ -24,7 +24,8 @@ var WaveData = {
     gridScale: 1 / 16,
     stepsX: undefined,
     amplitude: undefined,
-    rms: undefined
+    rms: undefined,
+    scaleX: 1
 };
 
 var mouseUsed = 0;
@@ -300,8 +301,8 @@ function displayWavePosition(evt) {
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1);
 
 
-    var amplitude = WaveData.amplitude[Math.round(mousePos.x)];
-    var rms = WaveData.rms[Math.round(mousePos.x)];
+    var amplitude = WaveData.amplitude[Math.round(mousePos.x/WaveData.scaleX)];
+    var rms = WaveData.rms[Math.round(mousePos.x/WaveData.scaleX)];
 
     if (amplitude == 0) {
         amplitudeValue.innerHTML = 'Amplitude: ' +
