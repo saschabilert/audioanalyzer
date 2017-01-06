@@ -19,6 +19,7 @@
  *
  * contact: sascha.bilert@student.jade-hs.de
  */
+ 
 function plotWindow() {
 
     var windowLen = linspace(0, 1024, 1024);
