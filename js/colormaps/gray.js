@@ -1,5 +1,28 @@
+/*
+ * gray.js
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
+
 var grayScale;
 
+// write rgb data into colorscale
 function createGray() {
     var rgbR = [0.0000, 2.5758, 5.1515, 7.7273, 10.3030, 12.8788, 15.4545, 18.0303, 20.6061, 23.1818, 25.7576, 28.3333, 30.9091, 33.4848, 36.0606, 38.6364, 41.2121, 43.7879, 46.3636, 48.9394, 51.5152, 54.0909, 56.6667, 59.2424, 61.8182, 64.3939, 66.9697, 69.5455, 72.1212, 74.6970, 77.2727, 79.8485, 82.4242, 85.0000, 87.5758, 90.1515, 92.7273, 95.3030, 97.8788, 100.4545, 103.0303, 105.6061, 108.1818, 110.7576, 113.3333, 115.9091, 118.4848, 121.0606, 123.6364, 126.2121, 128.7879, 131.3636, 133.9394, 136.5152, 139.0909, 141.6667, 144.2424, 146.8182, 149.3939, 151.9697, 154.5455, 157.1212, 159.6970, 162.2727, 164.8485, 167.4242, 170.0000, 172.5758, 175.1515, 177.7273, 180.3030, 182.8788, 185.4545, 188.0303, 190.6061, 193.1818, 195.7576, 198.3333, 200.9091, 203.4848, 206.0606, 208.6364, 211.2121, 213.7879, 216.3636, 218.9394, 221.5152, 224.0909, 226.6667, 229.2424, 231.8182, 234.3939, 236.9697, 239.5455, 242.1212, 244.6970, 247.2727, 249.8485, 252.4242, 255.0000, ];
 

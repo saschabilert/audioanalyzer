@@ -42,7 +42,6 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- import audioprocessing.js to plot the window functions -->
     <script type="text/javascript" src="js/audioprocessing.js"></script>
     <script type="text/javascript" src="js/fft.js">
-
     </script>
 
     <!-- import plotly.js latest version to visulize data -->
@@ -97,18 +96,20 @@ contact: sascha.bilert@student.jade-hs.de
         <li><a class="naviItems" href="#saveSpectrogram">Save Spectrogram</a></li>
     </ul>
 
+
     <p>This Website includes useful information about how to use the Audioanalyzer to analyse your audio file. In addition we tried to help the user by writing short tooltipps. If you need help to use the website you can navigate to the preferred help-section
         in the menu on the left side. The website is programmed by using the following technologies:</p>
     <ul>
-        <li>JavaScript (JS ES6)</li>
+        <li>JavaScript ES6 (JS ES6)</li>
         <li>Plotly (JS-Framework)</li>
         <li>Rainbow (JS-Framework)</li>
         <li>Hypertext Markup Language (HTML5)</li>
         <li>Cascading Style Sheet (CSS3)</li>
     </ul>
+
     <p style="margin-top: 16px;">The audioprocessing is based on a free FFT programmed in JavaScript (JS) by Nayuki. For more information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed was
         to create an easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as a spectrogram. The user is able to apply different settings for various examinations. For describing
-        the different windows we used
+        the different windows, we used
         <b>plotly.js</b> for illustration and <b>rainbow.js</b> to highlight the code. We tried to describe all the parameters in an easy way in the instructions.</p>
     <h2><a id="choosingAFile">Choose a file:</a></h2>
     <figure>
@@ -145,7 +146,7 @@ contact: sascha.bilert@student.jade-hs.de
         over the spectrogram the position data is displayed in the upper left corner. To identify the 3th dimension you have a legend for the colormap over the spectrogram on the right side. If you want to have more information you can zoom into the spectrogram
         by pressing the buttons down in the right corner of the spectrum window. You can zoom both the time and the frequency axis. As you have read in the last section, it is possible to select a short piece of your audio file. When you do that in the waveform, the spectrogram will automatically zoom in the selected part of the audio file. </p>
     <h2><a id="parameters">Parameters:</a></h2>
-    <p>You can customize the spectrogram individually by choosing the following listing parameters:</p>
+    <p style="margin-bottom: 20px;">You can customize the spectrogram individually by choosing the following listing parameters:</p>
     <table align="center" cellpadding="10">
         <caption>Table 1: Possible parameters to individualize the spectrogram. The gray fields show not free selectable parameters</caption>
         <tr>
@@ -236,7 +237,23 @@ contact: sascha.bilert@student.jade-hs.de
         </ul>
         <li>Selectivity</li>
     </ul>
-    <p>The following subsections explain each window.</p>
+    <p style="margin-top: 0px;">The following subsections explain each window more detailed. You see the mathematical definition of the window, a illustration and the implementation. For illustration we used the Framework <b>Plotly.js</b>. All windows are calculated with the default
+        length of 1024. The input for the windows were calculated with a linespace function in JS. To link the math part and the code we have $N$ = windowLen.length and $n$ = windowLen[i].</p>
+    <pre class="code"><code data-language="javascript">/*
+ * implementation of the linspace function make use of start value, end value
+ * and the number of points between the start and end index
+ */
+ function linspace(startIdx, endIdx, n) {
+
+      var linVector = new Array(n);
+
+      for (var i = 0; i &lt; n; i++) {
+            linVector[i] = startIdx + (i * (endIdx - startIdx) / n);
+      }
+      linVector[0] = startIdx;
+      linVector[n - 1] = endIdx;
+      return linVector;
+ }</code></pre>
     <h3>1. Rect Window</h3>
     <p class="windowDef">The Rect Window is defined by: $w(n) = 1$</p>
     <div class="plot" id="divRect"></div>
@@ -393,16 +410,132 @@ contact: sascha.bilert@student.jade-hs.de
       return window;
  }</code></pre>
     <h2><a id="overlap">Overlap:</a></h2>
-    <p>HERE COMES SOMETHING ABOUT THE OVERLAP</p>
+    <p>The images below tries to illustrate two different overlaps. When you select an overlap of 90% the calculation may take a little bit longer. The more percentage overlap you choose, the more sample blocks will be transformed from the time domain into
+        the frequency domain.</p>
+    <figure>
+        <img class="resizeImg" src="image/overlap0.png">
+        <figcaption>Figure 1: Illustration of a 0% Overlap.</figcaption>
+    </figure>
+    <figure>
+        <img class="resizeImg" src="image/overlap75.png">
+        <figcaption>Figure 1: Illustration of a 75% Overlap.</figcaption>
+    </figure>
     <h2><a id="displayType">Display-Types:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE display type</p>
-    <h3>1. Spectrum</h3>
-    <h3>2. Phase</h3>
-    <h3>3. Group Delay</h3>
-    <h3>4 Instantaneous Frequency Deiviation</h3>
+    <h3>1. FFT</h3>
+    <pre class="code"><code data-language="javascript">// calculate the fft depending on the given sampleblock
+function calculateFFT(sampleBlock) {
+
+      var imag = new Array(sampleBlock.length).fill(0);
+      var real = sampleBlock;
+
+      // call the fft from Nayuki (see fft.js for more information)
+      transform(real, imag);
+
+      return [real, imag];
+}</code></pre>
+    <h3>2. Spectrum</h3>
+    <pre class="code"><code data-language="javascript">// calculate the absolute value of the spectrogram data (see formula in instructions.html)
+function calculateAbs(real, imag) {
+
+      var absValue = new Array(Audiodata.blockLen / 2 + 1);
+
+      for (i = 0; i &lt; absValue.length; i++) {
+            absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
+      }
+      return absValue;
+}</code></pre>
+    <h3>3. Phase</h3>
+    <pre class="code"><code data-language="javascript">// calculate the phase of the spectrogram data (see formula in instructions.html)
+function calculatePhase(real, imag) {
+
+      var phaseValue = new Array(real.length / 2 + 1);
+
+      for (i = 0; i &lt; phaseValue.length; i++) {
+            phaseValue[i] = Math.atan2(imag[i], real[i]);
+      }
+      return phaseValue;
+ }</code></pre>
+    <h3>4. Group Delay</h3>
+    <pre class="code"><code data-language="javascript">/*
+ * calculate the group delay using calcluatePhase() and linspace() (see formula
+ * in instructions.html)
+ */
+ function calculateGroupDelay(real, imag) {
+
+       var phase = calculatePhase(real, imag);
+
+       var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
+
+       var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
+
+       var dPhase = diff(phase);
+
+       var groupDelay = new Array(dPhase.length);
+
+       for (var k = 0; k &lt; dPhase.length; k++) {
+             if (dPhase[k] &gt; Math.PI) {
+                   dPhase[k] = dPhase[k] - 2 * Math.PI;
+             } else if (dPhase[k] &lt; (-1 * Math.PI)) {
+                   dPhase[k] = dPhase[k] + 2 * Math.PI;
+             }
+             groupDelay[k] = -1 * dPhase[k] / dOmega;
+       }
+       return groupDelay;
+ }</code></pre>
+    <h3>5. Instantaneous Frequency Deviation</h3>
+    <pre class="code"><code data-language="javascript">/*
+ * calculate the instantaneous frequency deviation for more informations see
+ * the instructions.html website
+ */
+ function calculateInstantFreqDev(sampleBlock, windowType) {
+
+       var InstHopsize = Audiodata.sampleRate / Audiodata.wrapFreq;
+
+       var newSampleBlockLen = Math.round(sampleBlock.length - InstHopsize);
+
+       var windowLen = linspace(0, newSampleBlockLen, newSampleBlockLen);
+
+       var window = calculateWindow(windowLen, windowType);
+
+       var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
+
+       var secondSampleBlock = sampleBlock.slice(sampleBlock.length
+                              - newSampleBlockLen, sampleBlock.length);
+
+       for (var i = 0; i &lt; newSampleBlockLen; i++) {
+             firstSampleBlock[i] = firstSampleBlock[i] * window[i];
+            secondSampleBlock[i] = secondSampleBlock[i] * window[i];
+       }
+
+       var [firstReal, firstImag] = calculateFFT(firstSampleBlock);
+       var [secondReal, secondImag] = calculateFFT(secondSampleBlock);
+
+       var firstPhase = calculatePhase(firstReal, firstImag);
+
+       var secondPhase = calculatePhase(secondReal, secondImag);
+
+       var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
+       var instantFreqDev = new Array(instantFreq.length).fill(0);
+
+       var freq = linspace(0, Audiodata.sampleRate / 2, instantFreq.length);
+
+       for (var k = 0; k &lt; instantFreq.length; k++) {
+             var dPhase = secondPhase[k] - firstPhase[k];
+
+             instantFreq[k] = dPhase * Audiodata.wrapFreq / (2 * Math.PI);
+
+             instantFreq[k] = instantFreq[k] + Math.round((freq[k] - instantFreq[k]) /
+                              Audiodata.wrapFreq) * Audiodata.wrapFreq;
+
+             instantFreqDev[k] = instantFreq[k] - freq[k];
+       }
+       return instantFreqDev;
+ }</code></pre>
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
     <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE SAVEBUTTON</p>
 </body>
 
 </html>

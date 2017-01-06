@@ -1,5 +1,5 @@
 /*
- * style.css
+ * master.css
  *
  * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
  * IHA @ Jade Hochschule applied licence see EOF
@@ -396,6 +396,7 @@ option {/*Style and size of all option button*/
     opacity: 0.65;
 }
 #canvasWaveGrid {
+  margin-left: 25px;
     position: absolute;
 }
 #canvasWaveScale {

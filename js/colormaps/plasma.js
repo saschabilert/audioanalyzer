@@ -1,5 +1,28 @@
-var Scale;
+/*
+ * plasma.js
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
 
+var plasmaScale;
+
+// write rgb data into colorscale
 function createPlasma() {
       var rgbR = [0.0000,3.0600,6.1200,27.0300,47.9400,58.0125,68.0850,75.4800,82.8750,89.3775,95.8800,102.0000,108.1200,113.6025,119.0850,124.0575,129.0300,133.4925,137.9550,142.4175,146.8800,150.9600,155.0400,158.9925,162.9450,167.0250,171.1050,174.5475,177.9900,181.0500,184.1100,187.5525,190.9950,194.0550,197.1150,199.5375,201.9600,204.5100,207.0600,209.4825,211.9050,213.9450,215.9850,218.0250,220.0650,221.9775,223.8900,225.4200,226.9500,228.4800,230.0100,231.0300,232.0500,233.0700,234.0900,234.6000,235.1100,235.4925,235.8750,236.3850,236.8950,236.8950,236.8950,236.3850,235.8750,235.4925,235.1100,234.0900,233.0700,232.0500,231.0300,229.5000,227.9700,226.4400,224.9100,222.9975,221.0850,219.5550,218.0250,];
 

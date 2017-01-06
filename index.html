@@ -89,15 +89,15 @@ contact: sascha.bilert@student.jade-hs.de
     <!-- Create a canvas with the waveform -->
     <div class="canvas" id="canvasDivWave">
         <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
-        <canvas id="canvasWaveGrid" width="1200" height="260"></canvas>
+        <canvas id="canvasWaveGrid" width="1176" height="260"></canvas>
         <canvas id="canvasWave" width="1176" height="260"></canvas>
         <canvas id="canvasRMS" width="1176" height="260"></canvas>
         <canvas id="canvasSelect" width="1176" height="260"></canvas>
         <canvas id="canvasWaveLine" width="1176" height="260"></canvas>
         <div id="divWavePosition">
-            <p id="waveTime"></p>
-            <p id="amplitudeValue"></p>
-            <p id="rmsValue"></p>
+            <p id="waveTime">Time: </p>
+            <p id="amplitudeValue">Amplitude: </p>
+            <p id="rmsValue">RMS: </p>
         </div>
     </div>
 
@@ -204,17 +204,17 @@ contact: sascha.bilert@student.jade-hs.de
         <canvas id="canvasSpecLine" width="1176" height="512"></canvas>
     </div>
     <div class="specButtonsY">
-        <button id ="plusY" class="specButtons">+</button>
-        <button id ="minusY" class="specButtons">-</button>
+        <button id="plusY" class="specButtons">+</button>
+        <button id="minusY" class="specButtons">-</button>
     </div>
     <div class="specButtonsX">
-        <button id ="minusX" class="specButtons">-</button>
-        <button id ="plusX" class="specButtons">+</button>
+        <button id="minusX" class="specButtons">-</button>
+        <button id="plusX" class="specButtons">+</button>
     </div>
     <div id="divSpecPosition">
-        <p id="specTime"></p>
-        <p id="specFreq"></p>
-        <p id="magnitute"></p>
+        <p id="specTime">Time: </p>
+        <p id="specFreq">Freq: </p>
+        <p id="magnitute">Value: </p>
     </div>
 
     <!-- Create a button for saving the information in .png format -->

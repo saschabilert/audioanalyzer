@@ -1,5 +1,5 @@
 /*
- * menu.js
+ * fitCanvasToDiv.js
  *
  * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
  * IHA @ Jade Hochschule applied licence see EOF
@@ -19,6 +19,7 @@
  *
  * contact: sascha.bilert@student.jade-hs.de
  */
+
  function fitCanvas(){
    var canvasSpec = document.getElementById("canvasSpec")
    var canvasSpecLine = document.getElementById("canvasSpecLine")
@@ -45,6 +46,5 @@
    canvasSelect.width=divWaveWidth-offSetLeft;
    canvasWaveScale.width=divWaveWidth;
    canvasWaveGrid.width=divWaveWidth-offSetLeft;
-
-
+   
  }

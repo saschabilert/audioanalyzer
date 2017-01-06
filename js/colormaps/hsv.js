@@ -1,5 +1,28 @@
-var Scale;
+/*
+ * hsv.js
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
 
+var hsvScale;
+
+// write rgb data into colorscale
 function createHsv() {
       var rgbR = [243.7510,235.7528,228.0571,220.4665,212.7668,204.8790,196.8328,188.6960,180.5650,172.5476,164.7490,157.2520,150.1121,143.3621,137.0244,131.1130,125.6422,120.6273,116.0833,112.0232,108.4554,105.3819,102.7902,100.6590,98.9549,97.6338,96.6429,95.9237,95.4127,95.0450,94.7571,94.4861,94.1706,93.7490,93.1581,92.3327,91.2031,89.6931,87.7232,85.2195,82.1299,78.4493,74.2313,69.5669,64.5568,59.2900,53.8317,48.2270,42.5012,36.6650,36.9777,43.5439,50.1465,56.7923,63.4869,70.2280,77.0135,83.8325,90.6709,97.5052,104.3036,111.0248,117.6184,124.0333,130.2214,136.1473,141.7913,147.1468,152.2200,157.0202,161.5577,165.8411,169.8768,173.6681,177.2167,180.5235,183.5882,186.4111,188.9940,191.3420,193.4639,195.3774,197.1078,198.6896,200.1674,201.5942,203.0310,204.5416,206.1895,208.0332,210.1227,212.4959,215.1769,218.1685,221.4404,224.9347,228.7649,233.2687,238.3407,243.7510,];
 

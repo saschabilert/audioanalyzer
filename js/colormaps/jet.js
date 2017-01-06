@@ -1,5 +1,28 @@
+/*
+ * jet.js
+ *
+ * Copyright (C) 2016  Moritz Balter, Vlad Paul, Sascha Bilert
+ * IHA @ Jade Hochschule applied licence see EOF
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * contact: sascha.bilert@student.jade-hs.de
+ */
+
 var jetScale;
 
+// write rgb data into colorscale
 function createJet() {
     var rgbR = [0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 10.2000, 20.4000, 30.6000, 40.8000, 51.0000, 61.2000, 71.4000, 81.6000, 91.8000, 102.0000, 112.2000, 122.4000, 132.6000, 142.8000, 153.0000, 163.2000, 173.4000, 183.6000, 193.8000, 204.0000, 214.2000, 224.4000, 234.6000, 244.8000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 255.0000, 244.8000, 234.6000, 224.4000, 214.2000, 204.0000, 193.8000, 183.6000, 173.4000, 163.2000, 153.0000, 142.8000, 132.6000, ];
 

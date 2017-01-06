@@ -473,7 +473,7 @@ function displayMousePosition(evt) {
     mouseX = Math.round((sigLenSec / canvas.width * mousePos.x) * 100) / 100;
     mouseY = Math.round(((Audiodata.sampleRate / 2) / canvas.height) * (canvas.height - mousePos.y))
 
-    specTime.innerHTML = 'Time: ' + timeToString(mouseX, 0, 1)
+    specTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1)
     specFreq.innerHTML = 'Freq: ' + mouseY + ' Hz';
     point = SpectroData.specData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)]
     [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
