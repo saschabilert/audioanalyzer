@@ -20,31 +20,90 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
- function fitCanvas(){
-   var canvasSpec = document.getElementById("canvasSpec")
-   var canvasSpecLine = document.getElementById("canvasSpecLine")
-   var canvasSpecScale = document.getElementById('canvasSpecScale');
-   var divSpec = document.getElementById("canvasDivSpec")
-   var divWave = document.getElementById("canvasDivWave")
-   var canvasWave = document.getElementById("canvasWave");
-   var canvasWaveLine = document.getElementById("canvasWaveLine");
-   var canvasRMS = document.getElementById("canvasRMS");
-   var canvasSelect = document.getElementById("canvasSelect");
-   var canvasWaveScale = document.getElementById("canvasWaveScale");
-   var canvasWaveGrid = document.getElementById("canvasWaveGrid");
+function fitCanvas() {
+    var canvasSpec = document.getElementById("canvasSpec")
+    var canvasSpecLine = document.getElementById("canvasSpecLine")
+    var canvasSpecScale = document.getElementById('canvasSpecScale');
+    var divSpec = document.getElementById("canvasDivSpec")
+    var divWave = document.getElementById("canvasDivWave")
+    var canvasWave = document.getElementById("canvasWave");
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
+    var canvasRMS = document.getElementById("canvasRMS");
+    var canvasSelect = document.getElementById("canvasSelect");
+    var canvasWaveScale = document.getElementById("canvasWaveScale");
+    var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
-   var divSpecWidth = divSpec.offsetWidth;
-   var divWaveWidth = divWave.offsetWidth;
+    var divSpecWidth = divSpec.offsetWidth;
+    var divWaveWidth = divWave.offsetWidth;
 
 
-   canvasSpec.width=divSpecWidth-SpectroData.scaleOfsetLeft;
-   canvasSpecLine.width=divSpecWidth-SpectroData.scaleOfsetLeft;
-   canvasSpecScale.width=divSpecWidth;
-   canvasWave.width=divWaveWidth-offSetLeft;
-   canvasWaveLine.width=divWaveWidth-offSetLeft;
-   canvasRMS.width=divWaveWidth-offSetLeft;
-   canvasSelect.width=divWaveWidth-offSetLeft;
-   canvasWaveScale.width=divWaveWidth;
-   canvasWaveGrid.width=divWaveWidth-offSetLeft;
-   
- }
+    canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
+    canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
+    canvasSpecScale.width = divSpecWidth;
+    canvasWave.width = divWaveWidth - offSetLeft;
+    canvasWaveLine.width = divWaveWidth - offSetLeft;
+    canvasRMS.width = divWaveWidth - offSetLeft;
+    canvasSelect.width = divWaveWidth - offSetLeft;
+    canvasWaveScale.width = divWaveWidth;
+    canvasWaveGrid.width = divWaveWidth - offSetLeft;
+
+}
+
+function resizeCanvas() {
+    var canvasSpec = document.getElementById("canvasSpec")
+    var canvasSpecLine = document.getElementById("canvasSpecLine")
+    var canvasSpecScale = document.getElementById('canvasSpecScale');
+    var ctx = canvasSpec.getContext('2d')
+    var divSpec = document.getElementById("canvasDivSpec")
+    var divWave = document.getElementById("canvasDivWave")
+    var canvasWave = document.getElementById("canvasWave");
+    var ctxWave = canvasWave.getContext('2d')
+    var canvasWaveLine = document.getElementById("canvasWaveLine");
+    var canvasRMS = document.getElementById("canvasRMS");
+    var ctxRMS = canvasRMS.getContext('2d')
+    var canvasSelect = document.getElementById("canvasSelect");
+    var canvasWaveScale = document.getElementById("canvasWaveScale");
+    var canvasWaveGrid = document.getElementById("canvasWaveGrid");
+
+    var divSpecWidth = divSpec.offsetWidth;
+    var divWaveWidth = divWave.offsetWidth;
+
+    if (canvasSpec.width <= divSpecWidth) {
+        canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
+        canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
+        canvasSpecScale.width = divSpecWidth;
+        if ((typeof(viridisScale) != "undefined")) {
+            ctx.scale(canvasSpec.width / SpectroData.specWidth, canvasSpec.height / SpectroData.specHight);
+            SpectroData.scaleFactorWidth = canvasSpec.width / SpectroData.specWidth;
+            ctx.clearRect(0, 0, canvasSpec.width, canvasSpec.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
+        }
+    }
+
+if ((typeof(viridisScale) != "undefined")) {
+     canvasWave.width=divWaveWidth-offSetLeft;
+     canvasWaveLine.width=divWaveWidth-offSetLeft;
+     canvasRMS.width=divWaveWidth-offSetLeft;
+     canvasSelect.width=divWaveWidth-offSetLeft;
+     canvasWaveScale.width=divWaveWidth;
+     canvasWaveGrid.width=divWaveWidth-offSetLeft;
+
+     ctxRMS.setTransform(1, 0, 0, 1, 0, 0);
+     ctxWave.setTransform(1, 0, 0, 1, 0, 0);
+     ctxRMS.clearRect(0, 0, canvasWave.width, canvasWave.height);
+     ctxWave.clearRect(0, 0, canvasWave.width, canvasWave.height);
+     ctxRMS.scale(canvasWave.width/ tempWaveCanvas.width, canvasWave.height/ tempWaveCanvas.height);
+     ctxWave.scale(canvasWave.width/ tempWaveCanvas.width, canvasWave.height/ tempWaveCanvas.height);
+     console.log(ctxWave,ctxRMS)
+     ctxRMS.drawImage(tempRMSCanvas, 0, 0);
+     ctxWave.drawImage(tempWaveCanvas, 0, 0);
+     drawWaveTimeAxes()
+     drawWaveGrid();
+     section = getSectionDisplayed()
+     drawSelection(section.min, 2, section.max);
+}
+
+}

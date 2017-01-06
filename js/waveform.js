@@ -33,12 +33,21 @@ var selectionX = NaN;
 var startSelection = NaN;
 var offSetLeft = 24;
 var offSetBottom = 20;
+var tempWaveCanvas = document.createElement("canvas");
+var tempWaveCtx = tempWaveCanvas.getContext("2d");
+var tempRMSCanvas = document.createElement("canvas");
+var tempRMSCtx = tempWaveCanvas.getContext("2d");
 
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
+
+    tempWaveCanvas.width=canvas.width;
+    tempWaveCanvas.height = canvas.height;
+    tempRMSCanvas.width=canvasRMS.width;
+    tempRMSCanvas.height = canvasRMS.height;
 
     canvasWaveLine.addEventListener("mousedown", startPlayHereWave);
     canvasWaveLine.addEventListener("mousedown", waveOnMouseDown);
@@ -83,28 +92,29 @@ function drawWave() {
         drawWaveTimeAxes();
         drawWaveGrid();
 
-        canvasCtx.beginPath();
-        canvasCtx.strokeStyle = "#100C87";
-        canvasCtx.lineWidth = 0.05;
+        tempWaveCtx.beginPath();
+        tempWaveCtx.strokeStyle = "#100C87";
+        tempWaveCtx.lineWidth = 0.05;
 
-        canvasCtx.moveTo(0, canvas.height / 2);
+        tempWaveCtx.moveTo(0, canvas.height / 2);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtx.lineTo(i, canvas.height / 2 - maxValue[i]);
-            canvasCtx.lineTo(i, canvas.height / 2 - minValue[i]);
-            canvasCtx.stroke();
+            tempWaveCtx.lineTo(i, canvas.height / 2 - maxValue[i]);
+            tempWaveCtx.lineTo(i, canvas.height / 2 - minValue[i]);
+            tempWaveCtx.stroke();
         }
 
-        canvasCtxRMS.beginPath();
-        canvasCtxRMS.strokeStyle = "#66a3ff";
-        canvasCtxRMS.lineWidth = 0.05;
+        tempRMSCtx.beginPath();
+        tempRMSCtx.strokeStyle = "#66a3ff";
+        tempRMSCtx.lineWidth = 0.05;
 
-        canvasCtxRMS.moveTo(0, canvas.height / 2);
+        tempRMSCtx.moveTo(0, canvas.height / 2);
         for (i = 0; i < maxValue.length; i++) {
-            canvasCtxRMS.lineTo(i, canvas.height / 2 - rms[i] * waveScale);
-            canvasCtxRMS.lineTo(i, canvas.height / 2 + rms[i] * waveScale);
-            canvasCtxRMS.stroke();
+            tempRMSCtx.lineTo(i, canvas.height / 2 - rms[i] * waveScale);
+            tempRMSCtx.lineTo(i, canvas.height / 2 + rms[i] * waveScale);
+            tempRMSCtx.stroke();
         }
-
+        canvasCtxRMS.drawImage(tempRMSCanvas, 0, 0);
+        canvasCtx.drawImage(tempWaveCanvas, 0, 0);
         WaveData.amplitude = peak;
         WaveData.rms = rms;
         WaveData.crestFactor = calculateCrestFactor(peak, rms);
