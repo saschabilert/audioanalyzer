@@ -96,6 +96,7 @@ function loadAudio() {
 
 // function to process the Audiodata with the given parameters
 function processAudio() {
+
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
@@ -120,6 +121,7 @@ function processAudio() {
 
     // draw the spectrogram (see spectrogram.js)
     drawSpec();
+
 }
 
 /*

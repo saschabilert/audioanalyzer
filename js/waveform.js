@@ -55,11 +55,8 @@ function drawWave() {
         canvasCtxRMS.clearRect(0, 0, canvasCtx.width, canvasCtx.height);
 
         var waveScale = 100;
-
         var canvasBlockLen = Audiodata.signalLen / canvas.width;
-
         var nPart = Math.floor(Audiodata.signalLen / canvasBlockLen);
-
         var currentBlock = new Array(canvasBlockLen.length);
         var maxValue = new Array(nPart);
         var minValue = new Array(nPart);
@@ -254,7 +251,7 @@ function drawWaveGrid() {
     var gridSize = WaveData.stepsX * WaveData.gridScale;
 
     var numHorizontal = canvasWaveGrid.height / gridSize;
-    var numVertical = canvasWaveGrid.width  / gridSize;
+    var numVertical = canvasWaveGrid.width / gridSize;
 
     ctxWaveGrid.clearRect(0, 0, canvasWaveGrid.width, canvasWaveGrid.height);
 
@@ -263,7 +260,7 @@ function drawWaveGrid() {
     ctxWaveGrid.lineWidth = 1;
 
     for (var i = 1; i < numHorizontal; i++) {
-        ctxWaveGrid.moveTo( 1, gridSize * i);
+        ctxWaveGrid.moveTo(1, gridSize * i);
         ctxWaveGrid.lineTo(canvasWaveGrid.width, gridSize * i);
         ctxWaveGrid.stroke();
     }
@@ -273,7 +270,6 @@ function drawWaveGrid() {
         ctxWaveGrid.lineTo(gridSize * k, canvasWaveGrid.height - 1);
         ctxWaveGrid.stroke();
     }
-
     ctxWaveGrid.beginPath();
     ctxWaveGrid.strokeStyle = "#000000";
     ctxWaveGrid.lineWidth = 1;
@@ -330,7 +326,6 @@ function waveOnMouseDown(evt) {
 }
 
 function drawSelection(startPos, caller, endPos) {
-
     var canvas = document.getElementById("canvasWave");
     var canvasSelect = document.getElementById("canvasSelect");
     var ctxSelect = canvasSelect.getContext("2d");
@@ -379,7 +374,6 @@ function onMouseMove(evt) {
 }
 
 function resetSelection() {
-
     var canvasSelect = document.getElementById("canvasSelect");
     var ctxSelect = canvasSelect.getContext("2d");
     SpectroData.endTimeSelection = NaN;

@@ -20,31 +20,35 @@
  * contact: sascha.bilert@student.jade-hs.de
  */
 
-//Get the user choice of grid size
+// get the user choice of grid size
 function gridSize() {
     WaveData.gridScale = +(document.getElementById("grid").value);
     drawWaveGrid();
 }
-//Get the user choice of block length
+
+// get the user choice of block length
 function blockLength() {
     Audiodata.blockLen = +(document.getElementById("blockLength").value);
     processAudio();
 }
-//Get the user choice of window type
+
+// get the user choice of window type
 function windowType() {
     Audiodata.windowFunction = document.getElementById("windowType").value;
     processAudio();
 }
-//Get the user choice of overlap
+
+// get the user choice of overlap
 function overlap() {
     Audiodata.overlap = +(document.getElementById("overlap").value);
     processAudio();
 }
-//Get the user choice of display type
+
+// get the user choice of display type
 function chooseDisplay() {
     Audiodata.display = document.getElementById("display").value;
     processAudio();
-    // If this three display types are chosen, disable the colormap and the min max values
+    // if this three display types are chosen, disable the colormap and the min and max values and set the right colormap
     if (Audiodata.display == "Phase" || Audiodata.display == "Instantaneous Frequency Deviation" || Audiodata.display == "Group Delay") {
         document.getElementById("colormap").value = "5";
         document.getElementById("colormap").disabled = true;
@@ -59,34 +63,36 @@ function chooseDisplay() {
         document.getElementById("min").disabled = false;
         document.getElementById("max").disabled = false;
     }
-
 }
-//Get the user choice of colormap
+
+// get the user choice of colormap
 function colormap() {
     SpectroData.TypeColorScale = +(document.getElementById("colormap").value);
     draw();
 }
-// Define the needed global variables for audio signal
+
+// define the needed global variables for audio signal
 var startOffset = 0;
 var startTime = 0;
 var audPlay;
 var isPlaying = false;
 var gainNode;
 var durationTrack;
-//Get the user input for playing or pausing the signal
+
+// get the user input for play or pause the signal
 var playButton = document.getElementById("player");
 playButton.addEventListener("click", toggleSound);
 
-//Get the user input for stopping the signal
-var stopbtn = document.getElementById("stop");
+// get the user input for stopping the signal
+var stopButton = document.getElementById("stop");
 var info = document.getElementById("playbackTime");
 
-// Save the current gain
+// save the current gain
 document.getElementById('volume').addEventListener('input', function() {
     gainNode.gain.value = this.value;
 });
 
-// If user presses "Space", play/pause the file
+// if user presses "Space", play/pause the file
 document.onkeydown = function(e) {
     var keyCode = e.keyCode;
     if (keyCode == 32) {
@@ -95,7 +101,7 @@ document.onkeydown = function(e) {
     }
 };
 
-//Play, pause and stop the signal
+// play, pause and stop the signal
 function toggleSound() {
     if (!isPlaying) {
         startTime = audioCtx.currentTime;
@@ -119,9 +125,10 @@ function toggleSound() {
     gainNode.gain.value = 0.5;
 }
 
-//Show song name after importing it
+// show song name after importing it
 var inputs = document.querySelectorAll('.audioInput');
 Array.prototype.forEach.call(inputs, function(input) {
+
     var label = input.nextElementSibling;
 
     input.addEventListener('change', function(e) {
@@ -137,10 +144,10 @@ Array.prototype.forEach.call(inputs, function(input) {
     });
 });
 
-// Function for enabling the buttons after loading a file
+// function for enabling the buttons after loading a file
 function enableButton() {
     playButton.disabled = false;
-    stopbtn.disabled = false;
+    stopButton.disabled = false;
     document.getElementById("grid").disabled = false;
     document.getElementById("saveSpec").disabled = false;
     document.getElementById("LoopCheck").disabled = false;
@@ -148,7 +155,7 @@ function enableButton() {
     document.getElementById("saveSpec").disabled = false;
 }
 
-// Values for displaying the spectrum
+// values for displaying the spectrum
 function minMaxValue(e) {
     var min = 0;
     var max = 0;
@@ -182,12 +189,11 @@ function minMaxValue(e) {
         } else if (min >= 0 || max >= 0 || max < min) {
             alert("You can use just values <= -1. In addition, the min value has to be smaller than the max value");
         }
-
         draw();
     }
-
 }
-// Function to calculate the time in minutes, seconds and miliseconds
+
+// function to calculate the time in minutes, seconds and miliseconds
 function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
 
     var minutes = Math.floor((time) / 60);
@@ -223,7 +229,8 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
         }
     }
 }
-// Function to update the playback time
+
+// function to update the playback time
 function timeUpdate() {
     window.requestAnimationFrame(timeUpdate);
     if (isPlaying === false) {
@@ -257,7 +264,7 @@ function timeUpdate() {
             toggleSound();
         }
     }
-    stopbtn.onclick = function() {
+    stopButton.onclick = function() {
         startTime = 0;
         startOffset = 0;
         isPlaying = false;
@@ -278,7 +285,8 @@ function timeUpdate() {
         }
     };
 }
-//Check the loop selection
+
+// check the loop selection
 var loopSelection = false;
 function setLoop() {
     loopSelection = document.getElementById("LoopCheck").checked;
