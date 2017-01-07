@@ -31,10 +31,11 @@ p {
     line-height: 160%;
 }
 
-p.windowDef {
+p.equation {
     /*style of the window definition paragraphes*/
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     line-height: 100%;
+    text-align: center;
 }
 
 ul {

@@ -99,6 +99,7 @@ function processAudio() {
 
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
+    // calculate the audiodata duration
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
     info.innerHTML = "00:00.0" +
@@ -182,7 +183,7 @@ function calculateFFT(sampleBlock) {
 // calculate the absolute value of the spectrogram data (see formula in instructions.html)
 function calculateAbs(real, imag) {
 
-    var absValue = new Array(Audiodata.blockLen / 2 + 1);
+    var absValue = new Array(real.length / 2 + 1);
 
     for (i = 0; i < absValue.length; i++) {
         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);

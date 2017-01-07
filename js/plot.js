@@ -19,7 +19,8 @@
  *
  * contact: sascha.bilert@student.jade-hs.de
  */
- 
+
+// function to plot the different windows for the instruction page
 function plotWindow() {
 
     var windowLen = linspace(0, 1024, 1024);
@@ -54,31 +55,18 @@ function plotWindow() {
     Plotly.newPlot('divHann', data, layout, {showLink: false});
 
     var windowValueRect = calculateWindow(windowLen, "rect");
-    var [realRect,
-        imagRect] = calculateFFT(windowValueRect);
-    var spectrumRect = calculateAbs(realRect, imagRect);
-
     windowValueRect.fill(0, 0, 81);
     windowValueRect.fill(0, 942, 1024);
-    var trace1 = {
-        x: windowLen,
-        y: windowValueRect,
-        type: 'bar'
-    };
-    var trace2 = {
-        x: windowLen,
-        y: spectrumRect,
-        xaxis: 'x2',
-        yaxis: 'y2',
-        type: 'bar'
-    };
-    var data = [trace1, trace2];
+    var data = [
+        {
+            x: windowLen,
+            y: windowValueRect,
+            type: 'bar'
+        }
+    ];
     var layout = {
         title: 'Rect Window',
         xaxis: {
-            domain: [
-                0, 0.45
-            ],
             title: 'samples [n]',
             titlefont: {
                 family: 'Arial, sans-serif',
@@ -86,17 +74,13 @@ function plotWindow() {
                 color: 'black'
             }
         },
-        yaxis2: {
+        yaxis: {
             title: 'value',
-            anchor: 'x2',
             titlefont: {
                 family: 'Arial, sans-serif',
                 size: 14,
                 color: 'black'
             }
-        },
-        xaxis2: {
-            domain: [0.55, 1]
         }
     };
     Plotly.newPlot('divRect', data, layout);
