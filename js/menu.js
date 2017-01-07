@@ -160,6 +160,7 @@ function enableButton() {
 
 // values for displaying the spectrum
 function minMaxValue(e) {
+
     var min = 0;
     var max = 0;
     if (e.keyCode == 13 || e.which == 13) {
@@ -176,21 +177,21 @@ function minMaxValue(e) {
         } else {
             max = 1;
         }
-
+        console.log(min,max)
         if (min < 0 && max < 0 && max > min) {
-            specLevelHigh = max;
-            specLevelLow = min;
-            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
-        } else if (min < 0 && max === 0 && specLevelHigh > min) {
+            SpectroData.specLevelHigh = max;
+            SpectroData.specLevelLow = min;
+            SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
+        } else if (min < 0 && isNaN(max) && SpectroData.specLevelHigh > min) {
 
-            specLevelLow = min;
-            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
-        } else if (min === 0 && max < 0 && specLevelLow < max) {
+            SpectroData.specLevelLow = min;
+            SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
+        } else if (isNaN(min) && max < 0 && SpectroData.specLevelLow < max) {
 
-            specLevelHigh = max;
-            specLevelWidth = Math.abs(specLevelHigh - specLevelLow);
+            SpectroData.specLevelHigh = max;
+            SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
         } else if (min >= 0 || max >= 0 || max < min) {
-            alert("You can use just values <= -1. In addition, the min value has to be smaller than the max value");
+            alert("Es duerfen nur Werte <= -1 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
         }
         draw();
     }
