@@ -415,8 +415,8 @@ contact: vlad.paul@student.jade-hs.de
  }</code></pre>
     <h2><a id="overlap">Overlap:</a></h2>
     <p>The images below tries to illustrate two different overlaps. When you select an overlap of 90% the calculation may take a little bit longer. The more percentage overlap you choose, the more sample blocks will be transformed from the time domain into
-        the frequency domain. In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means a number of samples you jump forward to get the new block. For example if you got a blocksize of 100 samples and an overlap of
-        75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated you hopsize correctly the next step is to calculate the total number of blocks for your audiodata. The code below shows a way to calculate a hopsize form a given overlap
+        the frequency domain. In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means a number of samples you jump forward to get the new block. For example if you got a block size of 100 samples and an overlap of
+        75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated you hopsize correctly the next step is to calculate the total number of blocks for your audio data. The code below shows a way to calculate a hopsize form a given overlap
         and block length.</p>
     <figure>
         <img class="resizeImg" src="image/overlapFirst.png">
@@ -431,18 +431,18 @@ Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiod
 // calculating the number of blocks with a hopsize, block length and total signal length
 Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);</code></pre>
     <h2><a id="displayType">Display-Types:</a></h2>
-    <p>On the Audioanalyzer website you have different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JavaScript (JS) by Nayuki. In this section you find a short discription of the spectrograms and
+    <p>On the Audioanalyzer website you have different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JavaScript (JS) by Nayuki. In this section you find a short description of the spectrograms and
         how they are implemented. To combine the programming with the mathematical theory we shortly wrote down the definition for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or on
         the internet.</p>
     <h3>1. Fast Fourier Transform (FFT)</h3>
-    <p>As already mentioned we have the basic FFT to transform the audiodata from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the signal. In almost all cases of signals we have just the real part,
-        because "real world signal" just have a real part. Thats the reason why the imaginary part (var imag) is filled with zeros by the same length as the real part. In our case the FFT returns a real part and an imaginary part of the transformed signal.
-        The Fast Fourier Tranform is a fast version of the Discret Fourier Transform (DFT) which is defined as:</p>
+    <p>As already mentioned we have the basic FFT to transform the audio data from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the signal. In almost all cases of signals we have just the real part,
+        because "real world signal" just have a real part. That is the reason why the imaginary part (var imag) is filled with zeros by the same length as the real part. In our case the FFT returns a real part and an imaginary part of the transformed signal.
+        The Fast Fourier Transform is a fast version of the Discrete Fourier Transform (DFT) which is defined as:</p>
     <p class="equation">$X(n) = X(e^{j2\pi n/N}) = \sum\limits_{k=0}^{N-1}x(k)e^{-j2\pi nk/N}$</p>
-    <p>The inverse Discret Fourier Transform (IDFT) is defined as:</p>
+    <p>The inverse Discrete Fourier Transform (IDFT) is defined as:</p>
     <p class="equation">$x(k) = \dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
-    <p>The FFT itself works with a power of two blocksize. For further informations you can find explanations in serveral books of signalprocessing.</p>
-    <pre class="code"><code data-language="javascript">// calculate the fft depending on the given sampleblock
+    <p>The FFT itself works with a power of two block size. For further information you can find explanations in several books of signal processing.</p>
+    <pre class="code"><code data-language="javascript">// calculate the fft depending on the given sample block
 function calculateFFT(sampleBlock) {
 
       // create an imag part for the fft
@@ -455,11 +455,11 @@ function calculateFFT(sampleBlock) {
       return [real, imag];
 }</code></pre>
     <h3>2. Spectrum</h3>
-    <p>In the section <b>Block-Length</b> were some informations about how to split an audiosignal into blocks, depending on the block length. For a spectrum you need to transform every block of an audio signal from the time domain into frequency domain.
-        After you tranformed your audiosignal blocks, you have to calculate the absolute value complex number. To calculate the absolute value of a complex number ($z = a + \text{i}b$) use the following equation:</p>
+    <p>In the section <b>Block-Length</b> were some information about how to split an audio signal into blocks, depending on the block length. For a spectrum you need to transform every block of an audio signal from the time domain into frequency domain.
+        After you transformed your audio signal blocks, you have to calculate the absolute value complex number. To calculate the absolute value of a complex number ($z = a + \text{i}b$) use the following equation:</p>
     <p class="equation">$|z| = \sqrt{a^2 + b^2}$</p>
     <p>If you look at the spectrum of your signal you will see three dimensions the time (x-axis), the color coded magnitude (calculated by the code below) and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem.
-        This theorem is very importend when you work with time discret or sampled data (e.g sampling rate $f_s = 44100$Hz). The Nyquist-Theorem implies that the maxium frequency ($f_{max}$) is limited by the half of the sampling rate.</p>
+        This theorem is very important when you work with time discrete or sampled data (e.g sampling rate $f_s = 44100$Hz). The Nyquist-Theorem implies that the maxium frequency ($f_{max}$) is limited by the half of the sampling rate.</p>
     <p class="equation">$f_{max} = \dfrac{f_s}{2}$</p>
     <pre class="code"><code data-language="javascript">// calculate the absolute value of the spectrogram data (see formula in instructions.html)
 function calculateAbs(real, imag) {
@@ -472,8 +472,8 @@ function calculateAbs(real, imag) {
       return absValue;
 }</code></pre>
     <h3>3. Phase</h3>
-    <p>The phase data of an audiosignal is not as meaningful as the spectrum data (magnitude). When you analyse short transients you can see a phase shift of $\pi$. If you choose phase as a Display-Type the range of the colormap is going from $-\pi$ to $\pi$.
-        To calculate the phase of a transformed audiodata you have to calculate the argument of a complex number. There for you change the form of the complex number to the euler form.</p>
+    <p>The phase data of an audio signal is not as meaningful as the spectrum data (magnitude). When you analyse short transients you can see a phase shift of $\pi$. If you choose phase as a Display-Type the range of the colormap is going from $-\pi$ to $\pi$.
+        To calculate the phase of a transformed audio data you have to calculate the argument of a complex number. There for you change the form of the complex number to the euler form.</p>
     <pre class="code"><code data-language="javascript">// calculate the phase of the spectrogram data (see formula in instructions.html)
 function calculatePhase(real, imag) {
 
@@ -486,7 +486,7 @@ function calculatePhase(real, imag) {
  }</code></pre>
     <h3>4. Group Delay</h3>
     <pre class="code"><code data-language="javascript">/*
- * calculate the group delay using calcluatePhase() and linspace() (see formula
+ * calculate the group delay using calculatePhase() and linspace() (see formula
  * in instructions.html)
  */
  function calculateGroupDelay(real, imag) {
@@ -563,9 +563,9 @@ function calculatePhase(real, imag) {
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
     <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
-    <p>HERE COMES SOMETHING ABOUT THE ZOOM FUNCTION</p>
+    <p>You can zoom in the spectrum window by pressing the buttons down on the right corner of the window. With the vertical once you can zoom into the frequency axis and with the horizontal one you can zoom into the time axis.</p>
     <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
-    <p>If you want to save the spectum data of your audiosignal you can use the save button. It works only if you choose the Display-Typ "spectrum" and you have not zoomed into the spectrogram. Because you only have limitation of downloading data.</p>
+    <p>If you want to save the spectrum data of your audio signal you can use the save button. It works only if you choose the Display-Type "spectrum" and you have not zoomed into the spectrogram.</p>
     <h4>END OF INSTRUCTION</h4>
 </body>
 
