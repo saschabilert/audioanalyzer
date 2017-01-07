@@ -282,7 +282,7 @@ option {/*Style and size of all option button*/
     border: 1px solid #bfbfbf;
     display: block;
     /*width: 1200px;*/
-    min-width: 1200px
+    min-width: 1200px;
 }
 #canvasSpec {/*Spectrum*/
     margin-left: 25px;
@@ -323,7 +323,7 @@ option {/*Style and size of all option button*/
     border: 1px solid #bfbfbf;
 }
 .specButtons { /*Zoom buttons for the spectrum*/
-    opacity: 0.5;
+    opacity: 0.7;
     background-color: white;
 }
 .specButtonsY {
