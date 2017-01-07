@@ -17,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * contact: moritz.balters@student.jade-hs.de
  * contact: sascha.bilert@student.jade-hs.de
+ * contact: vlad.paul@student.jade-hs.de
  */
 
 // get the user choice of grid size
@@ -54,6 +56,7 @@ function chooseDisplay() {
         document.getElementById("colormap").disabled = true;
         document.getElementById("min").disabled = true;
         document.getElementById("max").disabled = true;
+        document.getElementById("saveSpec").disabled = true;
         if (Audiodata.display == "Instantaneous Frequency Deviation") {
             document.getElementById("colormap").value = "6";
         }

@@ -17,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * contact: moritz.balters@student.jade-hs.de
  * contact: sascha.bilert@student.jade-hs.de
+ * contact: vlad.paul@student.jade-hs.de
  */
 
 // check if AudioContext is supported by the current browser
@@ -99,6 +101,7 @@ function processAudio() {
 
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
+    // calculate the audiodata duration
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
     info.innerHTML = "00:00.0" +
@@ -182,7 +185,7 @@ function calculateFFT(sampleBlock) {
 // calculate the absolute value of the spectrogram data (see formula in instructions.html)
 function calculateAbs(real, imag) {
 
-    var absValue = new Array(Audiodata.blockLen / 2 + 1);
+    var absValue = new Array(real.length / 2 + 1);
 
     for (i = 0; i < absValue.length; i++) {
         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);

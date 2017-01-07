@@ -19,7 +19,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+contact: moritz.balters@student.jade-hs.de
 contact: sascha.bilert@student.jade-hs.de
+contact: vlad.paul@student.jade-hs.de
 -->
 
 <html lang="en">
@@ -88,11 +90,12 @@ contact: sascha.bilert@student.jade-hs.de
         <li><a class="naviItems" href="#waveform">Waveform</a></li>
         <li><a class="naviItems" href="#spectrogram">Spectrogram</a></li>
         <li><a class="naviItems" href="#parameters">Parameters</a></li>
-        <li><a class="naviItems" href="#blockLength">Blocklength</a></li>
+        <li><a class="naviItems" href="#blockLength">Block-Length</a></li>
         <li><a class="naviItems" href="#windowType">Window-Types</a></li>
         <li><a class="naviItems" href="#overlap">Overlap</a></li>
         <li><a class="naviItems" href="#displayType">Display-Types</a></li>
         <li><a class="naviItems" href="#colormap">Colormaps</a></li>
+        <li><a class="naviItems" href="#zoomSpectrogram">Zoom Spectrogram</a></li>
         <li><a class="naviItems" href="#saveSpectrogram">Save Spectrogram</a></li>
     </ul>
 
@@ -103,14 +106,14 @@ contact: sascha.bilert@student.jade-hs.de
         <li>JavaScript ES6 (JS ES6)</li>
         <li>Plotly (JS-Framework)</li>
         <li>Rainbow (JS-Framework)</li>
+        <li>MathJax (JS-Framework)</li>
         <li>Hypertext Markup Language (HTML5)</li>
         <li>Cascading Style Sheet (CSS3)</li>
     </ul>
 
     <p style="margin-top: 16px;">The audioprocessing is based on a free FFT programmed in JavaScript (JS) by Nayuki. For more information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed was
         to create an easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as a spectrogram. The user is able to apply different settings for various examinations. For describing
-        the different windows, we used
-        <b>plotly.js</b> for illustration and <b>rainbow.js</b> to highlight the code. We tried to describe all the parameters in an easy way in the instructions.</p>
+        the different windows, we used <b>plotly.js</b> for illustration, <b>rainbow.js</b> to highlight the code and <b>mathJax.js</b> to write LateX formula in HTML5. We tried to describe all the parameters in an easy way in the instructions.</p>
     <h2><a id="choosingAFile">Choose a file:</a></h2>
     <figure>
         <img class="resizeImg" id="upload" src="image/upload.png">
@@ -144,7 +147,8 @@ contact: sascha.bilert@student.jade-hs.de
     </figure>
     <p>The spectrogram has different display types which are discussed in a section below. One thing they have in common, they are always three dimensional. On the x-axis you have the time and on the y-axis you have the frequency. If you move your cursor
         over the spectrogram the position data is displayed in the upper left corner. To identify the 3th dimension you have a legend for the colormap over the spectrogram on the right side. If you want to have more information you can zoom into the spectrogram
-        by pressing the buttons down in the right corner of the spectrum window. You can zoom both the time and the frequency axis. As you have read in the last section, it is possible to select a short piece of your audio file. When you do that in the waveform, the spectrogram will automatically zoom in the selected part of the audio file. </p>
+        by pressing the buttons down in the right corner of the spectrum window. You can zoom both the time and the frequency axis. As you have read in the last section, it is possible to select a short piece of your audio file. When you do that in the
+        waveform, the spectrogram will automatically zoom in the selected part of the audio file. </p>
     <h2><a id="parameters">Parameters:</a></h2>
     <p style="margin-bottom: 20px;">You can customize the spectrogram individually by choosing the following listing parameters:</p>
     <table align="center" cellpadding="10">
@@ -215,13 +219,13 @@ contact: sascha.bilert@student.jade-hs.de
         <figcaption>Figure 5: Display the possible parameters to individualize the spectrogram.</figcaption>
     </figure>
     <p>In the Figure 5 you can see the different parameter-dropdown-menus and the lines for min and max range value. On the right side of the image you can see the spectrogram legend depending on the choosen display type.</p>
-    <h2><a id="blockLength">Blocklength:</a></h2>
+    <h2><a id="blockLength">Block-Length:</a></h2>
     <p>The block length is the number of samples used to divide the audio signal into equal blocks. In our case the block length is equal to the FFT-size. This means one bit in the spectrogram represents one audio sample and defines the frequency resolution
         of the window. For a 44100 Hz sample rate and a block size of 1024, the signal is being divided into 512 frequency bins. Changing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the
         block size, you will have an improved frequency resolution, because you have more bins in the same plot resolution. An increase of the block size slows the calculation time.</p>
     <h2><a id="windowType">Window-Types:</a></h2>
-    <p>The following part is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JavaScript. In general a window can be explained as a weight for the audio signal
-        in the time domain. If you take a look at a window itself in the time domain as well as in the frequency domain, you can categorize a window in three major classes and subclasses in the frequency domain (Quelle AMT):</p>
+    <p>The following part is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JavaScript. In general a window can be explained as a weight for the audio
+        signal in the time domain. If you take a look at a window itself in the time domain as well as in the frequency domain, you can categorize a window in three major classes and subclasses in the frequency domain (Quelle AMT):</p>
     <ul>
         <li>Spectral resolution</li>
         <ul>
@@ -238,7 +242,7 @@ contact: sascha.bilert@student.jade-hs.de
         <li>Selectivity</li>
     </ul>
     <p style="margin-top: 0px;">The following subsections explain each window more detailed. You see the mathematical definition of the window, a illustration and the implementation. For illustration we used the Framework <b>Plotly.js</b>. All windows are calculated with the default
-        length of 1024. The input for the windows were calculated with a linespace function in JS. To link the math part and the code we have $N$ = windowLen.length and $n$ = windowLen[i].</p>
+        length of 1024. The input for the windows were calculated with a linespace function in JS. To link the math part and the code we have $N$ &#8793; windowLen.length and $n$ &#8793; windowLen[i].</p>
     <pre class="code"><code data-language="javascript">/*
  * implementation of the linspace function make use of start value, end value
  * and the number of points between the start and end index
@@ -255,7 +259,7 @@ contact: sascha.bilert@student.jade-hs.de
       return linVector;
  }</code></pre>
     <h3>1. Rect Window</h3>
-    <p class="windowDef">The Rect Window is defined by: $w(n) = 1$</p>
+    <p class="equation">The Rect Window is defined by: $w(n) = 1$</p>
     <div class="plot" id="divRect"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an rect window in Javascript
@@ -270,7 +274,7 @@ contact: sascha.bilert@student.jade-hs.de
        return window;
  }</code></pre>
     <h3>2. Hann Window</h3>
-    <p class="windowDef">The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
+    <p class="equation">The Hann Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)$</p>
     <div class="plot" id="divHann"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an hann window in Javascript
@@ -288,7 +292,7 @@ contact: sascha.bilert@student.jade-hs.de
        return window;
  }</code></pre>
     <h3>3. Hann-Poisson Window</h3>
-    <p class="windowDef">The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)\text{e}^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
+    <p class="equation">The Hann-Poisson Window is defined by: $w(n) = \dfrac{1}{2}\left(1-\cos\left(\dfrac{2\pi n}{N-1}\right)\right)\text{e}^{{\dfrac{-\alpha\vert N-1-2n\vert}{N-1}}}$</p>
     <div class="plot" id="divHannPoisson"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an hann-poisson window in Javascript
@@ -312,7 +316,7 @@ contact: sascha.bilert@student.jade-hs.de
        return window;
  }</code></pre>
     <h3>4. Cosine Window</h3>
-    <p class="windowDef">The Cosine Window is defined by: $w(n) = \cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
+    <p class="equation">The Cosine Window is defined by: $w(n) = \cos\left(\dfrac{\pi n}{N-1}-\dfrac{\pi}{2}\right)$</p>
     <div class="plot" id="divCosine"></div>
     <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an cosine window in Javascript
@@ -330,9 +334,9 @@ contact: sascha.bilert@student.jade-hs.de
        return window;
  }</code></pre>
     <h3>5. Flat-Top Window</h3>
-    <p class="windowDef">The Flat-Top Window is defined by:</p>
-    <p class="windowDef">$w(n) = \alpha_{0}-\alpha_{1}\cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}\cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}\cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}\cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
-    <p class="windowDef">$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
+    <p class="equation">The Flat-Top Window is defined by:</p>
+    <p class="equation">$w(n) = \alpha_{0}-\alpha_{1}\cos\left(\dfrac{2\pi n}{N-1}\right)+ \alpha_{2}\cos\left(\dfrac{4\pi n}{N-1}\right)- \alpha_{3}\cos\left(\dfrac{6\pi n}{N-1}\right)+ \alpha_{4}\cos\left(\dfrac{8\pi n}{N-1}\right)$</p>
+    <p class="equation">$\alpha_{0} = 1$; $\alpha_{1} = 1.93$; $\alpha_{2} = 1.29$; $\alpha_{3} = 0.388$; $\alpha_{4} = 0.028$</p>
     <div class="plot" id="divFlatTop"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an flat-top window in Javascript
@@ -358,8 +362,8 @@ contact: sascha.bilert@student.jade-hs.de
        return window;
  }</code></pre>
     <h3>6. Hamming Window</h3>
-    <p class="windowDef">The Hamming Window is defined by: $w(n) = \alpha - \beta \cos\left(\dfrac{2\pi n}{N-1}\right)$</p>
-    <p class="windowDef">$\alpha = 0.54$; $\beta = 1 - \alpha = 0.46$</p>
+    <p class="equation">The Hamming Window is defined by: $w(n) = \alpha - \beta \cos\left(\dfrac{2\pi n}{N-1}\right)$</p>
+    <p class="equation">$\alpha = 0.54$; $\beta = 1 - \alpha = 0.46$</p>
     <div class="plot" id="divHamming"></div>
     <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an hamming window in Javascript
@@ -382,8 +386,8 @@ contact: sascha.bilert@student.jade-hs.de
       return window;
  }</code></pre>
     <h3>6. Blackman Window</h3>
-    <p class="windowDef">The Blackman Window is defined by: $w(n) = \alpha_{0} - \alpha_{1} \cos\left(\dfrac{2\pi n}{N-1}\right) + \alpha_{2} \cos\left(\dfrac{4\pi n}{N-1}\right)$</p>
-    <p class="windowDef">$\alpha_{0} = \dfrac{1 - \alpha}{2}$; $\alpha_{1} = \dfrac{1}{2}$; $\alpha_{2} = \dfrac{\alpha}{2}$; $\alpha = 0.16$</p>
+    <p class="equation">The Blackman Window is defined by: $w(n) = \alpha_{0} - \alpha_{1} \cos\left(\dfrac{2\pi n}{N-1}\right) + \alpha_{2} \cos\left(\dfrac{4\pi n}{N-1}\right)$</p>
+    <p class="equation">$\alpha_{0} = \dfrac{1 - \alpha}{2}$; $\alpha_{1} = \dfrac{1}{2}$; $\alpha_{2} = \dfrac{\alpha}{2}$; $\alpha = 0.16$</p>
     <div class="plot" id="divBlackman"></div>
     <pre class="code"><code data-language="javascript">/*
  * This shows the implementation of an blackman window in Javascript
@@ -411,21 +415,37 @@ contact: sascha.bilert@student.jade-hs.de
  }</code></pre>
     <h2><a id="overlap">Overlap:</a></h2>
     <p>The images below tries to illustrate two different overlaps. When you select an overlap of 90% the calculation may take a little bit longer. The more percentage overlap you choose, the more sample blocks will be transformed from the time domain into
-        the frequency domain.</p>
+        the frequency domain. In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means a number of samples you jump forward to get the new block. For example if you got a blocksize of 100 samples and an overlap of
+        75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated you hopsize correctly the next step is to calculate the total number of blocks for your audiodata. The code below shows a way to calculate a hopsize form a given overlap
+        and block length.</p>
     <figure>
-        <img class="resizeImg" src="image/overlap0.png">
+        <img class="resizeImg" src="image/overlapFirst.png">
         <figcaption>Figure 1: Illustration of a 0% Overlap.</figcaption>
     </figure>
     <figure>
-        <img class="resizeImg" src="image/overlap75.png">
+        <img class="resizeImg" src="image/overlapSecond.png">
         <figcaption>Figure 1: Illustration of a 75% Overlap.</figcaption>
     </figure>
+    <pre class="code"><code data-language="javascript">// calculating the hopsize with an overlap and a block length
+Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
+// calculating the number of blocks with a hopsize, block length and total signal length
+Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);</code></pre>
     <h2><a id="displayType">Display-Types:</a></h2>
-    <p>HERE COMES SOMETHING ABOUT THE display type</p>
-    <h3>1. FFT</h3>
+    <p>On the Audioanalyzer website you have different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JavaScript (JS) by Nayuki. In this section you find a short discription of the spectrograms and
+        how they are implemented. To combine the programming with the mathematical theory we shortly wrote down the definition for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or on
+        the internet.</p>
+    <h3>1. Fast Fourier Transform (FFT)</h3>
+    <p>As already mentioned we have the basic FFT to transform the audiodata from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the signal. In almost all cases of signals we have just the real part,
+        because "real world signal" just have a real part. Thats the reason why the imaginary part (var imag) is filled with zeros by the same length as the real part. In our case the FFT returns a real part and an imaginary part of the transformed signal.
+        The Fast Fourier Tranform is a fast version of the Discret Fourier Transform (DFT) which is defined as:</p>
+    <p class="equation">$X(n) = X(e^{j2\pi n/N}) = \sum\limits_{k=0}^{N-1}x(k)e^{-j2\pi nk/N}$</p>
+    <p>The inverse Discret Fourier Transform (IDFT) is defined as:</p>
+    <p class="equation">$x(k) = \dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
+    <p>The FFT itself works with a power of two blocksize. For further informations you can find explanations in serveral books of signalprocessing.</p>
     <pre class="code"><code data-language="javascript">// calculate the fft depending on the given sampleblock
 function calculateFFT(sampleBlock) {
 
+      // create an imag part for the fft
       var imag = new Array(sampleBlock.length).fill(0);
       var real = sampleBlock;
 
@@ -435,6 +455,12 @@ function calculateFFT(sampleBlock) {
       return [real, imag];
 }</code></pre>
     <h3>2. Spectrum</h3>
+    <p>In the section <b>Block-Length</b> were some informations about how to split an audiosignal into blocks, depending on the block length. For a spectrum you need to transform every block of an audio signal from the time domain into frequency domain.
+        After you tranformed your audiosignal blocks, you have to calculate the absolute value complex number. To calculate the absolute value of a complex number ($z = a + \text{i}b$) use the following equation:</p>
+    <p class="equation">$|z| = \sqrt{a^2 + b^2}$</p>
+    <p>If you look at the spectrum of your signal you will see three dimensions the time (x-axis), the color coded magnitude (calculated by the code below) and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem.
+        This theorem is very importend when you work with time discret or sampled data (e.g sampling rate $f_s = 44100$Hz). The Nyquist-Theorem implies that the maxium frequency ($f_{max}$) is limited by the half of the sampling rate.</p>
+    <p class="equation">$f_{max} = \dfrac{f_s}{2}$</p>
     <pre class="code"><code data-language="javascript">// calculate the absolute value of the spectrogram data (see formula in instructions.html)
 function calculateAbs(real, imag) {
 
@@ -446,6 +472,8 @@ function calculateAbs(real, imag) {
       return absValue;
 }</code></pre>
     <h3>3. Phase</h3>
+    <p>The phase data of an audiosignal is not as meaningful as the spectrum data (magnitude). When you analyse short transients you can see a phase shift of $\pi$. If you choose phase as a Display-Type the range of the colormap is going from $-\pi$ to $\pi$.
+        To calculate the phase of a transformed audiodata you have to calculate the argument of a complex number. There for you change the form of the complex number to the euler form.</p>
     <pre class="code"><code data-language="javascript">// calculate the phase of the spectrogram data (see formula in instructions.html)
 function calculatePhase(real, imag) {
 
@@ -483,7 +511,7 @@ function calculatePhase(real, imag) {
        }
        return groupDelay;
  }</code></pre>
-    <h3>5. Instantaneous Frequency Deviation</h3>
+    <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
     <pre class="code"><code data-language="javascript">/*
  * calculate the instantaneous frequency deviation for more informations see
  * the instructions.html website
@@ -534,8 +562,11 @@ function calculatePhase(real, imag) {
  }</code></pre>
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
+    <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE ZOOM FUNCTION</p>
     <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
-    <p>HERE COMES SOMETHING ABOUT THE SAVEBUTTON</p>
+    <p>If you want to save the spectum data of your audiosignal you can use the save button. It works only if you choose the Display-Typ "spectrum" and you have not zoomed into the spectrogram. Because you only have limitation of downloading data.</p>
+    <h4>END OF INSTRUCTION</h4>
 </body>
 
 </html>

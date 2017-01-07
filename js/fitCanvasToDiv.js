@@ -17,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * contact: moritz.balters@student.jade-hs.de
  * contact: sascha.bilert@student.jade-hs.de
+ * contact: vlad.paul@student.jade-hs.de
  */
 
 function fitCanvas() {
@@ -35,7 +37,6 @@ function fitCanvas() {
 
     var divSpecWidth = divSpec.offsetWidth;
     var divWaveWidth = divWave.offsetWidth;
-
 
     canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
@@ -72,7 +73,7 @@ function resizeCanvas() {
         canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
         canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
         canvasSpecScale.width = divSpecWidth;
-        if ((typeof(viridisScale) != "undefined")) {
+        if (typeof(viridisScale) != "undefined") {
             ctx.scale(canvasSpec.width / SpectroData.specWidth, canvasSpec.height / SpectroData.specHight);
             SpectroData.scaleFactorWidth = canvasSpec.width / SpectroData.specWidth;
             ctx.clearRect(0, 0, canvasSpec.width, canvasSpec.height);
@@ -83,28 +84,25 @@ function resizeCanvas() {
         }
     }
 
-
-     canvasWave.width=divWaveWidth-offSetLeft;
-     canvasWaveLine.width=divWaveWidth-offSetLeft;
-     canvasRMS.width=divWaveWidth-offSetLeft;
-     canvasSelect.width=divWaveWidth-offSetLeft;
-     canvasWaveScale.width=divWaveWidth;
-     canvasWaveGrid.width=divWaveWidth-offSetLeft;
-if ((typeof(viridisScale) != "undefined")) {
-     ctxRMS.setTransform(1, 0, 0, 1, 0, 0);
-     ctxWave.setTransform(1, 0, 0, 1, 0, 0);
-     ctxRMS.clearRect(0, 0, canvasWave.width, canvasWave.height);
-     ctxWave.clearRect(0, 0, canvasWave.width, canvasWave.height);
-     ctxRMS.scale(canvasWave.width/ tempWaveCanvas.width, canvasWave.height/ tempWaveCanvas.height);
-     ctxWave.scale(canvasWave.width/ tempWaveCanvas.width, canvasWave.height/ tempWaveCanvas.height);
-     WaveData.scaleX=canvasWave.width/ tempWaveCanvas.width
-     console.log(ctxWave,ctxRMS)
-     ctxRMS.drawImage(tempRMSCanvas, 0, 0);
-     ctxWave.drawImage(tempWaveCanvas, 0, 0);
-     drawWaveTimeAxes()
-     drawWaveGrid();
-     section = getSectionDisplayed()
-     drawSelection(section.min, 2, section.max);
-}
-
+    canvasWave.width = divWaveWidth - offSetLeft;
+    canvasWaveLine.width = divWaveWidth - offSetLeft;
+    canvasRMS.width = divWaveWidth - offSetLeft;
+    canvasSelect.width = divWaveWidth - offSetLeft;
+    canvasWaveScale.width = divWaveWidth;
+    canvasWaveGrid.width = divWaveWidth - offSetLeft;
+    if (typeof(viridisScale) != "undefined") {
+        ctxRMS.setTransform(1, 0, 0, 1, 0, 0);
+        ctxWave.setTransform(1, 0, 0, 1, 0, 0);
+        ctxRMS.clearRect(0, 0, canvasWave.width, canvasWave.height);
+        ctxWave.clearRect(0, 0, canvasWave.width, canvasWave.height);
+        ctxRMS.scale(canvasWave.width / tempWaveCanvas.width, canvasWave.height / tempWaveCanvas.height);
+        ctxWave.scale(canvasWave.width / tempWaveCanvas.width, canvasWave.height / tempWaveCanvas.height);
+        WaveData.scaleX = canvasWave.width / tempWaveCanvas.width
+        ctxRMS.drawImage(tempRMSCanvas, 0, 0);
+        ctxWave.drawImage(tempWaveCanvas, 0, 0);
+        drawWaveTimeAxes()
+        drawWaveGrid();
+        section = getSectionDisplayed()
+        drawSelection(section.min, 2, section.max);
+    }
 }
