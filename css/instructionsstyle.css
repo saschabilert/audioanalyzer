@@ -17,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * contact: moritz.balters@student.jade-hs.de
  * contact: sascha.bilert@student.jade-hs.de
+ * contact: vlad.paul@student.jade-hs.de
  */
 
 p {
@@ -53,7 +55,7 @@ h2 {
     /*style of the h2 header*/
     position: static;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 h3 {
@@ -63,6 +65,14 @@ h3 {
     margin: auto;
     margin-top: 50px;
     width: 800px;
+}
+
+h4 {
+    /*style of the h3 header*/
+    text-align: center;
+    font-weight: bold;
+    margin-top: 70px;
+    margin-bottom: 70px;
 }
 
 img.resizeImg {

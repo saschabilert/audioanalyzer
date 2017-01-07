@@ -19,7 +19,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+contact: moritz.balters@student.jade-hs.de
 contact: sascha.bilert@student.jade-hs.de
+contact: vlad.paul@student.jade-hs.de
 -->
 
 <html lang="en">
@@ -93,6 +95,7 @@ contact: sascha.bilert@student.jade-hs.de
         <li><a class="naviItems" href="#overlap">Overlap</a></li>
         <li><a class="naviItems" href="#displayType">Display-Types</a></li>
         <li><a class="naviItems" href="#colormap">Colormaps</a></li>
+        <li><a class="naviItems" href="#zoomSpectrogram">Zoom Spectrogram</a></li>
         <li><a class="naviItems" href="#saveSpectrogram">Save Spectrogram</a></li>
     </ul>
 
@@ -103,14 +106,14 @@ contact: sascha.bilert@student.jade-hs.de
         <li>JavaScript ES6 (JS ES6)</li>
         <li>Plotly (JS-Framework)</li>
         <li>Rainbow (JS-Framework)</li>
+        <li>MathJax (JS-Framework)</li>
         <li>Hypertext Markup Language (HTML5)</li>
         <li>Cascading Style Sheet (CSS3)</li>
     </ul>
 
     <p style="margin-top: 16px;">The audioprocessing is based on a free FFT programmed in JavaScript (JS) by Nayuki. For more information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>. The main goal we adressed was
         to create an easy and useful tool to analyse audio files in terms of magnitude, phase and other values which are displayable and interpretable as a spectrogram. The user is able to apply different settings for various examinations. For describing
-        the different windows, we used
-        <b>plotly.js</b> for illustration and <b>rainbow.js</b> to highlight the code. We tried to describe all the parameters in an easy way in the instructions.</p>
+        the different windows, we used <b>plotly.js</b> for illustration, <b>rainbow.js</b> to highlight the code and <b>mathJax.js</b> to write LateX formula in HTML5. We tried to describe all the parameters in an easy way in the instructions.</p>
     <h2><a id="choosingAFile">Choose a file:</a></h2>
     <figure>
         <img class="resizeImg" id="upload" src="image/upload.png">
@@ -559,8 +562,11 @@ function calculatePhase(real, imag) {
  }</code></pre>
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
+    <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
+    <p>HERE COMES SOMETHING ABOUT THE ZOOM FUNCTION</p>
     <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
-    <p>HERE COMES SOMETHING ABOUT THE SAVEBUTTON</p>
+    <p>If you want to save the spectum data of your audiosignal you can use the save button. It works only if you choose the Display-Typ "spectrum" and you have not zoomed into the spectrogram. Because you only have limitation of downloading data.</p>
+    <h4>END OF INSTRUCTION</h4>
 </body>
 
 </html>
