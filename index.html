@@ -60,11 +60,10 @@ contact: vlad.paul@student.jade-hs.de
 
     <!-- Create a div with all the buttons above the waveform -->
     <div id="buttonsMenu">
-        <div class="range-container">
             <form method="post" enctype="multipart/form-data" action="">
                 <!-- set input audiofile and trigger the audioProcessing function -->
                 <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
-                <label for="myAudio">Choose a file</label><span class="tooltiptext">Choose an audio signal that is supported by your browser </span>
+                <label for="myAudio">Choose a file</label>
             </form>
         </div>
         <div class="buttons">
@@ -130,7 +129,7 @@ contact: vlad.paul@student.jade-hs.de
                      <option value="hamming">hamming</option>
                      <option value="blackman">blackman</option>
                </select>
-                <span class="tooltiptext">Each window type show parts of the signal better. Check the instructions page for further explanation</span>
+                <span class="tooltiptext">Each window type show parts of the signal better</span>
             </div>
         </div>
         <div class="dropdownBlock">
@@ -155,7 +154,7 @@ contact: vlad.paul@student.jade-hs.de
                         <option value="Group Delay">group delay</option>
                         <option value="Instantaneous Frequency Deviation">instantaneous frequency deviation</option>
                   </select>
-                <span class="tooltiptext">The display types show different information. Check the Instruction page for further explanation</span>
+                <span class="tooltiptext">The display types show different information</span>
             </div>
         </div>
         <div class="dropdownBlock">
@@ -169,7 +168,7 @@ contact: vlad.paul@student.jade-hs.de
                         <option value="5" disabled>twilight</option>
                         <option value="6" disabled>sunlight</option>
                    </select>
-                <span class="tooltiptext">The colormap is only for the spectrum useful. Check the Instruction page for further explanation </span>
+                <span class="tooltiptext">The colormap is only for the spectrum useful</span>
             </div>
         </div>
         <div class="dropdownBlock">
