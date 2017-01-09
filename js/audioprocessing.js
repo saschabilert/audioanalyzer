@@ -83,6 +83,7 @@ function loadAudio() {
             // get the samples of the first channel
             Audiodata.samples = buffer.getChannelData(0);
 
+            // calculate the length of the audiosignal
             Audiodata.signalLen = Audiodata.samples.length;
 
             drawWave();

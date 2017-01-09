@@ -442,18 +442,6 @@ Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiod
     <p>The inverse Discrete Fourier Transform (IDFT) is defined as:</p>
     <p class="equation">$x(k) = \dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
     <p>The FFT itself works with a power of two block size. For further information you can find explanations in several books of signal processing.</p>
-    <pre class="code"><code data-language="javascript">// calculate the fft depending on the given sample block
-function calculateFFT(sampleBlock) {
-
-      // create an imag part for the fft
-      var imag = new Array(sampleBlock.length).fill(0);
-      var real = sampleBlock;
-
-      // call the fft from Nayuki (see fft.js for more information)
-      transform(real, imag);
-
-      return [real, imag];
-}</code></pre>
     <h3>2. Spectrum</h3>
     <p>In the section <b>Block-Length</b> were some information about how to split an audio signal into blocks, depending on the block length. For a spectrum you need to transform every block of an audio signal from the time domain into frequency domain.
         After you transformed your audio signal blocks, you have to calculate the absolute value complex number. To calculate the absolute value of a complex number ($z = a + \text{i}b$) use the following equation:</p>
@@ -461,105 +449,9 @@ function calculateFFT(sampleBlock) {
     <p>If you look at the spectrum of your signal you will see three dimensions the time (x-axis), the color coded magnitude (calculated by the code below) and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem.
         This theorem is very important when you work with time discrete or sampled data (e.g sampling rate $f_s = 44100$Hz). The Nyquist-Theorem implies that the maxium frequency ($f_{max}$) is limited by the half of the sampling rate.</p>
     <p class="equation">$f_{max} = \dfrac{f_s}{2}$</p>
-    <pre class="code"><code data-language="javascript">// calculate the absolute value of the spectrogram data (see formula in instructions.html)
-function calculateAbs(real, imag) {
-
-      var absValue = new Array(Audiodata.blockLen / 2 + 1);
-
-      for (i = 0; i &lt; absValue.length; i++) {
-            absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
-      }
-      return absValue;
-}</code></pre>
     <h3>3. Phase</h3>
-    <p>The phase data of an audio signal is not as meaningful as the spectrum data (magnitude). When you analyse short transients you can see a phase shift of $\pi$. If you choose phase as a Display-Type the range of the colormap is going from $-\pi$ to $\pi$.
-        To calculate the phase of a transformed audio data you have to calculate the argument of a complex number. There for you change the form of the complex number to the euler form.</p>
-    <pre class="code"><code data-language="javascript">// calculate the phase of the spectrogram data (see formula in instructions.html)
-function calculatePhase(real, imag) {
-
-      var phaseValue = new Array(real.length / 2 + 1);
-
-      for (i = 0; i &lt; phaseValue.length; i++) {
-            phaseValue[i] = Math.atan2(imag[i], real[i]);
-      }
-      return phaseValue;
- }</code></pre>
     <h3>4. Group Delay</h3>
-    <pre class="code"><code data-language="javascript">/*
- * calculate the group delay using calculatePhase() and linspace() (see formula
- * in instructions.html)
- */
- function calculateGroupDelay(real, imag) {
-
-       var phase = calculatePhase(real, imag);
-
-       var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
-
-       var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
-
-       var dPhase = diff(phase);
-
-       var groupDelay = new Array(dPhase.length);
-
-       for (var k = 0; k &lt; dPhase.length; k++) {
-             if (dPhase[k] &gt; Math.PI) {
-                   dPhase[k] = dPhase[k] - 2 * Math.PI;
-             } else if (dPhase[k] &lt; (-1 * Math.PI)) {
-                   dPhase[k] = dPhase[k] + 2 * Math.PI;
-             }
-             groupDelay[k] = -1 * dPhase[k] / dOmega;
-       }
-       return groupDelay;
- }</code></pre>
     <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
-    <pre class="code"><code data-language="javascript">/*
- * calculate the instantaneous frequency deviation for more informations see
- * the instructions.html website
- */
- function calculateInstantFreqDev(sampleBlock, windowType) {
-
-       var InstHopsize = Audiodata.sampleRate / Audiodata.wrapFreq;
-
-       var newSampleBlockLen = Math.round(sampleBlock.length - InstHopsize);
-
-       var windowLen = linspace(0, newSampleBlockLen, newSampleBlockLen);
-
-       var window = calculateWindow(windowLen, windowType);
-
-       var firstSampleBlock = sampleBlock.slice(0, newSampleBlockLen);
-
-       var secondSampleBlock = sampleBlock.slice(sampleBlock.length
-                              - newSampleBlockLen, sampleBlock.length);
-
-       for (var i = 0; i &lt; newSampleBlockLen; i++) {
-             firstSampleBlock[i] = firstSampleBlock[i] * window[i];
-            secondSampleBlock[i] = secondSampleBlock[i] * window[i];
-       }
-
-       var [firstReal, firstImag] = calculateFFT(firstSampleBlock);
-       var [secondReal, secondImag] = calculateFFT(secondSampleBlock);
-
-       var firstPhase = calculatePhase(firstReal, firstImag);
-
-       var secondPhase = calculatePhase(secondReal, secondImag);
-
-       var instantFreq = new Array(newSampleBlockLen / 2 + 1).fill(0);
-       var instantFreqDev = new Array(instantFreq.length).fill(0);
-
-       var freq = linspace(0, Audiodata.sampleRate / 2, instantFreq.length);
-
-       for (var k = 0; k &lt; instantFreq.length; k++) {
-             var dPhase = secondPhase[k] - firstPhase[k];
-
-             instantFreq[k] = dPhase * Audiodata.wrapFreq / (2 * Math.PI);
-
-             instantFreq[k] = instantFreq[k] + Math.round((freq[k] - instantFreq[k]) /
-                              Audiodata.wrapFreq) * Audiodata.wrapFreq;
-
-             instantFreqDev[k] = instantFreq[k] - freq[k];
-       }
-       return instantFreqDev;
- }</code></pre>
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
     <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
