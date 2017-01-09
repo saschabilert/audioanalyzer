@@ -717,7 +717,7 @@ function drawScale() {
         ctxScale.moveTo(kk + SpectroData.scaleOfsetLeft, canvasSpecScale.height - SpectroData.scaleOfsetBottom);
         ctxScale.lineTo(kk + SpectroData.scaleOfsetLeft, canvasSpecScale.height - SpectroData.scaleOfsetBottom + 5)
         ctxScale.stroke();
-        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX), 0, 0), kk + SpectroData.scaleOfsetLeft - 5, canvasSpecScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
+        ctxScale.fillText(timeToString(tickNumX * (kk / stepsX), 0, tickNumX), kk + SpectroData.scaleOfsetLeft - 5, canvasSpecScale.height - SpectroData.scaleOfsetBottom + 15, SpectroData.scaleOfsetLeft - 2);
     }
 
 }

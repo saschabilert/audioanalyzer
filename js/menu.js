@@ -198,11 +198,19 @@ function minMaxValue(e) {
 }
 
 // function to calculate the time in minutes, seconds and miliseconds
-function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
+function timeToString(time, alwaysShowFull, stepSize) {
+    if (time==0){
 
+      return "0"
+    }
     var minutes = Math.floor((time) / 60);
     var seconds = Math.floor((time) - minutes * 60);
     var miliseconds = Math.floor((time % 1) * 10);
+
+    var modoStepSize = stepSize%1
+    console.log(modoStepSize)
+
+
 
     if (seconds < 10) {
         seconds = "0" + seconds;
@@ -215,13 +223,13 @@ function timeToString(time, alwaysShowFull, alwaysShowMilisec) {
         return [minutes + ":" + seconds + "." + miliseconds];
     } else if (alwaysShowFull == 0) {
         if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {
-            if (miliseconds != 0) {
+            if (miliseconds != 0 || modoStepSize!=0) {
                 return [seconds + "." + miliseconds];
             } else {
                 return [seconds];
             }
         } else {
-            if (alwaysShowMilisec) {
+            if (modoStepSize!=0) {
                 return [minutes + ":" + seconds + "." + miliseconds];
             } else {
                 if (miliseconds != 0) {
