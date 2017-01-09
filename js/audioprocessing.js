@@ -83,6 +83,7 @@ function loadAudio() {
             // get the samples of the first channel
             Audiodata.samples = buffer.getChannelData(0);
 
+            // calculate the length of the audiosignal
             Audiodata.signalLen = Audiodata.samples.length;
 
             drawWave();
@@ -388,15 +389,5 @@ function checkNumbOfBlocks() {
         alert("Reached the maximum number of blocks.\n Data not fully displayed!");
         Audiodata.nPart = maxBlockNumb;
     }
-}
-
-function showLoadingScreen(){
-  document.getElementById("loading").style.display = "block";
-  document.getElementById("container").style.display = "block";
-}
-
-function hideLoadingScreen(){
-  document.getElementById("loading").style.display = "none";
-  document.getElementById("container").style.display = "none";
 
 }
