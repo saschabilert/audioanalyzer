@@ -420,19 +420,18 @@ option {/*Style and size of all option button*/
 }
 
 /*Animation while the page is loading*/
-#loading {/*Loading circle*/
-    position: fixed;
-    z-index: 1;
-    width: 150px;
-    height: 150px;
-    margin-left: 46%;
-    margin-top: 15%;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
+#loading {
+    background-image: url(loadingGif.gif);
+    background-repeat: no-repeat;
+    position:absolute;
+    height:200px;
+    width:200px;
+
+    /* Ensures that the transition only runs in one direction */
+
 }
+
+
 #container {/*White container on the webpage*/
     position:absolute;
     width:100%;
