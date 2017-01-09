@@ -36,17 +36,17 @@ function fitCanvas() {
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
     var divSpecWidth = divSpec.offsetWidth;
-    var divWaveWidth = divWave.offsetWidth;
-
+    var divWaveWidth = divWave.offsetWidth-3;
+console.log(divWaveWidth)
     canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecScale.width = divSpecWidth;
-    canvasWave.width = divWaveWidth - offSetLeft;
-    canvasWaveLine.width = divWaveWidth - offSetLeft;
-    canvasRMS.width = divWaveWidth - offSetLeft;
-    canvasSelect.width = divWaveWidth - offSetLeft;
+    canvasWave.width = divWaveWidth - offSetLeft-20;
+    canvasWaveLine.width = divWaveWidth - offSetLeft-20;
+    canvasRMS.width = divWaveWidth - offSetLeft-20;
+    canvasSelect.width = divWaveWidth - offSetLeft-20;
     canvasWaveScale.width = divWaveWidth;
-    canvasWaveGrid.width = divWaveWidth - offSetLeft;
+    canvasWaveGrid.width = divWaveWidth - offSetLeft-20;
 
 }
 
@@ -72,7 +72,7 @@ function resizeCanvas() {
     if (canvasSpec.width <= divSpecWidth) {
         canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
         canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
-        canvasSpecScale.width = divSpecWidth;
+        canvasSpecScale.width = divSpecWidth-3;
         if (typeof(viridisScale) != "undefined") {
             ctx.scale(canvasSpec.width / SpectroData.specWidth, canvasSpec.height / SpectroData.specHight);
             SpectroData.scaleFactorWidth = canvasSpec.width / SpectroData.specWidth;
