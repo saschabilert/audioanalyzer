@@ -81,9 +81,8 @@ contact: vlad.paul@student.jade-hs.de
                 <label for="myAudio">Choose a file</label>
             </form>
         <div class="buttons">
-            <div class="range-container"><button id="player" type="button" class="playPause" disabled>&#9654;</button><span class="tooltiptext">Play or Pause at the
-  current playback position</span></div>
-            <div class="range-container"><button id="stop" type="button" class="stop" disabled>&#9724;</button><span class="tooltiptext">By stopping, the playback position will be at the beginning</span></div>
+            <button id="player" type="button" class="playPause" disabled>&#9654;</button>
+           <button id="stop" type="button" class="stop" disabled>&#9724;</button>
             <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled><span class="tooltiptext">Adjust the volume
                                          by dragging the bar</span></div>
         </div>
@@ -143,7 +142,7 @@ contact: vlad.paul@student.jade-hs.de
                      <option value="hamming">hamming</option>
                      <option value="blackman">blackman</option>
                </select>
-                <span class="tooltiptext">Each window type show parts of the signal better</span>
+                <span class="tooltiptext">Different window types in relation between smiring and selectivity</span>
             </div>
         </div>
         <div class="dropdownBlock">
