@@ -169,33 +169,45 @@ function drawSpec() {
         } else {
             factor = 1;
         }
-        console.log(factor)
+        console.log(delta, canvas.width, factor, divHeight, tempCanvas.width)
         // Checking if the new canvas size is smaler than the maximum possible
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
             canvasSpecScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
             canvas.width = canvas.width * factor;
             SpectroData.cWidth = canvas.width;
             canvasSpecLine.width = canvasSpecLine.width * factor
+
+            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
+            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
+            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
-        } else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth) {
+        } else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
+        console.log('oder das?')
             canvasSpecScale.width = divWidth
             canvas.width = divWidth - SpectroData.scaleOfsetLeft
             SpectroData.cWidth = canvas.width;
             canvasSpecLine.width = divWidth - SpectroData.scaleOfsetLeft
 
+            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
+            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
+            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
+
         }
 
-        ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-        SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-        SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
-        section = getSectionDisplayed()
-        drawSelection(section.min, 2, section.max);
+
 
     }
     // Function for zooming freq axes only
@@ -212,31 +224,42 @@ function drawSpec() {
         // Checking if the new canvas size is smaler than the maximum possible
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
-        console.log(delta, canvas.height, factor, divHeight)
+
         if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor > divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
 
             canvasSpecScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvas.height = canvas.height * factor;
             SpectroData.cHigh = canvas.height;
             canvasSpecLine.height = canvasSpecLine.height * factor;
+
+            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
+            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
+            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
         } else if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor < divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
-            console.log('oder das?')
+
             canvasSpecScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
             SpectroData.cHigh = canvas.height;
             canvasSpecLine.height = divHeight - SpectroData.scaleOfsetBottom
+
+            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
+            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
+            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(tempCanvas, 0, 0);
+            drawScale()
+            section = getSectionDisplayed()
+            drawSelection(section.min, 2, section.max);
         }
 
-        ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-        SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-        SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
-        section = getSectionDisplayed()
-        drawSelection(section.min, 2, section.max);
+
 
     }
 
@@ -575,7 +598,7 @@ function drawLegend(colorScale) {
             break;
         case "Phase":
             ctxLegend.fillText('-\u03C0', 2, canvasLegend.height - 1);
-            ctxLegend.fillText(0, (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText(0, (canvasLegend.width / 2) -4, canvasLegend.height - 1);
             ctxLegend.fillText('\u03C0', (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
             break;
         case "Group Delay":
