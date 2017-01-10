@@ -125,7 +125,7 @@ function toggleSound() {
     gainNode = audioCtx.createGain();
     audPlay.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-    gainNode.gain.value = 0.5;
+    gainNode.gain.value = document.getElementById('volume').value
 }
 
 // show song name after importing it
@@ -141,8 +141,6 @@ Array.prototype.forEach.call(inputs, function(input) {
         if (fileName === "") {
             fileName = "Choose a file";
             label.innerHTML = fileName;
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("container").style.display = "none";
         }
     });
 });
