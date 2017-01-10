@@ -38,7 +38,7 @@ function fitCanvas() {
 
     var divSpecWidth = divSpec.offsetWidth-offsetButtons;
     var divWaveWidth = divWave.offsetWidth-3-offsetButtons;
-console.log(divWaveWidth)
+
     canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecScale.width = divSpecWidth;

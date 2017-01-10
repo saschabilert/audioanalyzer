@@ -861,14 +861,14 @@ function scaleFullSpec() {
     var div = document.getElementById("canvasDivSpec")
     var canvasSpecScale = document.getElementById('canvasSpecScale');
     // Resizing all three canvases
-    canvas.width = div.offsetWidth - SpectroData.scaleOfsetLeft
-    canvas.height = div.offsetHeight - SpectroData.scaleOfsetBottom
+    canvas.width = div.offsetWidth - SpectroData.scaleOfsetLeft-20
+    canvas.height = div.offsetHeight - SpectroData.scaleOfsetBottom-20
     SpectroData.cWidth = canvas.width;
     SpectroData.cHigh = canvas.height
-    canvasSpecLine.width = div.offsetWidth - SpectroData.scaleOfsetLeft
-    canvasSpecLine.height = div.offsetHeight - SpectroData.scaleOfsetBottom
-    canvasSpecScale.width = div.offsetWidth
-    canvasSpecScale.height = div.offsetHeight
+    canvasSpecLine.width = div.offsetWidth - SpectroData.scaleOfsetLeft-20
+    canvasSpecLine.height = div.offsetHeight - SpectroData.scaleOfsetBottom-20
+    canvasSpecScale.width = div.offsetWidth-20
+    canvasSpecScale.height = div.offsetHeight-20
 
     // Scale the spectrogram canvas to fit into the div and hold all
     // spectrogram information
