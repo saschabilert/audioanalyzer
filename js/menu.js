@@ -141,6 +141,8 @@ Array.prototype.forEach.call(inputs, function(input) {
         if (fileName === "") {
             fileName = "Choose a file";
             label.innerHTML = fileName;
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
         }
     });
 });

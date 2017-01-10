@@ -100,8 +100,6 @@ function loadAudio() {
 
 function processAudio() {
 
-
-  console.log(document.getElementById("container"))
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
