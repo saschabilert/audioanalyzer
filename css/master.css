@@ -421,11 +421,11 @@ option {/*Style and size of all option button*/
 
 /*Animation while the page is loading*/
 #loading {
+    width: 200px;
+    height: 300px;
     background-image: url(loadingGif.gif);
-    background-repeat: no-repeat;
-    position:absolute;
-    height:200px;
-    width:200px;
+    background-repeat:no-repeat;
+    background-position: center
 
     /* Ensures that the transition only runs in one direction */
 
