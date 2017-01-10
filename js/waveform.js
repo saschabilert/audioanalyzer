@@ -240,14 +240,14 @@ function drawWaveTimeAxes() {
 
     ctxWaveScale.moveTo(offSetLeft, 0);
     ctxWaveScale.lineTo(offSetLeft, canvasWaveScale.height - offSetBottom);
-    ctxWaveScale.lineTo(canvasWaveScale.width - 1, canvasWaveScale.height - offSetBottom);
+    ctxWaveScale.lineTo(canvasWave.width + offSetLeft, canvasWaveScale.height - offSetBottom);
     ctxWaveScale.stroke();
 
     ctxWaveScale.beginPath();
     ctxWaveScale.lineWidth = 2;
     ctxWaveScale.font = "bold 12px Verdana";
 
-    for (i = 0; i <= canvasWaveScale.width; i += WaveData.stepsX) {
+    for (i = 0; i <= canvasWave.width; i += WaveData.stepsX) {
         ctxWaveScale.moveTo(i + offSetLeft, canvasWaveScale.height - offSetBottom);
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
@@ -302,7 +302,7 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1);
 
-
+console.log(mouseX)
     var amplitude = WaveData.amplitude[Math.round(mousePos.x/WaveData.scaleX)];
     var rms = WaveData.rms[Math.round(mousePos.x/WaveData.scaleX)];
 

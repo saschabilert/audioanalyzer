@@ -17,9 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * contact: moritz.balters@student.jade-hs.de
  * contact: sascha.bilert@student.jade-hs.de
- * contact: vlad.paul@student.jade-hs.de
  */
 
 // check if AudioContext is supported by the current browser
@@ -45,6 +43,8 @@ var Audiodata = {
     groupDelay: undefined,
     instantFreqDev: undefined,
     windowFunction: "hann",
+    cepstrum: undefined,
+    modSpec: undefined,
     display: "Spectrum",
     windowValue: undefined,
     windowLen: undefined,
@@ -55,12 +55,12 @@ var Audiodata = {
 var reader = new FileReader();
 var audioCtx = new AudioContext();
 
-// function to load the Audiodata
+
 function loadAudio() {
 
-    // display the loading screen
     document.getElementById("loading").style.display = "block";
     document.getElementById("container").style.display = "block";
+
     enableButton();
 
     // get the first file data with the id "myAudio"
@@ -87,22 +87,24 @@ function loadAudio() {
             Audiodata.signalLen = Audiodata.samples.length;
 
             drawWave();
+           document.getElementById("loading").style.display = "none";
+           document.getElementById("container").style.display = "none";
 
             processAudio();
 
-            // hide the loading display after processing the audiodata
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("container").style.display = "none";
         });
     }
+
 }
 
-// function to process the Audiodata with the given parameters
 function processAudio() {
 
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("container").style.display = "block";
+
+  console.log(document.getElementById("container"))
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
-    // calculate the audiodata duration
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
     info.innerHTML = "00:00.0" +
@@ -126,6 +128,8 @@ function processAudio() {
     // draw the spectrogram (see spectrogram.js)
     drawSpec();
 
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("container").style.display = "none";
 }
 
 /*
@@ -142,6 +146,7 @@ function calculateDisplay(type) {
     for (var i = 0; i < Audiodata.nPart; i++) {
 
         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
+      //  console.log(sampleBlock.length);
 
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
@@ -186,7 +191,7 @@ function calculateFFT(sampleBlock) {
 // calculate the absolute value of the spectrogram data (see formula in instructions.html)
 function calculateAbs(real, imag) {
 
-    var absValue = new Array(real.length / 2 + 1);
+    var absValue = new Array(Audiodata.blockLen / 2 + 1);
 
     for (i = 0; i < absValue.length; i++) {
         absValue[i] = Math.sqrt(real[i] * real[i] + imag[i] * imag[i]);
@@ -312,8 +317,6 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "hamming":
-            // alpha is a parameter that controls the slope of the exponential
-            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
             var alpha = 0.54;
             var beta = 1 - alpha;
 
@@ -331,8 +334,7 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "blackman":
-            // alpha is a parameter that controls the slope of the exponential
-            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
+
             var alpha = 0.16;
             var alpha0 = (1 - alpha) / 2;
             var alpha1 = 1 / 2;
@@ -387,4 +389,5 @@ function checkNumbOfBlocks() {
         alert("Reached the maximum number of blocks.\n Data not fully displayed!");
         Audiodata.nPart = maxBlockNumb;
     }
+
 }

@@ -220,6 +220,9 @@ function timeToString(time, alwaysShowFull, stepSize) {
     }
 
     if (alwaysShowFull == 1) {
+      if (time<0){
+        return "00:00.0"
+      }
         return [minutes + ":" + seconds + "." + miliseconds];
     } else if (alwaysShowFull == 0) {
         if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {

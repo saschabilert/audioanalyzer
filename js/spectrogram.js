@@ -213,7 +213,7 @@ function drawSpec() {
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
         console.log(delta, canvas.height, factor, divHeight)
-        if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor > divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+        if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor > divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
 
             canvasSpecScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvas.height = canvas.height * factor;
@@ -221,11 +221,11 @@ function drawSpec() {
             canvasSpecLine.height = canvasSpecLine.height * factor;
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
-        } else if (canvas.height * factor < 32767 && (canvas.height * factor) * canvas.width < 268435456 && canvas.height * factor < divHeight && canvas.height * factor <= (tempCanvas.height * 2.5)) {
+        } else if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor < divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
             console.log('oder das?')
             canvasSpecScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
-            cHigh = canvas.height;
+            SpectroData.cHigh = canvas.height;
             canvasSpecLine.height = divHeight - SpectroData.scaleOfsetBottom
         }
 
