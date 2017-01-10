@@ -24,7 +24,6 @@
 
 "use strict";
 
-
 /*
  * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
  * The vector can have any length. This is a wrapper function.
@@ -40,8 +39,7 @@ function transform(real, imag) {
         transformRadix2(real, imag);
     else // More complicated algorithm for arbitrary sizes
         transformBluestein(real, imag);
-}
-
+    }
 
 /*
  * Computes the inverse discrete Fourier transform (IDFT) of the given complex vector, storing the result back into the vector.
@@ -50,7 +48,6 @@ function transform(real, imag) {
 function inverseTransform(real, imag) {
     transform(imag, real);
 }
-
 
 /*
  * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
@@ -67,7 +64,7 @@ function transformRadix2(real, imag) {
     for (var i = 0; i < 32; i++) {
         if (1 << i == n)
             levels = i; // Equal to log2(n)
-    }
+        }
     if (levels == -1)
         throw "Length is not a power of 2";
     var cosTable = new Array(n / 2);
@@ -116,7 +113,6 @@ function transformRadix2(real, imag) {
         return y;
     }
 }
-
 
 /*
  * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
@@ -173,7 +169,6 @@ function transformBluestein(real, imag) {
     }
 }
 
-
 /*
  * Computes the circular convolution of the given real vectors. Each vector's length must be the same.
  */
@@ -185,7 +180,6 @@ function convolveReal(x, y, out) {
         zeros[i] = 0;
     convolveComplex(x, zeros, y, zeros.slice(), out, zeros.slice());
 }
-
 
 /*
  * Computes the circular convolution of the given complex vectors. Each vector's length must be the same.
