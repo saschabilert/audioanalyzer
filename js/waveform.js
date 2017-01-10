@@ -302,7 +302,7 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1);
 
-
+console.log(mouseX)
     var amplitude = WaveData.amplitude[Math.round(mousePos.x/WaveData.scaleX)];
     var rms = WaveData.rms[Math.round(mousePos.x/WaveData.scaleX)];
 
