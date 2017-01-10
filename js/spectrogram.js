@@ -575,7 +575,7 @@ function drawLegend(colorScale) {
             break;
         case "Phase":
             ctxLegend.fillText('-\u03C0', 2, canvasLegend.height - 1);
-            ctxLegend.fillText(0, (canvasLegend.width / 2) - 15, canvasLegend.height - 1);
+            ctxLegend.fillText(0, (canvasLegend.width / 2) -4, canvasLegend.height - 1);
             ctxLegend.fillText('\u03C0', (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
             break;
         case "Group Delay":

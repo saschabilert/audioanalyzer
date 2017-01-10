@@ -208,7 +208,7 @@ function timeToString(time, alwaysShowFull, stepSize) {
     var miliseconds = Math.floor((time % 1) * 10);
 
     var modoStepSize = stepSize%1
-    console.log(modoStepSize)
+
 
 
 
