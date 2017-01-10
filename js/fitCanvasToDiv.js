@@ -23,6 +23,7 @@
  */
 
 function fitCanvas() {
+  var offsetButtons=25;
     var canvasSpec = document.getElementById("canvasSpec")
     var canvasSpecLine = document.getElementById("canvasSpecLine")
     var canvasSpecScale = document.getElementById('canvasSpecScale');
@@ -35,8 +36,8 @@ function fitCanvas() {
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
-    var divSpecWidth = divSpec.offsetWidth;
-    var divWaveWidth = divWave.offsetWidth-3;
+    var divSpecWidth = divSpec.offsetWidth-offsetButtons;
+    var divWaveWidth = divWave.offsetWidth-3-offsetButtons;
 console.log(divWaveWidth)
     canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
@@ -51,6 +52,7 @@ console.log(divWaveWidth)
 }
 
 function resizeCanvas() {
+    var offsetButtons=25;
     var canvasSpec = document.getElementById("canvasSpec")
     var canvasSpecLine = document.getElementById("canvasSpecLine")
     var canvasSpecScale = document.getElementById('canvasSpecScale');
@@ -66,8 +68,8 @@ function resizeCanvas() {
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
-    var divSpecWidth = divSpec.offsetWidth;
-    var divWaveWidth = divWave.offsetWidth;
+    var divSpecWidth = divSpec.offsetWidth-offsetButtons;
+    var divWaveWidth = divWave.offsetWidth-offsetButtons;
 
     if (canvasSpec.width <= divSpecWidth) {
         canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
