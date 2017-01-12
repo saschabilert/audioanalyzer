@@ -31,6 +31,7 @@ p {
     width: 800px;
     margin-top: 40px;
     line-height: 160%;
+    text-indent: 2em;
 }
 
 p.equation {
@@ -49,6 +50,11 @@ ul {
     font-size: 13px;
     list-style-type: decimal;
     line-height: 160%;
+}
+
+ul.Frameworks {
+    /*style of the sublisting*/
+    list-style-type: circle;
 }
 
 h2 {
