@@ -229,26 +229,27 @@ contact: vlad.paul@student.jade-hs.de
         the spectrogram.</p>
     <h2><a id="windowType">Window-Types:</a></h2>
     <p>The following section is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JS ES6. In general a window can be explained as a weight for the audio
-        signal in the time domain. If you take a look at a window-function itself in the time domain as well as in the frequency domain, you can categorize a window (Quelle AMT):</p>
+        signal in the time domain. If you take a look at a window-function itself in the time domain as well as in the frequency domain, you can categorize the window-functions in the frequency domain as the following [4]:</p>
     <ul>
-        <li>Spectral resolution</li>
-        <ul>
-            <li>-3 dB point</li>
-            <li>Equivalent noise bandwidth</li>
-            <li>Rippel factor [dB]</li>
-        </ul>
-        <li>Power of damping [dB]</li>
-        <ul>
-            <li>Damping of the first sidelobe [dB]</li>
-            <li>Spectral roll-off [dB/OCT]</li>
-            <li>$\Delta$f till damping &gt; 60dB</li>
-        </ul>
-        <li>Selectivity</li>
+        <li>Effective noise bandwidth</li>
+        <li>3 dB bandwidth</li>
+        <li>Ripple in the passband.</li>
+        <li>Highest side lobe</li>
+        <li>Side lobe fall-off rate</li>
+        <li>60 dB bandwidth</li>
+        <li>Shape factor</li>
     </ul>
     <p style="margin-top: 0px;">The following subsections explain each window-function more detailed. You see the mathematical definition of the window, a illustration and the implementation. In Table 2 you can find some key figures for each implemented window-function. For illustration
         all windows are calculated with the default block length of 1024. To link the math part and the code we have $N$ &#8793; windowLen.length and $n$ &#8793; windowLen[i].</p>
-    <h3>1. Rect Window</h3>
+    <h3>1. Rectangle Window</h3>
     <p class="equation">The Rect Window is defined by: $w(n) = 1$</p>
+    <p>The rect window is known for its narrow 3 dB bandwidth (0.89 $\Delta$f). For analysing music or speech (deterministic/harmonic) signals the rectangle window is very poor. Because the filter is [4]:</p>
+    <ul>
+        <li>Very poor in selectivity, due to a 60 dB bandwidth of 665 $\Delta$f</li>
+        <li>Relatively large the terms of the ripples in the passband (3.9 dB)</li>
+    </ul>
+    <p>If the signal you want to analyse is a sinusoid which has a frequency that hits one of the centre frequency of the rect window you will get a very got result in the spectrum. But that means you have to know your measurement signal. If you analyse
+        a signal with crossover frequencies like music, the output frequencies around your filter center frequency will be weighted with the value of the side lobes. This effect is called leakage [4].</p>
     <div class="plot" id="divRect"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an rect window in Javascript
@@ -439,8 +440,8 @@ contact: vlad.paul@student.jade-hs.de
         signal. Maybe you detect a structur but often its very confused. To display the calculated data it is an advantage to use circular colormaps (e.g twilight).</p>
     <p class="equation">$\text{arg}(z)=\text{atan}2(y,x)$</p>
     <h3>4. Group Delay</h3>
-    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful informations [2]. The result is also circular as the phase data and for the calculation you have to unwrap the
-        phase data. The group delay is defined as the negativ differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
+    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful informations [2]. The result is also circular as the phase data and for the calculation you have to unwrap
+        the phase data. The group delay is defined as the negativ differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
     <p class="equation">$\tau_{\omega}=-\dfrac{\partial\theta(\omega)}{\partial\omega}$</p>
     <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
     <p>Another interpretable spectrum in terms of phase data is the Instantaneous Frequency Deviation. The IFD can also be used for automatic speech/speaker recognition (ASR). To analyse speech for example you can see the pitch and the harmonics crossing
@@ -459,6 +460,7 @@ contact: vlad.paul@student.jade-hs.de
     <p class="references">[1] Stark, A. P. &amp; Paliwal, K. K. (2008). "Speech Analysis Using Instantaneous Frequency Deviation". Interspeech 2008</p>
     <p class="references">[2] Stark, A. P. &amp; Paliwal, K. K. (2009). "Group-Delay-Deviation Based Spectral Analysis of Speech". Interspeech 2009</p>
     <p class="references">[3] Harris, F. J. (1978). "On the use of windows for harmonic analysis with the discrete Fourier transform". Proceedings of the IEEE. 66:51.</p>
+    <p class="references">[4] Gade, S. &amp; Herlufsen, H. (1987). "Use of Weighting Functions in DFT/FFT Analysis (Part I)". Brül &amp; Kjaer Technical Reviews No.3.</p>
 </body>
 
 </html>
