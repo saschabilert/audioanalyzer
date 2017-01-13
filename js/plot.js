@@ -22,7 +22,7 @@
  * contact: vlad.paul@student.jade-hs.de
  */
 
-// function to plot the different windows for the instruction page
+// function to plot the different windows for the instruction page using plotly.js
 function plotWindow() {
 
     var windowLen = linspace(0, 1024, 1024);

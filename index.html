@@ -27,10 +27,16 @@ contact: vlad.paul@student.jade-hs.de
 <html lang="en">
 
 <head>
+    <!-- divine meta data of the page -->
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+
+    <!-- import the fitCanvasToDiv.js file -->
     <script type="text/javascript" src="js/fitCanvasToDiv.js"></script>
+
+    <!-- set tab title of the website -->
     <title>Audioanalyzer</title>
 
+    <!-- link to the masters.css stylesheet -->
     <link rel="stylesheet" type="text/css" href="css/master.css">
 
     <!-- import image for tab icon -->
@@ -39,6 +45,7 @@ contact: vlad.paul@student.jade-hs.de
 
 <body onload="fitCanvas()" onresize="resizeCanvas()">
 
+    <!-- set image and link to github repo -->
     <a href="https://github.com/saschabilert/audioanalyzer" target="_blank">
         <img class="githubribbon" id="githubribbonmain" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
             alt="Fork us on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
@@ -84,7 +91,6 @@ contact: vlad.paul@student.jade-hs.de
         </div>
     </div>
 
-
     <!-- Create a canvas with the waveform -->
     <div class="canvas" id="canvasDivWave">
         <canvas id="canvasWaveScale" width="1200" height="280"></canvas>
@@ -100,7 +106,7 @@ contact: vlad.paul@student.jade-hs.de
         </div>
     </div>
 
-    <!-- Create the dropdown menu with all settings-->
+    <!-- Create the dropdown menu with all settings -->
     <div class="dropdownContainer">
         <div class="dropdownBlock">
             <p>Block-Length:</p>
@@ -216,7 +222,7 @@ contact: vlad.paul@student.jade-hs.de
         <p id="magnitute">Value:</p>
     </div>
 
-    <!-- Create a button for saving the information in .png format -->
+    <!-- Create a button for saving the spectrum as .png format -->
     <div class="range-container">
         <button id="saveSpec" type="button" onclick="downloadSpectrum()" disabled>Save</button>
         <span class="tooltiptext">Save a picture of the information displayed above</span>

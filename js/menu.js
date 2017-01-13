@@ -209,16 +209,12 @@ function timeToString(time, alwaysShowFull, stepSize) {
 
     var modoStepSize = stepSize % 1
 
-
-
-
     if (seconds < 10) {
         seconds = "0" + seconds;
     }
     if (minutes < 10) {
         minutes = "0" + minutes;
     }
-
     if (alwaysShowFull == 1) {
         if (time < 0) {
             return "00:00.0"
