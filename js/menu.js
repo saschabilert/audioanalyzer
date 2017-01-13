@@ -177,7 +177,7 @@ function minMaxValue(e) {
         } else {
             max = 1;
         }
-        console.log(min,max)
+        console.log(min, max)
         if (min < 0 && max < 0 && max > min) {
             SpectroData.specLevelHigh = max;
             SpectroData.specLevelLow = min;
@@ -199,15 +199,15 @@ function minMaxValue(e) {
 
 // function to calculate the time in minutes, seconds and miliseconds
 function timeToString(time, alwaysShowFull, stepSize) {
-    if (time==0){
+    if (time == 0) {
 
-      return "0"
+        return "0"
     }
     var minutes = Math.floor((time) / 60);
     var seconds = Math.floor((time) - minutes * 60);
     var miliseconds = Math.floor((time % 1) * 10);
 
-    var modoStepSize = stepSize%1
+    var modoStepSize = stepSize % 1
 
 
 
@@ -220,19 +220,19 @@ function timeToString(time, alwaysShowFull, stepSize) {
     }
 
     if (alwaysShowFull == 1) {
-      if (time<0){
-        return "00:00.0"
-      }
+        if (time < 0) {
+            return "00:00.0"
+        }
         return [minutes + ":" + seconds + "." + miliseconds];
     } else if (alwaysShowFull == 0) {
         if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {
-            if (miliseconds != 0 || modoStepSize!=0) {
+            if (miliseconds != 0 || modoStepSize != 0) {
                 return [seconds + "." + miliseconds];
             } else {
                 return [seconds];
             }
         } else {
-            if (modoStepSize!=0) {
+            if (modoStepSize != 0) {
                 return [minutes + ":" + seconds + "." + miliseconds];
             } else {
                 if (miliseconds != 0) {
@@ -303,6 +303,7 @@ function timeUpdate() {
 
 // check the loop selection
 var loopSelection = false;
+
 function setLoop() {
     loopSelection = document.getElementById("LoopCheck").checked;
 }

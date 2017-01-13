@@ -107,14 +107,22 @@ function drawSpec() {
     draw();
 
     // Functions for chasing mouse actions
-    var plusX=document.getElementById('plusX')
+    var plusX = document.getElementById('plusX')
     var minusX = document.getElementById('minusX')
-    var plusY=document.getElementById('plusY')
-    var minusY=document.getElementById('minusY')
-    plusX.addEventListener("click",function(){zoomTime(-1)},false);
-    minusX.addEventListener("click",function(){zoomTime(1)},false);
-    plusY.addEventListener("click",function(){zoomFreq(-1)},false);
-    minusY.addEventListener("click",function(){zoomFreq(1)},false);
+    var plusY = document.getElementById('plusY')
+    var minusY = document.getElementById('minusY')
+    plusX.addEventListener("click", function() {
+        zoomTime(-1)
+    }, false);
+    minusX.addEventListener("click", function() {
+        zoomTime(1)
+    }, false);
+    plusY.addEventListener("click", function() {
+        zoomFreq(-1)
+    }, false);
+    minusY.addEventListener("click", function() {
+        zoomFreq(1)
+    }, false);
     playButton.addEventListener("click", toggleSound);
     playButton.addEventListener("click", toggleSound);
     //canvasSpecLine.addEventListener("mousewheel", mouseWheelFunction);
@@ -170,9 +178,9 @@ function drawSpec() {
             factor = 1;
         }
         console.log(delta, canvas.width, factor, divHeight, tempCanvas.width)
-        // Checking if the new canvas size is smaler than the maximum possible
-        // size, but also bigger then the size of the surrounding div. If this is
-        // the case, the canvases are scaled to the new size
+            // Checking if the new canvas size is smaler than the maximum possible
+            // size, but also bigger then the size of the surrounding div. If this is
+            // the case, the canvases are scaled to the new size
         if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
             canvasSpecScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
             canvas.width = canvas.width * factor;
@@ -190,7 +198,7 @@ function drawSpec() {
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
         } else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
-        console.log('oder das?')
+            console.log('oder das?')
             canvasSpecScale.width = divWidth
             canvas.width = divWidth - SpectroData.scaleOfsetLeft
             SpectroData.cWidth = canvas.width;
@@ -464,10 +472,10 @@ function draw() {
 
     // Call function for drawing the legend
     drawLegend(colorScale)
-    // Call function for creating the scale arround the spectrgram
+        // Call function for creating the scale arround the spectrgram
     drawScale()
     section = getSectionDisplayed()
-    // Mark the section of the signa that is currently displayed
+        // Mark the section of the signa that is currently displayed
     drawSelection(section.min, 2, section.max);
 
 }
@@ -501,7 +509,7 @@ function displayMousePosition(evt) {
     specTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1)
     specFreq.innerHTML = 'Freq: ' + mouseY + ' Hz';
     point = SpectroData.specData[Math.round(mousePos.x / SpectroData.scaleFactorWidth)]
-    [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
+        [Math.round(((canvas.height - 1) - (mousePos.y)) / SpectroData.scaleFactorHeight)]
 
     switch (Audiodata.display) {
         case "Spectrum":
@@ -598,7 +606,7 @@ function drawLegend(colorScale) {
             break;
         case "Phase":
             ctxLegend.fillText('-\u03C0', 2, canvasLegend.height - 1);
-            ctxLegend.fillText(0, (canvasLegend.width / 2) -4, canvasLegend.height - 1);
+            ctxLegend.fillText(0, (canvasLegend.width / 2) - 4, canvasLegend.height - 1);
             ctxLegend.fillText('\u03C0', (canvasLegend.width - 2) - 10, canvasLegend.height - 1);
             break;
         case "Group Delay":
@@ -750,7 +758,7 @@ function drawScale() {
 function setscrollPosition() {
     div = document.getElementById('canvasDivSpec')
     SpectroData.scrollPositionX = div.scrollLeft,
-    SpectroData.scrollPositionY = div.scrollTop
+        SpectroData.scrollPositionY = div.scrollTop
     section = getSectionDisplayed()
     drawSelection(section.min, 2, section.max);
 
@@ -801,9 +809,9 @@ function zoomToSelection(timeStart, timeEnd) {
         timeStart = timeEnd;
         timeEnd = tempTimeStart;
         SpectroData.endTimeSelection = timeEnd
-        // If start and endtime are the same, the user hast just clicked without
-        // marking an area. No selection area is set then, but the spectrogram
-        // canvas is scrolled that the marked line is near the left end of the div
+            // If start and endtime are the same, the user hast just clicked without
+            // marking an area. No selection area is set then, but the spectrogram
+            // canvas is scrolled that the marked line is near the left end of the div
     } else if (timeEnd == timeStart) {
         SpectroData.endTimeSelection = Audiodata.signalLen / Audiodata.sampleRate;
         div.scrollLeft = (timeStart / ((Audiodata.signalLen / Audiodata.sampleRate) / canvas.width)) - divWidth / 8;

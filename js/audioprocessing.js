@@ -90,8 +90,8 @@ function loadAudio() {
 
 
             processAudio();
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("container").style.display = "none";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
 
         });
     }
@@ -141,7 +141,7 @@ function calculateDisplay(type) {
     for (var i = 0; i < Audiodata.nPart; i++) {
 
         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
-      //  console.log(sampleBlock.length);
+        //  console.log(sampleBlock.length);
 
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
@@ -149,7 +149,8 @@ function calculateDisplay(type) {
                 sampleBlock[k] = sampleBlock[k] * Audiodata.windowValue[k];
             }
             var [realPart,
-                imagPart] = calculateFFT(sampleBlock);
+                imagPart
+            ] = calculateFFT(sampleBlock);
         }
 
         switch (type) {
@@ -257,9 +258,11 @@ function calculateInstantFreqDev(sampleBlock, windowType) {
     }
 
     var [firstReal,
-        firstImag] = calculateFFT(firstSampleBlock);
+        firstImag
+    ] = calculateFFT(firstSampleBlock);
     var [secondReal,
-        secondImag] = calculateFFT(secondSampleBlock);
+        secondImag
+    ] = calculateFFT(secondSampleBlock);
 
     var firstPhase = calculatePhase(firstReal, firstImag);
 
@@ -384,5 +387,4 @@ function checkNumbOfBlocks() {
         alert("Reached the maximum number of blocks.\n Data not fully displayed!");
         Audiodata.nPart = maxBlockNumb;
     }
-
 }

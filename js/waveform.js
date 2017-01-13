@@ -47,9 +47,9 @@ function drawWave() {
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
 
-    tempWaveCanvas.width=canvas.width;
+    tempWaveCanvas.width = canvas.width;
     tempWaveCanvas.height = canvas.height;
-    tempRMSCanvas.width=canvasRMS.width;
+    tempRMSCanvas.width = canvasRMS.width;
     tempRMSCanvas.height = canvasRMS.height;
 
     canvasWaveLine.addEventListener("mousedown", startPlayHereWave);
@@ -252,7 +252,7 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(timeToString((i / WaveData.stepsX) * tickNum, 0,tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i / WaveData.stepsX) * tickNum, 0, tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
@@ -302,9 +302,8 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1);
 
-console.log(mouseX)
-    var amplitude = WaveData.amplitude[Math.round(mousePos.x/WaveData.scaleX)];
-    var rms = WaveData.rms[Math.round(mousePos.x/WaveData.scaleX)];
+    var amplitude = WaveData.amplitude[Math.round(mousePos.x / WaveData.scaleX)];
+    var rms = WaveData.rms[Math.round(mousePos.x / WaveData.scaleX)];
 
     if (amplitude == 0) {
         amplitudeValue.innerHTML = 'Amplitude: ' +

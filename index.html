@@ -57,32 +57,17 @@ contact: vlad.paul@student.jade-hs.de
     <!--Create the loading animation-->
     <div id="container" style="display:none;"></div>
     <img id="loading" class="rotating" src="image/icon.png" height="300px" width="300px" style="display: none">
-        <!--<div id="crossfade">
-            <img id="img1" class="slide showMe" src="image/loading/animation_1.png">
-            <img id="img2" class="slide" src="image/loading/animation_2.png">
-            <img id="img3" class="slide" src="image/loading/animation_3.png">
-            <img id="img4" class="slide" src="image/loading/animation_4.png">
-            <img id="img5" class="slide" src="image/loading/animation_5.png">
-            <img id="img6" class="slide" src="image/loading/animation_6.png">
-            <img id="img7" class="slide" src="image/loading/animation_7.png">
-            <img id="img8" class="slide" src="image/loading/animation_8.png">
-            <img id="img9" class="slide" src="image/loading/animation_9.png">
-            <img id="img10" class="slide" src="image/loading/animation_10.png">
-            <img id="img11" class="slide" src="image/loading/animation_11.png">
-            <img id="img12" class="slide" src="image/loading/animation_12.png">
-            <img id="img13" class="slide" src="image/loading/animation_13.png">
-           </div>-->
 
     <!-- Create a div with all the buttons above the waveform -->
     <div id="buttonsMenu">
-            <form method="post" enctype="multipart/form-data" action="">
-                <!-- set input audiofile and trigger the audioProcessing function -->
-                <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
-                <label for="myAudio">Choose a file</label>
-            </form>
+        <form method="post" enctype="multipart/form-data" action="">
+            <!-- set input audiofile and trigger the audioProcessing function -->
+            <input type="file" class="audioInput" id="myAudio" name="myAudio[]" accept="audio/*" onchange="loadAudio()">
+            <label for="myAudio">Choose a file</label>
+        </form>
         <div class="buttons">
             <button id="player" type="button" class="playPause" disabled>&#9654;</button>
-           <button id="stop" type="button" class="stop" disabled>&#9724;</button>
+            <button id="stop" type="button" class="stop" disabled>&#9724;</button>
             <div class="range-container"><input id="volume" type="range" min="0" max="1" step="0.1" value="0.5" class="Gain" disabled><span class="tooltiptext">Adjust the volume
                                          by dragging the bar</span></div>
         </div>
