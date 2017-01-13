@@ -35,14 +35,23 @@ p {
 }
 
 p.equation {
-    /*style of the window definition paragraphes*/
+    /*style of the window equations*/
     margin-bottom: 10px;
     line-height: 100%;
     text-align: center;
 }
 
+p.references {
+    /*style of the references*/
+    margin-top: 0px;
+    text-indent: inherit;
+    font-style: italic;
+    text-align: left;
+    line-height: 200%;
+}
+
 ul {
-    /*style of the list technic items */
+    /*style of the list items */
     position: static;
     margin-left: auto;
     margin-right: auto;
@@ -106,6 +115,8 @@ figcaption {
 
 table {
     border-collapse: collapse;
+    width: 800px;
+    margin-top: 30px;
 }
 
 tr, th, td {

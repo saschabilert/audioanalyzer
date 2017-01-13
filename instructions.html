@@ -223,44 +223,30 @@ contact: vlad.paul@student.jade-hs.de
     </figure>
     <p>In the Figure 5 you can see the different parameter dropdown menus and the input lines for min and max range value. On the right side of the image you can see the spectrogram magnitude legend depending on the choosen display type.</p>
     <h2><a id="blockLength">Block-Length:</a></h2>
-    <p>The block length is the number of samples used to divide the full audio samples into equal blocks. In our case the block length is equal to the FFT length. This means one bit in the spectrogram represents one audio sample and defines the frequency resolution
-        of the spectrogram. For example, if you have a sample rate of 44.1 kHz and a block length of 1024, the transformed signal is divided into 1024 frequency bins. Reducing the block length affects the temporal resolution and the coefficient quality of the spectrum. If you increase the
-        block length, you will have an improved frequency resolution, because you have more bins in the same plot resolution. An increase of the block length slows the calculation for displaying the spectrogram.</p>
+    <p>The block length is the number of samples used to divide the full audio samples into equal blocks. In our case the block length is equal to the FFT length. This means one bit in the spectrogram represents one audio sample and defines the frequency
+        resolution of the spectrogram. For example, if you have a sample rate ($fs$) of 44.1 kHz and a block length of 1024, the transformed signal is divided into 1024 frequency bins. Reducing the block length affects the temporal resolution and the
+        coefficient quality of the spectrum. If you increase the block length, you will have an improved frequency resolution, because you have more bins in the same plot resolution. An increase of the block length slows the calculation for displaying
+        the spectrogram.</p>
     <h2><a id="windowType">Window-Types:</a></h2>
-    <p>The following part is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JavaScript. In general a window can be explained as a weight for the audio
-        signal in the time domain. If you take a look at a window itself in the time domain as well as in the frequency domain, you can categorize a window in three major classes and subclasses in the frequency domain (Quelle AMT):</p>
+    <p>The following section is adressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JS ES6. In general a window can be explained as a weight for the audio
+        signal in the time domain. If you take a look at a window-function itself in the time domain as well as in the frequency domain, you can categorize a window (Quelle AMT):</p>
     <ul>
         <li>Spectral resolution</li>
         <ul>
             <li>-3 dB point</li>
-            <li>Effective noise width</li>
-            <li>Rippel factor</li>
+            <li>Equivalent noise bandwidth</li>
+            <li>Rippel factor [dB]</li>
         </ul>
-        <li>Power of damping</li>
+        <li>Power of damping [dB]</li>
         <ul>
-            <li>Damping of the first sidelobe</li>
-            <li>Spectral roll-off</li>
+            <li>Damping of the first sidelobe [dB]</li>
+            <li>Spectral roll-off [dB/OCT]</li>
             <li>$\Delta$f till damping &gt; 60dB</li>
         </ul>
         <li>Selectivity</li>
     </ul>
-    <p style="margin-top: 0px;">The following subsections explain each window more detailed. You see the mathematical definition of the window, a illustration and the implementation. For illustration we used the Framework <b>Plotly.js</b>. All windows are calculated with the default
-        length of 1024. The input for the windows were calculated with a linespace function in JS. To link the math part and the code we have $N$ &#8793; windowLen.length and $n$ &#8793; windowLen[i].</p>
-    <pre class="code"><code data-language="javascript">/*
- * implementation of the linspace function make use of start value, end value
- * and the number of points between the start and end index
- */
- function linspace(startIdx, endIdx, n) {
-
-      var linVector = new Array(n);
-
-      for (var i = 0; i &lt; n; i++) {
-            linVector[i] = startIdx + (i * (endIdx - startIdx) / n);
-      }
-      linVector[0] = startIdx;
-      linVector[n - 1] = endIdx;
-      return linVector;
- }</code></pre>
+    <p style="margin-top: 0px;">The following subsections explain each window-function more detailed. You see the mathematical definition of the window, a illustration and the implementation. In Table 2 you can find some key figures for each implemented window-function. For illustration
+        all windows are calculated with the default block length of 1024. To link the math part and the code we have $N$ &#8793; windowLen.length and $n$ &#8793; windowLen[i].</p>
     <h3>1. Rect Window</h3>
     <p class="equation">The Rect Window is defined by: $w(n) = 1$</p>
     <div class="plot" id="divRect"></div>
@@ -417,44 +403,51 @@ contact: vlad.paul@student.jade-hs.de
       return window;
  }</code></pre>
     <h2><a id="overlap">Overlap:</a></h2>
-    <p>The images below tries to illustrate two different overlaps. When you select an overlap of 90% the calculation may take a little bit longer. The more percentage overlap you choose, the more sample blocks will be transformed from the time domain into
-        the frequency domain. In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means a number of samples you jump forward to get the new block. For example if you got a block size of 100 samples and an overlap of
-        75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated you hopsize correctly the next step is to calculate the total number of blocks for your audio data. The code below shows a way to calculate a hopsize form a given overlap
-        and block length.</p>
+    <p>Figure 6 and 7 tries to illustrate two different overlaps. The overlap factor represents the relationship between the old and the new sample block. The more overlap you choose, the higher is the number of blocks transformed from the time domain into
+        the frequency domain. In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means the number of samples you jump forward to the new start and end Index of your blocks. For example if you got a block size of 100
+        samples and an overlap of 75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated your hopsize correctly the next step is to calculate the total number of blocks for your audio data. In some cases the separation into equal block
+        is not possible. So we decide to throw away the last samples which won't fill a hole block.</p>
     <figure>
         <img class="resizeImg" src="image/overlapFirst.png">
-        <figcaption>Figure 1: Illustration of a 0% Overlap.</figcaption>
+        <figcaption>Figure 6: Illustration of a 0% Overlap.</figcaption>
     </figure>
     <figure>
         <img class="resizeImg" src="image/overlapSecond.png">
-        <figcaption>Figure 1: Illustration of a 75% Overlap.</figcaption>
+        <figcaption>Figure 7: Illustration of a 75% Overlap.</figcaption>
     </figure>
-    <pre class="code"><code data-language="javascript">// calculating the hopsize with an overlap and a block length
-Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
-// calculating the number of blocks with a hopsize, block length and total signal length
-Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiodata.hopsize);</code></pre>
     <h2><a id="displayType">Display-Types:</a></h2>
-    <p>On the Audioanalyzer website you have different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JavaScript (JS) by Nayuki. In this section you find a short description of the spectrograms and
-        how they are implemented. To combine the programming with the mathematical theory we shortly wrote down the definition for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or on
-        the internet.</p>
+    <p>On the Audioanalyzer page you have different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JS by Nayuki. In this section you find a short description of the spectrograms. We tried to introduce
+        the concept for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or professional journals.</p>
     <h3>1. Fast Fourier Transform (FFT)</h3>
-    <p>As already mentioned we have the basic FFT to transform the audio data from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the signal. In almost all cases of signals we have just the real part,
-        because "real world signal" just have a real part. That is the reason why the imaginary part (var imag) is filled with zeros by the same length as the real part. In our case the FFT returns a real part and an imaginary part of the transformed
-        signal. The Fast Fourier Transform is a fast version of the Discrete Fourier Transform (DFT) which is defined as:</p>
-    <p class="equation">$X(n) = X(e^{j2\pi n/N}) = \sum\limits_{k=0}^{N-1}x(k)e^{-j2\pi nk/N}$</p>
+    <p>As already mentioned we have a basic FFT to transform the audio data from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the audio signal. Both array must have the same length. The FFT returns
+        a real part and an imaginary part of the transformed signal. The Fast Fourier Transform is a fast version of the Discrete Fourier Transform (DFT) which is defined as:
+    </p>
+    <p class="equation">$X(n)=X(e^{j2\pi n/N}) = \sum\limits_{k=0}^{N-1}x(k)e^{-j2\pi nk/N}$</p>
     <p>The inverse Discrete Fourier Transform (IDFT) is defined as:</p>
-    <p class="equation">$x(k) = \dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
-    <p>The FFT itself works with a power of two block size. For further information you can find explanations in several books of signal processing.</p>
+    <p class="equation">$x(k)=\dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
+    <p>The FFT algorithm itself works with a power of two block length. For further information you can find explanations in several signal processing books.</p>
     <h3>2. Spectrum</h3>
-    <p>In the section <b>Block-Length</b> were some information about how to split an audio signal into blocks, depending on the block length. For a spectrum you need to transform every block of an audio signal from the time domain into frequency domain.
-        After you transformed your audio signal blocks, you have to calculate the absolute value complex number. To calculate the absolute value of a complex number ($z = a + \text{i}b$) use the following equation:</p>
-    <p class="equation">$|z| = \sqrt{a^2 + b^2}$</p>
-    <p>If you look at the spectrum of your signal you will see three dimensions the time (x-axis), the color coded magnitude (calculated by the code below) and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem.
-        This theorem is very important when you work with time discrete or sampled data (e.g sampling rate $f_s = 44100$Hz). The Nyquist-Theorem implies that the maxium frequency ($f_{max}$) is limited by the half of the sampling rate.</p>
-    <p class="equation">$f_{max} = \dfrac{f_s}{2}$</p>
+    <p>The section <b>Block-Length</b> includs some informations about how to split an audio signal into blocks, depending on the block length. For a magnitude spectrum you need to transform every block of an audio signal from the time domain into frequency
+        domain. After you transformed your audio signal blocks, you have to calculate the absolute value of the complex number. The absolute value of a complex number ($z = a + \text{i}b$) is defined as:</p>
+    <p class="equation">$|z|=\sqrt{a^2 + b^2}$</p>
+    <p>If you look at the spectrum of your signal in general, you will see three dimensions the time (x-axis), the color coded magnitude and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem. This theorem is
+        very important when you work with sampled data (e.g sampling rate $f_{\text{s}} = 44.1$kHz). The Nyquist-Theorem implies the maximal displayable frequency ($f_{\text{max}}$) is limited by the half of the sampling rate. The magnitude range is fixed
+        from -90 dB up to -30 dB.</p>
+    <p class="equation">$f_{\text{max}}=\dfrac{f_{\text{s}}}{2}$</p>
     <h3>3. Phase</h3>
+    <p>If you want to analyse the phase of an audio signal you can also calculate the phase of a complex number. The results of the phase data is circular and has a range from $-\pi$ to $\pi$. It is quit hard to interpret the phase spectrogram of and audio
+        signal. Maybe you detect a structur but often its very confused. To display the calculated data it is an advantage to use circular colormaps (e.g twilight).</p>
+    <p class="equation">$\text{arg}(z)=\text{atan}2(y,x)$</p>
     <h3>4. Group Delay</h3>
+    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful informations [2]. The result is also circular as the phase data and for the calculation you have to unwrap the
+        phase data. The group delay is defined as the negativ differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
+    <p class="equation">$\tau_{\omega}=-\dfrac{\partial\theta(\omega)}{\partial\omega}$</p>
     <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
+    <p>Another interpretable spectrum in terms of phase data is the Instantaneous Frequency Deviation. The IFD can also be used for automatic speech/speaker recognition (ASR). To analyse speech for example you can see the pitch and the harmonics crossing
+        the zero IFD value. To calculate the IFD you need the Instantaneous Frequency (IF) which is defined by the differentation of the phase data along the time axis. To extract the IFD we subtract the angular frequency from the IF spectrum $\nu(\omega,t)$.
+        The value range is fixed from -125Hz to 125Hz. The IFD spectrum is comparative to the magnitude spectrum. The continuous IF and the IFD $\psi(\omega,t)$ is mathematically defined by the following [1]:</p>
+    <p class="equation">$\nu(\omega,t)=\dfrac{\partial\theta(\omega,t)}{\partial t}$</p>
+    <p class="equation">$\psi(\omega,t)=\nu(\omega,t)-\omega$</p>
     <h2><a id="colormap">Colormaps:</a></h2>
     <p>HERE COMES SOMETHING ABOUT THE colormap</p>
     <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
@@ -463,6 +456,9 @@ Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiod
     <p>If you want to save the spectrum data of your audio signal you can use the save button. It works only if you choose the Display-Type "spectrum" and you have not zoomed into the spectrogram.</p>
     <h4>END OF INSTRUCTION</h4>
     <h2>References</h2>
+    <p class="references">[1] Stark, A. P. &amp; Paliwal, K. K. (2008). "Speech Analysis Using Instantaneous Frequency Deviation". Interspeech 2008</p>
+    <p class="references">[2] Stark, A. P. &amp; Paliwal, K. K. (2009). "Group-Delay-Deviation Based Spectral Analysis of Speech". Interspeech 2009</p>
+    <p class="references">[3] Harris, F. J. (1978). "On the use of windows for harmonic analysis with the discrete Fourier transform". Proceedings of the IEEE. 66:51.</p>
 </body>
 
 </html>
