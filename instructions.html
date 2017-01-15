@@ -420,11 +420,11 @@ contact: vlad.paul@student.jade-hs.de
         and block length.</p>
     <figure>
         <img class="resizeImg" src="image/overlapFirst.png">
-        <figcaption>Figure 1: Illustration of a 0% Overlap.</figcaption>
+        <figcaption>Figure 6: Illustration of a 0% Overlap.</figcaption>
     </figure>
     <figure>
         <img class="resizeImg" src="image/overlapSecond.png">
-        <figcaption>Figure 1: Illustration of a 75% Overlap.</figcaption>
+        <figcaption>Figure 7: Illustration of a 75% Overlap.</figcaption>
     </figure>
     <pre class="code"><code data-language="javascript">// calculating the hopsize with an overlap and a block length
 Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
@@ -459,12 +459,21 @@ Audiodata.nPart = Math.round((Audiodata.signalLen - Audiodata.blockLen) / Audiod
     <p> Linear or Sequential Colormaps are desined in a way, that the lightness value of the color increases or decreases in a linear manner through the whole colormap. Through this, the interpretation of graphics are steight forward.
       The lighter the color is, the higher is the value that the color is representing. The three linear colormaps that are part of the audioanalyzer are <b>viridis</b>, <b>plasma</b> and <b>gray</b>. They are only available for the spectrogram.</p>
       <h3>Rainbow Colormap</h3>
-
+      The rainbow color map <b>Jet</b>
       <h3>Cyclic Colormap</h3>
+      <p>Cyclic colormaps are used to display cyclic data like phase information. The phase of a signal goes from -&#960 to &#960, where this both values represent the samme phase.To show that, the first and the last color of circular colormaps are excactly the same.
+      The used cyclic colormap to show phase and group delay data is <b>twilight</b>. Twilight starts with white, goes on to blue over black on the center over red back to white. </p>
 
-      <h3>Min and max Value</h3>
-
-
+      <h2>Min and max Value</h2>
+      <p>With choosing the value range for the spectrogram, it is possible to define the value range, that is mapped onto the colormap. This is don by showing every datapoint with a value higher than the max value in the color representing this value, and the same for datapoints
+        with values below the min value.
+        By doing so, it is possible to get details more visible as shown in figure 9. In the B-part of the figure, the lines for the harmonigs in the frequency range of 12.5 kHz are much better seeable than in part A of the figure</p>
+      <figure>
+          <img class="resizeImg" id="minmaxpic" src="image/minmax.png">
+          <figcaption>Figure 8: Comparison of to spectrograms with same values for blocksize, window and overlap but with different min and max values for the spectrogram.<br>
+            <b>A:</b> min = -90dB max = -30dB. <b>B:</b> min = -100dB max = -60dB
+          </figcaption>
+      </figure>
 
     </p>
     <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>

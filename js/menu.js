@@ -175,19 +175,27 @@ function minMaxValue(e) {
         } else {
             max = 1;
         }
-        console.log(min,max)
+
         if (min < 0 && max < 0 && max > min) {
             SpectroData.specLevelHigh = max;
             SpectroData.specLevelLow = min;
             SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
+            document.getElementById("min").value= []
+            document.getElementById("max").value= []
+            document.getElementById("min").placeholder= "min: " + min
+            document.getElementById("max").placeholder="max: " + max
         } else if (min < 0 && isNaN(max) && SpectroData.specLevelHigh > min) {
 
             SpectroData.specLevelLow = min;
             SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
+            document.getElementById("min").value= []
+            document.getElementById("min").placeholder= "min: " + min
         } else if (isNaN(min) && max < 0 && SpectroData.specLevelLow < max) {
 
             SpectroData.specLevelHigh = max;
             SpectroData.specLevelWidth = Math.abs(SpectroData.specLevelHigh - SpectroData.specLevelLow);
+            document.getElementById("max").value= []
+            document.getElementById("max").placeholder="max: " + max
         } else if (min >= 0 || max >= 0 || max < min) {
             alert("Es duerfen nur Werte <= -1 eingetragen werden. Ausserdem muss min Value kleiner sein als max Value ");
         }

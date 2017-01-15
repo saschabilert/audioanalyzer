@@ -85,6 +85,12 @@ img.resizeImg {
     width: 800px;
     height: 70%;
 }
+img.resizeImg#minmaxpic{
+
+
+  width: 900px;
+  height: 90%;
+}
 
 img.resizeImg#upload {
     /*style of the upload image*/
