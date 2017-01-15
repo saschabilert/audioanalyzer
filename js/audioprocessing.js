@@ -55,12 +55,13 @@ var Audiodata = {
 var reader = new FileReader();
 var audioCtx = new AudioContext();
 
-
 function loadAudio() {
 
+    //  display the loading screen
     document.getElementById("loading").style.display = "block";
     document.getElementById("container").style.display = "block";
 
+    // enable all the Buttons after loading an audio file
     enableButton();
 
     // get the first file data with the id "myAudio"
@@ -78,6 +79,7 @@ function loadAudio() {
 
             myArrayBuffer = buffer;
 
+            // get the number of channels
             Audiodata.numOfChannels = buffer.numberOfChannels;
 
             // get the samples of the first channel
@@ -86,26 +88,28 @@ function loadAudio() {
             // calculate the length of the audiosignal
             Audiodata.signalLen = Audiodata.samples.length;
 
+            // trigger the drawWave() function (see waveform.js)
             drawWave();
 
-
+            // trigger the processAudio() function
             processAudio();
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("container").style.display = "none";
 
+            // hide the loading screen
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
         });
     }
-
 }
 
 function processAudio() {
 
-
-  console.log(document.getElementById("container"))
+    // calculate the hopesize depending on the overlap
     Audiodata.hopsize = Math.round(Audiodata.blockLen - (Audiodata.blockLen * Audiodata.overlap));
 
+    // calculate the total duration of the audiodata
     var duration = (Audiodata.signalLen / Audiodata.sampleRate);
 
+    // write the duration into the playback time
     info.innerHTML = "00:00.0" +
         "&thinsp;/&thinsp;" + timeToString(duration, 1, 0);
 
@@ -142,8 +146,8 @@ function calculateDisplay(type) {
     // cut the audiosamples into blocks and calculate the choosen data
     for (var i = 0; i < Audiodata.nPart; i++) {
 
+        // slice the audio samples into equivalent blocks
         var sampleBlock = Audiodata.samples.slice(Audiodata.hopsize * i, Audiodata.blockLen + Audiodata.hopsize * i);
-      //  console.log(sampleBlock.length);
 
         // check if type is Instantaneous Frequency Deviation or not
         if (type != "Instantaneous Frequency Deviation") {
@@ -154,6 +158,7 @@ function calculateDisplay(type) {
                 imagPart] = calculateFFT(sampleBlock);
         }
 
+        // switch between the different display types
         switch (type) {
             case "Spectrum":
                 Audiodata.spectrogram[i] = calculateAbs(realPart, imagPart);
@@ -215,7 +220,6 @@ function calculateGroupDelay(real, imag) {
 
     var phase = calculatePhase(real, imag);
 
-    //TODO: Is not useful here, fix later
     var freqVector = linspace(0, Audiodata.sampleRate / 2, Audiodata.blockLen / 2);
 
     var dOmega = (freqVector[2] - freqVector[1]) * 2 * Math.PI;
@@ -300,8 +304,6 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "hannpoisson":
-            // alpha is a parameter that controls the slope of the exponential
-            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
             var alpha = 2;
 
             for (i = 0; i < windowLen.length; i++) {
@@ -322,8 +324,6 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "flat-top":
-            // alpha is a parameter that controls the slope of the exponential
-            // (Wiki: https://en.wikipedia.org/wiki/Window_function)
             var alpha = [1, 1.93, 1.29, 0.388, 0.028];
 
             for (i = 0; i < windowLen.length; i++) {
@@ -331,7 +331,6 @@ function calculateWindow(windowLen, type) {
             }
             break;
         case "blackman":
-
             var alpha = 0.16;
             var alpha0 = (1 - alpha) / 2;
             var alpha1 = 1 / 2;
@@ -386,5 +385,4 @@ function checkNumbOfBlocks() {
         alert("Reached the maximum number of blocks.\n Data not fully displayed!");
         Audiodata.nPart = maxBlockNumb;
     }
-
 }

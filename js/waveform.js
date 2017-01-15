@@ -22,6 +22,7 @@
  * contact: vlad.paul@student.jade-hs.de
  */
 
+// define global object for the waveform
 var WaveData = {
     gridScale: 1 / 16,
     stepsX: undefined,
@@ -30,6 +31,7 @@ var WaveData = {
     scaleX: 1
 };
 
+// define global variables for the waveform
 var mouseUsed = 0;
 var intervalDrawSelect;
 var selectionX = NaN;
@@ -41,15 +43,16 @@ var tempWaveCtx = tempWaveCanvas.getContext("2d");
 var tempRMSCanvas = document.createElement("canvas");
 var tempRMSCtx = tempWaveCanvas.getContext("2d");
 
+// function to calculate the waveform and draw it into the canvas
 function drawWave() {
 
     var canvas = document.getElementById("canvasWave");
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvasRMS = document.getElementById("canvasRMS");
 
-    tempWaveCanvas.width=canvas.width;
+    tempWaveCanvas.width = canvas.width;
     tempWaveCanvas.height = canvas.height;
-    tempRMSCanvas.width=canvasRMS.width;
+    tempRMSCanvas.width = canvasRMS.width;
     tempRMSCanvas.height = canvasRMS.height;
 
     canvasWaveLine.addEventListener("mousedown", startPlayHereWave);
@@ -75,6 +78,7 @@ function drawWave() {
         var peak = new Array(nPart);
         var rms = new Array(nPart);
 
+        // search the min and max samples in on predefined audioblock
         for (i = 0; i < nPart; i++) {
 
             currentBlock = Audiodata.samples.slice(canvasBlockLen * i, canvasBlockLen * (i + 1));
@@ -83,6 +87,7 @@ function drawWave() {
 
             minValue[i] = Math.min(...currentBlock) * waveScale;
 
+            // calculate the RMS of the current sampleblock
             rms[i] = calculateRMS(currentBlock);
 
             if (Math.max(...currentBlock) >= Math.abs(Math.min(...currentBlock))) {
@@ -92,9 +97,13 @@ function drawWave() {
             }
         }
 
+        // draw the axes of the waveform
         drawWaveTimeAxes();
+
+        // draw the grid of the waveform
         drawWaveGrid();
 
+        // draw the waveform into the canvas
         tempWaveCtx.beginPath();
         tempWaveCtx.strokeStyle = "#100C87";
         tempWaveCtx.lineWidth = 0.05;
@@ -124,8 +133,10 @@ function drawWave() {
 
     } else {
         // canvas-unsupported code here
+        alert("canvas is unsupported on this browser!");
     }
 
+    // calculate the RMS value of the input samples
     function calculateRMS(samples) {
 
         var sum = 0;
@@ -139,6 +150,7 @@ function drawWave() {
         return rms;
     }
 
+    // calculate the crest factor using the peak and the rms value
     function calculateCrestFactor(peak, rms) {
 
         var crestFactor = new Array(rms.length);
@@ -152,6 +164,7 @@ function drawWave() {
         return crestFactor;
     }
 
+    // set the playback position depending on the current mouse position
     function startPlayHereWave(evt) {
 
         var mousePos = getMousePos(canvas, evt);
@@ -165,8 +178,8 @@ function drawWave() {
     }
 }
 
+// draw the red playback bar into the waveform
 function drawLineKlickWave(mouseTime) {
-
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvas = document.getElementById("canvasWave");
     var ctxLine = canvasWaveLine.getContext("2d");
@@ -177,8 +190,8 @@ function drawLineKlickWave(mouseTime) {
     drawLineKlick(mouseTime);
 }
 
+// move the red playback bar using requestAnimationFrame()
 function drawLinePlayWave() {
-
     var canvasWaveLine = document.getElementById("canvasWaveLine");
     var ctxLine = canvasWaveLine.getContext("2d");
 
@@ -192,6 +205,7 @@ function drawLinePlayWave() {
     }
 }
 
+// draw the axis of the waveform
 function drawWaveTimeAxes() {
 
     var canvasWaveScale = document.getElementById("canvasWaveScale");
@@ -252,10 +266,11 @@ function drawWaveTimeAxes() {
         ctxWaveScale.lineTo(i + offSetLeft, canvasWaveScale.height - offSetBottom + 5);
         ctxWaveScale.stroke();
 
-        ctxWaveScale.fillText(timeToString((i / WaveData.stepsX) * tickNum, 0,tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
+        ctxWaveScale.fillText(timeToString((i / WaveData.stepsX) * tickNum, 0, tickNum), i + offSetLeft - 5, canvasWaveScale.height - offSetBottom + 15, offSetLeft - 2);
     }
 }
 
+// draw the grid into the waveform
 function drawWaveGrid() {
 
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
@@ -291,6 +306,7 @@ function drawWaveGrid() {
     ctxWaveGrid.stroke();
 }
 
+// display the current position of the mouse cursor
 function displayWavePosition(evt) {
 
     var canvasWave = document.getElementById("canvasWave");
@@ -302,9 +318,8 @@ function displayWavePosition(evt) {
     var mouseX = Math.round((trackLenSec / canvasWave.width * mousePos.x) * 100) / 100;
     waveTime.innerHTML = 'Time: ' + timeToString(mouseX, 1, 1);
 
-console.log(mouseX)
-    var amplitude = WaveData.amplitude[Math.round(mousePos.x/WaveData.scaleX)];
-    var rms = WaveData.rms[Math.round(mousePos.x/WaveData.scaleX)];
+    var amplitude = WaveData.amplitude[Math.round(mousePos.x / WaveData.scaleX)];
+    var rms = WaveData.rms[Math.round(mousePos.x / WaveData.scaleX)];
 
     if (amplitude == 0) {
         amplitudeValue.innerHTML = 'Amplitude: ' +
@@ -325,6 +340,8 @@ console.log(mouseX)
     }
 }
 
+// define the function for setting the current playback position by pushing down the mouse
+// button
 function waveOnMouseDown(evt) {
     var canvas = document.getElementById("canvasWave");
     var canvasWaveLine = document.getElementById("canvasWaveLine");
@@ -338,6 +355,7 @@ function waveOnMouseDown(evt) {
     }, 30);
 }
 
+// function to select a piece of the waveform
 function drawSelection(startPos, caller, endPos) {
     var canvas = document.getElementById("canvasWave");
     var canvasSelect = document.getElementById("canvasSelect");
@@ -360,6 +378,7 @@ function drawSelection(startPos, caller, endPos) {
     }
 }
 
+// function for the selection on the waveform by releasing the mouse button
 function waveOnMouseUp(evt) {
     canvasWaveLine = document.getElementById("canvasWaveLine");
     var canvas = document.getElementById("canvasWave");
@@ -380,12 +399,14 @@ function waveOnMouseUp(evt) {
     selectionX = NaN;
 }
 
+// function for the current mouse position
 function onMouseMove(evt) {
     canvasWaveLine = document.getElementById("canvasWaveLine");
     mousePos = getMousePos(canvasWaveLine, evt);
     selectionX = mousePos.x;
 }
 
+// function to select the hole waveform by double clicking the mouse button
 function resetSelection() {
     var canvasSelect = document.getElementById("canvasSelect");
     var ctxSelect = canvasSelect.getContext("2d");

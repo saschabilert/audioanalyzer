@@ -23,7 +23,7 @@
  */
 
 function fitCanvas() {
-  var offsetButtons=25;
+    var offsetButtons = 25;
     var canvasSpec = document.getElementById("canvasSpec")
     var canvasSpecLine = document.getElementById("canvasSpecLine")
     var canvasSpecScale = document.getElementById('canvasSpecScale');
@@ -36,23 +36,25 @@ function fitCanvas() {
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
+
     var divSpecWidth = divSpec.offsetWidth-offsetButtons;
     var divWaveWidth = divWave.offsetWidth-3-offsetButtons;
+
 
     canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
     canvasSpecScale.width = divSpecWidth;
-    canvasWave.width = divWaveWidth - offSetLeft-20;
-    canvasWaveLine.width = divWaveWidth - offSetLeft-20;
-    canvasRMS.width = divWaveWidth - offSetLeft-20;
-    canvasSelect.width = divWaveWidth - offSetLeft-20;
+    canvasWave.width = divWaveWidth - offSetLeft - 20;
+    canvasWaveLine.width = divWaveWidth - offSetLeft - 20;
+    canvasRMS.width = divWaveWidth - offSetLeft - 20;
+    canvasSelect.width = divWaveWidth - offSetLeft - 20;
     canvasWaveScale.width = divWaveWidth;
-    canvasWaveGrid.width = divWaveWidth - offSetLeft-20;
+    canvasWaveGrid.width = divWaveWidth - offSetLeft - 20;
 
 }
 
 function resizeCanvas() {
-    var offsetButtons=25;
+    var offsetButtons = 25;
     var canvasSpec = document.getElementById("canvasSpec")
     var canvasSpecLine = document.getElementById("canvasSpecLine")
     var canvasSpecScale = document.getElementById('canvasSpecScale');
@@ -68,13 +70,13 @@ function resizeCanvas() {
     var canvasWaveScale = document.getElementById("canvasWaveScale");
     var canvasWaveGrid = document.getElementById("canvasWaveGrid");
 
-    var divSpecWidth = divSpec.offsetWidth-offsetButtons;
-    var divWaveWidth = divWave.offsetWidth-offsetButtons;
+    var divSpecWidth = divSpec.offsetWidth - offsetButtons;
+    var divWaveWidth = divWave.offsetWidth - offsetButtons;
 
     if (canvasSpec.width <= divSpecWidth) {
         canvasSpec.width = divSpecWidth - SpectroData.scaleOfsetLeft;
         canvasSpecLine.width = divSpecWidth - SpectroData.scaleOfsetLeft;
-        canvasSpecScale.width = divSpecWidth-3;
+        canvasSpecScale.width = divSpecWidth - 3;
         if (typeof(viridisScale) != "undefined") {
             ctx.scale(canvasSpec.width / SpectroData.specWidth, canvasSpec.height / SpectroData.specHight);
             SpectroData.scaleFactorWidth = canvasSpec.width / SpectroData.specWidth;

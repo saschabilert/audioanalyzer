@@ -141,6 +141,8 @@ Array.prototype.forEach.call(inputs, function(input) {
         if (fileName === "") {
             fileName = "Choose a file";
             label.innerHTML = fileName;
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("container").style.display = "none";
         }
     });
 });
@@ -205,18 +207,15 @@ function minMaxValue(e) {
 
 // function to calculate the time in minutes, seconds and miliseconds
 function timeToString(time, alwaysShowFull, stepSize) {
-    if (time==0){
+    if (time == 0) {
 
-      return "0"
+        return "0"
     }
     var minutes = Math.floor((time) / 60);
     var seconds = Math.floor((time) - minutes * 60);
     var miliseconds = Math.floor((time % 1) * 10);
 
-    var modoStepSize = stepSize%1
-
-
-
+    var modoStepSize = stepSize % 1
 
     if (seconds < 10) {
         seconds = "0" + seconds;
@@ -224,21 +223,20 @@ function timeToString(time, alwaysShowFull, stepSize) {
     if (minutes < 10) {
         minutes = "0" + minutes;
     }
-
     if (alwaysShowFull == 1) {
-      if (time<0){
-        return "00:00.0"
-      }
+        if (time < 0) {
+            return "00:00.0"
+        }
         return [minutes + ":" + seconds + "." + miliseconds];
     } else if (alwaysShowFull == 0) {
         if ((minutes == "00") && (Audiodata.signalLen / Audiodata.sampleRate) < 60) {
-            if (miliseconds != 0 || modoStepSize!=0) {
+            if (miliseconds != 0 || modoStepSize != 0) {
                 return [seconds + "." + miliseconds];
             } else {
                 return [seconds];
             }
         } else {
-            if (modoStepSize!=0) {
+            if (modoStepSize != 0) {
                 return [minutes + ":" + seconds + "." + miliseconds];
             } else {
                 if (miliseconds != 0) {
@@ -309,6 +307,7 @@ function timeUpdate() {
 
 // check the loop selection
 var loopSelection = false;
+
 function setLoop() {
     loopSelection = document.getElementById("LoopCheck").checked;
 }

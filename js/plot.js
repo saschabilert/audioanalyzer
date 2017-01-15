@@ -22,19 +22,17 @@
  * contact: vlad.paul@student.jade-hs.de
  */
 
-// function to plot the different windows for the instruction page
+// function to plot the different windows for the instruction page using plotly.js
 function plotWindow() {
 
     var windowLen = linspace(0, 1024, 1024);
 
     var windowValueHann = calculateWindow(windowLen, "hann");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueHann,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueHann,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Hann Window',
         xaxis: {
@@ -54,18 +52,18 @@ function plotWindow() {
             }
         }
     };
-    Plotly.newPlot('divHann', data, layout, {showLink: false});
+    Plotly.newPlot('divHann', data, layout, {
+        showLink: false
+    });
 
     var windowValueRect = calculateWindow(windowLen, "rect");
     windowValueRect.fill(0, 0, 81);
     windowValueRect.fill(0, 942, 1024);
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueRect,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueRect,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Rect Window',
         xaxis: {
@@ -88,13 +86,11 @@ function plotWindow() {
     Plotly.newPlot('divRect', data, layout);
 
     var windowValueHannPoisson = calculateWindow(windowLen, "hannpoisson");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueHannPoisson,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueHannPoisson,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Hann-Poisson Window',
         xaxis: {
@@ -117,13 +113,11 @@ function plotWindow() {
     Plotly.newPlot('divHannPoisson', data, layout);
 
     var windowValueCosine = calculateWindow(windowLen, "cosine");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueCosine,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueCosine,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Cosine Window',
         xaxis: {
@@ -146,13 +140,11 @@ function plotWindow() {
     Plotly.newPlot('divCosine', data, layout);
 
     var windowValueFlatTop = calculateWindow(windowLen, "flat-top");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueFlatTop,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueFlatTop,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Flat-Top Window',
         xaxis: {
@@ -175,13 +167,11 @@ function plotWindow() {
     Plotly.newPlot('divFlatTop', data, layout);
 
     var windowValueHamming = calculateWindow(windowLen, "hamming");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueHamming,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueHamming,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Hamming Window',
         xaxis: {
@@ -204,13 +194,11 @@ function plotWindow() {
     Plotly.newPlot('divHamming', data, layout);
 
     var windowValueBlackman = calculateWindow(windowLen, "blackman");
-    var data = [
-        {
-            x: windowLen,
-            y: windowValueBlackman,
-            type: 'bar'
-        }
-    ];
+    var data = [{
+        x: windowLen,
+        y: windowValueBlackman,
+        type: 'bar'
+    }];
     var layout = {
         title: 'Blackman Window',
         xaxis: {
