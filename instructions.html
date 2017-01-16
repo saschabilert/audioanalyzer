@@ -95,6 +95,7 @@ contact: vlad.paul@student.jade-hs.de
         <li><a class="naviItems" href="#overlap">Overlap</a></li>
         <li><a class="naviItems" href="#displayType">Display-Types</a></li>
         <li><a class="naviItems" href="#colormap">Colormaps</a></li>
+        <li><a class="naviItems" href="minMaxValue">Min and Max Value</a></li>
         <li><a class="naviItems" href="#zoomSpectrogram">Zoom Spectrogram</a></li>
         <li><a class="naviItems" href="#saveSpectrogram">Save Spectrogram</a></li>
     </ul>
@@ -462,7 +463,7 @@ contact: vlad.paul@student.jade-hs.de
     <h3>3. Cyclic Colormap</h3>
     <p>Cyclic colormaps are used to display cyclic data like phase information. The phase of a signal goes from -&#960 to &#960, where this both values represent the samme phase.To show that, the first and the last color of circular colormaps are excactly
         the same. The used cyclic colormap to show phase and group delay data is <b>twilight</b>. Twilight starts with white, goes on to blue over black on the center over red back to white. </p>
-    <h2>Min and Max Value:</h2>
+    <h2><a id="minMaxValue">Min and Max Value:</a></h2>
     <p>With choosing the value range for the spectrogram, it is possible to define the value range, that is mapped onto the colormap. This is don by showing every datapoint with a value higher than the max value in the color representing this value, and
         the same for datapoints with values below the min value. By doing so, it is possible to get details more visible as shown in figure 9. In the B-part of the figure, the lines for the harmonigs in the frequency range of 12.5 kHz are much better
         seeable than in part A of the figure</p>
