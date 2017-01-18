@@ -143,24 +143,6 @@ function drawSpec() {
         drawLineKlickWave(mouseTime)
     }
 
-    // This function calls a zoom function in dependency on the keys that are
-    // pressed while using the mousewheel
-    function mouseWheelFunction(evt) {
-        var delta = evt.deltaY;
-
-        if (SpectroData.strgPressed) {
-            if (SpectroData.shiftPressed) {
-                event.preventDefault();
-                zoomFreq(delta);
-            } else {
-                event.preventDefault();
-                zoomTime(delta);
-            }
-        } else if (SpectroData.shiftPressed) {
-            zoomAll(delta);
-            event.preventDefault();
-        }
-    }
 
     // Function for zooming the time axes only
     function zoomTime(delta) {
@@ -181,14 +163,8 @@ function drawSpec() {
             canvas.width = canvas.width * factor;
             SpectroData.cWidth = canvas.width;
             canvasSpecLine.width = canvasSpecLine.width * factor
-            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(tempCanvas, 0, 0);
-            drawScale()
-            section = getSectionDisplayed()
-            drawSelection(section.min, 2, section.max);
+
+    scaleSpectrogramm()
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
         } else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
@@ -196,14 +172,8 @@ function drawSpec() {
             canvas.width = divWidth - SpectroData.scaleOfsetLeft
             SpectroData.cWidth = canvas.width;
             canvasSpecLine.width = divWidth - SpectroData.scaleOfsetLeft
-            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(tempCanvas, 0, 0);
-            drawScale()
-            section = getSectionDisplayed()
-            drawSelection(section.min, 2, section.max);
+
+      scaleSpectrogramm()
         }
     }
 
@@ -228,14 +198,7 @@ function drawSpec() {
             SpectroData.cHigh = canvas.height;
             canvasSpecLine.height = canvasSpecLine.height * factor;
 
-            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(tempCanvas, 0, 0);
-            drawScale()
-            section = getSectionDisplayed()
-            drawSelection(section.min, 2, section.max);
+          scaleSpectrogramm()
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
         } else if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor < divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
@@ -244,62 +207,11 @@ function drawSpec() {
             SpectroData.cHigh = canvas.height;
             canvasSpecLine.height = divHeight - SpectroData.scaleOfsetBottom
 
-            ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-            SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-            SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(tempCanvas, 0, 0);
-            drawScale()
-            section = getSectionDisplayed()
-            drawSelection(section.min, 2, section.max);
+        scaleSpectrogramm()
         }
     }
 
-    // Function for zooming both axes
-    function zoomAll(delta) {
-        var factor;
-        if (delta < 0) {
-            factor = 1.1;
-        } else if (delta > 0) {
-            factor = 0.9;
-        } else {
-            factor = 1;
-        }
 
-        // Checking if the new canvas size is smaler than the maximum possible
-        // size, but also bigger then the size of the surrounding div. If this is
-        // the case, the canvases are scaled to the new size
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && canvas.height * factor > divHeight && canvas.width * factor > divWidth && canvas.height * factor <= (tempCanvas.height * 2.5)) {
-            canvasSpecScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
-            canvasSpecScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
-            canvas.height = canvas.height * factor;
-            SpectroData.cHigh = canvas.height;
-            canvas.width = canvas.width * factor;
-            SpectroData.cWidth = canvas.width;
-            canvasSpecLine.height = canvasSpecLine.height * factor;
-            canvasSpecLine.width = canvasSpecLine.width * factor;
-            // If the new size will be smaler then the surrounding div, the size
-            // of the canvases is set to the size of the div
-        } else if (canvas.width * factor < 32767 && (canvas.width * factor) * (canvas.height * factor) < 268435456 && canvas.height * factor < 32767 && (canvas.height * factor > divHeight || canvas.width * factor > divWidth) && canvas.height * factor <= (tempCanvas.height * 2.5)) {
-            canvasSpecScale.height = divHeight
-            canvas.height = divHeight - SpectroData.scaleOfsetBottom
-            SpectroData.cHigh = canvas.height;
-            canvasSpecLine.height = divHeight - SpectroData.scaleOfsetBottom
-            canvasSpecScale.width = divWidth
-            canvas.width = divWidth - SpectroData.scaleOfsetLeft
-            cWidth = canvas.width;
-            canvasSpecLine.width = divWidth - SpectroData.scaleOfsetLeft
-        }
-
-        ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-        SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-        SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
-        section = getSectionDisplayed()
-        drawSelection(section.min, 2, section.max);
-    }
 }
 
 // Function for drawing a new spectrogram
@@ -433,22 +345,9 @@ function draw() {
 
     // Putting imageData into the temp canvas
     tempCtx.putImageData(pictureData, 0, 0);
-
-    // scaling the actual cavas to fit the whole Spectrogram
-    ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-    SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-    SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-    // Draw the image from the temp canvas to the scaled canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(tempCanvas, 0, 0);
-
-    // Call function for drawing the legend
     drawLegend(colorScale)
-    // Call function for creating the scale arround the spectrgram
-    drawScale()
-    section = getSectionDisplayed()
-    // Mark the section of the signa that is currently displayed
-    drawSelection(section.min, 2, section.max);
+    scaleSpectrogramm()
+
 }
 
 function drawLineKlick(mouseTime) {
@@ -801,12 +700,7 @@ function zoomToSelection(timeStart, timeEnd) {
         SpectroData.cWidth = canvas.width;
         canvasSpecLine.width = canvasSpecLine.width * factor
 
-        ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-        SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-        SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-        ctx.drawImage(tempCanvas, 0, 0);
-        drawScale()
-        drawLineKlick(timeStart)
+        scaleSpectrogramm()
 
         var lineStart = (timeStart * canvas.width) / (Audiodata.signalLen / Audiodata.sampleRate);
         div.scrollLeft = lineStart;
@@ -842,18 +736,7 @@ function scaleFullSpec() {
     canvasSpecScale.width = div.offsetWidth-20
     canvasSpecScale.height = div.offsetHeight-20
 
-    // Scale the spectrogram canvas to fit into the div and hold all
-    // spectrogram information
-    ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
-    // Store the scale factors
-    SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
-    SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
-    // Draw the spectrogram from the tempCanvas onto the spec canvas
-    ctx.drawImage(tempCanvas, 0, 0);
-    // Draw new scale and mark the section on the wave form
-    drawScale()
-    var section = getSectionDisplayed()
-    drawSelection(section.min, 2, section.max);
+  scaleSpectrogramm()
 }
 
 // function to download the spectrum when it is calculated
@@ -867,4 +750,23 @@ function downloadSpectrum() {
     link.download = "spectrogram.png";
     link.href = scaleCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     link.click();
+}
+
+// Function that scales the spectrogramm canvas to the new set size and copies
+// the spectrogram from the temp canvas onto it
+function scaleSpectrogramm(){
+  var canvas = document.getElementById("canvasSpec")
+  var ctx = canvas.getContext("2d")
+
+  // Scaling the canvas to fit the whole temp canvas with the new canvas dimensions
+  ctx.scale(SpectroData.cWidth / SpectroData.specWidth, SpectroData.cHigh / SpectroData.specHight);
+  SpectroData.scaleFactorWidth = SpectroData.cWidth / SpectroData.specWidth;
+  SpectroData.scaleFactorHeight = SpectroData.cHigh / SpectroData.specHight;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(tempCanvas, 0, 0);
+  drawScale()
+  section = getSectionDisplayed()
+  drawSelection(section.min, 2, section.max);
+
+
 }
