@@ -65,11 +65,12 @@ function drawSpec() {
     window.addEventListener("keyup", onKeyUp)
     var divWidth = div.offsetWidth;
     var divHeight = div.offsetHeight;
+    // Reset Transformastion and scaling of the spoectrogram canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     SpectroData.cWidth = canvas.width;
     SpectroData.cHigh = canvas.height;
 
-    //Importing spectrogram data to local variable
+    //Importing time-frequency-data to local variable
     switch (Audiodata.display) {
         case "Spectrum":
             SpectroData.specData = Audiodata.spectrogram;
@@ -88,9 +89,8 @@ function drawSpec() {
     // Defining varables with no of spectrograms
     SpectroData.specWidth = SpectroData.specData.length;
     SpectroData.specHight = SpectroData.specData[1].length;
-    // Storing spectrogram specs to global variable
 
-    // Create temp canvas for temp storing of picture data
+    // Setting size of the temp canvas to fit the spectrogram data
     tempCtx.clearRect(0, 0, SpectroData.specWidth, SpectroData.specHight);
     tempCanvas.width = SpectroData.specWidth;
     tempCanvas.height = SpectroData.specHight;
@@ -99,14 +99,13 @@ function drawSpec() {
     createViridis();
     createGray();
     createJet();
-    createHsv();
     createPlasma();
     createTwilight();
 
     // Start draw spectrogram
     draw();
 
-    // Functions for chasing mouse actions
+    // Adding fuction callbacks for zoom buttons
     var plusX = document.getElementById('plusX')
     var minusX = document.getElementById('minusX')
     var plusY = document.getElementById('plusY')
@@ -123,13 +122,15 @@ function drawSpec() {
     minusY.addEventListener("click", function() {
         zoomFreq(1)
     }, false);
-    playButton.addEventListener("click", toggleSound);
+
+    //create eventlistener for mouse actions and play button
     playButton.addEventListener("click", toggleSound);
     canvasSpecLine.addEventListener("click", startPlayHere)
     canvasSpecLine.addEventListener('mousemove', displayMousePosition);
     canvasSpecLine.addEventListener("dblclick", scaleFullSpec);
 
-    // Callback function of single click event on the spectrogram
+    // Callback function of single click event on the spectrogram, to set the
+    // playback start position at klick position and create the red line at this positon
     function startPlayHere(evt) {
         var mousePos = getMousePos(canvas, evt)
         mouseTime = (Audiodata.signalLen / Audiodata.sampleRate) / canvas.width * mousePos.x
@@ -158,7 +159,11 @@ function drawSpec() {
             // Checking if the new canvas size is smaler than the maximum possible
             // size, but also bigger then the size of the surrounding div. If this is
             // the case, the canvases are scaled to the new size
-        if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
+        if (canvas.width * factor < 32767 &&
+          (canvas.width * factor) * canvas.height < 268435456 &&
+          canvas.width * factor > divWidth &&
+          canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
+
             canvasSpecScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
             canvas.width = canvas.width * factor;
             SpectroData.cWidth = canvas.width;
@@ -167,7 +172,11 @@ function drawSpec() {
     scaleSpectrogramm()
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
-        } else if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor < divWidth && canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
+        } else if (canvas.width * factor < 32767 &&
+          (canvas.width * factor) * canvas.height < 268435456 &&
+          canvas.width * factor < divWidth &&
+          canvasSpecScale.width * factor <= (tempCanvas.width * 4)) {
+
             canvasSpecScale.width = divWidth
             canvas.width = divWidth - SpectroData.scaleOfsetLeft
             SpectroData.cWidth = canvas.width;
@@ -192,7 +201,11 @@ function drawSpec() {
         // Checking if the new canvas size is smaler than the maximum possible
         // size, but also bigger then the size of the surrounding div. If this is
         // the case, the canvases are scaled to the new size
-        if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor > divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
+        if (canvasSpecScale.height * factor < 32767 &&
+          (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 &&
+           canvasSpecScale.height * factor > divHeight &&
+           canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
+
             canvasSpecScale.height = canvas.height * factor + SpectroData.scaleOfsetBottom
             canvas.height = canvas.height * factor;
             SpectroData.cHigh = canvas.height;
@@ -201,7 +214,11 @@ function drawSpec() {
           scaleSpectrogramm()
             // If the new size will be smaler then the surrounding div, the size
             // of the canvases is set to the size of the div
-        } else if (canvasSpecScale.height * factor < 32767 && (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 && canvasSpecScale.height * factor < divHeight && canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
+        } else if (canvasSpecScale.height * factor < 32767 &&
+          (canvasSpecScale.height * factor) * canvasSpecScale.width < 268435456 &&
+          canvasSpecScale.height * factor < divHeight &&
+          canvasSpecScale.height * factor <= (tempCanvas.height * 2.5)) {
+
             canvasSpecScale.height = divHeight
             canvas.height = divHeight - SpectroData.scaleOfsetBottom
             SpectroData.cHigh = canvas.height;
@@ -343,13 +360,14 @@ function draw() {
             break;
     }
 
-    // Putting imageData into the temp canvas
+    // Putting imageData onto the temp canvas
     tempCtx.putImageData(pictureData, 0, 0);
     drawLegend(colorScale)
     scaleSpectrogramm()
 
 }
 
+// Function that draws a red line at playback position
 function drawLineKlick(mouseTime) {
     canvasSpecLine = document.getElementById("canvasSpecLine")
     canvas = document.getElementById("canvasSpec")
@@ -409,7 +427,7 @@ function displayMousePosition(evt) {
     }
 };
 
-// Function that draws the red play position line on the canvas
+// Function that draws the red play position line on the canvas while playback
 function drawLinePlay() {
     // Getting all elements needed for the function
     var canvasSpecLine = document.getElementById("canvasSpecLine")
@@ -533,6 +551,7 @@ function drawScale() {
 
     var stepsX = 100;
 
+    // Finding the best fit scale size for the actual canvas size
     while (isNaN(tickNumX)) {
         for (var kk = minDistanceNumbersX; kk <= maxDistanceNumbersX; kk++) {
             var time = kk * timePerColumn;
@@ -599,6 +618,7 @@ function drawScale() {
 
     ctxScale.font = "bold 12px Verdana";
 
+    // Drawing ticks and tick labels of the y-axis
     for (var kk = canvasSpecScale.height - SpectroData.scaleOfsetBottom; kk >= 0; kk -= stepsY) {
         ctxScale.moveTo(SpectroData.scaleOfsetLeft, kk);
         ctxScale.lineTo(SpectroData.scaleOfsetLeft - 5, kk)
@@ -606,7 +626,7 @@ function drawScale() {
 
         ctxScale.fillText(tickNumY * ((canvasSpecScale.height - SpectroData.scaleOfsetBottom - kk) / stepsY), 1, kk, SpectroData.scaleOfsetLeft - 2);
     }
-
+    // Drawing ticks and tick labels of the x-axis
     for (var kk = 0; kk <= canvasSpecScale.width; kk += stepsX) {
         ctxScale.moveTo(kk + SpectroData.scaleOfsetLeft, canvasSpecScale.height - SpectroData.scaleOfsetBottom);
         ctxScale.lineTo(kk + SpectroData.scaleOfsetLeft, canvasSpecScale.height - SpectroData.scaleOfsetBottom + 5)
@@ -693,7 +713,8 @@ function zoomToSelection(timeStart, timeEnd) {
         factor = timePerSide / (lengthSelect * 1.1);
     }
 
-    if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456 && canvas.width * factor > divWidth) {
+    if (canvas.width * factor < 32767 && (canvas.width * factor) * canvas.height < 268435456
+    && canvas.width * factor > divWidth) {
 
         canvasSpecScale.width = canvas.width * factor + SpectroData.scaleOfsetLeft
         canvas.width = canvas.width * factor;
