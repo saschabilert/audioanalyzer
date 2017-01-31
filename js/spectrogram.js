@@ -788,6 +788,4 @@ function scaleSpectrogramm(){
   drawScale()
   section = getSectionDisplayed()
   drawSelection(section.min, 2, section.max);
-
-
 }
