@@ -301,7 +301,7 @@ for the instruction page
     weighted with the value of the side lobes. This effect is called leakage [4].</p>
 <div class="plot" id="divRect"></div>
 <pre class="code"><code data-language="javascript">/*
-=======
+
 
  * This code shows the implementation of an rect window in Javascript
  */
@@ -460,7 +460,6 @@ for the instruction page
       }
       return window;
  }</code></pre>
-<<<<<<< HEAD
 <h2><a id="overlap">Overlap:</a></h2>
 <p>Figure 6 and 7 tries to illustrate two different overlaps. The overlap factor represents the relationship between the
     old and the new sample block. The more overlap you choose, the higher is the number of blocks transformed from the
@@ -588,88 +587,6 @@ for the instruction page
     transform". Proceedings of the IEEE. 66:51.</p>
 <p class="references">[4] Gade, S. &amp; Herlufsen, H. (1987). "Use of Weighting Functions in DFT/FFT Analysis (Part
     I)". Brül &amp; Kjaer Technical Reviews No.3.</p>
-=======
-    <h2><a id="overlap">Overlap:</a></h2>
-    <p>Figure 6 and 7 tries to illustrate two different overlaps. The overlap factor represents the relationship between the old and the new sample block. The more overlap you choose, the more samples of your previous block are present in the next block.
-       In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means the number of samples you jump forward to the new start and end Index of your blocks. For example if you got a block size of 100
-        samples and an overlap of 75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated your hopsize correctly the next step is to calculate the total number of blocks for your audio data. In some cases the separation into equal block
-        is not possible. So we decide to throw away the last samples which won't fill a hole block.</p>
-    <figure>
-        <img class="resizeImg" src="image/overlapFirst.png">
-        <figcaption>Figure 6: Illustration of a 0% Overlap.</figcaption>
-    </figure>
-    <figure>
-        <img class="resizeImg" src="image/overlapSecond.png">
-        <figcaption>Figure 7: Illustration of a 75% Overlap.</figcaption>
-    </figure>
-    <h2><a id="displayType">Display-Types:</a></h2>
-    <p>On the Audioanalyzer page you can choose between different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JS by Nayuki. In this section you find a short description of the spectrograms. We tried to introduce
-        the concept for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or professional journals.</p>
-    <h3>1. Fast Fourier Transform (FFT)</h3>
-    <p>As already mentioned we have a basic FFT to transform the audio data from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the audio signal. Both array must have the same length. The FFT returns
-        a real part and an imaginary part of the transformed signal. The Fast Fourier Transform is a fast version of the Discrete Fourier Transform (DFT) which is defined as:
-    </p>
-    <p class="equation">$X(n)=X(e^{j2\pi n/N}) = \sum\limits_{k=0}^{N-1}x(k)e^{-j2\pi nk/N}$</p>
-    <p>The inverse Discrete Fourier Transform (IDFT) is defined as:</p>
-    <p class="equation">$x(k)=\dfrac{1}{N}\sum\limits_{n=0}^{N-1}X(n)e^{j2\pi nk/N}$</p>
-    <p>The FFT algorithm itself works with a power of two block length. For further information you can find explanations in several signal processing books.</p>
-    <h3>2. Spectrum</h3>
-    <p>The section <b>Block-Length</b> includes some information about how to split an audio signal into blocks, depending on the block length. For a magnitude spectrum you need to transform every block of an audio signal from the time domain into frequency
-        domain. After you transformed your audio signal blocks, you have to calculate the absolute value of the complex number. The absolute value of a complex number ($z = a + \text{i}b$) is defined as:</p>
-    <p class="equation">$|z|=\sqrt{a^2 + b^2}$</p>
-    <p>If you look at the spectrum of your signal in general, you will see three dimensions the time (x-axis), the color coded magnitude and the frequency (y-axis). If we talk about the frequency you have to know about the Nyquist-Theorem. This theorem is
-        very important when you work with sampled data (e.g. sampling rate $f_{\text{s}} = 44.1$kHz). The Nyquist-Theorem implies the maximal displayable frequency ($f_{\text{max}}$) is limited by the half of the sampling rate.</p>
-    <p class="equation">$f_{\text{max}}=\dfrac{f_{\text{s}}}{2}$</p>
-    <h3>3. Phase</h3>
-    <p>If you want to analyze the phase of an audio signal you can also calculate the phase of a complex number. The results of the phase data is circular and has a range from $-\pi$ to $\pi$. It is quit hard to interpret the phase spectrogram of and audio
-        signal. Maybe you detect a structure but often its very confused. To display the calculated data it is an advantage to use circular colormaps (e.g. twilight).</p>
-    <p class="equation">$\text{arg}(z)=\text{atan}2(y,x)$</p>
-    <h3>4. Group Delay</h3>
-    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful information [2]. The result is also circular as the phase data and for the calculation you have to unwrap
-        the phase data. The group delay is defined as the negative differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
-    <p class="equation">$\tau_{\omega}=-\dfrac{\partial\theta(\omega)}{\partial\omega}$</p>
-    <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
-    <p>Another interpretable spectrum in terms of phase data is the Instantaneous Frequency Deviation. The IFD can also be used for automatic speech/speaker recognition (ASR). To analyze speech for example you can see the pitch and the harmonics crossing
-        the zero IFD value. To calculate the IFD you need the Instantaneous Frequency (IF) which is defined by the differentiation of the phase data along the time axis. To extract the IFD we subtract the angular frequency from the IF spectrum $\nu(\omega,t)$.
-        The value range is fixed from -125Hz to 125Hz. The IFD spectrum is comparative to the magnitude spectrum. The continuous IF and the IFD $\psi(\omega,t)$ is mathematically defined by the following [1]:</p>
-    <p class="equation">$\nu(\omega,t)=\dfrac{\partial\theta(\omega,t)}{\partial t}$</p>
-    <p class="equation">$\psi(\omega,t)=\nu(\omega,t)-\omega$</p>
-    <h2><a id="colormap">Colormaps:</a></h2>
-    <p>Colormaps are used to show the third dimension in the displayed time frequency plots like the classic amplitude spectrogram or the group delay spectrogram. In the amplitude spectrogram for example, the colormap codes the amplitude of each frequency bin to each time. There are three
-        different types of colormaps included in this page. </p>
-    <h3>1. Linear or Sequential Colormaps</h3>
-    <p> Linear or Sequential Colormaps are designed in a way, that the lightness value of the color increases or decreases in a linear manner through the whole colormap. Through this, the interpretation of graphics are straight forward. The lighter the color
-        is, the higher is the value that the color is representing. The three linear colormaps that are part of the audioanalyzer are <b>viridis</b>, <b>plasma</b> and <b>gray</b>. They are only available for the amplitude spectrogram.</p>
-    <h3>2. Rainbow Colormap</h3>
-    <p>The rainbow color map <b>Jet</b> is well known because it was used in many plotting programs as the default color map in the past years. We do not recomend to use this colormap, because it is not as even in lightnes as the sequential colormaps are, but we included it, because it was used often in the past years.
-  This colormap can also only be used in the amplitude spectrogram.</p>
-    <h3>3. Cyclic Colormap</h3>
-    <p>Cyclic colormaps are used to display cyclic data like phase information. The phase of a signal goes from -&#960 to &#960, where this both values represent the same phase. To show that, the first and the last color of circular colormaps are exactly
-        the same. The used cyclic colormap to show phase and group delay data is <b>twilight</b>. Twilight starts with white, goes on to blue over black on the center over red back to white. Twilight is used for group delay and phase spectrogram, because in both spectrograms most values are at both ends of the value range.
-        <b>sunlight</b> is verry similar to twilight, but here, white is at the center of the scale. Sunlight is used for instantaneous frequency deviation spectrogram because here most values are at the center of the scale
-      </p>
-
-    <h2><a id="minMaxValue">Min and Max Value:</a></h2>
-    <p>With choosing the value range for the spectrogram, it is possible to define the value range, that is mapped onto the colormap. This is done by showing every data point with a value higher than the max value in the color representing this value, and
-        the same for data points with values below the min value. By doing so, it is possible to get details more visible as shown in figure 9. In the B-part of the figure, the lines for the harmonics in the frequency range of 12.5 kHz are much better
-        seeable than in part A of the figure</p>
-    <figure>
-        <img class="resizeImg" id="minmaxpic" src="image/minmax.png">
-        <figcaption>Figure 8: Comparison of to spectrograms with same values for blocksize, window and overlap but with different min and max values for the spectrogram.<br>
-            <b>A:</b> min = -90dB max = -30dB. <b>B:</b> min = -100dB max = -60dB
-        </figcaption>
-    </figure>
-    <h2><a id="zoomSpectrogram">Zoom Spectrogram:</a></h2>
-    <p>You can zoom in the spectrum window by pressing the buttons down on the right corner of the window. With the vertical once you can zoom into the frequency axis and with the horizontal one you can zoom into the time axis.</p>
-    <h2><a id="saveSpectrogram">Save Spectrogram:</a></h2>
-    <p>If you want to save the spectrum data of your audio signal you can use the save button. It works only if you choose the Display-Type "spectrum" and you have not zoomed into the spectrogram.</p>
-    <h4>END OF INSTRUCTION</h4>
-    <h2>References</h2>
-    <p class="references">[1] Stark, A. P. &amp; Paliwal, K. K. (2008). "Speech Analysis Using Instantaneous Frequency Deviation". Interspeech 2008</p>
-    <p class="references">[2] Stark, A. P. &amp; Paliwal, K. K. (2009). "Group-Delay-Deviation Based Spectral Analysis of Speech". Interspeech 2009</p>
-    <p class="references">[3] Harris, F. J. (1978). "On the use of windows for harmonic analysis with the discrete Fourier transform". Proceedings of the IEEE. 66:51.</p>
-    <p class="references">[4] Gade, S. &amp; Herlufsen, H. (1987). "Use of Weighting Functions in DFT/FFT Analysis (Part I)". Brül &amp; Kjaer Technical Reviews No.3.</p>
->>>>>>> aa18bb8984d8a4b610b76d4091727b044c2aaca7
 </body>
 
 </html>
