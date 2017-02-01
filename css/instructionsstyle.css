@@ -204,3 +204,8 @@ a.naviItems:hover {
     background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100%);
     background-color: #dfdfdf;
 }
+li.grayBackground{
+  background-color: gray;
+  width: 60px;
+
+}
