@@ -5,7 +5,7 @@ Audioanalyzer
 
 The Audioanalyzer is a website to analyze different audio files in various formats. It is the result of an university project. The FFT used for tranformation is made by [Project Nayuki](https://www.nayuki.io/page/free-small-fft-in-multiple-languages).
 
-The intension of the project was to build an environment where everybody can easily and fast analyze audio signals. The code for [Audioanalyzer](http://audioanalyzer.net/) is licensed under the GNU General Public License Copyright (C) 2016  Moritz Balter, Sascha Bilert, Vlad-Stefan Paul IHA @ Jade Hochschule applied licence see EOF.
+The intension of the project was to build an environment where everybody can easily and fast analyze audio signals. The code for [Audioanalyzer](http://audioanalyzer.net/) is licensed under the GNU General Public License Copyright (C) 2016  Moritz Balters, Sascha Bilert, Vlad-Stefan Paul IHA @ Jade Hochschule applied licence see EOF.
 
 <p align="center">
 <img src="/image/icon.png" width="30%" height="30%">
@@ -51,3 +51,5 @@ The website is optimized for the following web-browsers:
 2. Firefox (Ver. 50.1.0)
 
 ## News
+
+Version: 1.0 (Moritz Balters, Sascha Bilert, Vlad Paul)
