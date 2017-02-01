@@ -99,8 +99,8 @@ contact: vlad.paul@student.jade-hs.de
     write the text, set the plots, write the mathematic formulas and display the code samples
     for the instruction page
     -->
-    <p>This Page includes useful information about how to use the Audioanalyzer to analyze your audio file. In addition, we tried to help you by writing short tool Tipps on the main page. For quick search, you can navigate to the preferred help-section
-        in the menu on the left side. The website is programmed by using the following technologies:</p>
+    <p>This Page includes useful information about how to use the Audioanalyzer to analyze your audio file. In addition, we tried to help you by writing short tool Tipps on the main page. For quick search, you can navigate to the preferred help-section in
+        the menu on the left side. The website is programmed by using the following technologies:</p>
     <ul>
         <li>JavaScript ES6 (JS ES6)</li>
         <ul class="Frameworks">
@@ -111,49 +111,50 @@ contact: vlad.paul@student.jade-hs.de
         <li>Hypertext Markup Language (HTML5)</li>
         <li>Cascading Style Sheet (CSS3)</li>
     </ul>
-    <p style="margin-top: 16px;">The audio processing to analyze your loaded audio file is based on a free Fast Fourier Transformation (FFT) programmed in JavaScript (JS) by Nayuki. For more information visit <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages" target="_blank">www.nayuki.io</a>.
-        If you are not confident in signal processing, it is sometimes hard to analyze a sound file quick and easy. So, the main goal we addressed was to create an easy and useful tool to analyze audio files in terms of magnitude, phase and other values
-        which are displayable and interpretable as a spectrogram. The user can apply different settings for various examinations. We tried to describe all the parameters in an easy way. For describing the different windows, we used <b>plotly.js</b>        for illustration, <b>rainbow.js</b> to highlight the code and <b>mathJax.js</b> to write LateX formula in HTML5.</p>
+    <p style="margin-top: 16px;">The audio processing to analyze your loaded audio file is based on a free Fast Fourier Transformation (FFT) programmed in JavaScript (JS) by Nayuki. For more information visit
+        <a href="https://www.nayuki.io/page/free-small-fft-in-multiple-languages"
+            target="_blank">www.nayuki.io</a>. If you are not confident in signal processing, it is sometimes hard to analyze a sound file quick and easy. So, the main goal we addressed was to create an easy and useful tool to analyze audio files in terms of magnitude, phase
+            and other values which are displayable and interpretable as a spectrogram. The user can apply different settings for various examinations. We tried to describe all the parameters in an easy way. For describing the different windows, we used
+            <b>plotly.js</b> for illustration, <b>rainbow.js</b> to highlight the code and <b>mathJax.js</b> to write LateX formula in HTML5.</p>
     <h2><a id="choosingAFile">Choose a file:</a></h2>
     <figure>
         <img class="resizeImg" id="upload" src="image/upload.png">
         <figcaption>Figure 1: Upload the audio file which you want to analyze.</figcaption>
     </figure>
     <p>If you click on “Choose a file” you can load an audio file from your local computer. You can analyze different audio formats e.g. wav or mp3.
-        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more information about supported audio formats)</a>. After you have chosen a file, the waveform and the magnitude-spectrum will be calculated and displayed below
-        the buttons after the loading screen disappeared. The name of the loaded file will now be displayed on the load button. By clicking the button again, you can load a new audio file. Your audio data won’t be saved outside your computer at any point just analyzed. There is no webserver in the background, all
-        calculation takes place on your own computer. In Figure 1 you can see the file manager where you can open an audio file.</p>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">(Click here for more information about supported audio formats)</a>. After you have chosen a file, the waveform and the magnitude-spectrum will
+        be calculated and displayed below the buttons after the loading screen disappeared. The name of the loaded file will now be displayed on the load button. By clicking the button again, you can load a new audio file. Your audio data won’t be saved
+        outside your computer at any point just analyzed. There is no webserver in the background, all calculation takes place on your own computer. In Figure 1 you can see the file manager where you can open an audio file.</p>
     <h2><a id="controlBar">Control Bar:</a></h2>
     <figure>
         <img class="resizeImg" src="image/controlbar.png">
         <figcaption>Figure 2: Control bar to operate your sound in terms of play/stop for example.</figcaption>
     </figure>
-    <p>AFter a audio file is loaded, You can play, pause and stop your loaded track by using the corresponding button in the control bar (Figure 2). Here you also find the button "Choose a file" as described in the section before. You can also adjust the volume by using the volume slider
-        next to the stop button. Next to the volume slider the current playback time and the total length of the file are displayed. You can use the pause and play button to control the playback while you analyze. It is also possible to loop
-        a selected part of the audio file by ticking the box next to "Loop Selection". How to select a part of your audio file is explained in the Waveform section. In case of analysis you can pick a matching grid size for the waveform including small,
-        medium and large.</p>
+    <p>AFter a audio file is loaded, You can play, pause and stop your loaded track by using the corresponding button in the control bar (Figure 2). Here you also find the button "Choose a file" as described in the section before. You can also adjust the
+        volume by using the volume slider next to the stop button. Next to the volume slider the current playback time and the total length of the file are displayed. You can use the pause and play button to control the playback while you analyze. It
+        is also possible to loop a selected part of the audio file by ticking the box next to "Loop Selection". How to select a part of your audio file is explained in the Waveform section. In case of analysis you can pick a matching grid size for the
+        waveform including small, medium and large.</p>
     <h2><a id="waveform">Waveform:</a></h2>
     <figure>
         <img class="resizeImg" src="image/waveform.png">
         <figcaption>Figure 3: A view of the waveform of a loaded audio file.</figcaption>
     </figure>
-    <p>The waveform is compound by the linear amplitude (blue) and the RMS (light blue) as shown in Figure 3. On the x-axis, you have the time scale based on the total track length. In the upper left corner of the waveform the data of your current mouse position are
-      displayed while your mouse in on the waveform. When you push play after loading an audio file, a red line shows the current time position in the waveform.
-      For jumping inside of the file to another play position, just klick ones on the wanted position in the waeform or the spectrogram.
-      For selecting a part of the file, just klick on the start positon of the part you want to select, hold the mouse button and drag to the end of the desired section. While draging, the area you will select will be shaded red. After releasing the mouse button, the spectrogram will zoom to show the complete selected part.
-      If you now push the play button only the selected part will be played. If you want to play the selected part in a endless, youst check the checkbox behind "Loop Selection" .</p>
+    <p>The waveform is compound by the linear amplitude (blue) and the RMS (light blue) as shown in Figure 3. On the x-axis, you have the time scale based on the total track length. In the upper left corner of the waveform the data of your current mouse
+        position are displayed while your mouse in on the waveform. When you push play after loading an audio file, a red line shows the current time position in the waveform. For jumping inside of the file to another play position, just klick ones on
+        the wanted position in the waeform or the spectrogram. For selecting a part of the file, just klick on the start positon of the part you want to select, hold the mouse button and drag to the end of the desired section. While draging, the area
+        you will select will be shaded red. After releasing the mouse button, the spectrogram will zoom to show the complete selected part. If you now push the play button only the selected part will be played. If you want to play the selected part in
+        a endless, youst check the checkbox behind "Loop Selection" .</p>
     <p>The RMS is calculated by RMS $= \sqrt{\dfrac{1}{N}\sum \limits_{i=0}^{N} n_{i}^{2}}$.</p>
     <h2><a id="spectrogram">Spectrogram:</a></h2>
     <figure>
         <img class="resizeImg" src="image/spectrum.png">
         <figcaption>Figure 4: A view of the spectrum of an uploaded audio file.</figcaption>
     </figure>
-    <p>In Figure 4 you can see the magnitude spectrogram of a loaded file. You can also display phase, group delay or a instantaneous frequency deviation spectrogram (more about these spectrograms in the section "Display-Type").
-      One thing they have in common, is that they display a value in its dependency from time and frequency. Frequency is displayed on the y-, time on the x-axis. The y-axis goes from 0 to the half sampling frequency of your audio file.
-      If you move your cursor over the spectrogram the position data is displayed in the upper left corner. The actual value of the frequency-time point is decoded in the color. The value each color is representing can be taken from the
-      color legend that can be found over the right corner of the spectrogram. If you want to have more information you can zoom into the spectrogram by pressing the buttons in the lower right corner of the spectrogram window.
-      You can zoom both the time and the frequency axis. As you have read in the last section, it is possible to select a short piece of your audio file. When you select a section in the waveform, the spectrogram will automatically zoom in the selected part of the audio file.</p>
-      If you want to reset the spectrogram to see the complete spectrogram, you can use the zoom buttons or doublecklick on the spectrogram.
+    <p>In Figure 4 you can see the magnitude spectrogram of a loaded file. You can also display phase, group delay or a instantaneous frequency deviation spectrogram (more about these spectrograms in the section "Display-Type"). One thing they have in common,
+        is that they display a value in its dependency from time and frequency. Frequency is displayed on the y-, time on the x-axis. The y-axis goes from 0 to the half sampling frequency of your audio file. If you move your cursor over the spectrogram
+        the position data is displayed in the upper left corner. The actual value of the frequency-time point is decoded in the color. The value each color is representing can be taken from the color legend that can be found over the right corner of the
+        spectrogram. If you want to have more information you can zoom into the spectrogram by pressing the buttons in the lower right corner of the spectrogram window. You can zoom both the time and the frequency axis. As you have read in the last section,
+        it is possible to select a short piece of your audio file. When you select a section in the waveform, the spectrogram will automatically zoom in the selected part of the audio file. If you want to reset the spectrogram to see the complete spectrogram, you can use the zoom buttons or doublecklick on the spectrogram.</p>
 
     <h2><a id="parameters">Parameters:</a></h2>
     <ul>
@@ -194,18 +195,16 @@ contact: vlad.paul@student.jade-hs.de
         </ul>
         <li>Colormap</li>
         <ul>
-        <li><b>Viridis</b></li>
-        <li>Gray</li>
-        <li>JET</li>
-        <li>Plasma</li>
-        <li class="grayBackground">Twilight</li>
-        <li class="grayBackground">Sunlight</li>
-      </ul>
+            <li><b>Viridis</b></li>
+            <li>Gray</li>
+            <li>JET</li>
+            <li>Plasma</li>
+            <li class="grayBackground">Twilight</li>
+            <li class="grayBackground">Sunlight</li>
+        </ul>
     </ul>
-
     <p>You can customize the spectrogram individually by choosing the parameters shown in the above listing. The default values are the bold ones. For the amplitude spectrogram, you can choose a minimal and a maximal value which restricts the color range.
-      Depending on what you want to analyze you can choose between the four display types. The different display types
-        (depending on the display type) are discussed in the section <b>Display-Types</b>.
+        Depending on what you want to analyze you can choose between the four display types. The different display types (depending on the display type) are discussed in the section <b>Display-Types</b>.
     </p>
     <figure>
         <img class="resizeImg" src="image/parameters.png">
@@ -213,11 +212,11 @@ contact: vlad.paul@student.jade-hs.de
     </figure>
     <p>In the Figure 5 you can see the different parameter dropdown menus and the input lines for min and max range value. On the right side of the image you can see the spectrogram magnitude legend depending on the chosen display type.</p>
     <h2><a id="blockLength">Block-Length:</a></h2>
-    <p>The block length is the number of samples used to divide the full audio samples into equal blocks. In our case the block length is equal to the FFT length. This means one bit in the spectrogram represents one block of block-length samples and defines the time
-        resolution of the spectrogram. The shorter the block-length is chosen, the more time points will be calculated, because yu have more blocks your signal is split to.
-        But on the other hand, the shorter the block-length is chosen, the lower the frequency resolution. For example, if you have a file with a sample rate ($fs$) of 44.1 kHz and a you choose a block length of 1024, the FFT will calcuate 1024 frequency bins.
-        Each bin will therefore represent a band with a bandwidth of 43 Hz. If you choose a block length of 2048, you will have half the number of blocks, but each frequency bin will only represent 21.5 Hz. So you have always to choose between frequency and time resolution.
-        </p>
+    <p>The block length is the number of samples used to divide the full audio samples into equal blocks. In our case the block length is equal to the FFT length. This means one bit in the spectrogram represents one block of block-length samples and defines
+        the time resolution of the spectrogram. The shorter the block-length is chosen, the more time points will be calculated, because yu have more blocks your signal is split to. But on the other hand, the shorter the block-length is chosen, the lower
+        the frequency resolution. For example, if you have a file with a sample rate ($fs$) of 44.1 kHz and a you choose a block length of 1024, the FFT will calcuate 1024 frequency bins. Each bin will therefore represent a band with a bandwidth of 43
+        Hz. If you choose a block length of 2048, you will have half the number of blocks, but each frequency bin will only represent 21.5 Hz. So you have always to choose between frequency and time resolution.
+    </p>
     <h2><a id="windowType">Window-Types:</a></h2>
     <p>The following section is addressed to the different window types. We tried to explain the windows in various ways, mathematically, graphically and in the way we programmed them in JS. In general, a window can be explained as a weight for the audio
         signal in the time domain. If you look at a window-function itself in the time domain as well as in the frequency domain, you can categorize the window-functions in the frequency domain as the following [4]:</p>
@@ -239,8 +238,8 @@ contact: vlad.paul@student.jade-hs.de
         <li>Very poor in selectivity, due to a 60 dB bandwidth of 665 $\Delta$f</li>
         <li>Relatively large the terms of the ripples in the passband (3.9 dB)</li>
     </ul>
-    <p>If the signal you want to analyze is a sinusoid which has a frequency that hits one of the center frequency of the rect window you will get a very got result in the spectrum. But that means you must know your measurement signal. If you analyze
-        a signal with crossover frequencies like music, the output frequencies around your filter center frequency will be weighted with the value of the side lobes. This effect is called leakage [4].</p>
+    <p>If the signal you want to analyze is a sinusoid which has a frequency that hits one of the center frequency of the rect window you will get a very got result in the spectrum. But that means you must know your measurement signal. If you analyze a signal
+        with crossover frequencies like music, the output frequencies around your filter center frequency will be weighted with the value of the side lobes. This effect is called leakage [4].</p>
     <div class="plot" id="divRect"></div>
     <pre class="code"><code data-language="javascript">/*
  * This code shows the implementation of an rect window in Javascript
@@ -396,9 +395,9 @@ contact: vlad.paul@student.jade-hs.de
  }</code></pre>
     <h2><a id="overlap">Overlap:</a></h2>
     <p>Figure 6 and 7 tries to illustrate two different overlaps. The overlap factor represents the relationship between the old and the new sample block. The more overlap you choose, the more samples of your previous block are present in the next block.
-       In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means the number of samples you jump forward to the new start and end Index of your blocks. For example if you got a block size of 100
-        samples and an overlap of 75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated your hopsize correctly the next step is to calculate the total number of blocks for your audio data. In some cases the separation into equal block
-        is not possible. So we decide to throw away the last samples which won't fill a hole block.</p>
+        In terms of programming an overlap algorithm you define a so called <b>hopsize</b>, this means the number of samples you jump forward to the new start and end Index of your blocks. For example if you got a block size of 100 samples and an overlap
+        of 75% your hopsize results in $\frac{100}{4} = 25$. If you have calculated your hopsize correctly the next step is to calculate the total number of blocks for your audio data. In some cases the separation into equal block is not possible. So
+        we decide to throw away the last samples which won't fill a hole block.</p>
     <figure>
         <img class="resizeImg" src="image/overlapFirst.png">
         <figcaption>Figure 6: Illustration of a 0% Overlap.</figcaption>
@@ -408,8 +407,8 @@ contact: vlad.paul@student.jade-hs.de
         <figcaption>Figure 7: Illustration of a 75% Overlap.</figcaption>
     </figure>
     <h2><a id="displayType">Display-Types:</a></h2>
-    <p>On the Audioanalyzer page you can choose between different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JS by Nayuki. In this section you find a short description of the spectrograms. We tried to introduce
-        the concept for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or professional journals.</p>
+    <p>On the Audioanalyzer page you can choose between different types of spectrograms we called <b>Display-Types</b>. All of them are based on a free FFT programmed in JS by Nayuki. In this section you find a short description of the spectrograms. We tried
+        to introduce the concept for each spectrogram. We just outlined the theory, for more information you have to search in several specialist books or professional journals.</p>
     <h3>1. Fast Fourier Transform (FFT)</h3>
     <p>As already mentioned we have a basic FFT to transform the audio data from the time domain into the frequency domain. The FFT we used needs the real part and the imaginary part of the audio signal. Both array must have the same length. The FFT returns
         a real part and an imaginary part of the transformed signal. The Fast Fourier Transform is a fast version of the Discrete Fourier Transform (DFT) which is defined as:
@@ -430,8 +429,8 @@ contact: vlad.paul@student.jade-hs.de
         signal. Maybe you detect a structure but often its very confused. To display the calculated data it is an advantage to use circular colormaps (e.g. twilight).</p>
     <p class="equation">$\text{arg}(z)=\text{atan}2(y,x)$</p>
     <h3>4. Group Delay</h3>
-    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful information [2]. The result is also circular as the phase data and for the calculation you have to unwrap
-        the phase data. The group delay is defined as the negative differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
+    <p>To have a better interpretable spectrum depending on the phase, its possible to calculate the group delay ($\tau_{\omega}$) for more useful information [2]. The result is also circular as the phase data and for the calculation you have to unwrap the
+        phase data. The group delay is defined as the negative differentiation of the phase data along the frequency axis. The unit of the group delay is milliseconds. The value range depends on the processed audio data.</p>
     <p class="equation">$\tau_{\omega}=-\dfrac{\partial\theta(\omega)}{\partial\omega}$</p>
     <h3>5. Instantaneous Frequency Deviation (IFD)</h3>
     <p>Another interpretable spectrum in terms of phase data is the Instantaneous Frequency Deviation. The IFD can also be used for automatic speech/speaker recognition (ASR). To analyze speech for example you can see the pitch and the harmonics crossing
@@ -440,19 +439,20 @@ contact: vlad.paul@student.jade-hs.de
     <p class="equation">$\nu(\omega,t)=\dfrac{\partial\theta(\omega,t)}{\partial t}$</p>
     <p class="equation">$\psi(\omega,t)=\nu(\omega,t)-\omega$</p>
     <h2><a id="colormap">Colormaps:</a></h2>
-    <p>Colormaps are used to show the third dimension in the displayed time frequency plots like the classic amplitude spectrogram or the group delay spectrogram. In the amplitude spectrogram for example, the colormap codes the amplitude of each frequency bin to each time. There are three
-        different types of colormaps included in this page. </p>
+    <p>Colormaps are used to show the third dimension in the displayed time frequency plots like the classic amplitude spectrogram or the group delay spectrogram. In the amplitude spectrogram for example, the colormap codes the amplitude of each frequency
+        bin to each time. There are three different types of colormaps included in this page. </p>
     <h3>1. Linear or Sequential Colormaps</h3>
     <p> Linear or Sequential Colormaps are designed in a way, that the lightness value of the color increases or decreases in a linear manner through the whole colormap. Through this, the interpretation of graphics are straight forward. The lighter the color
         is, the higher is the value that the color is representing. The three linear colormaps that are part of the audioanalyzer are <b>viridis</b>, <b>plasma</b> and <b>gray</b>. They are only available for the amplitude spectrogram.</p>
     <h3>2. Rainbow Colormap</h3>
-    <p>The rainbow color map <b>Jet</b> is well known because it was used in many plotting programs as the default color map in the past years. We do not recomend to use this colormap, because it is not as even in lightnes as the sequential colormaps are, but we included it, because it was used often in the past years.
-  This colormap can also only be used in the amplitude spectrogram.</p>
+    <p>The rainbow color map <b>Jet</b> is well known because it was used in many plotting programs as the default color map in the past years. We do not recomend to use this colormap, because it is not as even in lightnes as the sequential colormaps are,
+        but we included it, because it was used often in the past years. This colormap can also only be used in the amplitude spectrogram.</p>
     <h3>3. Cyclic Colormap</h3>
     <p>Cyclic colormaps are used to display cyclic data like phase information. The phase of a signal goes from -&#960 to &#960, where this both values represent the same phase. To show that, the first and the last color of circular colormaps are exactly
-        the same. The used cyclic colormap to show phase and group delay data is <b>twilight</b>. Twilight starts with white, goes on to blue over black on the center over red back to white. Twilight is used for group delay and phase spectrogram, because in both spectrograms most values are at both ends of the value range.
+        the same. The used cyclic colormap to show phase and group delay data is <b>twilight</b>. Twilight starts with white, goes on to blue over black on the center over red back to white. Twilight is used for group delay and phase spectrogram, because
+        in both spectrograms most values are at both ends of the value range.
         <b>sunlight</b> is verry similar to twilight, but here, white is at the center of the scale. Sunlight is used for instantaneous frequency deviation spectrogram because here most values are at the center of the scale
-      </p>
+    </p>
 
     <h2><a id="minMaxValue">Min and Max Value:</a></h2>
     <p>With choosing the value range for the spectrogram, it is possible to define the value range, that is mapped onto the colormap. This is done by showing every data point with a value higher than the max value in the color representing this value, and
